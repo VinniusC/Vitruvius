@@ -1,0 +1,360 @@
+; Jadwiga - Part VI: The Fruits of Her Labor
+; Player 3: Prussia (Enemy)
+; AI by Lord Basse
+
+(defrule
+	(true)
+=>
+	(set-goal 2 0)
+	(disable-self)
+)
+
+(defrule ;villagers
+	(goal 2 0)
+=>
+	(set-strategic-number sn-maximum-food-drop-distance 0)
+	(set-strategic-number sn-maximum-wood-drop-distance 0)
+	(set-strategic-number sn-maximum-gold-drop-distance 0)
+	(set-strategic-number sn-maximum-hunt-drop-distance 0)
+	(set-strategic-number sn-maximum-stone-drop-distance 0)
+	(set-strategic-number sn-food-gatherer-percentage 0)
+	(set-strategic-number sn-wood-gatherer-percentage 0)
+	(set-strategic-number sn-gold-gatherer-percentage 0)
+	(set-strategic-number sn-stone-gatherer-percentage 0)
+	(set-strategic-number sn-cap-civilian-explorers 0)
+	(set-strategic-number sn-percent-civilian-explorers 0) 
+	(disable-self)
+)
+(defrule ;military
+	(goal 2 0)
+=>
+	(set-strategic-number sn-percent-enemy-sighted-response 50)
+	(set-strategic-number sn-hits-before-alliance-change 25)
+	(set-strategic-number sn-number-explore-groups 0)
+	(set-strategic-number sn-percent-attack-soldiers 0)
+	(set-strategic-number sn-task-ungrouped-soldiers 0)
+	(set-strategic-number sn-number-attack-groups 0)
+	(set-strategic-number sn-total-number-explorers 0)
+	(set-strategic-number sn-relic-return-distance 0)
+	(set-strategic-number sn-minimum-town-size 0)
+	(set-strategic-number sn-maximum-town-size 0)
+	(disable-self)
+)
+
+(defrule
+	(true)
+	(difficulty == easy)
+	=>
+	(set-signal 1)
+	(set-strategic-number sn-enemy-sighted-response-distance 12)
+	(disable-self)
+)
+
+(defrule
+	(true)
+	(difficulty == moderate)
+	=>
+	(set-signal 2)
+	(set-strategic-number sn-enemy-sighted-response-distance 16)
+	(disable-self)
+)
+
+(defrule
+	(true)
+	(difficulty == hard)
+	=>
+	(set-signal 3)
+	(set-strategic-number sn-enemy-sighted-response-distance 20)
+	(disable-self)
+)
+
+; Resource cheating * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * 
+
+(defrule
+	(true)
+=>
+	(enable-timer 1 300) ; cheats
+	(enable-timer 2 300) ; army production
+	(set-goal 1 0) ; army production
+	(disable-self)
+)
+
+(defrule
+	(timer-triggered 1)
+=>
+	(chat-local-to-self "I think I need some resources")
+	(cc-add-resource food 800)
+	(cc-add-resource wood 800)
+	(cc-add-resource gold 1000)
+	(disable-timer 1)
+	(enable-timer 1 300)
+)
+
+; Army creation * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * 
+
+(defrule
+	(timer-triggered 2)
+=>
+	(set-goal 1 1) ; start unit production
+	(disable-timer 2)
+	(enable-timer 3 180)
+)
+
+(defrule
+	(timer-triggered 3)
+=>
+	(set-goal 1 0) ; pause unit production
+	(disable-timer 3)
+	(enable-timer 2 180)
+)
+
+; Knights
+
+(defrule
+	(goal 1 1)
+	(unit-type-count-total knight-line < 5) 
+	(can-train knight-line)
+	(unit-type-count-total stable less-or-equal 1) ; reduced production all difficulty levels
+=>
+	(train knight-line)
+)
+
+(defrule
+	(goal 1 1)
+	(unit-type-count-total knight-line < 10)
+	(can-train knight-line)
+	(difficulty == easy)
+	(unit-type-count-total stable greater-or-equal 2)
+=>
+	(train knight-line)
+)
+
+(defrule
+	(goal 1 1)
+	(unit-type-count-total knight-line < 15)
+	(can-train knight-line)
+	(difficulty == moderate)
+	(unit-type-count-total stable greater-or-equal 2)
+=>
+	(train knight-line)
+)
+
+(defrule
+	(goal 1 1)
+	(unit-type-count-total knight-line < 20)
+	(can-train knight-line)
+	(difficulty == hard)
+	(unit-type-count-total stable greater-or-equal 2)
+=>
+	(train knight-line)
+)
+
+; Pikemen
+
+(defrule
+	(goal 1 1)
+	(unit-type-count-total spearman-line < 7)
+	(can-train spearman-line)
+	(unit-type-count-total barracks less-than 3)
+=>
+	(train spearman-line)
+)
+
+(defrule
+	(goal 1 1)
+	(unit-type-count-total spearman-line < 15)
+	(can-train spearman-line)
+	(difficulty == easy)
+	(unit-type-count-total barracks greater-or-equal 3)
+=>
+	(train spearman-line)
+)
+
+(defrule
+	(goal 1 1)
+	(unit-type-count-total spearman-line < 20)
+	(can-train spearman-line)
+	(difficulty == moderate)
+	(unit-type-count-total barracks greater-or-equal 3)
+=>
+	(train spearman-line)
+)
+
+(defrule
+	(goal 1 1)
+	(unit-type-count-total spearman-line < 25)
+	(can-train spearman-line)
+	(difficulty == hard)
+	(unit-type-count-total barracks greater-or-equal 3)
+=>
+	(train spearman-line)
+)
+
+; Crossbowmen
+
+(defrule
+	(goal 1 1)
+	(unit-type-count-total archer-line < 5)
+	(can-train archer-line)
+	(unit-type-count-total archery-range less-or-equal 2)
+=>
+	(train archer-line)
+)
+
+(defrule
+	(goal 1 1)
+	(unit-type-count-total archer-line < 10)
+	(can-train archer-line)
+	(difficulty == easy)
+	(unit-type-count-total archery-range greater-or-equal 3)
+=>
+	(train archer-line)
+)
+
+(defrule
+	(goal 1 1)
+	(unit-type-count-total archer-line < 15)
+	(can-train archer-line)
+	(difficulty == moderate)
+	(unit-type-count-total archery-range greater-or-equal 3)
+=>
+	(train archer-line)
+)
+
+(defrule
+	(goal 1 1)
+	(unit-type-count-total archer-line < 20)
+	(can-train archer-line)
+	(difficulty == hard)
+	(unit-type-count-total archery-range greater-or-equal 3)
+=>
+	(train archer-line)
+)
+
+; B&D ends - go immobile  * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * 
+
+(defrule 
+	(event-detected trigger 1)
+=>
+	(set-goal 2 1)
+	(set-goal 1 0)
+	(disable-self)
+)
+
+(defrule
+	(goal 2 1)
+=>
+	(set-strategic-number sn-group-form-distance 0)
+	(set-strategic-number sn-percent-attack-soldiers 0)
+	(set-strategic-number sn-attack-group-size-randomness 0)
+	(set-strategic-number sn-number-explore-groups 0)
+	(set-strategic-number sn-task-ungrouped-soldiers 0)
+	(set-strategic-number sn-total-number-explorers 0)
+	(set-strategic-number sn-wall-targeting-mode 0)
+	(set-strategic-number sn-attack-intelligence 0)
+	(set-strategic-number sn-percent-enemy-sighted-response 0)
+	(set-strategic-number sn-gather-defense-units 0)
+	(set-strategic-number sn-maximum-attack-group-size 0)
+	(set-strategic-number sn-minimum-attack-group-size 0)
+	(set-strategic-number sn-enemy-sighted-response-distance 0)
+	(set-strategic-number sn-defense-distance 0)
+	(set-strategic-number sn-sentry-distance 0)
+	(set-strategic-number sn-hits-before-alliance-change 25)
+	(set-strategic-number sn-relic-return-distance 0)
+	(set-strategic-number sn-minimum-town-size 0)
+	(set-strategic-number sn-maximum-town-size 0)
+)
+
+(defrule ;villagers
+	(goal 2 1)
+=>
+	(set-strategic-number sn-maximum-food-drop-distance 0)
+	(set-strategic-number sn-maximum-wood-drop-distance 0)
+	(set-strategic-number sn-maximum-gold-drop-distance 0)
+	(set-strategic-number sn-maximum-hunt-drop-distance 0)
+	(set-strategic-number sn-maximum-stone-drop-distance 0)
+	(set-strategic-number sn-food-gatherer-percentage 0)
+	(set-strategic-number sn-wood-gatherer-percentage 0)
+	(set-strategic-number sn-gold-gatherer-percentage 0)
+	(set-strategic-number sn-stone-gatherer-percentage 0)
+	(set-strategic-number sn-cap-civilian-explorers 0)
+	(set-strategic-number sn-percent-civilian-explorers 0) 
+)
+
+; Final battle * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * 
+
+
+(defrule
+	(event-detected trigger 6) ; battle begins
+=>
+	(set-goal 2 2)
+	(disable-self)
+)
+
+(defrule
+	(goal 2 2)
+=>
+	(set-strategic-number sn-total-number-explorers 0)
+	(set-strategic-number sn-percent-enemy-sighted-response 25)
+	(set-strategic-number sn-enemy-sighted-response-distance 20)
+	(set-strategic-number sn-hits-before-alliance-change 25)
+	(set-strategic-number sn-minimum-attack-group-size 2)
+	(set-strategic-number sn-maximum-attack-group-size 20)
+	(set-strategic-number sn-percent-attack-soldiers 100)
+	(set-strategic-number sn-group-form-distance 50)
+	(set-strategic-number sn-attack-group-size-randomness 0)
+	(set-strategic-number sn-attack-intelligence 1)
+)
+
+(defrule
+	(goal 2 2)
+=>
+	(set-strategic-number sn-number-explore-groups 0)
+	(set-strategic-number sn-task-ungrouped-soldiers 0)
+	(set-strategic-number sn-total-number-explorers 0)
+	(set-strategic-number sn-wall-targeting-mode 0)
+	(set-strategic-number sn-gather-defense-units 0)
+	(set-strategic-number sn-defense-distance 30)
+	(set-strategic-number sn-sentry-distance 30)
+	(set-strategic-number sn-relic-return-distance 0)
+	(set-strategic-number sn-minimum-town-size 0)
+	(set-strategic-number sn-maximum-town-size 0)
+)
+
+(defrule
+	(goal 2 2)
+=>
+	(attack-now)
+	(enable-timer 4 30)
+	(disable-self)
+)
+
+(defrule
+	(timer-triggered 4)
+	(goal 2 2)
+	(difficulty == easy)
+=>
+	(disable-timer 4)
+	(attack-now)
+	(enable-timer 4 20)
+)
+
+(defrule
+	(timer-triggered 4)
+	(goal 2 2)
+	(difficulty == moderate)
+=>
+	(disable-timer 4)
+	(attack-now)
+	(enable-timer 4 12)
+)
+
+(defrule
+	(timer-triggered 4)
+	(goal 2 2)
+	(difficulty == hard)
+=>
+	(disable-timer 4)
+	(attack-now)
+	(enable-timer 4 5)
+)

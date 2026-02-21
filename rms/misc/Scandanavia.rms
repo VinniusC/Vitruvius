@@ -1,0 +1,559 @@
+/* Scandinavia - updated Nov 2020 */
+
+/* Note: random_map.def is automatically included in every rms script */
+<PLAYER_SETUP>
+  random_placement 
+	ai_info_map_type SCANDANAVIA 0 0 0
+
+#include_drs thebr_setup.inc
+
+<LAND_GENERATION>
+
+#define FROZEN_MAP
+
+start_random
+  percent_chance 50
+#define SCANDIROTATE_LEFT
+  percent_chance 50
+#define SCANDIROTATE_RIGHT
+end_random
+
+base_terrain SNOW
+
+/*
+create_land
+{ 
+  terrain_type                     SNOW
+  land_percent                       80
+  base_size                          15
+  border_fuzziness                   5 /* 5 */
+if SCANDIROTATE_LEFT
+    left_border                     12
+    right_border                    12
+elseif SCANDIROTATE_RIGHT
+    top_border                      12
+    bottom_border                   12
+endif
+}
+*/
+
+create_player_lands 
+{ 
+  terrain_type                     GRASS
+  land_percent                       30 /* 40 originally */
+  base_size                          18
+  border_fuzziness                   5 /* 5 */
+
+if EMPIRE_WARS
+circle_radius 28
+else
+endif
+
+if SCANDIROTATE_LEFT
+    left_border                     12
+    right_border                    12
+elseif SCANDIROTATE_RIGHT
+    top_border                      12
+    bottom_border                   12
+endif
+}
+
+if SCANDIROTATE_LEFT
+
+create_land
+{ 
+  terrain_type                     WATER
+  land_percent                       100
+  base_size                          4
+  border_fuzziness                   18
+    left_border                     92
+}
+
+create_land
+{ 
+  terrain_type                     WATER
+  land_percent                       100
+  base_size                          4
+  border_fuzziness                   18
+    right_border                    92
+}
+    
+
+elseif SCANDIROTATE_RIGHT
+
+
+create_land
+{ 
+  terrain_type                     WATER
+  land_percent                       100
+  base_size                          4
+  border_fuzziness                   18
+    top_border				92
+}
+
+create_land
+{ 
+  terrain_type                     WATER
+  land_percent                       100
+  base_size                          4
+  border_fuzziness                   18
+    bottom_border			92
+}
+    
+endif
+
+/* ****************************************************** */
+<TERRAIN_GENERATION>
+
+#const ICY_PASSABLES 26
+
+create_terrain ICY_PASSABLES 
+{
+base_terrain WATER
+land_percent                     2
+number_of_clumps                 10
+spacing_to_other_terrain_types   1
+set_flat_terrain_only
+terrain_mask 2
+}
+
+#define WMASK_NOSEASONS
+#include_drs F_WaterMasking.inc
+
+/*
+start_random
+percent_chance 50
+create_terrain ICE 
+{
+base_terrain SNOW
+land_percent                     1
+number_of_clumps                 6
+spacing_to_other_terrain_types   1
+set_avoid_player_start_areas
+set_flat_terrain_only     
+}
+end_random
+*/
+
+
+/* FROZEN LAKES */
+
+create_terrain ICE 
+{
+base_terrain SNOW
+land_percent                     1
+number_of_clumps                 8
+spacing_to_other_terrain_types   1
+set_avoid_player_start_areas
+set_flat_terrain_only     
+}
+
+create_terrain ICE 
+{
+base_terrain SNOW
+land_percent                     1
+number_of_clumps                 6
+spacing_to_other_terrain_types   1
+set_avoid_player_start_areas
+set_flat_terrain_only     
+}
+
+create_terrain SNOW
+{
+base_terrain GRASS
+land_percent                     100
+number_of_clumps                 1000
+}
+
+create_terrain SNOW
+{
+base_terrain GRASS
+land_percent                     100
+number_of_clumps                 1000
+}
+
+create_terrain SNOW
+{
+base_terrain GRASS
+land_percent                     100
+number_of_clumps                 1000
+}
+
+create_terrain SNOW
+{
+base_terrain GRASS
+land_percent                     100
+number_of_clumps                 1000
+}
+
+/* PRIMARY FOREST */
+
+create_terrain SNOW_FOREST
+{
+  base_terrain                   SNOW
+  spacing_to_other_terrain_types 5
+  land_percent                   10 /* 12 originally */
+  number_of_clumps               24 /* 8 originally */
+  set_avoid_player_start_areas     
+  set_scale_by_groups
+}
+
+create_terrain SNOW_FOREST
+{
+  base_terrain                   SNOW
+  spacing_to_other_terrain_types 5
+  land_percent                   5
+  number_of_clumps               20
+  set_avoid_player_start_areas     
+  set_scale_by_groups
+}
+
+   create_terrain GRASS
+{
+  base_terrain                   SNOW
+  number_of_clumps               36
+  spacing_to_other_terrain_types 0
+  land_percent                   rnd(14,16)
+  set_scale_by_size
+}
+
+   create_terrain ROAD
+{
+  base_terrain                   GRASS
+  number_of_clumps               1000
+  spacing_to_other_terrain_types 2
+  land_percent                   100
+}
+   create_terrain SNOW
+{
+  base_terrain                   GRASS
+  number_of_clumps               1000
+  land_percent                   100
+terrain_mask 2
+}
+   create_terrain SNOW
+{
+  base_terrain                   GRASS
+  number_of_clumps               1000
+  land_percent                   100
+terrain_mask 2
+}
+   create_terrain GRASS
+{
+  base_terrain                   ROAD
+  number_of_clumps               1000
+  land_percent                   100
+}
+   create_terrain GRASS
+{
+  base_terrain                   ROAD
+  number_of_clumps               1000
+  land_percent                   100
+}
+
+   create_terrain DIRT3
+{
+  base_terrain                   SNOW
+  number_of_clumps               24
+  spacing_to_other_terrain_types 0
+  land_percent                   rnd(2,6)
+  set_scale_by_size
+terrain_mask 1
+}
+
+   create_terrain GRASS3
+{
+  base_terrain                   SNOW
+  number_of_clumps               24
+  spacing_to_other_terrain_types 0
+  land_percent                   rnd(2,6)
+  set_scale_by_size
+terrain_mask 1
+}
+
+color_correction	CC_WINTER
+
+
+<OBJECTS_GENERATION>
+
+#define GNR_NORMALTC
+#define GNR_STARTVILLS
+#define GNR_CLASSICSCOUT
+
+
+#define GNR_GIVERELICS
+
+#define GNR_RELICMODERN_MEDIUM
+
+#define GNR_REGICIDECLASSIC
+
+#define GNR_STARTINGGOLD
+#define GNR_STARTINGSTONE
+
+#define GNR_STARTGOLD744CL
+#define GNR_STARTSTONE54CL
+
+#define GNR_STARTGS_3WBLOCK
+
+#const HERDABLE_A 594
+#const HERDABLE_B 594
+#const HUNTABLE 65
+#const LURABLE_A 48
+#const LURABLE_B 48
+#const STRAGGLER 413
+#const BIRDS_A 96
+#const BIRDS_B 96
+#const PREDATOR_A 486
+#const PREDATOR_B 486
+#const FISH_A 455
+#const FISH_B 457
+#const MELKARYBA 69
+
+#define GNR_GIVEHERD_A
+#define GNR_GIVEHERD_B
+
+#define GNR_HERD4CLASSIC_A
+#define GNR_HERD22CLASSIC_B
+
+#define GNR_GIVEHUNT
+
+#define GNR_HUNT8MODERN
+
+#define GNR_RESCLOSE
+
+#define GNR_GIVELURES
+#define GNR_CLASSICLURES_THREE
+
+#define GNR_FARGORIG_GIVE
+#define GNR_FARSORIG_GIVE
+
+#define GNR_FARGORIG_TYPE4
+#define GNR_FARSORIG_TYPE1
+
+#define GNR_HOMESTRAGGLE
+#define GNR_NORMALBIRDS
+
+#include_drs GeneratingObjects.inc
+
+
+if EMPIRE_WARS
+
+create_object MILL
+{
+  set_place_for_every_player
+  number_of_objects 1
+  avoid_forest_zone 2
+  actor_area 721
+  actor_area_radius 3
+  actor_area_to_place_in 776
+  min_distance_group_placement 2
+ }
+
+create_object BLANKOBJECT
+{
+  number_of_objects                   99999
+  set_gaia_object_only
+  actor_area 723
+  actor_area_radius 1
+  temp_min_distance_group_placement  1
+  terrain_to_place_on WATER
+}
+
+create_object BLANKOBJECT
+{
+  number_of_objects                   99999
+  set_gaia_object_only
+  actor_area 723
+  actor_area_radius 1
+  temp_min_distance_group_placement  1
+  terrain_to_place_on MED_WATER
+}
+
+create_object UNDERTCVILL
+{
+  set_place_for_every_player
+  number_of_objects 1
+  actor_area_to_place_in 721
+  force_placement
+  actor_area 722
+  actor_area_radius 0
+  avoid_actor_area 722
+  avoid_actor_area 723
+  avoid_forest_zone 1
+  avoid_cliff_zone 1
+ }
+
+create_object UNDERTCVILL
+{
+  set_place_for_every_player
+  number_of_objects 1
+  actor_area_to_place_in 721
+  force_placement
+  actor_area 722
+  actor_area_radius 0
+  avoid_actor_area 722
+  avoid_actor_area 723
+  avoid_forest_zone 1
+  avoid_cliff_zone 1
+ }
+
+create_object UNDERTCVILL
+{
+  set_place_for_every_player
+  number_of_objects 1
+  actor_area_to_place_in 721
+  force_placement
+  actor_area 722
+  actor_area_radius 0
+  avoid_actor_area 722
+  avoid_actor_area 723
+  avoid_forest_zone 1
+  avoid_cliff_zone 1
+ }
+
+create_object UNDERTCVILL
+{
+  set_place_for_every_player
+  number_of_objects 1
+  actor_area_to_place_in 721
+  force_placement
+  actor_area 722
+  actor_area_radius 0
+  avoid_actor_area 722
+  avoid_actor_area 723
+  avoid_forest_zone 1
+  avoid_cliff_zone 1
+ }
+
+endif
+
+if BATTLE_ROYALE
+elseif DEATH_MATCH
+elseif INFINITE_RESOURCES
+else
+create_object WOLF
+{
+  number_of_groups          1
+  set_loose_grouping
+  number_of_objects 		2
+  set_gaia_object_only
+  set_place_for_every_player
+  min_distance_to_players    37
+  max_distance_to_players    42
+  actor_area 1428
+  actor_area_radius 20
+} 
+endif
+
+if BATTLE_ROYALE
+elseif DEATH_MATCH
+elseif INFINITE_RESOURCES
+else
+create_object DLC_BEAR
+{
+  number_of_groups          999
+  set_loose_grouping
+  number_of_objects 	1
+  set_gaia_object_only
+  temp_min_distance_group_placement 50
+  min_distance_to_players    40
+  avoid_actor_area 1428
+} 
+endif
+
+if BATTLE_ROYALE
+elseif DEATH_MATCH
+elseif INFINITE_RESOURCES
+elseif EMPIRE_WARS
+else
+create_object DEER
+{
+   number_of_objects 3
+   set_loose_grouping
+   set_gaia_object_only
+   set_place_for_every_player
+   min_distance_to_players    19
+   max_distance_to_players    25
+}
+endif
+
+if BATTLE_ROYALE
+elseif DEATH_MATCH
+elseif INFINITE_RESOURCES
+else
+
+create_object SNOWPINETREE
+{
+  number_of_objects          30
+  set_gaia_object_only
+  set_scaling_to_map_size
+  min_distance_to_players    8
+  avoid_actor_area 12
+  avoid_actor_area 14
+  avoid_actor_area 149
+  avoid_actor_area 61
+  avoid_actor_area 62
+  avoid_actor_area 63
+  avoid_actor_area 65
+  avoid_actor_area 66
+  avoid_actor_area 67
+
+  avoid_forest_zone 2
+
+}
+
+endif
+
+/* CAPTAIN FIN BOSS */
+
+if INFINITE_RESOURCES
+else
+
+create_object DORADO
+{
+  number_of_objects                   6
+  set_scaling_to_map_size
+  set_gaia_object_only
+  max_distance_to_other_zones         4
+  min_distance_group_placement  4
+}
+create_object TUNA
+{
+  number_of_objects                   150
+  set_scaling_to_map_size
+  set_gaia_object_only
+  max_distance_to_other_zones         4
+  min_distance_group_placement  8
+}
+
+create_object SHORE_FISH
+{
+  number_of_objects                   25
+  set_scaling_to_map_size
+  set_gaia_object_only
+ min_distance_group_placement  3
+}
+
+endif
+
+/* CAPTAIN FIN BOSS END */
+
+/* ****************************************************** */
+
+<ELEVATION_GENERATION>
+
+#const LAYER_D 32
+
+#define GNRELEV_HEIGHT05
+#define GNRELEV_INTENSITY_G
+#define GNRELEV_LAY_D
+
+#include_drs GeneratingElevation.inc
+
+/* ****************************************************** */
+<CLIFF_GENERATION>
+min_number_of_cliffs 5
+max_number_of_cliffs 10
+min_length_of_cliff  3
+max_length_of_cliff  7
+cliff_type           CT_SNOW

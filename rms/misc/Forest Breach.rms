@@ -1,0 +1,1132 @@
+/*
+
+	Forest Breach by Forgotten Empires
+
+	Created: 30/04/2025
+	Updated: N/A
+	
+	Version: 1.0
+
+*/
+
+#const MAPSCALE_MODIFIER 1
+#include_drs includes/scaling.inc
+
+/* ----------------------------------- Debug Settings */
+
+/* #define DEBUG_MODE */
+/* #define TERRAIN_DEBUGGING */
+/* #define EMPIRE_WARS_TESTING */
+#define COLLAPSE
+
+/* ----------------------------------- Generation Settings */
+
+#define NEARCTIC_TEMPERATE
+/* #define CENTRALISE_SPAWN */
+/* #define RESTRICTED_SPAWN */
+
+/* ----------------------------------- Nomad Settings */
+
+/* #define NOMAD_MAP */
+/* #define NOMAD_SCATTERED */
+/* #define NOMAD_UNIT */
+#define NOMAD_TREATY
+/* #define NOMAD_HERDABLE */
+
+/* ----------------------------------- Themes & Overwrites */
+
+#define OVERWRITES
+if OVERWRITES
+endif
+
+#define MAP_CONSTANTS
+if MAP_CONSTANTS
+	#const STRAGGLER_SPAWN 349 /* Oak Tree */
+	#const STRAGGLER_NEUTRAL 349 /* Oak Tree */
+
+	#const BEACH_TERRAIN 2
+	#const SEABED_TERRAIN 2
+	
+	#const SPAWN_FOREST 48
+	#const SPAWN_TERRAIN 41
+
+	#const BASE_FOREST 19
+	#const BASE_FOREST_VARIATION 19
+
+	#const BASE_TERRAIN 0
+	#const BASE_EDGE 71
+	#const BASE_BLEND_A 3
+	#const BASE_BLEND_B 9
+	#const BASE_BLEND_C 100
+	#const BASE_BLEND_D 5
+
+	#const CORNER_FOREST 10
+	#const CORNER_TERRAIN 12
+	#const CORNER_EDGE 5
+	#const CORNER_BLEND_A 100
+	#const CORNER_BLEND_B 3
+	#const CORNER_BLEND_C 5
+endif
+
+#include_drs includes/themes.inc
+#include_drs includes/constants.inc
+#include_drs includes/decay.inc
+
+<PLAYER_SETUP>
+	#include_drs includes/preliminaries.inc
+	#include_drs includes/gaia_civilisation.inc
+
+	#define WATER_POND
+	#include_drs includes/water_preset.inc
+	water_definition WATER_PRESET
+
+	direct_placement
+	ai_info_map_type ARABIA 0 0
+
+	if CONFINED_SETUP
+		#const CONFINED_INCREASE 1.2
+	else
+		#const CONFINED_INCREASE 1
+	endif
+	
+<LAND_GENERATION>
+	base_terrain BASE_TERRAIN
+
+	create_land
+	{
+		terrain_type BASE_TERRAIN
+		number_of_tiles 1024
+		base_size 12
+		set_circular_base
+		land_conformity 50
+		land_position 50 50
+		land_id 420
+	}
+
+	start_random
+		percent_chance 25
+			#define ANGLE_A
+			#define HORIZONTAL_SPAWNS
+		percent_chance 25
+			#define ANGLE_B
+			#define VERTICAL_SPAWNS
+		percent_chance 25
+			#define ANGLE_C
+			#define VERTICAL_SPAWNS
+		percent_chance 25
+			#define ANGLE_D
+			#define HORIZONTAL_SPAWNS
+	end_random
+
+	if FIXED_POSITIONS
+		if 2_PLAYER_GAME
+			#define L1_T1
+			#define L2_T2
+		endif
+
+		if 3_PLAYER_GAME
+			#define UNPLAYABLE
+		endif
+
+		if 4_PLAYER_GAME
+			if 2_TEAM_GAME
+				#define L1_T1
+				#define L2_T2
+				#define L3_T1
+				#define L4_T2
+			else
+				#define UNPLAYABLE
+			endif
+		endif
+
+		if 5_PLAYER_GAME
+			#define UNPLAYABLE
+		endif
+
+		if 6_PLAYER_GAME
+			if 2_TEAM_GAME
+				#define L1_T1
+				#define L2_T2
+				#define L3_T1
+				#define L4_T2
+				#define L5_T1
+				#define L6_T2
+			else
+				#define UNPLAYABLE
+			endif
+		endif
+
+		if 7_PLAYER_GAME
+			#define UNPLAYABLE
+		endif
+
+		if 8_PLAYER_GAME
+			if 2_TEAM_GAME
+				#define L1_T1
+				#define L2_T2
+				#define L3_T1
+				#define L4_T2
+				#define L5_T1
+				#define L6_T2
+				#define L7_T1
+				#define L8_T2
+			else
+				#define UNPLAYABLE
+			endif
+		endif
+	else
+		if 2_PLAYER_GAME
+			#define L1_T2
+			#define L2_T1
+		endif
+
+		if 3_PLAYER_GAME
+			#define UNPLAYABLE
+		endif
+
+		if 4_PLAYER_GAME
+			if 2_TEAM_GAME
+				#define L1_T2
+				#define L2_T1
+				#define L3_T2
+				#define L4_T1
+			else
+				#define UNPLAYABLE
+			endif
+		endif
+
+		if 5_PLAYER_GAME
+			#define UNPLAYABLE
+		endif
+
+		if 6_PLAYER_GAME
+			if 2_TEAM_GAME
+				#define L1_T2
+				#define L2_T1
+				#define L3_T2
+				#define L4_T1
+				#define L5_T2
+				#define L6_T1
+			else
+				#define UNPLAYABLE
+			endif
+		endif
+
+		if 7_PLAYER_GAME
+			#define UNPLAYABLE
+		endif
+
+		if 8_PLAYER_GAME
+			if 2_TEAM_GAME
+				#define L1_T2
+				#define L2_T1
+				#define L3_T2
+				#define L4_T1
+				#define L5_T2
+				#define L6_T1
+				#define L7_T2
+				#define L8_T1
+			else
+				#define UNPLAYABLE
+			endif
+		endif
+	endif
+
+	if 2_PLAYER_GAME
+		#define GENERATE_LAND_2
+
+		start_random
+			percent_chance 25
+				#define ROTATE_A
+			percent_chance 25
+				#define ROTATE_B
+			percent_chance 25
+				#define ROTATE_C
+			percent_chance 25
+				#define ROTATE_D
+		end_random
+	elseif 3_PLAYER_GAME
+		#define GENERATE_LAND_2
+		#define GENERATE_LAND_3
+
+		start_random
+			percent_chance 25
+				#define ROTATE_A
+			percent_chance 25
+				#define ROTATE_B
+			percent_chance 25
+				#define ROTATE_C
+			percent_chance 25
+				#define ROTATE_D
+		end_random
+	elseif 4_PLAYER_GAME
+		#define GENERATE_LAND_2
+		#define GENERATE_LAND_3
+		#define GENERATE_LAND_4
+
+		start_random
+			percent_chance 25
+				#define ROTATE_A
+			percent_chance 25
+				#define ROTATE_B
+			percent_chance 25
+				#define ROTATE_C
+			percent_chance 25
+				#define ROTATE_D
+		end_random
+	elseif 5_PLAYER_GAME
+		#define GENERATE_LAND_2
+		#define GENERATE_LAND_3
+		#define GENERATE_LAND_4
+		#define GENERATE_LAND_5
+
+		start_random
+			percent_chance 33
+				#define ROTATE_A
+			percent_chance 34
+				#define ROTATE_B
+			percent_chance 33
+				#define ROTATE_C
+		end_random
+	elseif 6_PLAYER_GAME
+		#define GENERATE_LAND_2
+		#define GENERATE_LAND_3
+		#define GENERATE_LAND_4
+		#define GENERATE_LAND_5
+		#define GENERATE_LAND_6
+
+		start_random
+			percent_chance 33
+				#define ROTATE_A
+			percent_chance 34
+				#define ROTATE_B
+			percent_chance 33
+				#define ROTATE_C
+		end_random
+	elseif 7_PLAYER_GAME
+		#define GENERATE_LAND_2
+		#define GENERATE_LAND_3
+		#define GENERATE_LAND_4
+		#define GENERATE_LAND_5
+		#define GENERATE_LAND_6
+		#define GENERATE_LAND_7
+
+		start_random
+			percent_chance 50
+				#define ROTATE_A
+			percent_chance 50
+				#define ROTATE_B
+		end_random
+	elseif 8_PLAYER_GAME
+		#define GENERATE_LAND_2
+		#define GENERATE_LAND_3
+		#define GENERATE_LAND_4
+		#define GENERATE_LAND_5
+		#define GENERATE_LAND_6
+		#define GENERATE_LAND_7
+		#define GENERATE_LAND_8
+
+		start_random
+			percent_chance 50
+				#define ROTATE_A
+			percent_chance 50
+				#define ROTATE_B
+		end_random
+	endif
+
+	create_land
+	{
+		terrain_type BASE_TERRAIN
+		number_of_tiles 0
+		base_size 0
+
+		if ANGLE_A
+			land_position 40 40
+		elseif ANGLE_B
+			land_position 40 60
+		elseif ANGLE_C
+			land_position 60 40
+		elseif ANGLE_D
+			land_position 60 60
+		endif
+
+		if FIXED_POSITIONS
+			if 0_TEAM_GAME
+				assign_to AT_TEAM -10 0 0
+			else
+				if L1_T1
+					assign_to AT_TEAM 1 0 0
+				elseif L1_T2
+					assign_to AT_TEAM 2 0 0
+				elseif L1_T3
+					assign_to AT_TEAM 3 0 0
+				elseif L1_T4
+					assign_to AT_TEAM 4 0 0
+				elseif L1_HERMIT
+					assign_to AT_TEAM 0 0 0
+				endif
+			endif
+		else
+			assign_to AT_TEAM -10 0 0
+		endif
+	}
+
+	if GENERATE_LAND_2
+		create_land
+		{
+			terrain_type BASE_TERRAIN
+			number_of_tiles 0
+			base_size 0
+
+			if ANGLE_A
+				land_position 60 60
+			elseif ANGLE_B
+				land_position 60 40
+			elseif ANGLE_C
+				land_position 40 60
+			elseif ANGLE_D
+				land_position 40 40
+			endif
+
+			if FIXED_POSITIONS
+				if 0_TEAM_GAME
+					assign_to AT_TEAM -10 0 0
+				else
+					if L2_T1
+						assign_to AT_TEAM 1 0 0
+					elseif L2_T2
+						assign_to AT_TEAM 2 0 0
+					elseif L2_T3
+						assign_to AT_TEAM 3 0 0
+					elseif L2_T4
+						assign_to AT_TEAM 4 0 0
+					elseif L2_HERMIT
+						assign_to AT_TEAM 0 0 0
+					endif
+				endif
+			else
+				assign_to AT_TEAM -10 0 0
+			endif
+		}
+	endif
+
+	if GENERATE_LAND_3
+		create_land
+		{
+			terrain_type BASE_TERRAIN
+			number_of_tiles 0
+			base_size 0
+
+			if ANGLE_A
+				land_position 40 60
+			elseif ANGLE_B
+				land_position 40 40
+			elseif ANGLE_C
+				land_position 60 60
+			elseif ANGLE_D
+				land_position 60 40
+			endif
+
+			if FIXED_POSITIONS
+				if 0_TEAM_GAME
+					assign_to AT_TEAM -10 0 0
+				else
+					if L3_T1
+						assign_to AT_TEAM 1 0 0
+					elseif L3_T2
+						assign_to AT_TEAM 2 0 0
+					elseif L3_T3
+						assign_to AT_TEAM 3 0 0
+					elseif L3_T4
+						assign_to AT_TEAM 4 0 0
+					elseif L3_HERMIT
+						assign_to AT_TEAM 0 0 0
+					endif
+				endif
+			else
+				assign_to AT_TEAM -10 0 0
+			endif
+		}
+	endif
+
+	if GENERATE_LAND_4
+		create_land
+		{
+			terrain_type BASE_TERRAIN
+			number_of_tiles 0
+			base_size 0
+
+			if ANGLE_A
+				land_position 60 40
+			elseif ANGLE_B
+				land_position 60 60
+			elseif ANGLE_C
+				land_position 40 40
+			elseif ANGLE_D
+				land_position 40 60
+			endif
+
+			if FIXED_POSITIONS
+				if 0_TEAM_GAME
+					assign_to AT_TEAM -10 0 0
+				else
+					if L4_T1
+						assign_to AT_TEAM 1 0 0
+					elseif L4_T2
+						assign_to AT_TEAM 2 0 0
+					elseif L4_T3
+						assign_to AT_TEAM 3 0 0
+					elseif L4_T4
+						assign_to AT_TEAM 4 0 0
+					elseif L4_HERMIT
+						assign_to AT_TEAM 0 0 0
+					endif
+				endif
+			else
+				assign_to AT_TEAM -10 0 0
+			endif
+		}
+	endif
+
+	if GENERATE_LAND_5
+		create_land
+		{
+			terrain_type CORNER_FOREST
+			number_of_tiles 0
+			base_size 0
+
+			if ANGLE_A
+				land_position 15 15
+			elseif ANGLE_B
+				land_position 15 85
+			elseif ANGLE_C
+				land_position 85 15
+			elseif ANGLE_D
+				land_position 85 85
+			endif
+
+			if FIXED_POSITIONS
+				if 0_TEAM_GAME
+					assign_to AT_TEAM -10 0 0
+				else
+					if L5_T1
+						assign_to AT_TEAM 1 0 0
+					elseif L5_T2
+						assign_to AT_TEAM 2 0 0
+					elseif L5_T3
+						assign_to AT_TEAM 3 0 0
+					elseif L5_T4
+						assign_to AT_TEAM 4 0 0
+					elseif L5_HERMIT
+						assign_to AT_TEAM 0 0 0
+					endif
+				endif
+			else
+				assign_to AT_TEAM -10 0 0
+			endif
+		}
+	endif
+
+	if GENERATE_LAND_6
+		create_land
+		{
+			terrain_type CORNER_FOREST
+			number_of_tiles 0
+			base_size 0
+
+			if ANGLE_A
+				land_position 85 85
+			elseif ANGLE_B
+				land_position 85 15
+			elseif ANGLE_C
+				land_position 15 85
+			elseif ANGLE_D
+				land_position 15 15
+			endif
+
+			if FIXED_POSITIONS
+				if 0_TEAM_GAME
+					assign_to AT_TEAM -10 0 0
+				else
+					if L6_T1
+						assign_to AT_TEAM 1 0 0
+					elseif L6_T2
+						assign_to AT_TEAM 2 0 0
+					elseif L6_T3
+						assign_to AT_TEAM 3 0 0
+					elseif L6_T4
+						assign_to AT_TEAM 4 0 0
+					elseif L6_HERMIT
+						assign_to AT_TEAM 0 0 0
+					endif
+				endif
+			else
+				assign_to AT_TEAM -10 0 0
+			endif
+		}
+	endif
+
+	if GENERATE_LAND_7
+		create_land
+		{
+			terrain_type CORNER_FOREST
+			number_of_tiles 0
+			base_size 0
+
+			if ANGLE_A
+				land_position 15 85
+			elseif ANGLE_B
+				land_position 15 15
+			elseif ANGLE_C
+				land_position 85 85
+			elseif ANGLE_D
+				land_position 85 15
+			endif
+
+			if FIXED_POSITIONS
+				if 0_TEAM_GAME
+					assign_to AT_TEAM -10 0 0
+				else
+					if L7_T1
+						assign_to AT_TEAM 1 0 0
+					elseif L7_T2
+						assign_to AT_TEAM 2 0 0
+					elseif L7_T3
+						assign_to AT_TEAM 3 0 0
+					elseif L7_T4
+						assign_to AT_TEAM 4 0 0
+					elseif L7_HERMIT
+						assign_to AT_TEAM 0 0 0
+					endif
+				endif
+			else
+				assign_to AT_TEAM -10 0 0
+			endif
+		}
+	endif
+
+	if GENERATE_LAND_8
+		create_land
+		{
+			terrain_type CORNER_FOREST
+			number_of_tiles 0
+			base_size 0
+
+			if ANGLE_A
+				land_position 85 15
+			elseif ANGLE_B
+				land_position 85 85
+			elseif ANGLE_C
+				land_position 15 15
+			elseif ANGLE_D
+				land_position 15 85
+			endif
+
+			if FIXED_POSITIONS
+				if 0_TEAM_GAME
+					assign_to AT_TEAM -10 0 0
+				else
+					if L8_T1
+						assign_to AT_TEAM 1 0 0
+					elseif L8_T2
+						assign_to AT_TEAM 2 0 0
+					elseif L8_T3
+						assign_to AT_TEAM 3 0 0
+					elseif L8_T4
+						assign_to AT_TEAM 4 0 0
+					elseif L8_HERMIT
+						assign_to AT_TEAM 0 0 0
+					endif
+				endif
+			else
+				assign_to AT_TEAM -10 0 0
+			endif
+		}
+	endif
+
+	create_land
+	{
+		terrain_type CORNER_FOREST
+		land_percent 100
+		top_border -20
+		right_border -20
+		left_border 70
+		bottom_border 70
+		land_position 90 10
+		border_fuzziness 6
+	}
+
+	create_land
+	{
+		terrain_type CORNER_FOREST
+		land_percent 100
+		top_border -20
+		right_border 70
+		left_border -20
+		bottom_border 70
+		land_position 10 10
+		border_fuzziness 6
+	}
+
+	create_land
+	{
+		terrain_type CORNER_FOREST
+		land_percent 100
+		top_border 70
+		right_border -20
+		left_border 70
+		bottom_border -20
+		land_position 90 90
+		border_fuzziness 6
+	}
+
+	create_land
+	{
+		terrain_type CORNER_FOREST
+		land_percent 100
+		top_border 70
+		right_border 70
+		left_border -20
+		bottom_border -20
+		land_position 10 90
+		border_fuzziness 6
+	}
+
+<ELEVATION_GENERATION>
+	create_elevation 5
+	{
+		enable_balanced_elevation
+		base_terrain BASE_TERRAIN
+
+		number_of_tiles (512 * MAPSCALE_AREA)
+		number_of_clumps (32 * MAPSCALE_AREA)
+	}
+
+<CLIFF_GENERATION>
+	#include_drs includes/cliffs.inc
+	cliff_type CLIFF_TYPE
+
+<TERRAIN_GENERATION>
+	#include_drs includes/colour.inc
+	color_correction COLOUR_MOOD
+
+	create_terrain CORNER_TERRAIN
+	{
+		base_terrain CORNER_FOREST
+		land_percent 100
+		number_of_clumps 512
+		set_scale_by_groups
+		spacing_to_other_terrain_types 4
+	}
+
+	create_terrain PLACEHOLDER_TERRAIN_A
+	{
+		base_terrain CORNER_TERRAIN
+		land_percent 100
+		number_of_clumps 512
+		set_scale_by_groups
+		spacing_to_other_terrain_types 2
+	}
+
+	create_terrain CORNER_EDGE
+	{
+		base_terrain CORNER_TERRAIN
+		number_of_tiles (MAPSCALE_SIDE * 256)
+		number_of_clumps (MAPSCALE_SIDE * 128)
+		terrain_mask 2
+	}
+
+	create_terrain CORNER_TERRAIN
+	{
+		base_terrain PLACEHOLDER_TERRAIN_A
+		land_percent 100
+		number_of_clumps 512
+		set_scale_by_groups
+	}
+
+	create_terrain PLACEHOLDER_TERRAIN_A
+	{
+		base_terrain CORNER_TERRAIN
+		land_percent 100
+		number_of_clumps 512
+		set_scale_by_groups
+		spacing_to_other_terrain_types 1
+	}
+
+	create_terrain CORNER_EDGE
+	{
+		base_terrain CORNER_TERRAIN
+		number_of_tiles (MAPSCALE_SIDE * 64)
+		number_of_clumps (MAPSCALE_SIDE * 32)
+		terrain_mask 2
+	}
+
+	create_terrain CORNER_TERRAIN
+	{
+		base_terrain PLACEHOLDER_TERRAIN_A
+		land_percent 100
+		number_of_clumps 512
+		set_scale_by_groups
+	}
+
+	create_terrain PLACEHOLDER_TERRAIN_A
+	{
+		base_terrain CORNER_TERRAIN
+		land_percent 100
+		number_of_clumps 512
+		set_scale_by_groups
+		spacing_to_other_terrain_types 1
+	}
+
+	create_terrain CORNER_EDGE
+	{
+		base_terrain CORNER_TERRAIN
+		number_of_tiles (MAPSCALE_SIDE * 32)
+		number_of_clumps (MAPSCALE_SIDE * 16)
+		terrain_mask 2
+	}
+
+	create_terrain CORNER_TERRAIN { base_terrain PLACEHOLDER_TERRAIN_A land_percent 100 number_of_clumps 512 }
+	create_terrain CORNER_TERRAIN { base_terrain PLACEHOLDER_TERRAIN_A land_percent 100 number_of_clumps 512 }
+	create_terrain CORNER_TERRAIN { base_terrain PLACEHOLDER_TERRAIN_A land_percent 100 number_of_clumps 512 }
+	create_terrain CORNER_TERRAIN { base_terrain PLACEHOLDER_TERRAIN_A land_percent 100 number_of_clumps 512 }
+	create_terrain CORNER_TERRAIN { base_terrain PLACEHOLDER_TERRAIN_A land_percent 100 number_of_clumps 512 }
+	create_terrain CORNER_TERRAIN { base_terrain PLACEHOLDER_TERRAIN_A land_percent 100 number_of_clumps 512 }
+	create_terrain CORNER_TERRAIN { base_terrain PLACEHOLDER_TERRAIN_A land_percent 100 number_of_clumps 512 }
+	create_terrain CORNER_TERRAIN { base_terrain PLACEHOLDER_TERRAIN_A land_percent 100 number_of_clumps 512 }
+	create_terrain CORNER_TERRAIN { base_terrain PLACEHOLDER_TERRAIN_A land_percent 100 number_of_clumps 512 }
+	create_terrain CORNER_TERRAIN { base_terrain PLACEHOLDER_TERRAIN_A land_percent 100 number_of_clumps 512 }
+	create_terrain CORNER_TERRAIN { base_terrain PLACEHOLDER_TERRAIN_A land_percent 100 number_of_clumps 512 }
+	create_terrain CORNER_TERRAIN { base_terrain PLACEHOLDER_TERRAIN_A land_percent 100 number_of_clumps 512 }
+	create_terrain CORNER_TERRAIN { base_terrain PLACEHOLDER_TERRAIN_A land_percent 100 number_of_clumps 512 }
+	create_terrain CORNER_TERRAIN { base_terrain PLACEHOLDER_TERRAIN_A land_percent 100 number_of_clumps 512 }
+	create_terrain CORNER_TERRAIN { base_terrain PLACEHOLDER_TERRAIN_A land_percent 100 number_of_clumps 512 }
+	create_terrain CORNER_TERRAIN { base_terrain PLACEHOLDER_TERRAIN_A land_percent 100 number_of_clumps 512 }
+	create_terrain CORNER_TERRAIN { base_terrain PLACEHOLDER_TERRAIN_A land_percent 100 number_of_clumps 512 }
+	create_terrain CORNER_TERRAIN { base_terrain PLACEHOLDER_TERRAIN_A land_percent 100 number_of_clumps 512 }
+	create_terrain CORNER_TERRAIN { base_terrain PLACEHOLDER_TERRAIN_A land_percent 100 number_of_clumps 512 }
+	create_terrain CORNER_TERRAIN { base_terrain PLACEHOLDER_TERRAIN_A land_percent 100 number_of_clumps 512 }
+	create_terrain CORNER_TERRAIN { base_terrain PLACEHOLDER_TERRAIN_A land_percent 100 number_of_clumps 512 }
+	create_terrain CORNER_TERRAIN { base_terrain PLACEHOLDER_TERRAIN_A land_percent 100 number_of_clumps 512 }
+	create_terrain CORNER_TERRAIN { base_terrain PLACEHOLDER_TERRAIN_A land_percent 100 number_of_clumps 512 }
+	create_terrain CORNER_TERRAIN { base_terrain PLACEHOLDER_TERRAIN_A land_percent 100 number_of_clumps 512 }
+
+	create_terrain BASE_TERRAIN
+	{
+		base_terrain BASE_FOREST
+		land_percent 100
+		number_of_clumps 512
+		set_scale_by_groups
+		spacing_to_other_terrain_types 4
+	}
+
+	create_terrain PLACEHOLDER_TERRAIN_A
+	{
+		base_terrain BASE_TERRAIN
+		land_percent 100
+		number_of_clumps 512
+		set_scale_by_groups
+		spacing_to_other_terrain_types 2
+	}
+
+	create_terrain BASE_EDGE
+	{
+		base_terrain BASE_TERRAIN
+		number_of_tiles (MAPSCALE_SIDE * 256)
+		number_of_clumps (MAPSCALE_SIDE * 128)
+		terrain_mask 2
+	}
+
+	create_terrain BASE_TERRAIN
+	{
+		base_terrain PLACEHOLDER_TERRAIN_A
+		land_percent 100
+		number_of_clumps 512
+		set_scale_by_groups
+	}
+
+	create_terrain PLACEHOLDER_TERRAIN_A
+	{
+		base_terrain BASE_TERRAIN
+		land_percent 100
+		number_of_clumps 512
+		set_scale_by_groups
+		spacing_to_other_terrain_types 1
+	}
+
+	create_terrain BASE_EDGE
+	{
+		base_terrain BASE_TERRAIN
+		number_of_tiles (MAPSCALE_SIDE * 128)
+		number_of_clumps (MAPSCALE_SIDE * 64)
+		terrain_mask 2
+	}
+
+	create_terrain BASE_TERRAIN
+	{
+		base_terrain PLACEHOLDER_TERRAIN_A
+		land_percent 100
+		number_of_clumps 512
+		set_scale_by_groups
+	}
+
+	create_terrain PLACEHOLDER_TERRAIN_A
+	{
+		base_terrain BASE_TERRAIN
+		land_percent 100
+		number_of_clumps 512
+		set_scale_by_groups
+		spacing_to_other_terrain_types 1
+	}
+
+	create_terrain BASE_EDGE
+	{
+		base_terrain BASE_TERRAIN
+		number_of_tiles (MAPSCALE_SIDE * 64)
+		number_of_clumps (MAPSCALE_SIDE * 32)
+		terrain_mask 2
+	}
+
+	create_terrain BASE_TERRAIN { base_terrain PLACEHOLDER_TERRAIN_A land_percent 100 number_of_clumps 512 }
+	create_terrain BASE_TERRAIN { base_terrain PLACEHOLDER_TERRAIN_A land_percent 100 number_of_clumps 512 }
+	create_terrain BASE_TERRAIN { base_terrain PLACEHOLDER_TERRAIN_A land_percent 100 number_of_clumps 512 }
+	create_terrain BASE_TERRAIN { base_terrain PLACEHOLDER_TERRAIN_A land_percent 100 number_of_clumps 512 }
+	create_terrain BASE_TERRAIN { base_terrain PLACEHOLDER_TERRAIN_A land_percent 100 number_of_clumps 512 }
+	create_terrain BASE_TERRAIN { base_terrain PLACEHOLDER_TERRAIN_A land_percent 100 number_of_clumps 512 }
+	create_terrain BASE_TERRAIN { base_terrain PLACEHOLDER_TERRAIN_A land_percent 100 number_of_clumps 512 }
+	create_terrain BASE_TERRAIN { base_terrain PLACEHOLDER_TERRAIN_A land_percent 100 number_of_clumps 512 }
+	create_terrain BASE_TERRAIN { base_terrain PLACEHOLDER_TERRAIN_A land_percent 100 number_of_clumps 512 }
+	create_terrain BASE_TERRAIN { base_terrain PLACEHOLDER_TERRAIN_A land_percent 100 number_of_clumps 512 }
+	create_terrain BASE_TERRAIN { base_terrain PLACEHOLDER_TERRAIN_A land_percent 100 number_of_clumps 512 }
+	create_terrain BASE_TERRAIN { base_terrain PLACEHOLDER_TERRAIN_A land_percent 100 number_of_clumps 512 }
+	create_terrain BASE_TERRAIN { base_terrain PLACEHOLDER_TERRAIN_A land_percent 100 number_of_clumps 512 }
+	create_terrain BASE_TERRAIN { base_terrain PLACEHOLDER_TERRAIN_A land_percent 100 number_of_clumps 512 }
+	create_terrain BASE_TERRAIN { base_terrain PLACEHOLDER_TERRAIN_A land_percent 100 number_of_clumps 512 }
+	create_terrain BASE_TERRAIN { base_terrain PLACEHOLDER_TERRAIN_A land_percent 100 number_of_clumps 512 }
+	create_terrain BASE_TERRAIN { base_terrain PLACEHOLDER_TERRAIN_A land_percent 100 number_of_clumps 512 }
+	create_terrain BASE_TERRAIN { base_terrain PLACEHOLDER_TERRAIN_A land_percent 100 number_of_clumps 512 }
+	create_terrain BASE_TERRAIN { base_terrain PLACEHOLDER_TERRAIN_A land_percent 100 number_of_clumps 512 }
+	create_terrain BASE_TERRAIN { base_terrain PLACEHOLDER_TERRAIN_A land_percent 100 number_of_clumps 512 }
+	create_terrain BASE_TERRAIN { base_terrain PLACEHOLDER_TERRAIN_A land_percent 100 number_of_clumps 512 }
+	create_terrain BASE_TERRAIN { base_terrain PLACEHOLDER_TERRAIN_A land_percent 100 number_of_clumps 512 }
+	create_terrain BASE_TERRAIN { base_terrain PLACEHOLDER_TERRAIN_A land_percent 100 number_of_clumps 512 }
+	create_terrain BASE_TERRAIN { base_terrain PLACEHOLDER_TERRAIN_A land_percent 100 number_of_clumps 512 }
+
+	create_terrain CORNER_FOREST
+	{
+		base_terrain CORNER_TERRAIN
+		land_percent 1
+		number_of_clumps 16
+		set_scale_by_groups
+		set_avoid_player_start_areas
+		spacing_to_other_terrain_types 4
+	}
+
+	create_terrain BASE_FOREST
+	{
+		base_terrain BASE_TERRAIN
+		land_percent 8
+		number_of_clumps 18
+		set_scale_by_groups
+		set_avoid_player_start_areas
+		spacing_to_other_terrain_types 2
+	}
+
+	create_terrain BASE_BLEND_A
+	{
+		base_terrain BASE_TERRAIN
+		land_percent 8
+		number_of_clumps 16
+		set_scale_by_groups
+		terrain_mask 1
+	}
+
+	create_terrain BASE_BLEND_B
+	{
+		base_terrain BASE_TERRAIN
+		land_percent 2
+		number_of_clumps 12
+		clumping_factor -10
+		set_scale_by_groups
+		terrain_mask 1
+	}
+
+	create_terrain BASE_BLEND_C
+	{
+		base_terrain BASE_TERRAIN
+		land_percent 8
+		number_of_clumps 12
+		set_scale_by_groups
+		terrain_mask 1
+	}
+
+	create_terrain BASE_BLEND_D
+	{
+		base_terrain BASE_TERRAIN
+		land_percent 12
+		number_of_clumps 24
+		set_scale_by_groups
+		terrain_mask 1
+	}
+
+	create_terrain CORNER_BLEND_A
+	{
+		base_terrain CORNER_TERRAIN
+		land_percent 4
+		number_of_clumps 16
+		set_scale_by_groups
+		terrain_mask 1
+	}
+
+	create_terrain CORNER_BLEND_B
+	{
+		base_terrain CORNER_TERRAIN
+		land_percent 2
+		number_of_clumps 12
+		clumping_factor -10
+		set_scale_by_groups
+		terrain_mask 1
+	}
+
+	create_terrain CORNER_BLEND_C
+	{
+		base_terrain CORNER_TERRAIN
+		land_percent 8
+		number_of_clumps 32
+		set_scale_by_groups
+		terrain_mask 1
+	}
+
+<CONNECTION_GENERATION>
+	create_connect_all_players_land
+	{
+		replace_terrain WATER_SHALLOW SHALLOWS
+		replace_terrain WATER_MEDIUM SHALLOWS
+		replace_terrain WATER_DEEP SHALLOWS
+
+		terrain_cost BASE_TERRAIN 1
+		terrain_cost WATER_SHALLOW 2
+		terrain_cost WATER_MEDIUM 3
+		terrain_cost WATER_DEEP 4
+
+		terrain_size WATER_SHALLOW 1 0
+		terrain_size WATER_MEDIUM 1 0
+		terrain_size WATER_DEEP 1 0
+	}
+
+<OBJECTS_GENERATION>
+	if TERRAIN_DEBUGGING
+	else
+		#define PRELIMINARIES
+		if PRELIMINARIES
+			#const RESOURCE_SPACING_DEFAULT 10
+			#const RESOURCE_SPACING_FAR 18
+			#const RESOURCE_RESTRICTION 2
+
+			#include_drs includes/object_setup.inc
+			#include_drs includes/market_objects.inc
+		endif
+
+		#include_drs includes/town_centres.inc
+		#include_drs includes/villagers.inc
+		#include_drs includes/scouts.inc
+		#include_drs includes/walls.inc
+		
+		#include_drs includes/defend_wonder.inc
+		#include_drs includes/regicide.inc
+		#include_drs includes/capture_relic.inc
+
+		if NOMAD_START
+		else
+			#include_drs includes/stragglers.inc
+
+			#define FORAGE_BUSH_PRIMARY
+
+			#define GOLD_PRIMARY_ZONE_AVOIDANCE 1
+			#define GOLD_PRIMARY
+
+			#const GOLD_SECONDARY_DISTANCE 16
+			#define GOLD_SECONDARY
+
+			#const GOLD_TERTIARY_DISTANCE 22
+			#define GOLD_TERTIARY
+
+			#const STONE_PRIMARY_DISTANCE 14
+			#define STONE_PRIMARY
+
+			#const STONE_SECONDARY_DISTANCE 20
+			#define STONE_SECONDARY
+
+			#include_drs includes/starting_resources.inc
+
+			if DEATH_MATCH
+			elseif INFINITE_RESOURCES
+			else
+				#define HERDABLE_STARTING_COUNT_FOUR
+
+				#include_drs includes/herdable_starting.inc
+				#include_drs includes/herdable.inc
+
+				#const HUNTABLE_COUNT 3
+				#const HUNTABLE_GROUPS 1
+
+				#const HUNTABLE_SMALL_COUNT 10
+				#const HUNTABLE_SMALL_GROUPS 1
+
+				#include_drs includes/huntable.inc
+				#include_drs includes/lureable.inc
+				#include_drs includes/furbearers.inc
+			endif
+		endif
+
+		/* Neutral Resources */
+
+		if DEATH_MATCH
+		else
+			#include_drs includes/predators.inc
+			#include_drs includes/riparian.inc
+		endif
+
+		#include_drs includes/neritic.inc
+		#include_drs includes/oysters.inc
+
+		#const FRESHWATER_COUNT 0
+
+		#include_drs includes/aquatic_freshwater.inc
+
+		#const SALTWATER_COUNT 0
+
+		#include_drs includes/aquatic_saltwater.inc
+
+		if DEATH_MATCH
+		else
+			#include_drs includes/stragglers_neutral.inc
+			#include_drs includes/stragglers_coastal.inc
+			#include_drs includes/reeds.inc
+		endif
+
+		#define RELIC_TYPE_UNRESTRICTED
+
+		#include_drs includes/relics.inc
+		#include_drs includes/remote_resources.inc
+
+		#define EXTRA_STUFF
+		if EXTRA_STUFF
+			if EMPIRE_WARS_MODE
+				#define EMPIRE_WARS_FORAGERS
+
+				#include_drs includes/empire_wars.inc
+				#include_drs includes/empire_food.inc
+				#include_drs includes/empire_gold.inc
+				#include_drs includes/empire_wood.inc
+				#include_drs includes/empire_buildings.inc
+			elseif ESCALATION_MODE
+				#include_drs includes/escalation_mode.inc
+			endif
+
+			#define AESTHETICS
+			if AESTHETICS
+				#include_drs includes/birds.inc
+			endif
+		endif
+	endif

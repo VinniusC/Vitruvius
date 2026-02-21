@@ -1,0 +1,78 @@
+/*
+Battle Royale Forest Nothing
+by Zetnus
+16 DE 2020
+
+Only supports Battle Royale in DE
+
+Learn about random map scripting: https://docs.google.com/document/d/e/2PACX-1vR_I1I9u-hI2FFm-EYyjoM_-9dNJFOfTaIgr05wXNbdpv9tI18b6r18ARULy3Jqyvlq6-lc2VjX6xP4/pub
+
+
+*/
+
+
+/* =================================================================================================== */
+<PLAYER_SETUP>
+random_placement
+ai_info_map_type CUSTOM 0 1 0
+behavior_version 1
+
+/* =================================================================================================== */
+<LAND_GENERATION>
+base_terrain GRASS
+
+create_player_lands
+{
+    terrain_type GRASS
+    number_of_tiles 100
+	base_size 22
+	circle_radius 40 0
+}
+
+create_land
+{
+	terrain_type SNOW_FOREST
+	number_of_tiles 0
+	base_size 3
+	land_position 50 50
+	land_id 1
+}
+
+/* =================================================================================================== */
+<TERRAIN_GENERATION>
+create_terrain FOREST
+{
+	base_terrain GRASS
+	land_percent 100
+	number_of_clumps 9320
+	set_avoid_player_start_areas
+}
+create_terrain LEAVES
+{
+	base_terrain GRASS
+	land_percent 100
+	number_of_clumps 9320
+	spacing_to_other_terrain_types 4
+}
+create_terrain FOREST
+{
+	base_terrain GRASS
+	land_percent 100
+	number_of_clumps 9320
+}
+
+/* =================================================================================================== */
+<CONNECTION_GENERATION>
+create_connect_to_nonplayer_land {
+	replace_terrain FOREST SNOW_FOREST
+}
+
+/* =================================================================================================== */
+<OBJECTS_GENERATION>
+create_object SIEGE_ONAGER
+{
+	number_of_objects 60
+	set_place_for_every_player
+	find_closest
+}
+

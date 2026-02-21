@@ -1,0 +1,499 @@
+/* SPECIAL 11 */
+
+#include_drs random_map.def
+
+<ELEVATION_GENERATION>
+
+create_elevation        3
+{
+  base_terrain                DIRT3
+  number_of_clumps 	20
+  number_of_tiles 		1500
+  set_scale_by_groups
+  set_scale_by_size           
+}
+
+<TERRAIN_GENERATION>
+
+create_terrain DLC_JUNGLEGRASS
+{
+  base_terrain                   WATER
+  spacing_to_other_terrain_types 5
+  land_percent                   10
+  number_of_clumps               10
+set_avoid_player_start_areas
+border_fuzziness 1
+clumping_factor 100
+}
+
+create_terrain DESERT
+{
+  base_terrain                   WATER
+  spacing_to_other_terrain_types 5
+  land_percent                   10
+  number_of_clumps               10
+set_avoid_player_start_areas
+border_fuzziness 1
+clumping_factor 100
+}
+
+create_terrain DIRT2
+{
+  base_terrain                   WATER
+  spacing_to_other_terrain_types 5
+  land_percent                   10
+  number_of_clumps               10
+set_avoid_player_start_areas
+border_fuzziness 1
+clumping_factor 100
+}
+
+create_terrain DIRT3
+{
+  base_terrain                   WATER
+  spacing_to_other_terrain_types 5
+  land_percent                   4
+  number_of_clumps               4
+set_avoid_player_start_areas
+border_fuzziness 1
+clumping_factor 100
+}
+
+create_terrain DLC_JUNGLEGRASS
+{
+  base_terrain                   DESERT
+  spacing_to_other_terrain_types 0
+  land_percent                   100
+  number_of_clumps               100
+}
+
+create_terrain DLC_JUNGLEGRASS
+{
+  base_terrain                   DESERT
+  spacing_to_other_terrain_types 0
+  land_percent                   100
+  number_of_clumps               100
+}
+
+create_terrain DLC_JUNGLEGRASS
+{
+  base_terrain                   DIRT2
+  spacing_to_other_terrain_types 0
+  land_percent                   100
+  number_of_clumps               100
+}
+
+create_terrain DLC_JUNGLEGRASS
+{
+  base_terrain                   DIRT2
+  spacing_to_other_terrain_types 0
+  land_percent                   100
+  number_of_clumps               100
+}
+
+create_terrain DLC_JUNGLEGRASS
+{
+  base_terrain                   DIRT3
+  spacing_to_other_terrain_types 0
+  land_percent                   100
+  number_of_clumps               100
+}
+
+create_terrain DLC_JUNGLEGRASS
+{
+  base_terrain                   DIRT3
+  spacing_to_other_terrain_types 0
+  land_percent                   100
+  number_of_clumps               100
+}
+
+create_terrain DLC_JUNGLEGRASS
+{
+  base_terrain                   LEAVES
+  spacing_to_other_terrain_types 0
+  land_percent                   100
+  number_of_clumps               100
+}
+
+create_terrain DLC_JUNGLEGRASS
+{
+  base_terrain                   LEAVES
+  spacing_to_other_terrain_types 0
+  land_percent                   100
+  number_of_clumps               100
+}
+
+create_terrain DLC_JUNGLELEAVES
+{
+  base_terrain                   GRASS3
+  spacing_to_other_terrain_types 0
+  land_percent                   100
+  number_of_clumps               100
+}
+
+create_terrain DLC_JUNGLELEAVES
+{
+  base_terrain                   GRASS3
+  spacing_to_other_terrain_types 0
+  land_percent                   100
+  number_of_clumps               100
+}
+
+create_terrain DLC_WATER5
+{
+base_terrain WATER
+number_of_clumps 100
+spacing_to_other_terrain_types 0
+land_percent 100
+}
+
+#define AZUREMASKING
+#include_drs F_WaterMasking.inc
+
+create_terrain DLC_JUNGLEROAD 
+{
+base_terrain ROAD
+number_of_clumps 100
+land_percent 100
+}
+
+create_terrain DLC_JUNGLEROAD 
+{
+base_terrain ROAD
+number_of_clumps 100
+land_percent 100
+}
+
+
+create_terrain DLC_JUNGLEROAD 
+{
+base_terrain ROAD
+number_of_clumps 100
+land_percent 100
+}
+
+
+create_terrain DLC_JUNGLEROAD 
+{
+base_terrain ROAD
+number_of_clumps 100
+land_percent 100
+}
+
+
+create_terrain DLC_JUNGLEROAD 
+{
+base_terrain ROAD
+number_of_clumps 100
+land_percent 100
+}
+
+create_terrain DLC_RAINFOREST 
+{
+base_terrain DLC_JUNGLEGRASS
+number_of_clumps 35
+spacing_to_other_terrain_types 3
+land_percent 4
+}
+
+create_terrain DLC_RAINFOREST 
+{
+base_terrain DLC_JUNGLELEAVES
+number_of_clumps 22
+spacing_to_other_terrain_types 3
+land_percent 3
+}
+
+   create_terrain DLC_JUNGLEGRASS
+{
+  base_terrain                   DLC_JUNGLELEAVES
+  number_of_clumps               1000
+  spacing_to_other_terrain_types 0
+  land_percent                   100
+}
+
+   create_terrain DLC_JUNGLEGRASS
+{
+  base_terrain                   DLC_JUNGLELEAVES
+  number_of_clumps               1000
+  spacing_to_other_terrain_types 0
+  land_percent                   100
+}
+
+   create_terrain DLC_JUNGLELEAVES
+{
+  base_terrain                   DLC_JUNGLEGRASS
+  number_of_clumps               94
+  spacing_to_other_terrain_types 0
+  land_percent                   rnd(26,38)
+  set_scale_by_size
+}
+
+   create_terrain SNOW
+{
+  base_terrain                   DLC_JUNGLELEAVES
+  number_of_clumps               1000
+  spacing_to_other_terrain_types 2
+  land_percent                   100
+}
+   create_terrain DLC_JUNGLEGRASS
+{
+  base_terrain                   DLC_JUNGLELEAVES
+  number_of_clumps               1000
+  land_percent                   100
+terrain_mask 2
+}
+   create_terrain DLC_JUNGLEGRASS
+{
+  base_terrain                   DLC_JUNGLELEAVES
+  number_of_clumps               1000
+  land_percent                   100
+terrain_mask 2
+}
+   create_terrain DLC_JUNGLELEAVES
+{
+  base_terrain                   SNOW
+  number_of_clumps               1000
+  land_percent                   100
+}
+   create_terrain DLC_JUNGLELEAVES
+{
+  base_terrain                   SNOW
+  number_of_clumps               1000
+  land_percent                   100
+}
+
+   create_terrain GRASS2
+{
+  base_terrain                   DLC_JUNGLEGRASS
+  number_of_clumps               24
+  spacing_to_other_terrain_types 0
+  land_percent                   rnd(2,6)
+  set_scale_by_size
+terrain_mask 1
+}
+
+create_terrain GRASS2
+{
+  base_terrain                   GRASS
+  land_percent                   100
+  number_of_clumps               100
+}
+
+/* rainforesting the bases */
+
+create_terrain DLC_RAINFOREST 
+{
+  base_terrain                   DIRT
+  spacing_to_other_terrain_types 0
+  land_percent                   100
+  number_of_clumps               100
+}
+
+create_terrain DLC_RAINFOREST 
+{
+  base_terrain                   DIRT
+  spacing_to_other_terrain_types 0
+  land_percent                   100
+  number_of_clumps               100
+}
+
+create_terrain DLC_RAINFOREST 
+{
+  base_terrain                   DIRT
+  spacing_to_other_terrain_types 0
+  land_percent                   100
+  number_of_clumps               100
+}
+
+create_terrain DLC_RAINFOREST 
+{
+  base_terrain                   DIRT
+  spacing_to_other_terrain_types 0
+  land_percent                   100
+  number_of_clumps               100
+}
+
+create_terrain DLC_RAINFOREST 
+{
+  base_terrain                   DIRT
+  spacing_to_other_terrain_types 0
+  land_percent                   100
+  number_of_clumps               100
+}
+
+create_terrain DLC_RAINFOREST 
+{
+  base_terrain                   DIRT
+  spacing_to_other_terrain_types 0
+  land_percent                   100
+  number_of_clumps               100
+}
+
+create_terrain DLC_RAINFOREST 
+{
+  base_terrain                   DIRT
+  spacing_to_other_terrain_types 0
+  land_percent                   100
+  number_of_clumps               100
+}
+
+create_terrain DLC_RAINFOREST 
+{
+  base_terrain                   DIRT
+  spacing_to_other_terrain_types 0
+  land_percent                   100
+  number_of_clumps               100
+}
+
+create_terrain DLC_RAINFOREST 
+{
+  base_terrain                   DIRT
+  spacing_to_other_terrain_types 0
+  land_percent                   100
+  number_of_clumps               100
+}
+
+create_terrain DLC_RAINFOREST 
+{
+  base_terrain                   DIRT
+  spacing_to_other_terrain_types 0
+  land_percent                   100
+  number_of_clumps               100
+}
+
+create_terrain DLC_RAINFOREST 
+{
+  base_terrain                   DIRT
+  spacing_to_other_terrain_types 0
+  land_percent                   100
+  number_of_clumps               100
+}
+
+create_terrain DLC_RAINFOREST 
+{
+  base_terrain                   DIRT
+  spacing_to_other_terrain_types 0
+  land_percent                   100
+  number_of_clumps               100
+}
+
+	color_correction	CC_JUNGLE
+
+<OBJECTS_GENERATION>
+
+#define GNR_NORMALTC
+#define GNR_STARTVILLS
+#define GNR_CLASSICSCOUT
+
+#define GNR_REGICIDETOWER /* only tower + king */
+
+#define GNR_GIVETRANSPORT
+
+#define GNR_EMP_W_NOSPACE
+#define GNR_EMP_CLUMPLUMBER
+#define GNR_RESSUPERCLOSE
+
+#const HERDABLE_A 1142
+#const HERDABLE_B 1142
+
+#define GNR_GIVEHERD_A
+#define GNR_GIVEHERD_B
+
+#define GNR_HERDBDIST_SCL
+
+#define GNR_HERD4CLASSIC_A
+#define GNR_HERD22CLASSIC_B
+
+#const HUNTABLE 65
+
+#define GNR_GIVEHUNT
+#define GNR_HUNT6MODERN
+#define GNR_HUNTDIST_SCL
+
+#const LURABLE_A 1139
+#const LURABLE_B 1139
+
+#const LAYER_D 60
+
+#define GNR_FARLURABLES_20PLACED
+#define GNR_FARLURE_LAYERD
+#define GNR_FARLUREOVER_90PLACED
+
+#define GNR_GIVERELICS
+#define GNR_RELICMODERN_MEDIUM
+
+#const STRAGGLER 1146
+#define GNR_HOMESTRAGGLE
+
+#const BIRDS_A 96
+#define GNR_ABIRDS_ONLY
+
+#const MELKARYBA 1141
+#const FISH_A 455
+#const FISH_B 457
+
+#define GNR_STANDARDFISH
+
+#include_drs GeneratingObjects.inc
+
+/* DISTANT GOLD */
+
+create_object GOLD
+{
+  number_of_groups 180
+  number_of_objects 4
+  group_placement_radius 2
+  set_tight_grouping
+  set_gaia_object_only
+  temp_min_distance_group_placement 35
+  max_distance_to_other_zones 1
+terrain_to_place_on DLC_JUNGLEGRASS
+}
+
+create_object GOLD
+{
+  number_of_groups 180
+  number_of_objects 4
+  group_placement_radius 2
+  set_tight_grouping
+  set_gaia_object_only
+  temp_min_distance_group_placement 35
+  max_distance_to_other_zones 1
+terrain_to_place_on DLC_JUNGLELEAVES
+}
+
+/* DISTANT STONE */
+
+create_object STONE
+{
+  number_of_groups 150
+  number_of_objects 4
+  group_placement_radius 2
+  set_tight_grouping
+  set_gaia_object_only
+  temp_min_distance_group_placement 45
+  max_distance_to_other_zones 1
+terrain_to_place_on DLC_JUNGLEGRASS
+}
+
+create_object STONE
+{
+  number_of_groups 150
+  number_of_objects 4
+  group_placement_radius 2
+  set_tight_grouping
+  set_gaia_object_only
+  temp_min_distance_group_placement 45
+  max_distance_to_other_zones 1
+terrain_to_place_on DLC_JUNGLELEAVES
+}
+
+create_object DLC_ROCKBEACH 
+{
+  number_of_objects 999
+     set_scaling_to_map_size
+     temp_min_distance_group_placement 60
+     set_gaia_object_only
+terrain_to_place_on DLC_WATER5
+}

@@ -1,0 +1,1106 @@
+/*
+
+	Team Glaciers by Ensemble Studios
+	Reimagined by Forgotten Empires
+
+	Created: 07/10/2000
+	Updated: 27/10/2024
+	
+	Version: 2.0
+
+*/
+
+#const MAPSCALE_MODIFIER 1
+#include_drs includes/scaling.inc
+
+/* ----------------------------------- Debug Settings */
+
+/* #define DEBUG_MODE */
+/* #define TERRAIN_DEBUGGING */
+/* #define EMPIRE_WARS_TESTING */
+#define COLLAPSE
+
+/* ----------------------------------- Generation Settings */
+
+start_random
+	percent_chance 50 #define NEARCTIC_TUNDRA
+	percent_chance 50 #define ANTARCTIC_TUNDRA
+end_random
+
+/* #define CENTRALISE_SPAWN */
+/* #define RESTRICTED_SPAWN */
+
+/* ----------------------------------- Nomad Settings */
+
+/* #define NOMAD_MAP */
+/* #define NOMAD_SCATTERED */
+/* #define NOMAD_UNIT */
+#define NOMAD_TREATY
+/* #define NOMAD_HERDABLE */
+
+/* ----------------------------------- Themes & Overwrites */
+
+#define OVERWRITES
+if OVERWRITES
+endif
+
+#define MAP_CONSTANTS
+if MAP_CONSTANTS
+	#const STRAGGLER_SPAWN 1250 /* Dead Tree */
+	#const STRAGGLER_NEUTRAL 1250 /* Dead Tree */
+	
+	#const SPAWN_FOREST 105
+	#const SPAWN_FOREST_VARIATION 21
+	#const SPAWN_TERRAIN 32
+	#const SPAWN_BLEND_A 100
+	#const SPAWN_BLEND_B 5
+	
+	#const BEACH_TERRAIN 2
+
+	#const BASE_FOREST 105
+	#const BASE_FOREST_VARIATION 21
+
+	#const BASE_TERRAIN 32
+	#const BASE_BLEND_A 6
+	#const BASE_BLEND_B 42
+	#const BASE_BLEND_C 3
+	#const BASE_BLEND_D 0
+
+	#const ISLAND_TERRAIN 73
+	#const ISLAND_TERRAIN_BLEND 76
+
+	#const PLACEHOLDER_GROUND 3
+
+	#const RESTRICTIVE_TERRAIN 37
+	#const RESTRICTIVE_TERRAIN_BLEND 127
+
+	#const GLACIER_TERRAIN 35
+
+	#const AESTHETIC_A 1091 /* Animal Skeleton */
+	#const AESTHETIC_B 709 /* Cactus */
+endif
+
+#include_drs includes/themes.inc
+#include_drs includes/constants.inc
+#include_drs includes/decay.inc
+
+<PLAYER_SETUP>
+	#include_drs includes/preliminaries.inc
+	#include_drs includes/gaia_civilisation.inc
+
+	#define WATER_OCEAN
+	#include_drs includes/water_preset.inc
+	water_definition WATER_PRESET
+
+	grouped_by_team
+	ai_info_map_type CRATER_LAKE 0 0
+
+	effect_amount GAIA_UPGRADE_UNIT TREE_AUTUMN_SNOW TREE_DEAD 0
+
+	if CONFINED_SETUP
+		#const CONFINED_INCREASE 1.2
+	else
+		#const CONFINED_INCREASE 1
+	endif
+
+<LAND_GENERATION>
+	base_terrain WATER_SHALLOW
+
+	if MAPSIZE_MINI
+		#define SMALL_ISLAND
+	elseif MAPSIZE_TINY
+		#define SMALL_ISLAND
+	elseif MAPSIZE_SMALL
+		#define MEDIUM_ISLAND
+	elseif MAPSIZE_MEDIUM
+		#define MEDIUM_ISLAND
+	elseif MAPSIZE_NORMAL
+		#define MEDIUM_ISLAND
+	elseif MAPSIZE_LARGE
+		#define MEDIUM_ISLAND
+	elseif MAPSIZE_HUGE
+		#define MEDIUM_ISLAND
+	elseif MAPSIZE_GIANT
+		#define MEDIUM_ISLAND
+	elseif MAPSIZE_MASSIVE
+		#define LARGE_ISLAND
+	elseif MAPSIZE_ENORMOUS
+		#define LARGE_ISLAND
+	elseif MAPSIZE_COLOSSAL
+		#define LARGE_ISLAND
+	elseif MAPSIZE_INCREDIBLE
+		#define HUGE_ISLAND
+	elseif MAPSIZE_MONSTROUS
+		#define HUGE_ISLAND
+	elseif MAPSIZE_LUDICROUS
+		#define HUGE_ISLAND
+	endif
+
+	#const BORDER_CONSTRAINT 31
+	#const RIVER_WIDTH 10
+
+	create_land
+	{
+		terrain_type ISLAND_TERRAIN
+
+		if SMALL_ISLAND
+			number_of_tiles 124
+			base_size 4
+		elseif MEDIUM_ISLAND
+			number_of_tiles 248
+			base_size 6
+		elseif LARGE_ISLAND
+			number_of_tiles 480
+			base_size 8
+		elseif HUGE_ISLAND
+			number_of_tiles 760
+			base_size 10
+		endif
+
+		set_circular_base
+		clumping_factor 15
+		top_border BORDER_CONSTRAINT
+		left_border BORDER_CONSTRAINT
+		right_border BORDER_CONSTRAINT
+		bottom_border BORDER_CONSTRAINT
+		other_zone_avoidance_distance RIVER_WIDTH
+		zone 50
+		land_position 50 50
+		land_id 500
+	}
+
+	create_land
+	{
+		terrain_type ISLAND_TERRAIN
+
+		if SMALL_ISLAND
+			number_of_tiles 124
+			base_size 4
+		elseif MEDIUM_ISLAND
+			number_of_tiles 248
+			base_size 6
+		elseif LARGE_ISLAND
+			number_of_tiles 480
+			base_size 8
+		elseif HUGE_ISLAND
+			number_of_tiles 760
+			base_size 10
+		endif
+
+		clumping_factor 15
+		top_border BORDER_CONSTRAINT
+		left_border BORDER_CONSTRAINT
+		right_border BORDER_CONSTRAINT
+		bottom_border BORDER_CONSTRAINT
+		other_zone_avoidance_distance RIVER_WIDTH
+		zone 51
+		land_id 500
+	}
+
+	if MAPSIZE_ABOVE_MINI
+		create_land
+		{	
+			terrain_type ISLAND_TERRAIN
+
+			if SMALL_ISLAND
+				number_of_tiles 124
+				base_size 4
+			elseif MEDIUM_ISLAND
+				number_of_tiles 248
+				base_size 6
+			elseif LARGE_ISLAND
+				number_of_tiles 480
+				base_size 8
+			elseif HUGE_ISLAND
+				number_of_tiles 760
+				base_size 10
+			endif
+
+			clumping_factor 15
+			top_border BORDER_CONSTRAINT
+			left_border BORDER_CONSTRAINT
+			right_border BORDER_CONSTRAINT
+			bottom_border BORDER_CONSTRAINT
+			other_zone_avoidance_distance RIVER_WIDTH
+			zone 52
+			land_id 500
+		}
+	endif
+
+	if MAPSIZE_ABOVE_SMALL
+		create_land
+		{
+			terrain_type ISLAND_TERRAIN
+
+			if SMALL_ISLAND
+				number_of_tiles 124
+				base_size 4
+			elseif MEDIUM_ISLAND
+				number_of_tiles 248
+				base_size 6
+			elseif LARGE_ISLAND
+				number_of_tiles 480
+				base_size 8
+			elseif HUGE_ISLAND
+				number_of_tiles 760
+				base_size 10
+			endif
+
+			clumping_factor 15
+			top_border BORDER_CONSTRAINT
+			left_border BORDER_CONSTRAINT
+			right_border BORDER_CONSTRAINT
+			bottom_border BORDER_CONSTRAINT
+			other_zone_avoidance_distance RIVER_WIDTH
+			zone 53
+			land_id 500
+		}
+	endif
+
+	if MAPSIZE_ABOVE_MEDIUM
+		create_land
+		{
+			terrain_type ISLAND_TERRAIN
+
+			if SMALL_ISLAND
+					number_of_tiles 124
+					base_size 4
+			elseif MEDIUM_ISLAND
+					number_of_tiles 248
+					base_size 6
+			elseif LARGE_ISLAND
+					number_of_tiles 480
+					base_size 8
+			elseif HUGE_ISLAND
+					number_of_tiles 760
+					base_size 10
+			endif
+
+			clumping_factor 15
+			top_border BORDER_CONSTRAINT
+			left_border BORDER_CONSTRAINT
+			right_border BORDER_CONSTRAINT
+			bottom_border BORDER_CONSTRAINT
+			other_zone_avoidance_distance RIVER_WIDTH
+			zone 54
+			land_id 500
+		}
+	endif
+
+	if MAPSIZE_ABOVE_NORMAL
+		create_land
+		{
+			terrain_type ISLAND_TERRAIN
+
+			if SMALL_ISLAND
+					number_of_tiles 124
+					base_size 4
+			elseif MEDIUM_ISLAND
+					number_of_tiles 248
+					base_size 6
+			elseif LARGE_ISLAND
+					number_of_tiles 480
+					base_size 8
+			elseif HUGE_ISLAND
+					number_of_tiles 760
+					base_size 10
+			endif
+
+			clumping_factor 15
+			top_border BORDER_CONSTRAINT
+			left_border BORDER_CONSTRAINT
+			right_border BORDER_CONSTRAINT
+			bottom_border BORDER_CONSTRAINT
+			other_zone_avoidance_distance RIVER_WIDTH
+			zone 55
+			land_id 500
+		}
+	endif
+
+	if MAPSIZE_ABOVE_HUGE
+		create_land
+		{
+			terrain_type ISLAND_TERRAIN
+
+			if SMALL_ISLAND
+					number_of_tiles 124
+					base_size 4
+			elseif MEDIUM_ISLAND
+					number_of_tiles 248
+					base_size 6
+			elseif LARGE_ISLAND
+					number_of_tiles 480
+					base_size 8
+			elseif HUGE_ISLAND
+					number_of_tiles 760
+					base_size 10
+			endif
+
+			clumping_factor 15
+			top_border BORDER_CONSTRAINT
+			left_border BORDER_CONSTRAINT
+			right_border BORDER_CONSTRAINT
+			bottom_border BORDER_CONSTRAINT
+			other_zone_avoidance_distance RIVER_WIDTH
+			zone 56
+			land_id 500
+		}
+	endif
+
+	if MAPSIZE_ABOVE_MASSIVE
+		create_land
+		{
+			terrain_type ISLAND_TERRAIN
+
+			if SMALL_ISLAND
+					number_of_tiles 124
+					base_size 4
+			elseif MEDIUM_ISLAND
+					number_of_tiles 248
+					base_size 6
+			elseif LARGE_ISLAND
+					number_of_tiles 480
+					base_size 8
+			elseif HUGE_ISLAND
+					number_of_tiles 760
+					base_size 10
+			endif
+
+			clumping_factor 15
+			top_border BORDER_CONSTRAINT
+			left_border BORDER_CONSTRAINT
+			right_border BORDER_CONSTRAINT
+			bottom_border BORDER_CONSTRAINT
+			other_zone_avoidance_distance RIVER_WIDTH
+			zone 57
+			land_id 500
+		}
+	endif
+
+	if MAPSIZE_ABOVE_INCREDIBLE
+		create_land
+		{
+			terrain_type ISLAND_TERRAIN
+
+			if SMALL_ISLAND
+					number_of_tiles 124
+					base_size 4
+			elseif MEDIUM_ISLAND
+					number_of_tiles 248
+					base_size 6
+			elseif LARGE_ISLAND
+					number_of_tiles 480
+					base_size 8
+			elseif HUGE_ISLAND
+					number_of_tiles 760
+					base_size 10
+			endif
+
+			clumping_factor 15
+			top_border BORDER_CONSTRAINT
+			left_border BORDER_CONSTRAINT
+			right_border BORDER_CONSTRAINT
+			bottom_border BORDER_CONSTRAINT
+			other_zone_avoidance_distance RIVER_WIDTH
+			zone 59
+			land_id 500
+		}
+	endif
+
+	if MAPSIZE_ABOVE_MONSTROUS
+		create_land
+		{
+			terrain_type ISLAND_TERRAIN
+
+			if SMALL_ISLAND
+					number_of_tiles 124
+					base_size 4
+			elseif MEDIUM_ISLAND
+					number_of_tiles 248
+					base_size 6
+			elseif LARGE_ISLAND
+					number_of_tiles 480
+					base_size 8
+			elseif HUGE_ISLAND
+					number_of_tiles 760
+					base_size 10
+			endif
+
+			clumping_factor 15
+			top_border BORDER_CONSTRAINT
+			left_border BORDER_CONSTRAINT
+			right_border BORDER_CONSTRAINT
+			bottom_border BORDER_CONSTRAINT
+			other_zone_avoidance_distance RIVER_WIDTH
+			zone 60
+			land_id 500
+		}
+
+		create_land
+		{
+			terrain_type ISLAND_TERRAIN
+
+			if SMALL_ISLAND
+					number_of_tiles 124
+					base_size 4
+			elseif MEDIUM_ISLAND
+					number_of_tiles 248
+					base_size 6
+			elseif LARGE_ISLAND
+					number_of_tiles 480
+					base_size 8
+			elseif HUGE_ISLAND
+					number_of_tiles 760
+					base_size 10
+			endif
+
+			clumping_factor 15
+			top_border BORDER_CONSTRAINT
+			left_border BORDER_CONSTRAINT
+			right_border BORDER_CONSTRAINT
+			bottom_border BORDER_CONSTRAINT
+			other_zone_avoidance_distance RIVER_WIDTH
+			zone 61
+			land_id 500
+		}
+	endif
+
+	create_player_lands
+	{
+		terrain_type PLACEHOLDER_GROUND
+		land_percent 100
+		base_size 12
+		set_circular_base
+		clumping_factor 15
+		top_border 3
+		left_border 3
+		right_border 4
+		bottom_border 4
+		border_fuzziness 1
+		base_elevation 2
+		other_zone_avoidance_distance RIVER_WIDTH
+		set_zone_by_team
+
+		if MAPSIZE_MINI
+			circle_radius 33 0
+		elseif MAPSIZE_TINY
+			circle_radius 34 1
+		elseif MAPSIZE_SMALL
+			circle_radius 34 1
+		elseif MAPSIZE_MEDIUM
+			circle_radius 35 2
+		elseif MAPSIZE_NORMAL
+			circle_radius 36 3
+		elseif MAPSIZE_LARGE
+			circle_radius 37 4
+		elseif MAPSIZE_HUGE
+			circle_radius 38 5
+		elseif MAPSIZE_GIANT
+			circle_radius 39 6
+		elseif MAPSIZE_MASSIVE
+			circle_radius 39 6
+		elseif MAPSIZE_ENORMOUS
+			circle_radius 39 6
+		elseif MAPSIZE_COLOSSAL
+			circle_radius 39 6
+		elseif MAPSIZE_INCREDIBLE
+			circle_radius 39 6
+		elseif MAPSIZE_MONSTROUS
+			circle_radius 39 6
+		elseif MAPSIZE_LUDICROUS
+			circle_radius 39 6
+		endif
+	}
+
+<ELEVATION_GENERATION>
+	create_elevation 5
+	{
+		enable_balanced_elevation
+		base_terrain PLACEHOLDER_GROUND
+
+		number_of_tiles (128 * MAPSCALE_AREA)
+		number_of_clumps (24 * MAPSCALE_AREA)
+	}
+
+	create_elevation 2
+	{
+		enable_balanced_elevation
+		base_terrain ISLAND_TERRAIN
+
+		number_of_tiles (64 * MAPSCALE_AREA)
+		number_of_clumps (32 * MAPSCALE_AREA)
+	}
+
+<CLIFF_GENERATION>
+	#define CLIFF_ENABLE
+
+	#include_drs includes/cliffs.inc
+	cliff_type CLIFF_TYPE
+
+<TERRAIN_GENERATION>
+	#include_drs includes/colour.inc
+	color_correction COLOUR_MOOD
+
+
+
+	create_terrain RESTRICTIVE_TERRAIN { base_terrain PLACEHOLDER_GROUND land_percent 100 number_of_clumps 512 }
+	create_terrain RESTRICTIVE_TERRAIN { base_terrain PLACEHOLDER_GROUND land_percent 100 number_of_clumps 512 }
+	create_terrain RESTRICTIVE_TERRAIN { base_terrain PLACEHOLDER_GROUND land_percent 100 number_of_clumps 512 }
+	create_terrain RESTRICTIVE_TERRAIN { base_terrain PLACEHOLDER_GROUND land_percent 100 number_of_clumps 512 }
+	create_terrain RESTRICTIVE_TERRAIN { base_terrain PLACEHOLDER_GROUND land_percent 100 number_of_clumps 512 }
+	create_terrain RESTRICTIVE_TERRAIN { base_terrain PLACEHOLDER_GROUND land_percent 100 number_of_clumps 512 }
+	create_terrain RESTRICTIVE_TERRAIN { base_terrain PLACEHOLDER_GROUND land_percent 100 number_of_clumps 512 }
+	create_terrain RESTRICTIVE_TERRAIN { base_terrain PLACEHOLDER_GROUND land_percent 100 number_of_clumps 512 }
+	create_terrain RESTRICTIVE_TERRAIN { base_terrain PLACEHOLDER_GROUND land_percent 100 number_of_clumps 512 }
+	create_terrain RESTRICTIVE_TERRAIN { base_terrain PLACEHOLDER_GROUND land_percent 100 number_of_clumps 512 }
+	create_terrain RESTRICTIVE_TERRAIN { base_terrain PLACEHOLDER_GROUND land_percent 100 number_of_clumps 512 }
+	create_terrain RESTRICTIVE_TERRAIN { base_terrain PLACEHOLDER_GROUND land_percent 100 number_of_clumps 512 }
+	create_terrain RESTRICTIVE_TERRAIN { base_terrain PLACEHOLDER_GROUND land_percent 100 number_of_clumps 512 }
+	create_terrain RESTRICTIVE_TERRAIN { base_terrain PLACEHOLDER_GROUND land_percent 100 number_of_clumps 512 }
+	create_terrain RESTRICTIVE_TERRAIN { base_terrain PLACEHOLDER_GROUND land_percent 100 number_of_clumps 512 }
+	create_terrain RESTRICTIVE_TERRAIN { base_terrain PLACEHOLDER_GROUND land_percent 100 number_of_clumps 512 }
+
+	create_terrain GLACIER_TERRAIN
+	{
+		base_terrain WATER_SHALLOW
+		land_percent 100
+		number_of_clumps 512
+		set_scale_by_groups
+		height_limits 0 7
+	}
+	
+	create_terrain WATER_SHALLOW
+	{
+		base_terrain GLACIER_TERRAIN
+		land_percent 100
+		number_of_clumps 512
+		set_scale_by_groups
+		spacing_to_other_terrain_types 1
+		set_flat_terrain_only
+		height_limits 0 0
+	}
+	
+	create_terrain WATER_SHALLOW
+	{
+		base_terrain GLACIER_TERRAIN
+		land_percent 100
+		number_of_clumps 512
+		set_scale_by_groups
+		spacing_to_other_terrain_types 1
+		set_flat_terrain_only
+		height_limits 0 0
+	}
+
+	create_terrain SPAWN_TERRAIN
+	{
+		base_terrain RESTRICTIVE_TERRAIN
+		land_percent 100
+		number_of_clumps 512
+		set_scale_by_groups
+	}
+
+	create_terrain SPAWN_FOREST
+	{
+		base_terrain SPAWN_TERRAIN
+		land_percent 8
+		number_of_clumps 18
+		set_scale_by_groups
+		set_avoid_player_start_areas
+		spacing_to_other_terrain_types 2
+	}
+
+	create_terrain SPAWN_FOREST_VARIATION
+	{
+		base_terrain SPAWN_FOREST
+		land_percent 2
+		number_of_clumps 128
+		set_scale_by_groups
+	}
+
+	create_terrain RESTRICTIVE_TERRAIN
+	{
+		base_terrain BASE_TERRAIN
+		land_percent 4
+		number_of_clumps 16
+		set_scale_by_groups
+		set_avoid_player_start_areas
+		spacing_to_other_terrain_types 1
+	}
+
+	create_terrain RESTRICTIVE_TERRAIN_BLEND
+	{
+		base_terrain RESTRICTIVE_TERRAIN
+		land_percent 100
+		number_of_clumps 512
+		set_scale_by_groups
+		spacing_to_other_terrain_types 1
+	}
+
+	create_terrain RESTRICTIVE_TERRAIN
+	{
+		base_terrain RESTRICTIVE_TERRAIN_BLEND
+		land_percent 100
+		number_of_clumps 512
+		set_scale_by_groups
+		terrain_mask 1
+	}
+
+	create_terrain WATER_SHALLOW
+	{
+		base_terrain PLACEHOLDER_TERRAIN_A
+		land_percent 100
+		number_of_clumps 512
+		set_scale_by_groups
+	}
+
+	create_terrain WATER_MEDIUM
+	{
+		base_terrain WATER_SHALLOW
+		land_percent 100
+		number_of_clumps 512
+		set_scale_by_groups
+		spacing_to_other_terrain_types 2
+	}
+
+	create_terrain PLACEHOLDER_TERRAIN_A
+	{
+		base_terrain WATER_MEDIUM
+		land_percent 100
+		number_of_clumps 512
+		set_scale_by_groups
+		spacing_to_other_terrain_types 1
+	}
+
+	create_terrain WATER_SHALLOW
+	{
+		base_terrain WATER_MEDIUM
+		land_percent 100
+		number_of_clumps 512
+		set_scale_by_groups
+		terrain_mask 1
+	}
+
+	create_terrain WATER_MEDIUM
+	{
+		base_terrain PLACEHOLDER_TERRAIN_A
+		land_percent 100
+		number_of_clumps 512
+		set_scale_by_groups
+	}
+
+	create_terrain PLACEHOLDER_TERRAIN_A
+	{
+		base_terrain WATER_MEDIUM
+		land_percent 100
+		number_of_clumps 512
+		set_scale_by_groups
+		spacing_to_other_terrain_types 3
+	}
+
+	create_terrain WATER_SHALLOW
+	{
+		base_terrain WATER_MEDIUM
+		land_percent 2
+		number_of_clumps 64
+		set_scale_by_groups
+		terrain_mask 1
+	}
+
+	create_terrain WATER_MEDIUM
+	{
+		base_terrain PLACEHOLDER_TERRAIN_A
+		land_percent 100
+		number_of_clumps 512
+		set_scale_by_groups
+	}
+
+	create_terrain SPAWN_BLEND_A
+	{
+		base_terrain SPAWN_TERRAIN
+		land_percent 6
+		number_of_clumps 24
+		set_scale_by_groups
+		clumping_factor 20
+		terrain_mask 2
+	}
+
+	create_terrain SPAWN_BLEND_B
+	{
+		base_terrain SPAWN_TERRAIN
+		land_percent 2
+		number_of_clumps 24
+		set_scale_by_groups
+		clumping_factor -20
+		terrain_mask 2
+	}
+
+	create_terrain ISLAND_TERRAIN_BLEND
+	{
+		base_terrain ISLAND_TERRAIN
+		land_percent 100
+		number_of_clumps 512
+		height_limits 1 1
+		terrain_mask 2
+	}
+
+	create_terrain ISLAND_TERRAIN_BLEND
+	{
+		base_terrain ISLAND_TERRAIN
+		land_percent 100
+		number_of_clumps 512
+		height_limits 1 5
+	}
+
+	create_terrain SPAWN_TERRAIN
+	{
+		base_terrain GLACIER_TERRAIN
+		land_percent 100
+		number_of_clumps 512
+		height_limits 3 5
+		terrain_mask 1
+	}
+
+	create_terrain WATER_SHALLOW { base_terrain PLACEHOLDER_TERRAIN_A land_percent 100 number_of_clumps 512 }
+	create_terrain WATER_SHALLOW { base_terrain PLACEHOLDER_TERRAIN_A land_percent 100 number_of_clumps 512 }
+	create_terrain WATER_SHALLOW { base_terrain PLACEHOLDER_TERRAIN_A land_percent 100 number_of_clumps 512 }
+	create_terrain WATER_SHALLOW { base_terrain PLACEHOLDER_TERRAIN_A land_percent 100 number_of_clumps 512 }
+	create_terrain WATER_SHALLOW { base_terrain PLACEHOLDER_TERRAIN_A land_percent 100 number_of_clumps 512 }
+	create_terrain WATER_SHALLOW { base_terrain PLACEHOLDER_TERRAIN_A land_percent 100 number_of_clumps 512 }
+	create_terrain WATER_SHALLOW { base_terrain PLACEHOLDER_TERRAIN_A land_percent 100 number_of_clumps 512 }
+	create_terrain WATER_SHALLOW { base_terrain PLACEHOLDER_TERRAIN_A land_percent 100 number_of_clumps 512 }
+	create_terrain WATER_SHALLOW { base_terrain PLACEHOLDER_TERRAIN_A land_percent 100 number_of_clumps 512 }
+	create_terrain WATER_SHALLOW { base_terrain PLACEHOLDER_TERRAIN_A land_percent 100 number_of_clumps 512 }
+	create_terrain WATER_SHALLOW { base_terrain PLACEHOLDER_TERRAIN_A land_percent 100 number_of_clumps 512 }
+	create_terrain WATER_SHALLOW { base_terrain PLACEHOLDER_TERRAIN_A land_percent 100 number_of_clumps 512 }
+	create_terrain WATER_SHALLOW { base_terrain PLACEHOLDER_TERRAIN_A land_percent 100 number_of_clumps 512 }
+	create_terrain WATER_SHALLOW { base_terrain PLACEHOLDER_TERRAIN_A land_percent 100 number_of_clumps 512 }
+	create_terrain WATER_SHALLOW { base_terrain PLACEHOLDER_TERRAIN_A land_percent 100 number_of_clumps 512 }
+	create_terrain WATER_SHALLOW { base_terrain PLACEHOLDER_TERRAIN_A land_percent 100 number_of_clumps 512 }
+
+/*
+<CONNECTION_GENERATION>
+	create_connect_all_players_land
+	{
+		replace_terrain WATER_SHALLOW BEACH_ICE
+		replace_terrain WATER_MEDIUM BEACH_ICE
+		replace_terrain WATER_DEEP BEACH_ICE
+
+		terrain_cost BASE_TERRAIN 1
+		terrain_cost WATER_SHALLOW 8
+		terrain_cost WATER_MEDIUM 3
+		terrain_cost WATER_DEEP 4
+
+		terrain_size WATER_SHALLOW 2 0
+		terrain_size WATER_MEDIUM 2 0
+		terrain_size WATER_DEEP 2 0
+	}
+ */
+<OBJECTS_GENERATION>
+	if TERRAIN_DEBUGGING
+	else
+		#define PRELIMINARIES
+		if PRELIMINARIES
+			#const RESOURCE_SPACING_DEFAULT 10
+			#const RESOURCE_SPACING_FAR 16
+			#const RESOURCE_RESTRICTION 2
+
+			#include_drs includes/object_setup.inc
+			#include_drs includes/market_objects.inc
+		endif
+
+		#include_drs includes/town_centres.inc
+		#include_drs includes/villagers.inc
+		#include_drs includes/scouts.inc
+		#include_drs includes/walls.inc
+
+		#include_drs includes/defend_wonder.inc
+		#include_drs includes/regicide.inc
+		#include_drs includes/capture_relic.inc
+
+		if NOMAD_START
+		else
+			#include_drs includes/stragglers.inc
+
+			#const FORAGE_BUSH_PRIMARY_DISTANCE 10
+			#define FORAGE_BUSH_PRIMARY
+
+			#const GOLD_PRIMARY_DISTANCE 10
+			#define GOLD_PRIMARY
+
+			#const GOLD_SECONDARY_DISTANCE 14
+			#define GOLD_SECONDARY
+
+			#const GOLD_TERTIARY_DISTANCE 18
+			#define GOLD_TERTIARY
+
+			#const STONE_PRIMARY_DISTANCE 12
+			#define STONE_PRIMARY
+
+			#const STONE_SECONDARY_DISTANCE 16
+			#define STONE_SECONDARY
+
+			#include_drs includes/starting_resources.inc
+
+			if DEATH_MATCH
+			elseif INFINITE_RESOURCES
+			else
+				#define HERDABLE_STARTING_COUNT_FOUR
+
+				#include_drs includes/herdable_starting.inc
+				#include_drs includes/herdable.inc
+
+				#const HUNTABLE_GROUPS 1
+
+				#include_drs includes/huntable.inc
+				#include_drs includes/lureable.inc
+				#include_drs includes/furbearers.inc
+			endif
+		endif
+
+		if INFINITE_RESOURCES
+		else
+			create_object GOLD
+			{
+				place_on_specific_land_id 500
+
+				if SMALL_ISLAND
+					number_of_objects 5
+					number_of_groups 1
+				elseif MEDIUM_ISLAND
+					number_of_objects 3
+					number_of_groups 2
+				elseif LARGE_ISLAND
+					number_of_objects 3
+					number_of_groups 3
+				elseif HUGE_ISLAND
+					number_of_objects 4
+					number_of_groups 4
+				endif
+
+				set_tight_grouping
+				group_placement_radius 1
+				temp_min_distance_group_placement 4
+
+				min_distance_group_placement 1
+				max_distance_to_other_zones 2
+				avoid_forest_zone 1
+				avoid_cliff_zone 1
+				min_distance_to_map_edge 2
+
+				actor_area 1010
+				actor_area_radius 3
+
+				avoid_actor_area 1010 /* Neutral Gold */
+				avoid_actor_area 1020 /* Neutral Stone */
+			}
+
+			create_object STONE
+			{
+				place_on_specific_land_id 500
+
+				if SMALL_ISLAND
+					number_of_objects 3
+					number_of_groups 1
+				elseif MEDIUM_ISLAND
+					number_of_objects 2
+					number_of_groups 2
+				elseif LARGE_ISLAND
+					number_of_objects 2
+					number_of_groups 3
+				elseif HUGE_ISLAND
+					number_of_objects 3
+					number_of_groups 4
+				endif
+
+				set_tight_grouping
+				group_placement_radius 1
+				temp_min_distance_group_placement 4
+
+				min_distance_group_placement 1
+				max_distance_to_other_zones 2
+				avoid_forest_zone 1
+				avoid_cliff_zone 1
+				min_distance_to_map_edge 2
+
+				actor_area 1020
+				actor_area_radius 2
+
+				avoid_actor_area 1010 /* Neutral Gold */
+				avoid_actor_area 1020 /* Neutral Stone */
+			}
+		endif
+
+		if DEATH_MATCH
+		else
+			create_object PREDATOR_A
+			{
+				place_on_specific_land_id 500
+
+				if SMALL_ISLAND
+					number_of_objects 3
+				elseif MEDIUM_ISLAND
+					number_of_objects 5
+				elseif LARGE_ISLAND
+					number_of_objects 8
+				elseif HUGE_ISLAND
+					number_of_objects 14
+				endif
+				
+				temp_min_distance_group_placement 2
+
+				max_distance_to_other_zones 2
+				avoid_forest_zone 1
+				avoid_cliff_zone 1
+				min_distance_to_map_edge 4
+
+				actor_area 1100
+				actor_area_radius 1
+			}
+
+			#include_drs includes/riparian.inc
+		endif
+
+
+		create_object PLACEHOLDER_WATER_TILE
+		{
+			second_object NERITIC_A
+			number_of_objects 1024
+			temp_min_distance_group_placement 10
+
+			max_distance_to_other_zones 4
+			avoid_forest_zone 2
+			avoid_cliff_zone 2
+			min_distance_to_map_edge 2
+
+			actor_area 1200
+			actor_area_radius 2
+		}
+
+		create_object PLACEHOLDER_WATER_TILE
+		{
+			second_object NERITIC_A
+			number_of_objects 1024
+			temp_min_distance_group_placement 8
+			actor_area_to_place_in 1200
+
+			max_distance_to_other_zones 4
+			avoid_forest_zone 2
+			avoid_cliff_zone 2
+			min_distance_to_map_edge 2
+
+			actor_area 1200
+			actor_area_radius 2
+		}
+
+		create_object PLACEHOLDER_WATER_TILE
+		{
+			second_object NERITIC_A
+			number_of_objects 1024
+			temp_min_distance_group_placement 8
+			actor_area_to_place_in 1200
+
+			actor_area 1201
+			actor_area_radius 2
+		}
+
+		create_object PLACEHOLDER_WATER_TILE
+		{
+			second_object NERITIC_A
+			number_of_objects 1024
+			temp_min_distance_group_placement 8
+			actor_area_to_place_in 1200
+
+			actor_area 1201
+			actor_area_radius 2
+		}
+
+		#include_drs includes/oysters.inc
+		
+
+		#const FRESHWATER_COUNT 0
+
+		#include_drs includes/aquatic_freshwater.inc
+
+		#const SALTWATER_COUNT 0
+
+		#include_drs includes/aquatic_saltwater.inc
+
+		if DEATH_MATCH
+		else
+			create_object TREE_DEAD
+			{
+				place_on_specific_land_id 500
+
+				if SMALL_ISLAND
+					number_of_objects 4
+				elseif MEDIUM_ISLAND
+					number_of_objects 8
+				elseif LARGE_ISLAND
+					number_of_objects 16
+				elseif HUGE_ISLAND
+					number_of_objects 32
+				endif
+
+				min_distance_group_placement 1
+				max_distance_to_other_zones 1
+				avoid_forest_zone 1
+				avoid_cliff_zone 1
+				min_distance_to_map_edge 2
+			}
+
+			#include_drs includes/stragglers_neutral.inc
+			#include_drs includes/stragglers_coastal.inc
+			#include_drs includes/reeds.inc
+		endif
+
+		#define RELIC_TYPE_PLAYER
+
+		#include_drs includes/relics.inc
+		#include_drs includes/remote_resources.inc
+
+		#define EXTRA_STUFF
+		if EXTRA_STUFF
+			if EMPIRE_WARS_MODE
+				#define EMPIRE_WARS_FORAGERS
+
+				#include_drs includes/empire_wars.inc
+				#include_drs includes/empire_food.inc
+				#include_drs includes/empire_gold.inc
+				#include_drs includes/empire_wood.inc
+				#include_drs includes/empire_buildings.inc
+			elseif ESCALATION_MODE
+				#include_drs includes/escalation_mode.inc
+			endif
+
+			#define AESTHETICS
+			if AESTHETICS
+				#include_drs includes/birds.inc
+
+				create_object OUTPOST
+				{
+					set_place_for_every_player
+					number_of_objects 3
+					min_distance_to_players 10
+					set_circular_placement
+					find_closest
+					enable_tile_shuffling
+					temp_min_distance_group_placement 10
+
+					max_distance_to_other_zones 4	
+					avoid_forest_zone 2
+					avoid_cliff_zone 2
+					min_distance_to_map_edge 4
+
+					avoid_actor_area 10102 /* Minimum Primary Forage Bush Distance */
+					avoid_actor_area 10112 /* Minimum Secondary Forage Bush Distance */
+					avoid_actor_area 10122 /* Minimum Tertiary Forage Bush Distance */
+					avoid_actor_area 10202 /* Minimum Primary Gold Distance */
+					avoid_actor_area 10212 /* Minimum Secondary Gold Distance */
+					avoid_actor_area 10222 /* Minimum Tertiary Gold Distance */
+					avoid_actor_area 10302 /* Minimum Primary Stone Distance */
+					avoid_actor_area 10312 /* Minimum Secondary Stone Distance */
+					avoid_actor_area 10322 /* Minimum Tertiary Stone Distance */
+				}
+			endif
+		endif
+	endif

@@ -1,0 +1,514 @@
+/* BR - El Dorado 2020 */
+
+<PLAYER_SETUP>
+  random_placement
+  ai_info_map_type ARABIA 0 0 0
+  set_gaia_civilization 15
+
+#include_drs BR_conditions.inc
+
+<LAND_GENERATION>
+
+  base_terrain WATER
+
+create_player_lands 
+{ 
+    terrain_type                     SHALLOW
+  land_percent                     1
+  base_size                        3
+  circle_radius 		   80 0 /* 46 */
+  other_zone_avoidance_distance    18
+  clumping_factor                  15
+  zone 41
+}
+
+create_land 
+{
+  terrain_type                     GRASS2
+  number_of_tiles		   6
+  land_id                          108
+  land_position                    50 50
+  zone                             40
+}
+
+create_land 
+{
+    terrain_type                     DLC_JUNGLEGRASS
+  land_percent                     100 /* 52 */
+  clumping_factor                  1
+  border_fuzziness                 6
+  other_zone_avoidance_distance    12
+  land_id                          100
+if TINY_MAP
+  left_border                    10
+  right_border		   	 10
+  top_border			 10
+  bottom_border                  10
+elseif SMALL_MAP
+  left_border                    9
+  right_border		   	 9
+  top_border			 9
+  bottom_border                  9
+elseif MEDIUM_MAP
+  left_border                    8
+  right_border		   	 8
+  top_border			 8
+  bottom_border                  8
+elseif LARGE_MAP
+  left_border                    7
+  right_border		   	 7
+  top_border			 7
+  bottom_border                  7
+elseif HUGE_MAP
+  left_border                    6
+  right_border		   	 6
+  top_border			 6
+  bottom_border                  6
+elseif GIGANTIC_MAP
+  left_border                    6
+  right_border		   	 6
+  top_border			 6
+  bottom_border                  6
+elseif LUDIKRIS_MAP
+  left_border                    6
+  right_border		   	 6
+  top_border			 6
+  bottom_border                  6
+endif
+  zone 40
+}
+
+
+<TERRAIN_GENERATION>
+
+
+create_terrain WATER
+{
+  base_terrain                   DLC_JUNGLEGRASS
+  land_percent			4
+  number_of_clumps               28
+  spacing_to_other_terrain_types 2
+  set_scale_by_groups
+}
+
+
+if TINY_MAP
+
+#define BR_TINYMAP
+
+elseif SMALL_MAP
+
+#define BR_SMALLMAP
+
+elseif MEDIUM_MAP
+
+#define BR_MEDIUMMAP
+
+else
+
+#define BR_BIGGERMAP
+
+endif
+
+create_terrain DLC_JUNGLEGRASS
+{
+  base_terrain                   GRASS2
+  land_percent			100
+  number_of_clumps               100
+  terrain_mask 1
+}
+
+create_terrain DLC_RAINFOREST
+{
+  base_terrain                   DLC_JUNGLEGRASS
+  land_percent			7
+  number_of_clumps               14
+  spacing_to_other_terrain_types 2
+  set_avoid_player_start_areas     
+  set_scale_by_groups
+}
+
+
+<ELEVATION_GENERATION>
+
+if TINY_MAP
+
+create_elevation        4
+{
+  base_terrain                  DLC_JUNGLEGRASS
+  number_of_clumps 		99
+  number_of_tiles 		999
+  enable_balanced_elevation
+}
+
+elseif SMALL_MAP
+
+
+create_elevation        4
+{
+  base_terrain                  DLC_JUNGLEGRASS
+  number_of_clumps 		99
+  number_of_tiles 		999
+  enable_balanced_elevation
+}
+
+elseif MEDIUM_MAP
+
+
+create_elevation        4
+{
+  base_terrain                  DLC_JUNGLEGRASS
+  number_of_clumps 		200
+  number_of_tiles 		999
+  enable_balanced_elevation
+}
+
+
+else
+
+create_elevation        4
+{
+  base_terrain                  DLC_JUNGLEGRASS
+  number_of_clumps 		500
+  number_of_tiles 		999
+  enable_balanced_elevation
+}
+
+endif
+
+create_elevation        4
+{
+  base_terrain                  GRASS2
+  number_of_clumps 		1
+  number_of_tiles 		2
+  enable_balanced_elevation
+}
+
+
+
+<OBJECTS_GENERATION>
+
+/* starting heroes */
+
+/*
+
+defining heroes
+
+*/
+
+#const MRNEVSKI 197
+#const MRBOYAR 878
+#const MRFRANCISCO 425
+#const MRGONZALO 427
+#const MSYODIT 1066
+#const MRYEKUNO 1064
+#const MRGAJAH 1157
+#const MRJAYAVIRA 1164
+
+#const GUARD_AMAZONWARRIOR 825
+#const GUARD_AMAZONARCHER 850
+#const GUARD_KARAMBIT 1123
+#const GUARD_BATTLEELEPHANT 1132
+
+
+create_object MRFRANCISCO 
+{
+   number_of_objects 1
+   set_place_for_every_player
+   min_distance_to_players 4
+   max_distance_to_players 8
+}
+
+create_object MRGONZALO 
+{
+   number_of_objects 1
+   set_place_for_every_player
+   min_distance_to_players 4
+   max_distance_to_players 8
+}
+
+if REGICIDE
+
+create_object KING
+{
+   number_of_objects 1
+   set_place_for_every_player
+   min_distance_to_players 0
+   max_distance_to_players 3
+}
+
+endif
+
+#const STRANGETRADE 1647
+
+#const NOVASOCHA 1279
+
+#const BROKENCARTIE 858
+#const GOODSIES 1321
+#const NICEPAV_A 624
+#const NICEPAV_B 625
+#const NICEPAV_C 626
+
+#const SOMEBARRELS 1330
+#const PEKNASOCHA 1279
+
+
+/* objects in the center */
+
+#const BLANKOBJECT 647
+
+create_object BLANKOBJECT 
+{
+  number_of_objects 1
+  number_of_groups 1
+  set_gaia_object_only
+  terrain_to_place_on GRASS2
+  actor_area 1795
+  actor_area_radius 1
+}
+
+create_object BLANKOBJECT 
+{
+  number_of_objects 1
+  number_of_groups 1
+  set_gaia_object_only
+  actor_area_to_place_in 1795
+  actor_area 1796
+  actor_area_radius 2
+}
+
+/* Large camps */
+
+create_object BLANKOBJECT
+{
+  number_of_objects 999
+  set_gaia_object_only
+  temp_min_distance_group_placement 1
+  actor_area 8008
+  actor_area_radius 20
+  set_place_for_every_player
+  max_distance_to_players 20
+  terrain_to_place_on SHALLOW
+}
+
+create_object STRANGETRADE
+{
+  number_of_objects 999
+  set_gaia_object_only
+  temp_min_distance_group_placement 15
+  actor_area 8139
+  actor_area_radius 2
+}
+
+create_object BLANKOBJECT
+{
+  number_of_objects 999
+  set_gaia_object_only
+  temp_min_distance_group_placement 11
+  actor_area_to_place_in 8139
+  actor_area 8140
+  actor_area_radius 6
+}
+
+create_object BLANKOBJECT
+{
+  number_of_objects 999
+  set_gaia_object_only
+  temp_min_distance_group_placement 11
+  actor_area_to_place_in 8139
+  actor_area 8141
+  actor_area_radius 4
+}
+
+/* blocking eye-candy from appearing on water */
+
+create_object BLANKOBJECT
+{
+  number_of_objects 99999
+  set_gaia_object_only
+  temp_min_distance_group_placement 1
+  actor_area 8349
+  actor_area_radius 1
+  terrain_to_place_on WATER
+}
+
+#const STRANGETORCH 1377
+
+create_object STRANGETORCH
+{
+  number_of_objects 999
+  set_gaia_object_only
+  actor_area_to_place_in 8139
+  avoid_actor_area 8349
+  temp_min_distance_group_placement 11
+}
+
+create_object GOODSIES 
+{
+  number_of_objects 999
+  set_gaia_object_only
+  actor_area_to_place_in 8141
+  avoid_actor_area 8349
+  temp_min_distance_group_placement 11
+}
+
+create_object PEKNASOCHA
+{
+  number_of_objects 999
+  set_gaia_object_only
+  actor_area_to_place_in 8141
+  avoid_actor_area 8349
+  temp_min_distance_group_placement 11
+}
+
+create_object GUARD_AMAZONWARRIOR 
+{
+  number_of_objects 999
+  set_gaia_object_only
+  temp_min_distance_group_placement 5
+  actor_area_to_place_in 8140
+  set_gaia_unconvertible
+}
+
+/* - reserved for castle areas
+create_object GUARD_AMAZONARCHER
+{
+  number_of_objects 999
+  set_gaia_object_only
+  temp_min_distance_group_placement 6
+  actor_area_to_place_in 8140
+  set_gaia_unconvertible
+}
+*/
+
+
+create_object BARRACKS
+{
+if TINY_MAP
+  number_of_objects 5
+elseif SMALL_MAP
+  number_of_objects 8
+elseif MEDIUM_MAP
+  number_of_objects 10
+elseif LARGE_MAP
+  number_of_objects 15
+elseif HUGE_MAP
+  number_of_objects 20
+elseif GIGANTIC_MAP
+  number_of_objects 24
+elseif LUDIKRIS_MAP
+  number_of_objects 80
+endif
+  set_gaia_object_only
+  temp_min_distance_group_placement 27
+  actor_area_to_place_in 8140
+  min_distance_group_placement 3
+}
+
+create_object STABLE
+{
+if TINY_MAP
+  number_of_objects 5
+elseif SMALL_MAP
+  number_of_objects 8
+elseif MEDIUM_MAP
+  number_of_objects 10
+elseif LARGE_MAP
+  number_of_objects 15
+elseif HUGE_MAP
+  number_of_objects 20
+elseif GIGANTIC_MAP
+  number_of_objects 24
+elseif LUDIKRIS_MAP
+  number_of_objects 80
+endif
+  set_gaia_object_only
+  temp_min_distance_group_placement 27
+  actor_area_to_place_in 8140
+  min_distance_group_placement 3
+}
+
+create_object ARCHERY_RANGE
+{
+if TINY_MAP
+  number_of_objects 5
+elseif SMALL_MAP
+  number_of_objects 8
+elseif MEDIUM_MAP
+  number_of_objects 10
+elseif LARGE_MAP
+  number_of_objects 15
+elseif HUGE_MAP
+  number_of_objects 20
+elseif GIGANTIC_MAP
+  number_of_objects 24
+elseif LUDIKRIS_MAP
+  number_of_objects 80
+endif
+  set_gaia_object_only
+  temp_min_distance_group_placement 27
+  actor_area_to_place_in 8140
+  min_distance_group_placement 3
+}
+
+
+create_object CASTLE
+{
+  number_of_objects 999
+  set_gaia_object_only
+  temp_min_distance_group_placement 27
+  actor_area_to_place_in 8140
+  actor_area 8150
+  actor_area_radius 5
+  avoid_actor_area 8008
+}
+
+create_object GUARD_AMAZONARCHER
+{
+  number_of_objects 999
+  set_gaia_object_only
+  temp_min_distance_group_placement 1
+  actor_area_to_place_in 8150
+  set_gaia_unconvertible
+}
+
+create_object SIEGE_WORKSHOP
+{
+  number_of_objects 999
+  set_gaia_object_only
+  temp_min_distance_group_placement 27
+  actor_area_to_place_in 8140
+  min_distance_group_placement 3
+}
+
+create_object MONASTERY
+{
+  number_of_objects 999
+  set_gaia_object_only
+  temp_min_distance_group_placement 27
+  actor_area_to_place_in 8140
+  min_distance_group_placement 3
+}
+
+create_object GUARD_TOWER
+{
+  number_of_objects 999
+  set_gaia_object_only
+  temp_min_distance_group_placement 27
+  actor_area_to_place_in 8140
+}
+
+create_object DOCK
+{
+  number_of_objects 999
+  set_gaia_object_only
+  temp_min_distance_group_placement 18
+}
+
+<CONNECTION_GENERATION>
+create_connect_all_players_land
+{
+  replace_terrain WATER SHALLOW
+  terrain_cost    WATER 7
+  terrain_size    WATER 3       1
+}

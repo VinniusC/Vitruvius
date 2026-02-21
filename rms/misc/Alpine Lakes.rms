@@ -1,0 +1,281 @@
+
+/* Alpine Lakes 2017 */
+
+#include_drs random_map.def 
+
+<PLAYER_SETUP>
+random_placement
+  ai_info_map_type ARABIA 0 0 0
+
+<LAND_GENERATION>
+
+base_terrain DLC_DRYGRASS 
+
+create_player_lands
+{
+terrain_type SNOW
+  land_percent 24
+  base_size 12
+  border_fuzziness 20
+clumping_factor 6
+left_border 12
+right_border 12
+top_border 12
+bottom_border 12
+other_zone_avoidance_distance 14
+base_elevation 7
+set_zone_by_team
+}
+
+
+/* *********************************** */
+<TERRAIN_GENERATION>
+
+create_terrain DLC_FORESTAUTUMN 
+{
+base_terrain DLC_DRYGRASS 
+land_percent 14
+number_of_clumps 58
+spacing_to_other_terrain_types 10
+set_avoid_player_start_areas
+}
+
+create_terrain DLC_FORESTAUTUMN 
+{
+base_terrain DLC_DRYGRASS 
+land_percent 5
+number_of_clumps 32
+spacing_to_other_terrain_types 3
+set_avoid_player_start_areas
+height_limits 1 6
+}
+
+create_terrain WATER
+{
+base_terrain SNOW
+land_percent 6
+number_of_clumps 24
+spacing_to_other_terrain_types 4
+set_avoid_player_start_areas
+}
+
+create_terrain GRASS_SNOW
+{
+base_terrain DLC_DRYGRASS
+land_percent 3
+number_of_clumps 14
+spacing_to_other_terrain_types 0
+set_avoid_player_start_areas
+height_limits 5 7
+}
+
+create_terrain GRASS_SNOW
+{
+base_terrain SNOW
+land_percent 1
+number_of_clumps 48
+spacing_to_other_terrain_types 0
+set_avoid_player_start_areas
+}
+
+create_terrain MED_WATER
+{
+base_terrain WATER
+land_percent 100
+number_of_clumps 1000
+spacing_to_other_terrain_types 3
+set_avoid_player_start_areas
+}
+
+create_terrain DLC_FORESTDEAD 
+{
+base_terrain SNOW
+land_percent 1
+number_of_clumps 48
+spacing_to_other_terrain_types 1
+set_avoid_player_start_areas
+}
+
+<OBJECTS_GENERATION>
+
+create_object TOWN_CENTER
+{
+  number_of_objects             1
+  set_place_for_every_player
+  min_distance_to_players       0
+  max_distance_to_players       0
+ }
+
+create_object VILLAGER
+{
+  number_of_objects             200
+  set_place_for_every_player
+  min_distance_to_players       1
+  max_distance_to_players       6
+ }
+
+create_object SCOUT
+{
+  number_of_objects             100
+  set_place_for_every_player
+  min_distance_to_players       5
+  max_distance_to_players       9
+ }
+
+create_object DLC_PIG
+{
+  number_of_objects             100
+  number_of_groups 1
+  set_place_for_every_player
+   set_loose_grouping
+   set_gaia_object_only
+  min_distance_to_players       5
+  max_distance_to_players       11
+ }
+
+create_object DLC_GOOSE
+{
+  number_of_objects             100
+  number_of_groups 1
+  set_place_for_every_player
+   set_loose_grouping
+   set_gaia_object_only
+  min_distance_to_players       5
+  max_distance_to_players       14
+ }
+
+create_object RELIC
+{
+   number_of_objects            999
+   min_distance_to_players     35
+   temp_min_distance_group_placement 64
+terrain_to_place_on DLC_DRYGRASS 
+}
+
+if REGICIDE
+
+create_object KING
+{
+  set_place_for_every_player
+  min_distance_to_players       6
+  max_distance_to_players       8
+}
+
+create_object WATCH_TOWER
+{
+  number_of_objects             1
+  set_place_for_every_player
+  min_distance_to_players    3
+  max_distance_to_players    6
+}
+
+endif
+
+create_object GOLD
+{
+  number_of_objects          4
+  group_placement_radius     3
+  set_tight_grouping
+  set_gaia_object_only
+  set_place_for_every_player
+  min_distance_to_players    6
+  max_distance_to_players    12
+  temp_min_distance_group_placement  5
+}
+
+create_object GOLD
+{
+  number_of_objects          4
+  group_placement_radius     3
+  set_tight_grouping
+  set_gaia_object_only
+  set_place_for_every_player
+  min_distance_to_players    6
+  max_distance_to_players    12
+  temp_min_distance_group_placement  5
+}
+
+create_object STONE
+{
+  number_of_objects          4
+  group_placement_radius     3
+  set_tight_grouping
+  set_gaia_object_only
+  set_place_for_every_player
+  min_distance_to_players    6
+  max_distance_to_players    12
+  temp_min_distance_group_placement  5
+}
+
+/* DISTANT GOLD AND STONE */
+
+create_object GOLD
+{
+  number_of_groups 500
+  number_of_objects 3
+  group_placement_radius 2
+  set_tight_grouping
+  set_gaia_object_only
+  temp_min_distance_group_placement 28
+min_distance_to_players    32
+}
+
+create_object STONE
+{
+  number_of_groups 500
+  number_of_objects 3
+  group_placement_radius 2
+  set_tight_grouping
+  set_gaia_object_only
+  temp_min_distance_group_placement 28
+  max_distance_to_other_zones 2
+min_distance_to_players    32
+}
+
+create_object DLC_DEADTREE 
+{
+  number_of_objects             2
+  set_gaia_object_only
+  set_place_for_every_player
+  min_distance_to_players       5
+  max_distance_to_players       6
+  min_distance_group_placement  2
+}
+
+create_object DLC_DEADTREE 
+{
+  number_of_objects             3
+  set_gaia_object_only
+  set_place_for_every_player
+  min_distance_to_players       7
+  max_distance_to_players       9
+  min_distance_group_placement  2
+}
+
+create_object SALMON
+{
+  number_of_objects             1
+number_of_groups 99999
+  set_gaia_object_only
+  temp_min_distance_group_placement  6
+}
+
+create_object TUNA
+{
+  number_of_objects             1
+number_of_groups 99999
+  set_gaia_object_only
+  temp_min_distance_group_placement  6
+}
+
+create_object HAWK
+{
+   number_of_objects         4
+   set_scaling_to_map_size
+}
+
+/* ****************************************************** */
+
+<ELEVATION_GENERATION>
+
+<CONNECTION_GENERATION>

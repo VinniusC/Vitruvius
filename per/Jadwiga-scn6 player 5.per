@@ -1,0 +1,85 @@
+; Jadwiga - Part VI: The Fruits of Her Labor
+; Player 5: The Teutonic Order (Aggressive Enemy)
+; AI by Lord Basse
+
+(defrule
+	(true)
+	=>
+	(set-goal 1 0)
+	(disable-self)
+)
+
+(defrule
+	(event-detected trigger 42)
+	=>
+	(set-goal 1 1)
+	(disable-self)
+)
+
+
+(defrule		; keeps the AI immobile at the start
+	(goal 1 0)
+=>
+        (set-strategic-number sn-maximum-food-drop-distance 0)
+	(set-strategic-number sn-maximum-wood-drop-distance 0)
+	(set-strategic-number sn-maximum-gold-drop-distance 0)
+	(set-strategic-number sn-maximum-hunt-drop-distance 0)
+	(set-strategic-number sn-maximum-stone-drop-distance 0)
+	(set-strategic-number sn-food-gatherer-percentage 0)
+	(set-strategic-number sn-wood-gatherer-percentage 0)
+	(set-strategic-number sn-gold-gatherer-percentage 0)
+	(set-strategic-number sn-stone-gatherer-percentage 0)
+	(set-strategic-number sn-cap-civilian-explorers 0)
+	(set-strategic-number sn-percent-civilian-explorers 0)
+)
+
+(defrule
+	(goal 1 0)
+=>
+	(set-strategic-number sn-percent-enemy-sighted-response 100)
+	(set-strategic-number sn-hits-before-alliance-change 25)
+	(set-strategic-number sn-number-explore-groups 0)
+	(set-strategic-number sn-percent-attack-soldiers 0)
+	(set-strategic-number sn-task-ungrouped-soldiers 0)
+	(set-strategic-number sn-number-attack-groups 0)
+	(set-strategic-number sn-enemy-sighted-response-distance 10)
+	(set-strategic-number sn-total-number-explorers 0)
+	(set-strategic-number sn-relic-return-distance 0)
+)
+
+(defrule 		; makes the AI go aggressive after a while
+	(goal 1 1)
+	=>
+	(enable-timer 1 30)
+	(disable-self)
+)
+
+(defrule
+	(goal 1 1)
+	(timer-triggered 1)
+=>
+	(enable-timer 10 5)
+	(set-strategic-number sn-total-number-explorers 0)
+	(set-strategic-number sn-percent-enemy-sighted-response 100)
+	(set-strategic-number sn-enemy-sighted-response-distance 42)
+	(set-strategic-number sn-minimum-attack-group-size 2)
+	(set-strategic-number sn-maximum-attack-group-size 20)
+	(set-strategic-number sn-percent-attack-soldiers 100)
+	(attack-now)
+	(set-goal 1 2)
+	(disable-self)
+)
+
+(defrule
+	(up-timer-status 10 != timer-running); Promi was here
+	(goal 1 2)
+=>
+	(set-strategic-number sn-total-number-explorers 0)
+	(set-strategic-number sn-percent-enemy-sighted-response 100)
+	(set-strategic-number sn-enemy-sighted-response-distance 42)
+	(set-strategic-number sn-minimum-attack-group-size 2)
+	(set-strategic-number sn-maximum-attack-group-size 20)
+	(set-strategic-number sn-percent-attack-soldiers 100)
+	(attack-now)
+	(enable-timer 10 5); Promi was here
+)

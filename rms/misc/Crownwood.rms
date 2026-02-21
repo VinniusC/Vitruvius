@@ -1,0 +1,776 @@
+/*
+
+	Crownwood by Chrazini
+
+	Created: 11/08/2025
+	Updated: N/A
+	
+	Version: 1.0
+
+*/
+
+#const MAPSCALE_MODIFIER 1
+#include_drs includes/scaling.inc
+
+/* ----------------------------------- Debug Settings */
+
+/* #define DEBUG_MODE */
+/* #define TERRAIN_DEBUGGING */
+/* #define EMPIRE_WARS_TESTING */
+#define COLLAPSE
+
+/* ----------------------------------- Generation Settings */
+
+#define PALAEARCTIC_EUROPE_TEMPERATE
+/* #define CENTRALISE_SPAWN */
+/* #define RESTRICTED_SPAWN */
+
+/* ----------------------------------- Nomad Settings */
+
+/* #define NOMAD_MAP */
+/* #define NOMAD_SCATTERED */
+/* #define NOMAD_UNIT */
+#define NOMAD_TREATY
+/* #define NOMAD_HERDABLE */
+
+/* ----------------------------------- Themes & Overwrites */
+
+#define OVERWRITES
+if OVERWRITES
+endif
+
+#define MAP_CONSTANTS
+if MAP_CONSTANTS
+	#const STRAGGLER_SPAWN 349 /* Oak Tree */
+	#const STRAGGLER_NEUTRAL 1053 /* Bush B */
+
+	#const BEACH_TERRAIN 2
+	#const SEABED_TERRAIN 2
+	
+	#const SPAWN_FOREST 10
+	#const SPAWN_TERRAIN 0
+
+	#const BASE_FOREST 10
+	#const BASE_FOREST_VARIATION 20
+
+	#const BASE_TERRAIN 0
+	#const BASE_TERRAIN_VARIATION_A 122
+	#const BASE_TERRAIN_VARIATION_B 123
+	#const BASE_BLEND_A 0
+	#const BASE_BLEND_B 9
+	#const BASE_BLEND_C 12
+	#const BASE_BLEND_D 100
+
+	#const HILL_FOREST 19
+	#const HILL_TERRAIN 76
+	#const HILL_TREE 350 /* Pine Tree */
+
+	#const BLOCK_TERRAIN 70
+
+	#const EMPIRE_WARS_WOOD_TERRAIN 76
+endif
+
+#include_drs includes/themes.inc
+#include_drs includes/constants.inc
+#include_drs includes/decay.inc
+
+<PLAYER_SETUP>
+	#include_drs includes/preliminaries.inc
+	#include_drs includes/gaia_civilisation.inc
+
+	#define WATER_POND
+	#include_drs includes/water_preset.inc
+	water_definition WATER_PRESET
+
+	random_placement
+	ai_info_map_type ARABIA 0 0
+
+	if CONFINED_SETUP
+		#const CONFINED_INCREASE 1.2
+	else
+		#const CONFINED_INCREASE 1
+	endif
+	
+<LAND_GENERATION>
+	base_terrain HILL_TERRAIN
+
+	create_land
+	{
+		terrain_type HILL_TERRAIN
+		number_of_tiles 0
+		base_size 0
+		land_position 50 50
+		land_id 420
+	}
+
+	#const HILL_TILES 24
+	#const HILL_BASE 1
+	#const HILL_CLUMPING 15
+	#const HILL_BORDER 6
+	#const HILL_SPACING 22
+	#const HILL_ELEVATION 5
+	#const HILL_ZONE 50
+	#const HILL_IDENTIFICATION 500
+
+	create_land { terrain_type HILL_FOREST number_of_tiles HILL_TILES base_size HILL_BASE clumping_factor HILL_CLUMPING top_border HILL_BORDER left_border HILL_BORDER right_border HILL_BORDER bottom_border HILL_BORDER min_placement_distance HILL_SPACING generate_mode 1 zone HILL_ZONE base_elevation HILL_ELEVATION land_id HILL_IDENTIFICATION }
+	create_land { terrain_type HILL_FOREST number_of_tiles HILL_TILES base_size HILL_BASE clumping_factor HILL_CLUMPING top_border HILL_BORDER left_border HILL_BORDER right_border HILL_BORDER bottom_border HILL_BORDER min_placement_distance HILL_SPACING generate_mode 1 zone HILL_ZONE base_elevation HILL_ELEVATION land_id HILL_IDENTIFICATION }
+	create_land { terrain_type HILL_FOREST number_of_tiles HILL_TILES base_size HILL_BASE clumping_factor HILL_CLUMPING top_border HILL_BORDER left_border HILL_BORDER right_border HILL_BORDER bottom_border HILL_BORDER min_placement_distance HILL_SPACING generate_mode 1 zone HILL_ZONE base_elevation HILL_ELEVATION land_id HILL_IDENTIFICATION }
+	create_land { terrain_type HILL_FOREST number_of_tiles HILL_TILES base_size HILL_BASE clumping_factor HILL_CLUMPING top_border HILL_BORDER left_border HILL_BORDER right_border HILL_BORDER bottom_border HILL_BORDER min_placement_distance HILL_SPACING generate_mode 1 zone HILL_ZONE base_elevation HILL_ELEVATION land_id HILL_IDENTIFICATION }
+	create_land { terrain_type HILL_FOREST number_of_tiles HILL_TILES base_size HILL_BASE clumping_factor HILL_CLUMPING top_border HILL_BORDER left_border HILL_BORDER right_border HILL_BORDER bottom_border HILL_BORDER min_placement_distance HILL_SPACING generate_mode 1 zone HILL_ZONE base_elevation HILL_ELEVATION land_id HILL_IDENTIFICATION }
+	create_land { terrain_type HILL_FOREST number_of_tiles HILL_TILES base_size HILL_BASE clumping_factor HILL_CLUMPING top_border HILL_BORDER left_border HILL_BORDER right_border HILL_BORDER bottom_border HILL_BORDER min_placement_distance HILL_SPACING generate_mode 1 zone HILL_ZONE base_elevation HILL_ELEVATION land_id HILL_IDENTIFICATION }
+	create_land { terrain_type HILL_FOREST number_of_tiles HILL_TILES base_size HILL_BASE clumping_factor HILL_CLUMPING top_border HILL_BORDER left_border HILL_BORDER right_border HILL_BORDER bottom_border HILL_BORDER min_placement_distance HILL_SPACING generate_mode 1 zone HILL_ZONE base_elevation HILL_ELEVATION land_id HILL_IDENTIFICATION }
+	create_land { terrain_type HILL_FOREST number_of_tiles HILL_TILES base_size HILL_BASE clumping_factor HILL_CLUMPING top_border HILL_BORDER left_border HILL_BORDER right_border HILL_BORDER bottom_border HILL_BORDER min_placement_distance HILL_SPACING generate_mode 1 zone HILL_ZONE base_elevation HILL_ELEVATION land_id HILL_IDENTIFICATION }
+	create_land { terrain_type HILL_FOREST number_of_tiles HILL_TILES base_size HILL_BASE clumping_factor HILL_CLUMPING top_border HILL_BORDER left_border HILL_BORDER right_border HILL_BORDER bottom_border HILL_BORDER min_placement_distance HILL_SPACING generate_mode 1 zone HILL_ZONE base_elevation HILL_ELEVATION land_id HILL_IDENTIFICATION }
+	create_land { terrain_type HILL_FOREST number_of_tiles HILL_TILES base_size HILL_BASE clumping_factor HILL_CLUMPING top_border HILL_BORDER left_border HILL_BORDER right_border HILL_BORDER bottom_border HILL_BORDER min_placement_distance HILL_SPACING generate_mode 1 zone HILL_ZONE base_elevation HILL_ELEVATION land_id HILL_IDENTIFICATION }
+	create_land { terrain_type HILL_FOREST number_of_tiles HILL_TILES base_size HILL_BASE clumping_factor HILL_CLUMPING top_border HILL_BORDER left_border HILL_BORDER right_border HILL_BORDER bottom_border HILL_BORDER min_placement_distance HILL_SPACING generate_mode 1 zone HILL_ZONE base_elevation HILL_ELEVATION land_id HILL_IDENTIFICATION }
+	create_land { terrain_type HILL_FOREST number_of_tiles HILL_TILES base_size HILL_BASE clumping_factor HILL_CLUMPING top_border HILL_BORDER left_border HILL_BORDER right_border HILL_BORDER bottom_border HILL_BORDER min_placement_distance HILL_SPACING generate_mode 1 zone HILL_ZONE base_elevation HILL_ELEVATION land_id HILL_IDENTIFICATION }
+	create_land { terrain_type HILL_FOREST number_of_tiles HILL_TILES base_size HILL_BASE clumping_factor HILL_CLUMPING top_border HILL_BORDER left_border HILL_BORDER right_border HILL_BORDER bottom_border HILL_BORDER min_placement_distance HILL_SPACING generate_mode 1 zone HILL_ZONE base_elevation HILL_ELEVATION land_id HILL_IDENTIFICATION }
+	create_land { terrain_type HILL_FOREST number_of_tiles HILL_TILES base_size HILL_BASE clumping_factor HILL_CLUMPING top_border HILL_BORDER left_border HILL_BORDER right_border HILL_BORDER bottom_border HILL_BORDER min_placement_distance HILL_SPACING generate_mode 1 zone HILL_ZONE base_elevation HILL_ELEVATION land_id HILL_IDENTIFICATION }
+	create_land { terrain_type HILL_FOREST number_of_tiles HILL_TILES base_size HILL_BASE clumping_factor HILL_CLUMPING top_border HILL_BORDER left_border HILL_BORDER right_border HILL_BORDER bottom_border HILL_BORDER min_placement_distance HILL_SPACING generate_mode 1 zone HILL_ZONE base_elevation HILL_ELEVATION land_id HILL_IDENTIFICATION }
+	create_land { terrain_type HILL_FOREST number_of_tiles HILL_TILES base_size HILL_BASE clumping_factor HILL_CLUMPING top_border HILL_BORDER left_border HILL_BORDER right_border HILL_BORDER bottom_border HILL_BORDER min_placement_distance HILL_SPACING generate_mode 1 zone HILL_ZONE base_elevation HILL_ELEVATION land_id HILL_IDENTIFICATION }
+	create_land { terrain_type HILL_FOREST number_of_tiles HILL_TILES base_size HILL_BASE clumping_factor HILL_CLUMPING top_border HILL_BORDER left_border HILL_BORDER right_border HILL_BORDER bottom_border HILL_BORDER min_placement_distance HILL_SPACING generate_mode 1 zone HILL_ZONE base_elevation HILL_ELEVATION land_id HILL_IDENTIFICATION }
+	create_land { terrain_type HILL_FOREST number_of_tiles HILL_TILES base_size HILL_BASE clumping_factor HILL_CLUMPING top_border HILL_BORDER left_border HILL_BORDER right_border HILL_BORDER bottom_border HILL_BORDER min_placement_distance HILL_SPACING generate_mode 1 zone HILL_ZONE base_elevation HILL_ELEVATION land_id HILL_IDENTIFICATION }
+	create_land { terrain_type HILL_FOREST number_of_tiles HILL_TILES base_size HILL_BASE clumping_factor HILL_CLUMPING top_border HILL_BORDER left_border HILL_BORDER right_border HILL_BORDER bottom_border HILL_BORDER min_placement_distance HILL_SPACING generate_mode 1 zone HILL_ZONE base_elevation HILL_ELEVATION land_id HILL_IDENTIFICATION }
+	create_land { terrain_type HILL_FOREST number_of_tiles HILL_TILES base_size HILL_BASE clumping_factor HILL_CLUMPING top_border HILL_BORDER left_border HILL_BORDER right_border HILL_BORDER bottom_border HILL_BORDER min_placement_distance HILL_SPACING generate_mode 1 zone HILL_ZONE base_elevation HILL_ELEVATION land_id HILL_IDENTIFICATION }
+	create_land { terrain_type HILL_FOREST number_of_tiles HILL_TILES base_size HILL_BASE clumping_factor HILL_CLUMPING top_border HILL_BORDER left_border HILL_BORDER right_border HILL_BORDER bottom_border HILL_BORDER min_placement_distance HILL_SPACING generate_mode 1 zone HILL_ZONE base_elevation HILL_ELEVATION land_id HILL_IDENTIFICATION }
+	create_land { terrain_type HILL_FOREST number_of_tiles HILL_TILES base_size HILL_BASE clumping_factor HILL_CLUMPING top_border HILL_BORDER left_border HILL_BORDER right_border HILL_BORDER bottom_border HILL_BORDER min_placement_distance HILL_SPACING generate_mode 1 zone HILL_ZONE base_elevation HILL_ELEVATION land_id HILL_IDENTIFICATION }
+	create_land { terrain_type HILL_FOREST number_of_tiles HILL_TILES base_size HILL_BASE clumping_factor HILL_CLUMPING top_border HILL_BORDER left_border HILL_BORDER right_border HILL_BORDER bottom_border HILL_BORDER min_placement_distance HILL_SPACING generate_mode 1 zone HILL_ZONE base_elevation HILL_ELEVATION land_id HILL_IDENTIFICATION }
+	create_land { terrain_type HILL_FOREST number_of_tiles HILL_TILES base_size HILL_BASE clumping_factor HILL_CLUMPING top_border HILL_BORDER left_border HILL_BORDER right_border HILL_BORDER bottom_border HILL_BORDER min_placement_distance HILL_SPACING generate_mode 1 zone HILL_ZONE base_elevation HILL_ELEVATION land_id HILL_IDENTIFICATION }
+	create_land { terrain_type HILL_FOREST number_of_tiles HILL_TILES base_size HILL_BASE clumping_factor HILL_CLUMPING top_border HILL_BORDER left_border HILL_BORDER right_border HILL_BORDER bottom_border HILL_BORDER min_placement_distance HILL_SPACING generate_mode 1 zone HILL_ZONE base_elevation HILL_ELEVATION land_id HILL_IDENTIFICATION }
+	create_land { terrain_type HILL_FOREST number_of_tiles HILL_TILES base_size HILL_BASE clumping_factor HILL_CLUMPING top_border HILL_BORDER left_border HILL_BORDER right_border HILL_BORDER bottom_border HILL_BORDER min_placement_distance HILL_SPACING generate_mode 1 zone HILL_ZONE base_elevation HILL_ELEVATION land_id HILL_IDENTIFICATION }
+	create_land { terrain_type HILL_FOREST number_of_tiles HILL_TILES base_size HILL_BASE clumping_factor HILL_CLUMPING top_border HILL_BORDER left_border HILL_BORDER right_border HILL_BORDER bottom_border HILL_BORDER min_placement_distance HILL_SPACING generate_mode 1 zone HILL_ZONE base_elevation HILL_ELEVATION land_id HILL_IDENTIFICATION }
+	create_land { terrain_type HILL_FOREST number_of_tiles HILL_TILES base_size HILL_BASE clumping_factor HILL_CLUMPING top_border HILL_BORDER left_border HILL_BORDER right_border HILL_BORDER bottom_border HILL_BORDER min_placement_distance HILL_SPACING generate_mode 1 zone HILL_ZONE base_elevation HILL_ELEVATION land_id HILL_IDENTIFICATION }
+	create_land { terrain_type HILL_FOREST number_of_tiles HILL_TILES base_size HILL_BASE clumping_factor HILL_CLUMPING top_border HILL_BORDER left_border HILL_BORDER right_border HILL_BORDER bottom_border HILL_BORDER min_placement_distance HILL_SPACING generate_mode 1 zone HILL_ZONE base_elevation HILL_ELEVATION land_id HILL_IDENTIFICATION }
+	create_land { terrain_type HILL_FOREST number_of_tiles HILL_TILES base_size HILL_BASE clumping_factor HILL_CLUMPING top_border HILL_BORDER left_border HILL_BORDER right_border HILL_BORDER bottom_border HILL_BORDER min_placement_distance HILL_SPACING generate_mode 1 zone HILL_ZONE base_elevation HILL_ELEVATION land_id HILL_IDENTIFICATION }
+	create_land { terrain_type HILL_FOREST number_of_tiles HILL_TILES base_size HILL_BASE clumping_factor HILL_CLUMPING top_border HILL_BORDER left_border HILL_BORDER right_border HILL_BORDER bottom_border HILL_BORDER min_placement_distance HILL_SPACING generate_mode 1 zone HILL_ZONE base_elevation HILL_ELEVATION land_id HILL_IDENTIFICATION }
+	create_land { terrain_type HILL_FOREST number_of_tiles HILL_TILES base_size HILL_BASE clumping_factor HILL_CLUMPING top_border HILL_BORDER left_border HILL_BORDER right_border HILL_BORDER bottom_border HILL_BORDER min_placement_distance HILL_SPACING generate_mode 1 zone HILL_ZONE base_elevation HILL_ELEVATION land_id HILL_IDENTIFICATION }
+	create_land { terrain_type HILL_FOREST number_of_tiles HILL_TILES base_size HILL_BASE clumping_factor HILL_CLUMPING top_border HILL_BORDER left_border HILL_BORDER right_border HILL_BORDER bottom_border HILL_BORDER min_placement_distance HILL_SPACING generate_mode 1 zone HILL_ZONE base_elevation HILL_ELEVATION land_id HILL_IDENTIFICATION }
+	create_land { terrain_type HILL_FOREST number_of_tiles HILL_TILES base_size HILL_BASE clumping_factor HILL_CLUMPING top_border HILL_BORDER left_border HILL_BORDER right_border HILL_BORDER bottom_border HILL_BORDER min_placement_distance HILL_SPACING generate_mode 1 zone HILL_ZONE base_elevation HILL_ELEVATION land_id HILL_IDENTIFICATION }
+	create_land { terrain_type HILL_FOREST number_of_tiles HILL_TILES base_size HILL_BASE clumping_factor HILL_CLUMPING top_border HILL_BORDER left_border HILL_BORDER right_border HILL_BORDER bottom_border HILL_BORDER min_placement_distance HILL_SPACING generate_mode 1 zone HILL_ZONE base_elevation HILL_ELEVATION land_id HILL_IDENTIFICATION }
+	create_land { terrain_type HILL_FOREST number_of_tiles HILL_TILES base_size HILL_BASE clumping_factor HILL_CLUMPING top_border HILL_BORDER left_border HILL_BORDER right_border HILL_BORDER bottom_border HILL_BORDER min_placement_distance HILL_SPACING generate_mode 1 zone HILL_ZONE base_elevation HILL_ELEVATION land_id HILL_IDENTIFICATION }
+	create_land { terrain_type HILL_FOREST number_of_tiles HILL_TILES base_size HILL_BASE clumping_factor HILL_CLUMPING top_border HILL_BORDER left_border HILL_BORDER right_border HILL_BORDER bottom_border HILL_BORDER min_placement_distance HILL_SPACING generate_mode 1 zone HILL_ZONE base_elevation HILL_ELEVATION land_id HILL_IDENTIFICATION }
+	create_land { terrain_type HILL_FOREST number_of_tiles HILL_TILES base_size HILL_BASE clumping_factor HILL_CLUMPING top_border HILL_BORDER left_border HILL_BORDER right_border HILL_BORDER bottom_border HILL_BORDER min_placement_distance HILL_SPACING generate_mode 1 zone HILL_ZONE base_elevation HILL_ELEVATION land_id HILL_IDENTIFICATION }
+	create_land { terrain_type HILL_FOREST number_of_tiles HILL_TILES base_size HILL_BASE clumping_factor HILL_CLUMPING top_border HILL_BORDER left_border HILL_BORDER right_border HILL_BORDER bottom_border HILL_BORDER min_placement_distance HILL_SPACING generate_mode 1 zone HILL_ZONE base_elevation HILL_ELEVATION land_id HILL_IDENTIFICATION }
+	create_land { terrain_type HILL_FOREST number_of_tiles HILL_TILES base_size HILL_BASE clumping_factor HILL_CLUMPING top_border HILL_BORDER left_border HILL_BORDER right_border HILL_BORDER bottom_border HILL_BORDER min_placement_distance HILL_SPACING generate_mode 1 zone HILL_ZONE base_elevation HILL_ELEVATION land_id HILL_IDENTIFICATION }
+	create_land { terrain_type HILL_FOREST number_of_tiles HILL_TILES base_size HILL_BASE clumping_factor HILL_CLUMPING top_border HILL_BORDER left_border HILL_BORDER right_border HILL_BORDER bottom_border HILL_BORDER min_placement_distance HILL_SPACING generate_mode 1 zone HILL_ZONE base_elevation HILL_ELEVATION land_id HILL_IDENTIFICATION }
+	create_land { terrain_type HILL_FOREST number_of_tiles HILL_TILES base_size HILL_BASE clumping_factor HILL_CLUMPING top_border HILL_BORDER left_border HILL_BORDER right_border HILL_BORDER bottom_border HILL_BORDER min_placement_distance HILL_SPACING generate_mode 1 zone HILL_ZONE base_elevation HILL_ELEVATION land_id HILL_IDENTIFICATION }
+	create_land { terrain_type HILL_FOREST number_of_tiles HILL_TILES base_size HILL_BASE clumping_factor HILL_CLUMPING top_border HILL_BORDER left_border HILL_BORDER right_border HILL_BORDER bottom_border HILL_BORDER min_placement_distance HILL_SPACING generate_mode 1 zone HILL_ZONE base_elevation HILL_ELEVATION land_id HILL_IDENTIFICATION }
+	create_land { terrain_type HILL_FOREST number_of_tiles HILL_TILES base_size HILL_BASE clumping_factor HILL_CLUMPING top_border HILL_BORDER left_border HILL_BORDER right_border HILL_BORDER bottom_border HILL_BORDER min_placement_distance HILL_SPACING generate_mode 1 zone HILL_ZONE base_elevation HILL_ELEVATION land_id HILL_IDENTIFICATION }
+	create_land { terrain_type HILL_FOREST number_of_tiles HILL_TILES base_size HILL_BASE clumping_factor HILL_CLUMPING top_border HILL_BORDER left_border HILL_BORDER right_border HILL_BORDER bottom_border HILL_BORDER min_placement_distance HILL_SPACING generate_mode 1 zone HILL_ZONE base_elevation HILL_ELEVATION land_id HILL_IDENTIFICATION }
+	create_land { terrain_type HILL_FOREST number_of_tiles HILL_TILES base_size HILL_BASE clumping_factor HILL_CLUMPING top_border HILL_BORDER left_border HILL_BORDER right_border HILL_BORDER bottom_border HILL_BORDER min_placement_distance HILL_SPACING generate_mode 1 zone HILL_ZONE base_elevation HILL_ELEVATION land_id HILL_IDENTIFICATION }
+	create_land { terrain_type HILL_FOREST number_of_tiles HILL_TILES base_size HILL_BASE clumping_factor HILL_CLUMPING top_border HILL_BORDER left_border HILL_BORDER right_border HILL_BORDER bottom_border HILL_BORDER min_placement_distance HILL_SPACING generate_mode 1 zone HILL_ZONE base_elevation HILL_ELEVATION land_id HILL_IDENTIFICATION }
+	create_land { terrain_type HILL_FOREST number_of_tiles HILL_TILES base_size HILL_BASE clumping_factor HILL_CLUMPING top_border HILL_BORDER left_border HILL_BORDER right_border HILL_BORDER bottom_border HILL_BORDER min_placement_distance HILL_SPACING generate_mode 1 zone HILL_ZONE base_elevation HILL_ELEVATION land_id HILL_IDENTIFICATION }
+	create_land { terrain_type HILL_FOREST number_of_tiles HILL_TILES base_size HILL_BASE clumping_factor HILL_CLUMPING top_border HILL_BORDER left_border HILL_BORDER right_border HILL_BORDER bottom_border HILL_BORDER min_placement_distance HILL_SPACING generate_mode 1 zone HILL_ZONE base_elevation HILL_ELEVATION land_id HILL_IDENTIFICATION }
+	create_land { terrain_type HILL_FOREST number_of_tiles HILL_TILES base_size HILL_BASE clumping_factor HILL_CLUMPING top_border HILL_BORDER left_border HILL_BORDER right_border HILL_BORDER bottom_border HILL_BORDER min_placement_distance HILL_SPACING generate_mode 1 zone HILL_ZONE base_elevation HILL_ELEVATION land_id HILL_IDENTIFICATION }
+	create_land { terrain_type HILL_FOREST number_of_tiles HILL_TILES base_size HILL_BASE clumping_factor HILL_CLUMPING top_border HILL_BORDER left_border HILL_BORDER right_border HILL_BORDER bottom_border HILL_BORDER min_placement_distance HILL_SPACING generate_mode 1 zone HILL_ZONE base_elevation HILL_ELEVATION land_id HILL_IDENTIFICATION }
+	create_land { terrain_type HILL_FOREST number_of_tiles HILL_TILES base_size HILL_BASE clumping_factor HILL_CLUMPING top_border HILL_BORDER left_border HILL_BORDER right_border HILL_BORDER bottom_border HILL_BORDER min_placement_distance HILL_SPACING generate_mode 1 zone HILL_ZONE base_elevation HILL_ELEVATION land_id HILL_IDENTIFICATION }
+	create_land { terrain_type HILL_FOREST number_of_tiles HILL_TILES base_size HILL_BASE clumping_factor HILL_CLUMPING top_border HILL_BORDER left_border HILL_BORDER right_border HILL_BORDER bottom_border HILL_BORDER min_placement_distance HILL_SPACING generate_mode 1 zone HILL_ZONE base_elevation HILL_ELEVATION land_id HILL_IDENTIFICATION }
+	create_land { terrain_type HILL_FOREST number_of_tiles HILL_TILES base_size HILL_BASE clumping_factor HILL_CLUMPING top_border HILL_BORDER left_border HILL_BORDER right_border HILL_BORDER bottom_border HILL_BORDER min_placement_distance HILL_SPACING generate_mode 1 zone HILL_ZONE base_elevation HILL_ELEVATION land_id HILL_IDENTIFICATION }
+
+	create_player_lands
+	{
+		terrain_type HILL_TERRAIN
+		land_percent 1024
+		base_size 12
+		clumping_factor 15
+		other_zone_avoidance_distance 2
+
+		if MAPSIZE_MINI
+			circle_radius 33 0
+		elseif MAPSIZE_TINY
+			circle_radius 34 1
+		elseif MAPSIZE_SMALL
+			circle_radius 34 1
+		elseif MAPSIZE_MEDIUM
+			circle_radius 35 2
+		elseif MAPSIZE_NORMAL
+			circle_radius 36 3
+		elseif MAPSIZE_LARGE
+			circle_radius 37 4
+		elseif MAPSIZE_HUGE
+			circle_radius 38 5
+		elseif MAPSIZE_GIANT
+			circle_radius 39 6
+		elseif MAPSIZE_MASSIVE
+			circle_radius 39 6
+		elseif MAPSIZE_ENORMOUS
+			circle_radius 39 6
+		elseif MAPSIZE_COLOSSAL
+			circle_radius 39 6
+		elseif MAPSIZE_INCREDIBLE
+			circle_radius 39 6
+		elseif MAPSIZE_MONSTROUS
+			circle_radius 39 6
+		elseif MAPSIZE_LUDICROUS
+			circle_radius 39 6
+		endif
+	}
+
+	if MAPSIZE_MINI
+	elseif MAPSIZE_BELOW_SMALL
+		create_player_lands
+		{
+			terrain_type HILL_FOREST number_of_tiles HILL_TILES base_size HILL_BASE clumping_factor HILL_CLUMPING top_border HILL_BORDER left_border HILL_BORDER right_border HILL_BORDER bottom_border HILL_BORDER min_placement_distance HILL_SPACING generate_mode 1 zone HILL_ZONE base_elevation HILL_ELEVATION land_id 700
+		}
+	endif
+
+	create_player_lands
+	{
+		terrain_type HILL_FOREST number_of_tiles HILL_TILES base_size HILL_BASE clumping_factor HILL_CLUMPING top_border HILL_BORDER left_border HILL_BORDER right_border HILL_BORDER bottom_border HILL_BORDER min_placement_distance HILL_SPACING generate_mode 1 zone HILL_ZONE base_elevation HILL_ELEVATION land_id 800
+	}
+
+	if MAPSIZE_BELOW_NORMAL
+		create_player_lands
+		{
+			terrain_type HILL_FOREST number_of_tiles HILL_TILES base_size HILL_BASE clumping_factor HILL_CLUMPING top_border HILL_BORDER left_border HILL_BORDER right_border HILL_BORDER bottom_border HILL_BORDER min_placement_distance HILL_SPACING generate_mode 1 zone HILL_ZONE base_elevation HILL_ELEVATION land_id 700
+		}
+	endif
+
+<ELEVATION_GENERATION>
+	create_elevation 5
+	{
+		enable_balanced_elevation
+		base_terrain BASE_TERRAIN
+
+		number_of_tiles (512 * MAPSCALE_AREA)
+		number_of_clumps (32 * MAPSCALE_AREA)
+	}
+
+<CLIFF_GENERATION>
+	#include_drs includes/cliffs.inc
+	cliff_type CLIFF_TYPE
+
+<TERRAIN_GENERATION>
+	#include_drs includes/colour.inc
+	color_correction COLOUR_MOOD
+
+	create_terrain HILL_FOREST
+	{
+		base_terrain HILL_TERRAIN
+		land_percent 100
+		number_of_clumps 512
+		set_scale_by_groups
+		height_limits 4 5
+	}
+
+	create_terrain BASE_TERRAIN
+	{
+		base_terrain HILL_TERRAIN
+		land_percent 100
+		number_of_clumps 512
+		set_scale_by_groups
+		height_limits 0 0
+	}
+
+	create_terrain HILL_TERRAIN
+	{
+		base_terrain BASE_TERRAIN
+		land_percent 100
+		number_of_clumps 512
+		set_scale_by_groups
+		height_limits 1 1
+		terrain_mask 1
+	}
+
+	create_terrain HILL_FOREST
+	{
+		base_terrain HILL_TERRAIN
+		land_percent 100
+		number_of_clumps 512
+		set_scale_by_groups
+		height_limits 3 5
+		terrain_mask 1
+	}
+
+	create_terrain BASE_FOREST
+	{
+		base_terrain BASE_TERRAIN
+		land_percent 4
+		number_of_clumps 36
+		set_scale_by_groups
+		set_avoid_player_start_areas
+		spacing_to_other_terrain_types 2
+		set_flat_terrain_only
+		height_limits 0 0
+		terrain_mask 2
+	}
+
+	create_terrain BLOCK_TERRAIN
+	{
+		base_terrain BASE_TERRAIN
+		number_of_tiles 32
+		number_of_clumps 6
+		set_scale_by_size
+		set_scale_by_groups
+		set_avoid_player_start_areas 26
+		spacing_to_other_terrain_types 2
+		set_flat_terrain_only
+		height_limits 0 0
+		terrain_mask 2
+	}
+
+	create_terrain BASE_TERRAIN_VARIATION_A
+	{
+		base_terrain BASE_TERRAIN
+		land_percent 16
+		number_of_clumps 36
+		set_scale_by_groups
+		spacing_to_other_terrain_types 1
+		set_flat_terrain_only
+		height_limits 0 0
+	}
+
+	create_terrain BASE_TERRAIN_VARIATION_B
+	{
+		base_terrain BASE_TERRAIN
+		land_percent 6
+		number_of_clumps 36
+		set_scale_by_groups
+		spacing_to_other_terrain_types 1
+		set_flat_terrain_only
+		height_limits 0 0
+	}
+
+	create_terrain BASE_BLEND_A
+	{
+		base_terrain BASE_TERRAIN_VARIATION_A
+		land_percent 6
+		number_of_clumps 24
+		set_scale_by_groups
+		terrain_mask 1
+	}
+
+	create_terrain BASE_BLEND_B
+	{
+		base_terrain BASE_TERRAIN_VARIATION_A
+		land_percent 6
+		number_of_clumps 18
+		clumping_factor -10
+		set_scale_by_groups
+		terrain_mask 1
+	}
+
+	create_terrain BASE_BLEND_C
+	{
+		base_terrain BASE_TERRAIN_VARIATION_A
+		land_percent 4
+		number_of_clumps 16
+		set_scale_by_groups
+		terrain_mask 1
+	}
+
+	create_terrain BASE_BLEND_D
+	{
+		base_terrain BASE_TERRAIN_VARIATION_A
+		land_percent 4
+		number_of_clumps 18
+		set_scale_by_groups
+		terrain_mask 1
+	}
+
+	create_terrain BASE_BLEND_A
+	{
+		base_terrain BASE_TERRAIN_VARIATION_B
+		land_percent 2
+		number_of_clumps 24
+		set_scale_by_groups
+		terrain_mask 1
+	}
+
+	create_terrain BASE_BLEND_B
+	{
+		base_terrain BASE_TERRAIN_VARIATION_B
+		land_percent 2
+		number_of_clumps 18
+		clumping_factor -10
+		set_scale_by_groups
+		terrain_mask 1
+	}
+
+	create_terrain BASE_BLEND_C
+	{
+		base_terrain BASE_TERRAIN_VARIATION_B
+		land_percent 1
+		number_of_clumps 16
+		set_scale_by_groups
+		terrain_mask 1
+	}
+
+	create_terrain BASE_BLEND_D
+	{
+		base_terrain BASE_TERRAIN_VARIATION_B
+		land_percent 1
+		number_of_clumps 18
+		set_scale_by_groups
+		terrain_mask 1
+	}
+
+	create_terrain BASE_BLEND_B
+	{
+		base_terrain BASE_TERRAIN
+		land_percent 12
+		number_of_clumps 18
+		clumping_factor -10
+		set_scale_by_groups
+		terrain_mask 1
+	}
+
+	create_terrain BASE_BLEND_C
+	{
+		base_terrain BASE_TERRAIN
+		land_percent 10
+		number_of_clumps 16
+		set_scale_by_groups
+		terrain_mask 1
+	}
+
+	create_terrain BASE_BLEND_D
+	{
+		base_terrain BASE_TERRAIN
+		land_percent 14
+		number_of_clumps 18
+		set_scale_by_groups
+		terrain_mask 1
+	}
+
+	create_terrain HILL_TERRAIN
+	{
+		base_terrain HILL_FOREST
+		land_percent 2
+		number_of_clumps 48
+		set_scale_by_groups
+		terrain_mask 1
+	}
+
+<CONNECTION_GENERATION>
+	create_connect_all_players_land
+	{
+		replace_terrain WATER_SHALLOW SHALLOWS
+		replace_terrain WATER_MEDIUM SHALLOWS
+		replace_terrain WATER_DEEP SHALLOWS
+
+		terrain_cost BASE_TERRAIN 1
+		terrain_cost WATER_SHALLOW 2
+		terrain_cost WATER_MEDIUM 3
+		terrain_cost WATER_DEEP 4
+
+		terrain_size WATER_SHALLOW 1 0
+		terrain_size WATER_MEDIUM 1 0
+		terrain_size WATER_DEEP 1 0
+	}
+
+<OBJECTS_GENERATION>
+	if TERRAIN_DEBUGGING
+	else
+		#define PRELIMINARIES
+		if PRELIMINARIES
+			#const RESOURCE_SPACING_DEFAULT 10
+			#const RESOURCE_SPACING_FAR 18
+			#const RESOURCE_RESTRICTION 2
+
+			#include_drs includes/object_setup.inc
+			#include_drs includes/market_objects.inc
+
+			create_object HILL_TREE
+			{
+				number_of_objects 1024
+				temp_min_distance_group_placement 4
+				place_on_forest_zone
+				terrain_to_place_on HILL_TERRAIN
+			}
+
+			create_object HILL_TREE
+			{
+				number_of_objects 1024
+				temp_min_distance_group_placement 12
+				place_on_forest_zone
+				terrain_to_place_on HILL_TERRAIN
+			}
+
+			create_object HILL_TREE
+			{
+				number_of_objects 1024
+				temp_min_distance_group_placement 11
+				place_on_forest_zone
+				terrain_to_place_on HILL_TERRAIN
+			}
+
+			create_object HILL_TREE
+			{
+				number_of_objects 1024
+				temp_min_distance_group_placement 10
+				place_on_forest_zone
+				terrain_to_place_on HILL_TERRAIN
+			}
+
+			create_object HILL_TREE
+			{
+				number_of_objects 1024
+				temp_min_distance_group_placement 9
+				place_on_forest_zone
+				terrain_to_place_on HILL_TERRAIN
+			}
+
+			create_object HILL_TREE
+			{
+				number_of_objects 1024
+				temp_min_distance_group_placement 12
+				place_on_forest_zone
+				terrain_to_place_on HILL_TERRAIN
+			}
+
+			create_object HILL_TREE
+			{
+				number_of_objects 1024
+				temp_min_distance_group_placement 11
+				place_on_forest_zone
+				terrain_to_place_on HILL_TERRAIN
+			}
+
+			create_object HILL_TREE
+			{
+				number_of_objects 1024
+				temp_min_distance_group_placement 10
+				place_on_forest_zone
+				terrain_to_place_on HILL_TERRAIN
+			}
+
+			create_object HILL_TREE
+			{
+				number_of_objects 1024
+				temp_min_distance_group_placement 9
+				place_on_forest_zone
+				terrain_to_place_on HILL_TERRAIN
+			}
+
+			create_object ROCK_A
+			{
+				second_object FLOWER_BED
+				number_of_objects 1024
+				terrain_to_place_on BLOCK_TERRAIN
+
+				actor_area 7000
+				actor_area_radius 4
+			}
+
+			create_object PLACEHOLDER_GENERIC
+			{
+				number_of_objects 1024
+				temp_min_distance_group_placement 1
+				terrain_to_place_on HILL_TERRAIN
+
+				actor_area 7001
+				actor_area_radius 3
+			}
+		endif
+
+		#include_drs includes/town_centres.inc
+		#include_drs includes/villagers.inc
+		#include_drs includes/scouts.inc
+		#include_drs includes/walls.inc
+
+		#include_drs includes/defend_wonder.inc
+		#include_drs includes/regicide.inc
+		#include_drs includes/capture_relic.inc
+
+		if NOMAD_START
+		else
+			#include_drs includes/stragglers.inc
+
+			#const FORAGE_BUSH_PRIMARY_CAA_A 7000
+			#const FORAGE_BUSH_PRIMARY_CAA_A 7000
+			#define FORAGE_BUSH_PRIMARY
+
+			#const GOLD_PRIMARY_DISTANCE 12
+			#const GOLD_PRIMARY_CAA_A 7000
+			#const GOLD_PRIMARY_CAA_B 7001
+			#define GOLD_PRIMARY
+
+			#const GOLD_SECONDARY_DISTANCE 14
+			#const GOLD_SECONDARY_CAA_A 7000
+			#const GOLD_SECONDARY_CAA_B 7001
+			#define GOLD_SECONDARY
+
+			#const GOLD_TERTIARY_DISTANCE 18
+			#const GOLD_TERTIARY_CAA_A 7000
+			#const GOLD_TERTIARY_CAA_B 7001
+			#define GOLD_TERTIARY
+
+			#const STONE_PRIMARY_DISTANCE 14
+			#const STONE_PRIMARY_CAA_A 7000
+			#const STONE_PRIMARY_CAA_B 7001
+			#define STONE_PRIMARY
+
+			#const STONE_SECONDARY_DISTANCE 18
+			#const STONE_SECONDARY_CAA_A 7000
+			#const STONE_SECONDARY_CAA_B 7001
+			#define STONE_SECONDARY
+
+			create_object GOLD
+			{
+				place_on_specific_land_id 800
+				set_gaia_object_only
+				number_of_objects 4
+				set_tight_grouping
+				set_circular_placement
+				find_closest_to_map_center
+				max_distance_to_players 12
+			}
+
+			#include_drs includes/starting_resources.inc
+
+			if DEATH_MATCH
+			elseif INFINITE_RESOURCES
+			else
+				#define HERDABLE_STARTING_COUNT_FOUR
+
+				#include_drs includes/herdable_starting.inc
+				#include_drs includes/herdable.inc
+
+				#const HUNTABLE_SMALL_COUNT 8
+				#const HUNTABLE_SMALL_GROUPS 1
+
+				if EMPIRE_WARS_MODE
+					#define HUNTABLE_SMALL_TIGHT_GROUPING
+					#const HUNTABLE_SMALL_PLACEMENT_ID 10205
+				endif
+
+				#include_drs includes/huntable.inc
+				#include_drs includes/lureable.inc
+				#include_drs includes/furbearers.inc
+			endif
+		endif
+
+		/* Neutral Resources */
+
+		if DEATH_MATCH
+		else
+			#include_drs includes/predators.inc
+			#include_drs includes/riparian.inc
+		endif
+
+		#include_drs includes/neritic.inc
+		#include_drs includes/oysters.inc
+
+		#const FRESHWATER_COUNT 0
+
+		#include_drs includes/aquatic_freshwater.inc
+
+		#const SALTWATER_COUNT 0
+
+		#include_drs includes/aquatic_saltwater.inc
+
+		if DEATH_MATCH
+		else
+			#include_drs includes/stragglers_neutral.inc
+			#include_drs includes/stragglers_coastal.inc
+			#include_drs includes/reeds.inc
+		endif
+
+		if 2_PLAYER_GAME
+			create_object RELIC
+			{
+				place_on_specific_land_id 700
+				set_gaia_object_only
+				number_of_objects 1
+				min_distance_to_players 12
+				max_distance_to_players 14
+				set_circular_placement
+				find_closest_to_map_edge
+
+				actor_area 1500
+				actor_area_radius 1
+
+				avoid_actor_area 10102 /* Minimum Primary Forage Bush Distance */
+				avoid_actor_area 10202 /* Minimum Primary Gold Distance */
+				avoid_actor_area 10302 /* Minimum Primary Stone Distance */
+			}
+
+			create_object RELIC
+			{
+				place_on_specific_land_id 800
+				set_gaia_object_only
+				number_of_objects 1
+				min_distance_to_players 12
+				max_distance_to_players 14
+				set_circular_placement
+				find_closest_to_map_edge
+
+				actor_area 1500
+				actor_area_radius 1
+
+				avoid_actor_area 10102 /* Minimum Primary Forage Bush Distance */
+				avoid_actor_area 10202 /* Minimum Primary Gold Distance */
+				avoid_actor_area 10302 /* Minimum Primary Stone Distance */
+			}
+		else
+			#define RELIC_TYPE_UNRESTRICTED
+			#include_drs includes/relics.inc
+		endif
+
+		#include_drs includes/remote_resources.inc
+
+		#define EXTRA_STUFF
+		if EXTRA_STUFF
+			if EMPIRE_WARS_MODE
+				#define EMPIRE_WARS_FORAGERS
+
+				#include_drs includes/empire_wars.inc
+				#include_drs includes/empire_food.inc
+				#include_drs includes/empire_gold.inc
+				#include_drs includes/empire_wood.inc
+				#include_drs includes/empire_buildings.inc
+			elseif ESCALATION_MODE
+				#include_drs includes/escalation_mode.inc
+			endif
+
+			#define AESTHETICS
+			if AESTHETICS
+				#include_drs includes/birds.inc
+
+				create_object STUMP
+				{
+					number_of_objects 24
+					set_scaling_to_map_size
+					temp_min_distance_group_placement 1
+					place_on_forest_zone
+					terrain_to_place_on BASE_TERRAIN
+				}
+
+				create_object WILD_ANIMAL
+				{
+					number_of_objects 2
+					number_of_groups 1024
+					min_distance_to_players 36
+					set_circular_placement
+					temp_min_distance_group_placement 32
+
+					min_distance_group_placement 1
+					max_distance_to_other_zones 4
+					avoid_forest_zone 2
+					avoid_cliff_zone 2
+					min_distance_to_map_edge 2
+
+					avoid_actor_area 7000 /* Rock Formations */
+					avoid_actor_area 7001 /* Hill Terrain */
+				}
+
+				create_object SIGN
+				{
+					number_of_objects 1024
+					min_distance_to_players 32
+					set_circular_placement
+					temp_min_distance_group_placement 86
+
+					min_distance_group_placement 1
+					max_distance_to_other_zones 4
+					avoid_forest_zone 2
+					avoid_cliff_zone 2
+					min_distance_to_map_edge 2
+
+					avoid_actor_area 7000 /* Rock Formations */
+					avoid_actor_area 7001 /* Hill Terrain */
+				}
+			endif
+		endif
+	endif

@@ -1,0 +1,390 @@
+{
+	"water_types" : [
+
+		{
+			"water_type_name" : "Preset_Main",
+			"water_normals_def" : 
+			[
+				{ 
+					"normalFileName" : "water\\waterSurfaceFE.dds",
+					"direction_min" : [1.00, 0],
+					"direction_max" : [1.00, 0],
+					"velocity_min": 0.125,
+					"velocity_max": 0.125,
+					"azimuth" : 30,
+					"scale" : 0.05
+				}
+			],
+			"water_types_def" : [
+				{
+					"name" : "land", 
+					"reflectivity" : 0,
+					"height_mult" : 25,
+					"opacity" : 0
+				}, 
+				{
+					"name" : "walkable", 
+					"reflectivity" : 64,
+					"height_mult" : 255,
+					"opacity" : 10
+				},
+				{
+					"name" : "shallow",
+					"reflectivity" : 144,
+					"height_mult" : 255,
+					"opacity" : 10
+				},
+				{
+					"name" : "normal",
+					"reflectivity" : 144,
+					"height_mult" : 255,
+					"opacity" : 10
+				},
+				{
+					"name" : "deep",
+					"reflectivity" : 144,
+					"height_mult" : 255,
+					"opacity" : 10
+				},
+				{
+					"name" : "ocean",
+					"reflectivity" : 144,
+					"height_mult" : 255,
+					"opacity" : 10
+				},
+				{
+					"name" : "shoreless", 
+					"reflectivity" : 64,
+					"height_mult" : 255,
+					"opacity" : 10
+				}
+			],
+			"water_sky_texture" : "water\\skydome4.dds",
+			"sea_floor_texture" : "water\\seaFloor.dds",
+			"sun_direction" : [  0.7, -0.68, 0.45 ],
+			"sun_color" : [  1.0, 1.0, 1.0 ],
+			"sky_color" : [  1.0, 1.5, 1.25 ],
+			"water_color" : [  1.0, 1.0, 1.0 ],
+			"sea_floor_intensity" : 0.1,
+			"sky_intensity" : 2.0,
+			"sky_rotation" : 178.5,
+			"sky_scale" : -0.35,
+			"specular_intensity" : 0.7,
+			"specular_power" : 1600.0,
+			"map_scale" : 0.0045,
+			"sea_floor_scale" : 8.0,
+			"wave_animation_speed" : 2.0,
+			"wave_repeat_length" : 20.0,
+			"wave_amplitude" : 0.01
+		},
+
+
+		{
+			"water_type_name" : "Preset_Old",
+			"water_normals_def" : 
+			[
+				{ 
+					"normalFileName" : "water\\waterSurfaceFE.dds",
+					"direction_min" : [1.00, 0],
+					"direction_max" : [1.00, 0],
+					"velocity_min": 0.125,
+					"velocity_max": 0.125,
+					"azimuth" : 30,
+					"scale" : 0.05
+				}
+			],
+			"water_types_def" : [
+				{
+					"name" : "land", 
+					"reflectivity" : 0,
+					"height_mult" : 25,
+					"opacity" : 0
+				}, 
+				{
+					"name" : "walkable", 
+					"reflectivity" : 64,
+					"height_mult" : 255,
+					"opacity" : 24
+				},
+				{
+					"name" : "shallow",
+					"reflectivity" : 144,
+					"height_mult" : 255,
+					"opacity" : 32
+				},
+				{
+					"name" : "normal",
+					"reflectivity" : 144,
+					"height_mult" : 255,
+					"opacity" : 32
+				},
+				{
+					"name" : "deep",
+					"reflectivity" : 144,
+					"height_mult" : 255,
+					"opacity" : 32
+				},
+				{
+					"name" : "ocean",
+					"reflectivity" : 144,
+					"height_mult" : 255,
+					"opacity" : 32
+				},
+				{
+					"name" : "shoreless", 
+					"reflectivity" : 64,
+					"height_mult" : 255,
+					"opacity" : 10
+				}
+			],
+			"water_sky_texture" : "water\\skydome4.dds",
+			"sea_floor_texture" : "water\\seaFloor.dds",
+			"sun_direction" : [  0.7, -0.68, 0.45 ],
+			"sun_color" : [  1.0, 1.0, 1.0 ],
+			"sky_color" : [  1.0, 1.5, 1.25 ],
+			"water_color" : [  1.0, 1.0, 1.0 ],
+			"sea_floor_intensity" : 0.1,
+			"sky_intensity" : 2.0,
+			"sky_rotation" : 178.5,
+			"sky_scale" : -0.35,
+			"specular_intensity" : 0.7,
+			"specular_power" : 1600.0,
+			"map_scale" : 0.0045,
+			"sea_floor_scale" : 8.0,
+			"wave_animation_speed" : 2.0,
+			"wave_repeat_length" : 20.0,
+			"wave_amplitude" : 0.01
+		},
+
+
+
+		{
+			"water_type_name" : "Preset_Backup_FE1",
+			"water_normals_def" : 
+			[
+				{ 
+					"normalFileName" : "water\\waterSurfaceFE.dds",
+					"direction_min" : [1.00, 0],
+					"direction_max" : [1.00, 0],
+					"velocity_min": 0.125,
+					"velocity_max": 0.125,
+					"azimuth" : 30,
+					"scale" : 0.05
+				}
+			],
+			"water_types_def" : [
+				{
+					"name" : "land", 
+					"reflectivity" : 0,
+					"height_mult" : 25,
+					"opacity" : 0
+				}, 
+				{
+					"name" : "walkable", 
+					"reflectivity" : 50,
+					"height_mult" : 255,
+					"opacity" : 10
+				},
+				{
+					"name" : "shallow",
+					"reflectivity" : 50,
+					"height_mult" : 255,
+					"opacity" : 10
+				},
+				{
+					"name" : "normal",
+					"reflectivity" : 100,
+					"height_mult" : 120,
+					"opacity" : 310
+				},
+				{
+					"name" : "deep",
+					"reflectivity" : 200,
+					"height_mult" : 160,
+					"opacity" : 10
+				},
+				{
+					"name" : "ocean",
+					"reflectivity" : 250,
+					"height_mult" : 180,
+					"opacity" : 10
+				},
+				{
+					"name" : "shoreless", 
+					"reflectivity" : 100,
+					"height_mult" : 120,
+					"opacity" : 10
+				}
+			],
+			"water_sky_texture" : "water\\skydome4.dds",
+			"sea_floor_texture" : "water\\seaFloor.dds",
+			"sun_direction" : [  0.7, -0.68, 0.45 ],
+			"sun_color" : [  1.0, 1.0, 1.0 ],
+			"sky_color" : [  1.0, 1.5, 1.25 ],
+			"water_color" : [  1.0, 1.0, 1.0 ],
+			"sea_floor_intensity" : 0.0,
+			"sky_intensity" : 2.0,
+			"sky_rotation" : 178.5,
+			"sky_scale" : -0.35,
+			"specular_intensity" : 0.8,
+			"specular_power" : 1600.0,
+			"map_scale" : 0.0045,
+			"sea_floor_scale" : 8.0,
+			"wave_animation_speed" : 2.0,
+			"wave_repeat_length" : 20.0,
+			"wave_amplitude" : 0.01
+		},
+		{
+			"water_type_name" : "Preset_Backup_FE2",
+			"water_normals_def" : 
+			[
+				{ 
+					"normalFileName" : "water\\waterSurfaceFE.dds",
+					"direction_min" : [1.00, 0],
+					"direction_max" : [1.00, 0],
+					"velocity_min": 0.125,
+					"velocity_max": 0.125,
+					"azimuth" : 30,
+					"scale" : 0.05
+				}
+			],
+			"water_types_def" : [
+				{
+					"name" : "land", 
+					"reflectivity" : 0,
+					"height_mult" : 25,
+					"opacity" : 0
+				}, 
+				{
+					"name" : "walkable", 
+					"reflectivity" : 60,
+					"height_mult" : 255,
+					"opacity" : 10
+				},
+				{
+					"name" : "shallow",
+					"reflectivity" : 60,
+					"height_mult" : 255,
+					"opacity" : 10
+				},
+				{
+					"name" : "normal",
+					"reflectivity" : 130,
+					"height_mult" : 180,
+					"opacity" : 30
+				},
+				{
+					"name" : "deep",
+					"reflectivity" : 220,
+					"height_mult" : 200,
+					"opacity" : 50
+				},
+				{
+					"name" : "ocean",
+					"reflectivity" : 250,
+					"height_mult" : 220,
+					"opacity" : 60
+				},
+				{
+					"name" : "shoreless", 
+					"reflectivity" : 100,
+					"height_mult" : 120,
+					"opacity" : 30
+				}
+			],
+			"water_sky_texture" : "water\\skydome4.dds",
+			"sea_floor_texture" : "water\\seaFloor.dds",
+			"sun_direction" : [  0.7, -0.68, 0.45 ],
+			"sun_color" : [  1.0, 1.0, 1.0 ],
+			"sky_color" : [  1.0, 1.5, 1.25 ],
+			"water_color" : [  1.0, 1.0, 1.0 ],
+			"sea_floor_intensity" : 0.0,
+			"sky_intensity" : 2.0,
+			"sky_rotation" : 178.5,
+			"sky_scale" : -0.35,
+			"specular_intensity" : 0.8,
+			"specular_power" : 1200.0,
+			"map_scale" : 0.0035,
+			"sea_floor_scale" : 8.0,
+			"wave_animation_speed" : 2.0,
+			"wave_repeat_length" : 20.0,
+			"wave_amplitude" : 0.01
+		},
+		{
+			"water_type_name" : "Preset_Backup_WickedWitch",
+			"water_normals_def" : 
+			[
+				{ 
+					"normalFileName" : "water\\waterSurface.dds",
+					"direction_min" : [1.00, 0],
+					"direction_max" : [1.00, 0],
+					"velocity_min": 0.125,
+					"velocity_max": 0.125,
+					"azimuth" : 30,
+					"scale" : 0.05
+				}
+			],
+			"water_types_def" : [
+{
+					"name" : "land", 
+					"reflectivity" : 0,
+					"height_mult" : 25,
+					"opacity" : 0
+				}, ,
+				{
+					"name" : "walkable", 
+					"reflectivity" : 160,
+					"height_mult" : 65,
+					"opacity" : 70
+				},
+				{
+					"name" : "shallow",
+					"reflectivity" : 184,
+					"height_mult" : 78,
+					"opacity" : 70
+				},
+				{
+					"name" : "normal",
+					"reflectivity" : 200,
+					"height_mult" : 120,
+					"opacity" : 90
+				},
+				{
+					"name" : "deep",
+					"reflectivity" : 220,
+					"height_mult" : 188,
+					"opacity" : 120
+				},
+				{
+					"name" : "ocean",
+					"reflectivity" : 250,
+					"height_mult" : 250,
+					"opacity" : 130
+				}
+				{
+					"name" : "shoreless", 
+					"reflectivity" : 160,
+					"height_mult" : 70,
+					"opacity" : 70
+				}
+			],
+			"water_sky_texture" : "water\\skydome4.dds",
+			"sea_floor_texture" : "water\\seaFloor.dds",
+			"sun_direction" : [  0.7, -0.68, 0.45 ],
+			"sun_color" : [  1.0, 1.0, 1.0 ],
+			"sky_color" : [  0.56, 0.66, 0.8 ],
+			"water_color" : [  1.0, 1.0, 1.0 ],
+			"sea_floor_intensity" : 0.1,
+			"sky_intensity" : 1.2,
+			"sky_rotation" : 178.5,
+			"sky_scale" : -0.4,
+			"specular_intensity" : 0.8,
+			"specular_power" : 1600.0,
+			"map_scale" : 0.0045,
+			"sea_floor_scale" : 8.0,
+			"wave_animation_speed" : 3.5,
+			"wave_repeat_length" : 15.0,
+			"wave_amplitude" : 0.01
+		}
+	]
+}

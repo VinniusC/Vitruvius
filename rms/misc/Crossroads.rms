@@ -1,0 +1,573 @@
+/* Crossroads 2021 */
+
+/* PH SEASONS */
+
+#define PH_ALPINE
+
+#include_drs F_seasons.inc
+
+<PLAYER_SETUP>
+  random_placement
+  ai_info_map_type OASIS 0 0 0
+
+
+<LAND_GENERATION>
+base_terrain DLC_DRYGRASS
+enable_waves 0 
+
+create_land
+{
+  terrain_type				GRASS2
+  land_percent                     100
+  base_size                        2
+if TINY_MAP
+  top_border		rnd(26,28)
+  bottom_border		55
+  left_border		rnd(26,28)
+  right_border		55
+elseif SMALL_MAP
+  top_border		rnd(24,26)
+  bottom_border		rnd(55,57)
+  left_border		rnd(24,26)
+  right_border		rnd(55,57)
+else
+  top_border		rnd(21,23)
+  bottom_border		rnd(54,57)
+  left_border		rnd(21,23)
+  right_border		rnd(54,57)
+endif
+  zone 1
+  base_elevation 6
+}
+
+create_land
+{
+  terrain_type				GRASS2
+  land_percent                     100
+  base_size                        2
+if TINY_MAP
+  top_border		rnd(26,28)
+  bottom_border		55
+  left_border		55
+  right_border		rnd(26,28)
+elseif SMALL_MAP
+  top_border		rnd(24,26)
+  bottom_border		rnd(55,57)
+  left_border		rnd(55,57)
+  right_border		rnd(24,26)
+else
+  top_border		rnd(21,23)
+  bottom_border		rnd(54,57)
+  left_border		rnd(54,57)
+  right_border		rnd(21,23)
+endif
+  zone 1
+  base_elevation 6
+}
+
+create_land
+{
+  terrain_type				GRASS2
+  land_percent                     100
+  base_size                        2
+if TINY_MAP
+  top_border		55
+  bottom_border		rnd(26,28)
+  left_border		55
+  right_border		rnd(26,28)
+elseif SMALL_MAP
+  top_border		rnd(55,57)
+  bottom_border		rnd(24,26)
+  left_border		rnd(55,57)
+  right_border		rnd(24,26)
+else
+  top_border		rnd(54,57)
+  bottom_border		rnd(21,23)
+  left_border		rnd(54,57)
+  right_border		rnd(21,23)
+endif
+  zone 1
+  base_elevation 6
+}
+
+create_land
+{
+  terrain_type				GRASS2
+  land_percent                     100
+  base_size                        2
+if TINY_MAP
+  top_border		55
+  bottom_border		rnd(26,28)
+  left_border		rnd(26,28)
+  right_border		55
+elseif SMALL_MAP
+  top_border		rnd(54,57)
+  bottom_border		rnd(24,26)
+  left_border		rnd(24,26)
+  right_border		rnd(54,57)
+else
+  top_border		rnd(54,57)
+  bottom_border		rnd(21,23)
+  left_border		rnd(21,23)
+  right_border		rnd(54,57)
+endif
+  zone 1
+  base_elevation 6
+}
+
+create_player_lands 
+{
+  terrain_type				GRASS
+  land_percent                     1
+  base_size                        11
+  circle_radius 	54 0
+  other_zone_avoidance_distance    0
+  zone 1
+}
+
+
+/* ****************************************************** */
+<TERRAIN_GENERATION>
+
+  create_terrain LEAVES
+{
+  base_terrain GRASS2
+  land_percent 100
+  number_of_clumps 1000
+  height_limits 6 7
+if TINY_MAP
+  spacing_to_other_terrain_types 1
+elseif SMALL_MAP
+  spacing_to_other_terrain_types 1
+else
+  spacing_to_other_terrain_types 3
+endif
+}
+
+  create_terrain WOODIES
+{
+  base_terrain LEAVES
+  land_percent 100
+  number_of_clumps 100
+  height_limits 6 7
+  spacing_to_other_terrain_types 1
+}
+
+  create_terrain DLC_ROCK
+{
+  base_terrain DLC_DRYGRASS
+  land_percent 100
+  number_of_clumps 100
+  height_limits 1 5
+}
+
+  create_terrain DLC_ROCK
+{
+  base_terrain DLC_DRYGRASS
+  land_percent 100
+  number_of_clumps 100
+  height_limits 1 5
+}
+
+
+  create_terrain DLC_ROCK
+{
+  base_terrain DLC_DRYGRASS
+  land_percent 100
+  number_of_clumps 100
+  height_limits 1 5
+}
+
+
+  create_terrain DLC_ROCK
+{
+  base_terrain DLC_DRYGRASS
+  land_percent 100
+  number_of_clumps 100
+  height_limits 1 5
+}
+
+  create_terrain VODA
+{
+  base_terrain DLC_DRYGRASS
+  land_percent 100
+  number_of_clumps 100
+  height_limits 0 0
+if GIGANTIC_MAP
+  spacing_to_other_terrain_types 18
+elseif LUDIKRIS_MAP
+  spacing_to_other_terrain_types 40
+else
+  spacing_to_other_terrain_types 12
+endif
+  set_avoid_player_start_areas
+}
+
+/*
+  create_terrain GRASS
+{
+  base_terrain DLC_DRYGRASS
+  land_percent 5
+  number_of_clumps 40
+  height_limits 0 0
+  spacing_to_other_terrain_types 2
+}
+*/
+
+  create_terrain DLC_DRYGRASS
+{
+  base_terrain GRASS
+  land_percent 3
+  number_of_clumps 20
+  height_limits 0 0
+  spacing_to_other_terrain_types 0
+  terrain_mask 1
+}
+
+  create_terrain GRASS
+{
+  base_terrain DLC_DRYGRASS
+  land_percent 12
+  number_of_clumps 40
+  height_limits 0 0
+  spacing_to_other_terrain_types 2
+  terrain_mask 1
+}
+
+  create_terrain GRASS2
+{
+  base_terrain DLC_DRYGRASS
+  land_percent 100
+  number_of_clumps 1000
+  height_limits 4 7
+}
+
+  create_terrain GRASS2
+{
+  base_terrain DLC_DRYGRASS
+  land_percent 100
+  number_of_clumps 1000
+  height_limits 4 7
+}
+
+  create_terrain GRASS2
+{
+  base_terrain DLC_DRYGRASS
+  land_percent 100
+  number_of_clumps 1000
+  height_limits 4 7
+}
+
+  create_terrain GRASS2
+{
+  base_terrain DLC_DRYGRASS
+  land_percent 100
+  number_of_clumps 1000
+  height_limits 4 7
+}
+
+  create_terrain GRASS2
+{
+  base_terrain DLC_DRYGRASS
+  land_percent 100
+  number_of_clumps 1000
+  height_limits 4 7
+}
+
+  create_terrain GRASS2
+{
+  base_terrain DLC_DRYGRASS
+  land_percent 100
+  number_of_clumps 1000
+  height_limits 4 7
+}
+
+  create_terrain GRASS2
+{
+  base_terrain DLC_DRYGRASS
+  land_percent 100
+  number_of_clumps 1000
+  height_limits 4 7
+}
+
+  create_terrain GRASS2
+{
+  base_terrain DLC_ROCK
+  land_percent 100
+  number_of_clumps 1000
+  height_limits 5 6
+  terrain_mask 1
+}
+
+  create_terrain GRASS2
+{
+  base_terrain LEAVES
+  land_percent 100
+  number_of_clumps 1000
+  height_limits 5 7
+  terrain_mask 1
+}
+
+#const THESPECIALMUD 76
+
+  create_terrain THESPECIALMUD
+{
+  base_terrain GRASS2
+  land_percent 2
+  number_of_clumps 180
+  height_limits 5 7
+  terrain_mask 1
+}
+
+  create_terrain THESPECIALMUD
+{
+  base_terrain GRASS
+  land_percent 1
+  number_of_clumps 40
+  terrain_mask 1
+}
+
+  create_terrain THESPECIALMUD
+{
+  base_terrain DLC_DRYGRASS
+  land_percent 4
+  number_of_clumps 40
+  terrain_mask 1
+}
+
+#define WMASK_VODA
+#include_drs F_WaterMasking.inc
+
+/* ****************************************************** */
+<OBJECTS_GENERATION>
+
+#define GNR_NORMALTC
+#define GNR_STARTVILLS
+#define GNR_CLASSICSCOUT
+
+#define GNR_RESCLOSE
+
+#define GNR_REGICIDECLASSIC
+#define GNR_6KER
+
+#define GNR_STARTINGGOLD
+
+#define GNR_STARTGOLD66M
+#define GNR_SPLITSTARTGOLDS
+
+#define GNR_STARTINGSTONE
+#define GNR_STARTSTONE54CL
+
+#define GNR_GIVEHERD_A
+#define GNR_GIVEHERD_B
+
+#define GNR_HERD4CLASSIC_A
+#define GNR_HERD22CLASSIC_B
+
+#define GNR_GIVEHUNT
+
+#define GNR_HUNT4MODERN
+
+#define GNR_GIVELURES
+#define GNR_CLASSICLURES
+
+#define GNR_HOMESTRAGGLE
+#define GNR_NORMALBIRDS
+
+#define GNR_STANDARDFISH
+
+/* no stragglers per map */
+
+#include_drs GeneratingObjects.inc
+
+if EMPIRE_WARS
+
+
+create_object BLANKOBJECT
+{
+  set_place_for_every_player
+  number_of_objects 1
+  second_object LUMBER_CAMP
+  place_on_forest_zone 0
+  find_closest
+  actor_area 8
+  actor_area_radius 4
+  avoid_actor_area 94
+  avoid_actor_area 40
+ }
+
+create_object VILLAGER
+{
+  set_place_for_every_player
+  number_of_objects 4
+  actor_area_to_place_in 8
+  actor_area 71
+  actor_area_radius 3
+  avoid_forest_zone 0
+  force_placement
+ }
+
+create_object BLANKOBJECT
+{
+  set_place_for_every_player
+  number_of_objects 1
+  place_on_forest_zone 0
+  find_closest 
+  actor_area 9
+  actor_area_radius 4
+  second_object LUMBER_CAMP
+  avoid_actor_area 8
+  avoid_actor_area 94
+  avoid_actor_area 40
+ }
+
+create_object VILLAGER
+{
+  set_place_for_every_player
+  number_of_objects 4  /* increased from 3 */
+  actor_area_to_place_in 9
+  actor_area 72
+  actor_area_radius 3
+  avoid_forest_zone 0
+  force_placement
+ }
+
+create_object BLANKOBJECT
+{
+  set_place_for_every_player
+  number_of_objects 1
+  place_on_forest_zone 0
+  avoid_actor_area 8
+  avoid_actor_area 9
+  avoid_actor_area 94
+  avoid_actor_area 40
+  find_closest 
+  actor_area 99
+  actor_area_radius 4
+  second_object LUMBER_CAMP
+ }
+
+create_object VILLAGER
+{
+  set_place_for_every_player
+  number_of_objects 4
+  actor_area_to_place_in 99
+  actor_area 73
+  actor_area_radius 3
+  avoid_forest_zone 0
+  force_placement
+ }
+
+endif
+
+
+if INFINITE_RESOURCES
+else
+
+create_object STRAGGLER
+{
+   number_of_objects          5
+   number_of_groups           1
+   group_placement_radius     2
+   set_tight_grouping
+   set_gaia_object_only
+   max_distance_to_other_zones 3
+   min_distance_group_placement  2
+   min_distance_to_players 12
+   set_place_for_every_player
+   find_closest
+}
+
+endif
+
+if INFINITE_RESOURCES
+else
+
+create_object GOLD
+{
+   number_of_objects          3
+   number_of_groups           9999
+   temp_min_distance_group_placement  28
+   group_placement_radius     2
+   set_tight_grouping
+   set_gaia_object_only
+   avoid_forest_zone 3
+   max_distance_to_other_zones 3
+   min_distance_to_players 30
+   actor_area 66
+   actor_area_radius 5
+   terrain_to_place_on DLC_DRYGRASS
+   min_distance_group_placement  3
+}
+
+endif
+
+if INFINITE_RESOURCES
+else
+
+create_object STONE
+{
+   number_of_objects          3
+   number_of_groups           9999
+   temp_min_distance_group_placement  28
+   group_placement_radius     2
+   set_tight_grouping
+   set_gaia_object_only
+   avoid_forest_zone 3
+   max_distance_to_other_zones 3
+   min_distance_to_players 30
+   actor_area 67
+   actor_area_radius 5
+   avoid_actor_area 66
+   terrain_to_place_on DLC_DRYGRASS
+   min_distance_group_placement  3
+}
+
+endif
+
+
+create_object RELIC
+{
+		if TINY_MAP
+   number_of_objects            5
+   temp_min_distance_group_placement 30
+		elseif SMALL_MAP
+   number_of_objects            5
+   temp_min_distance_group_placement 30
+		elseif MEDIUM_MAP
+   number_of_objects            5
+   temp_min_distance_group_placement 40
+		elseif LARGE_MAP
+   number_of_objects            7
+   temp_min_distance_group_placement 40
+		elseif HUGE_MAP
+   number_of_objects            8
+   temp_min_distance_group_placement 40
+		elseif GIGANTIC_MAP
+   number_of_objects            999
+   temp_min_distance_group_placement 45
+		elseif LUDIKRIS_MAP
+   number_of_objects            999
+   temp_min_distance_group_placement 60
+		endif
+   set_gaia_object_only
+   avoid_forest_zone 1
+   min_distance_to_players 30
+   terrain_to_place_on DLC_DRYGRASS
+}
+
+/* ****************************************************** */
+
+<ELEVATION_GENERATION>
+
+
+create_elevation        7
+{
+  base_terrain			GRASS2
+  number_of_clumps 		999999
+  number_of_tiles               999999
+  spacing 2
+}
+
+/* ****************************************************** */
+<CONNECTION_GENERATION>

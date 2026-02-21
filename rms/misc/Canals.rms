@@ -1,0 +1,1295 @@
+/*
+
+	Canals by Forgotten Empires
+
+	Created: 30/04/2025
+	Updated: N/A
+	
+	Version: 1.0
+
+*/
+
+#const MAPSCALE_MODIFIER 1
+#include_drs includes/scaling.inc
+
+/* ----------------------------------- Debug Settings */
+
+/* #define DEBUG_MODE */
+/* #define TERRAIN_DEBUGGING */
+/* #define EMPIRE_WARS_TESTING */
+#define COLLAPSE
+
+/* ----------------------------------- Generation Settings */
+
+#define NEARCTIC_TEMPERATE
+/* #define CENTRALISE_SPAWN */
+/* #define RESTRICTED_SPAWN */
+
+/* ----------------------------------- Nomad Settings */
+
+/* #define NOMAD_MAP */
+/* #define NOMAD_SCATTERED */
+/* #define NOMAD_UNIT */
+#define NOMAD_TREATY
+/* #define NOMAD_HERDABLE */
+
+/* ----------------------------------- Themes & Overwrites */
+
+#define OVERWRITES
+if OVERWRITES
+endif
+
+#define MAP_CONSTANTS
+if MAP_CONSTANTS
+	#const STRAGGLER_SPAWN 349 /* Oak Tree */
+	#const STRAGGLER_NEUTRAL 349 /* Oak Tree */
+
+	#const BEACH_TERRAIN 2
+	#const SEABED_TERRAIN 2
+	
+	#const SPAWN_FOREST 48
+	#const SPAWN_TERRAIN 76
+	#const SPAWN_BLEND_A 100
+	#const SPAWN_BLEND_B 122
+
+	#const BASE_FOREST 20
+	#const BASE_FOREST_VARIATION 20
+
+	#const BASE_TERRAIN 0
+	#const BASE_BLEND_A 3
+	#const BASE_BLEND_B 5
+	#const BASE_BLEND_C 122
+	#const BASE_BLEND_D 76
+
+	#const EDGE_TERRAIN 5
+	#const OUTSIDE_FOREST 19
+	#const OUTSIDE_FOREST_VARIATION 21
+
+	#const MIDDLE_TERRAIN 100
+endif
+
+#include_drs includes/themes.inc
+#include_drs includes/constants.inc
+#include_drs includes/decay.inc
+
+<PLAYER_SETUP>
+	#include_drs includes/preliminaries.inc
+	#include_drs includes/gaia_civilisation.inc
+
+	#define WATER_POND
+	#include_drs includes/water_preset.inc
+	water_definition WATER_PRESET
+
+	random_placement
+	ai_info_map_type ARABIA 0 0
+
+	if CONFINED_SETUP
+		#const CONFINED_INCREASE 1.2
+	else
+		#const CONFINED_INCREASE 1
+	endif
+	
+<LAND_GENERATION>
+	base_terrain SPAWN_TERRAIN
+
+	create_land
+	{
+		terrain_type SHALLOWS
+
+		if MAPSIZE_ABOVE_LARGE
+			number_of_tiles 812
+			base_size 13
+		elseif MAPSIZE_ABOVE_NORMAL
+			number_of_tiles 788
+			base_size 12
+		elseif MAPSIZE_ABOVE_MEDIUM
+			number_of_tiles 768
+			base_size 12
+		elseif MAPSIZE_ABOVE_SMALL
+			number_of_tiles 626
+			base_size 10
+		else
+			number_of_tiles 512
+			base_size 8
+		endif
+		
+		set_circular_base
+		land_conformity 50
+		land_position 50 50
+		land_id 420
+		zone 10
+	}
+
+	create_land
+	{
+		terrain_type OUTSIDE_FOREST
+		land_percent 100
+		base_size 0
+		land_position 5 5
+	}
+
+	create_land
+	{
+		terrain_type OUTSIDE_FOREST
+		land_percent 100
+		base_size 0
+		land_position 95 5
+	}
+
+	create_land
+	{
+		terrain_type OUTSIDE_FOREST
+		land_percent 100
+		base_size 0
+		land_position 5 95
+	}
+
+	create_land
+	{
+		terrain_type OUTSIDE_FOREST
+		land_percent 100
+		base_size 0
+		land_position 95 95
+	}
+
+	if MAPSIZE_ABOVE_COLOSSAL
+		#const FOREST_BASE 6
+	elseif MAPSIZE_ABOVE_MASSIVE
+		#const FOREST_BASE 5
+	elseif MAPSIZE_ABOVE_GIANT
+		#const FOREST_BASE 4
+	elseif MAPSIZE_ABOVE_MEDIUM
+		#const FOREST_BASE 3
+	else
+		#const FOREST_BASE 2
+	endif
+
+	#const FOREST_CLUMPING 15
+	#const FOREST_AVOIDANCE 8
+	#const FOREST_ELEVATION 0
+	#const FOREST_IDENTIFICATION 500
+	#const FOREST_ZONE 0
+	#const FOREST_AVOIDANCE 0
+
+	create_land { terrain_type OUTSIDE_FOREST number_of_tiles rnd(16,32) base_size FOREST_BASE set_circular_base clumping_factor FOREST_CLUMPING base_elevation FOREST_ELEVATION zone FOREST_ZONE other_zone_avoidance_distance FOREST_AVOIDANCE land_id FOREST_IDENTIFICATION land_position 98 50 }
+	create_land { terrain_type OUTSIDE_FOREST number_of_tiles rnd(16,32) base_size FOREST_BASE set_circular_base clumping_factor FOREST_CLUMPING base_elevation FOREST_ELEVATION zone FOREST_ZONE other_zone_avoidance_distance FOREST_AVOIDANCE land_id FOREST_IDENTIFICATION land_position 98 51 }
+	create_land { terrain_type OUTSIDE_FOREST number_of_tiles rnd(16,32) base_size FOREST_BASE set_circular_base clumping_factor FOREST_CLUMPING base_elevation FOREST_ELEVATION zone FOREST_ZONE other_zone_avoidance_distance FOREST_AVOIDANCE land_id FOREST_IDENTIFICATION land_position 98 52 }
+	create_land { terrain_type OUTSIDE_FOREST number_of_tiles rnd(16,32) base_size FOREST_BASE set_circular_base clumping_factor FOREST_CLUMPING base_elevation FOREST_ELEVATION zone FOREST_ZONE other_zone_avoidance_distance FOREST_AVOIDANCE land_id FOREST_IDENTIFICATION land_position 98 54 }
+	create_land { terrain_type OUTSIDE_FOREST number_of_tiles rnd(16,32) base_size FOREST_BASE set_circular_base clumping_factor FOREST_CLUMPING base_elevation FOREST_ELEVATION zone FOREST_ZONE other_zone_avoidance_distance FOREST_AVOIDANCE land_id FOREST_IDENTIFICATION land_position 98 55 }
+	create_land { terrain_type OUTSIDE_FOREST number_of_tiles rnd(16,32) base_size FOREST_BASE set_circular_base clumping_factor FOREST_CLUMPING base_elevation FOREST_ELEVATION zone FOREST_ZONE other_zone_avoidance_distance FOREST_AVOIDANCE land_id FOREST_IDENTIFICATION land_position 98 56 }
+	create_land { terrain_type OUTSIDE_FOREST number_of_tiles rnd(16,32) base_size FOREST_BASE set_circular_base clumping_factor FOREST_CLUMPING base_elevation FOREST_ELEVATION zone FOREST_ZONE other_zone_avoidance_distance FOREST_AVOIDANCE land_id FOREST_IDENTIFICATION land_position 97 57 }
+	create_land { terrain_type OUTSIDE_FOREST number_of_tiles rnd(16,32) base_size FOREST_BASE set_circular_base clumping_factor FOREST_CLUMPING base_elevation FOREST_ELEVATION zone FOREST_ZONE other_zone_avoidance_distance FOREST_AVOIDANCE land_id FOREST_IDENTIFICATION land_position 97 58 }
+	create_land { terrain_type OUTSIDE_FOREST number_of_tiles rnd(16,32) base_size FOREST_BASE set_circular_base clumping_factor FOREST_CLUMPING base_elevation FOREST_ELEVATION zone FOREST_ZONE other_zone_avoidance_distance FOREST_AVOIDANCE land_id FOREST_IDENTIFICATION land_position 97 59 }
+	create_land { terrain_type OUTSIDE_FOREST number_of_tiles rnd(16,32) base_size FOREST_BASE set_circular_base clumping_factor FOREST_CLUMPING base_elevation FOREST_ELEVATION zone FOREST_ZONE other_zone_avoidance_distance FOREST_AVOIDANCE land_id FOREST_IDENTIFICATION land_position 97 61 }
+	create_land { terrain_type OUTSIDE_FOREST number_of_tiles rnd(16,32) base_size FOREST_BASE set_circular_base clumping_factor FOREST_CLUMPING base_elevation FOREST_ELEVATION zone FOREST_ZONE other_zone_avoidance_distance FOREST_AVOIDANCE land_id FOREST_IDENTIFICATION land_position 97 62 }
+	create_land { terrain_type OUTSIDE_FOREST number_of_tiles rnd(16,32) base_size FOREST_BASE set_circular_base clumping_factor FOREST_CLUMPING base_elevation FOREST_ELEVATION zone FOREST_ZONE other_zone_avoidance_distance FOREST_AVOIDANCE land_id FOREST_IDENTIFICATION land_position 96 63 }
+	create_land { terrain_type OUTSIDE_FOREST number_of_tiles rnd(16,32) base_size FOREST_BASE set_circular_base clumping_factor FOREST_CLUMPING base_elevation FOREST_ELEVATION zone FOREST_ZONE other_zone_avoidance_distance FOREST_AVOIDANCE land_id FOREST_IDENTIFICATION land_position 96 64 }
+	create_land { terrain_type OUTSIDE_FOREST number_of_tiles rnd(16,32) base_size FOREST_BASE set_circular_base clumping_factor FOREST_CLUMPING base_elevation FOREST_ELEVATION zone FOREST_ZONE other_zone_avoidance_distance FOREST_AVOIDANCE land_id FOREST_IDENTIFICATION land_position 96 65 }
+	create_land { terrain_type OUTSIDE_FOREST number_of_tiles rnd(16,32) base_size FOREST_BASE set_circular_base clumping_factor FOREST_CLUMPING base_elevation FOREST_ELEVATION zone FOREST_ZONE other_zone_avoidance_distance FOREST_AVOIDANCE land_id FOREST_IDENTIFICATION land_position 95 66 }
+	create_land { terrain_type OUTSIDE_FOREST number_of_tiles rnd(16,32) base_size FOREST_BASE set_circular_base clumping_factor FOREST_CLUMPING base_elevation FOREST_ELEVATION zone FOREST_ZONE other_zone_avoidance_distance FOREST_AVOIDANCE land_id FOREST_IDENTIFICATION land_position 95 67 }
+	create_land { terrain_type OUTSIDE_FOREST number_of_tiles rnd(16,32) base_size FOREST_BASE set_circular_base clumping_factor FOREST_CLUMPING base_elevation FOREST_ELEVATION zone FOREST_ZONE other_zone_avoidance_distance FOREST_AVOIDANCE land_id FOREST_IDENTIFICATION land_position 94 68 }
+	create_land { terrain_type OUTSIDE_FOREST number_of_tiles rnd(16,32) base_size FOREST_BASE set_circular_base clumping_factor FOREST_CLUMPING base_elevation FOREST_ELEVATION zone FOREST_ZONE other_zone_avoidance_distance FOREST_AVOIDANCE land_id FOREST_IDENTIFICATION land_position 94 69 }
+	create_land { terrain_type OUTSIDE_FOREST number_of_tiles rnd(16,32) base_size FOREST_BASE set_circular_base clumping_factor FOREST_CLUMPING base_elevation FOREST_ELEVATION zone FOREST_ZONE other_zone_avoidance_distance FOREST_AVOIDANCE land_id FOREST_IDENTIFICATION land_position 93 71 }
+	create_land { terrain_type OUTSIDE_FOREST number_of_tiles rnd(16,32) base_size FOREST_BASE set_circular_base clumping_factor FOREST_CLUMPING base_elevation FOREST_ELEVATION zone FOREST_ZONE other_zone_avoidance_distance FOREST_AVOIDANCE land_id FOREST_IDENTIFICATION land_position 93 72 }
+	create_land { terrain_type OUTSIDE_FOREST number_of_tiles rnd(16,32) base_size FOREST_BASE set_circular_base clumping_factor FOREST_CLUMPING base_elevation FOREST_ELEVATION zone FOREST_ZONE other_zone_avoidance_distance FOREST_AVOIDANCE land_id FOREST_IDENTIFICATION land_position 92 73 }
+	create_land { terrain_type OUTSIDE_FOREST number_of_tiles rnd(16,32) base_size FOREST_BASE set_circular_base clumping_factor FOREST_CLUMPING base_elevation FOREST_ELEVATION zone FOREST_ZONE other_zone_avoidance_distance FOREST_AVOIDANCE land_id FOREST_IDENTIFICATION land_position 92 74 }
+	create_land { terrain_type OUTSIDE_FOREST number_of_tiles rnd(16,32) base_size FOREST_BASE set_circular_base clumping_factor FOREST_CLUMPING base_elevation FOREST_ELEVATION zone FOREST_ZONE other_zone_avoidance_distance FOREST_AVOIDANCE land_id FOREST_IDENTIFICATION land_position 91 75 }
+	create_land { terrain_type OUTSIDE_FOREST number_of_tiles rnd(16,32) base_size FOREST_BASE set_circular_base clumping_factor FOREST_CLUMPING base_elevation FOREST_ELEVATION zone FOREST_ZONE other_zone_avoidance_distance FOREST_AVOIDANCE land_id FOREST_IDENTIFICATION land_position 91 76 }
+	create_land { terrain_type OUTSIDE_FOREST number_of_tiles rnd(16,32) base_size FOREST_BASE set_circular_base clumping_factor FOREST_CLUMPING base_elevation FOREST_ELEVATION zone FOREST_ZONE other_zone_avoidance_distance FOREST_AVOIDANCE land_id FOREST_IDENTIFICATION land_position 90 77 }
+	create_land { terrain_type OUTSIDE_FOREST number_of_tiles rnd(16,32) base_size FOREST_BASE set_circular_base clumping_factor FOREST_CLUMPING base_elevation FOREST_ELEVATION zone FOREST_ZONE other_zone_avoidance_distance FOREST_AVOIDANCE land_id FOREST_IDENTIFICATION land_position 89 78 }
+	create_land { terrain_type OUTSIDE_FOREST number_of_tiles rnd(16,32) base_size FOREST_BASE set_circular_base clumping_factor FOREST_CLUMPING base_elevation FOREST_ELEVATION zone FOREST_ZONE other_zone_avoidance_distance FOREST_AVOIDANCE land_id FOREST_IDENTIFICATION land_position 89 79 }
+	create_land { terrain_type OUTSIDE_FOREST number_of_tiles rnd(16,32) base_size FOREST_BASE set_circular_base clumping_factor FOREST_CLUMPING base_elevation FOREST_ELEVATION zone FOREST_ZONE other_zone_avoidance_distance FOREST_AVOIDANCE land_id FOREST_IDENTIFICATION land_position 88 80 }
+	create_land { terrain_type OUTSIDE_FOREST number_of_tiles rnd(16,32) base_size FOREST_BASE set_circular_base clumping_factor FOREST_CLUMPING base_elevation FOREST_ELEVATION zone FOREST_ZONE other_zone_avoidance_distance FOREST_AVOIDANCE land_id FOREST_IDENTIFICATION land_position 87 80 }
+	create_land { terrain_type OUTSIDE_FOREST number_of_tiles rnd(16,32) base_size FOREST_BASE set_circular_base clumping_factor FOREST_CLUMPING base_elevation FOREST_ELEVATION zone FOREST_ZONE other_zone_avoidance_distance FOREST_AVOIDANCE land_id FOREST_IDENTIFICATION land_position 86 81 }
+	create_land { terrain_type OUTSIDE_FOREST number_of_tiles rnd(16,32) base_size FOREST_BASE set_circular_base clumping_factor FOREST_CLUMPING base_elevation FOREST_ELEVATION zone FOREST_ZONE other_zone_avoidance_distance FOREST_AVOIDANCE land_id FOREST_IDENTIFICATION land_position 86 82 }
+	create_land { terrain_type OUTSIDE_FOREST number_of_tiles rnd(16,32) base_size FOREST_BASE set_circular_base clumping_factor FOREST_CLUMPING base_elevation FOREST_ELEVATION zone FOREST_ZONE other_zone_avoidance_distance FOREST_AVOIDANCE land_id FOREST_IDENTIFICATION land_position 85 83 }
+	create_land { terrain_type OUTSIDE_FOREST number_of_tiles rnd(16,32) base_size FOREST_BASE set_circular_base clumping_factor FOREST_CLUMPING base_elevation FOREST_ELEVATION zone FOREST_ZONE other_zone_avoidance_distance FOREST_AVOIDANCE land_id FOREST_IDENTIFICATION land_position 84 84 }
+	create_land { terrain_type OUTSIDE_FOREST number_of_tiles rnd(16,32) base_size FOREST_BASE set_circular_base clumping_factor FOREST_CLUMPING base_elevation FOREST_ELEVATION zone FOREST_ZONE other_zone_avoidance_distance FOREST_AVOIDANCE land_id FOREST_IDENTIFICATION land_position 83 85 }
+	create_land { terrain_type OUTSIDE_FOREST number_of_tiles rnd(16,32) base_size FOREST_BASE set_circular_base clumping_factor FOREST_CLUMPING base_elevation FOREST_ELEVATION zone FOREST_ZONE other_zone_avoidance_distance FOREST_AVOIDANCE land_id FOREST_IDENTIFICATION land_position 82 86 }
+	create_land { terrain_type OUTSIDE_FOREST number_of_tiles rnd(16,32) base_size FOREST_BASE set_circular_base clumping_factor FOREST_CLUMPING base_elevation FOREST_ELEVATION zone FOREST_ZONE other_zone_avoidance_distance FOREST_AVOIDANCE land_id FOREST_IDENTIFICATION land_position 81 86 }
+	create_land { terrain_type OUTSIDE_FOREST number_of_tiles rnd(16,32) base_size FOREST_BASE set_circular_base clumping_factor FOREST_CLUMPING base_elevation FOREST_ELEVATION zone FOREST_ZONE other_zone_avoidance_distance FOREST_AVOIDANCE land_id FOREST_IDENTIFICATION land_position 80 87 }
+	create_land { terrain_type OUTSIDE_FOREST number_of_tiles rnd(16,32) base_size FOREST_BASE set_circular_base clumping_factor FOREST_CLUMPING base_elevation FOREST_ELEVATION zone FOREST_ZONE other_zone_avoidance_distance FOREST_AVOIDANCE land_id FOREST_IDENTIFICATION land_position 80 88 }
+	create_land { terrain_type OUTSIDE_FOREST number_of_tiles rnd(16,32) base_size FOREST_BASE set_circular_base clumping_factor FOREST_CLUMPING base_elevation FOREST_ELEVATION zone FOREST_ZONE other_zone_avoidance_distance FOREST_AVOIDANCE land_id FOREST_IDENTIFICATION land_position 79 89 }
+	create_land { terrain_type OUTSIDE_FOREST number_of_tiles rnd(16,32) base_size FOREST_BASE set_circular_base clumping_factor FOREST_CLUMPING base_elevation FOREST_ELEVATION zone FOREST_ZONE other_zone_avoidance_distance FOREST_AVOIDANCE land_id FOREST_IDENTIFICATION land_position 78 89 }
+	create_land { terrain_type OUTSIDE_FOREST number_of_tiles rnd(16,32) base_size FOREST_BASE set_circular_base clumping_factor FOREST_CLUMPING base_elevation FOREST_ELEVATION zone FOREST_ZONE other_zone_avoidance_distance FOREST_AVOIDANCE land_id FOREST_IDENTIFICATION land_position 77 90 }
+	create_land { terrain_type OUTSIDE_FOREST number_of_tiles rnd(16,32) base_size FOREST_BASE set_circular_base clumping_factor FOREST_CLUMPING base_elevation FOREST_ELEVATION zone FOREST_ZONE other_zone_avoidance_distance FOREST_AVOIDANCE land_id FOREST_IDENTIFICATION land_position 76 91 }
+	create_land { terrain_type OUTSIDE_FOREST number_of_tiles rnd(16,32) base_size FOREST_BASE set_circular_base clumping_factor FOREST_CLUMPING base_elevation FOREST_ELEVATION zone FOREST_ZONE other_zone_avoidance_distance FOREST_AVOIDANCE land_id FOREST_IDENTIFICATION land_position 75 91 }
+	create_land { terrain_type OUTSIDE_FOREST number_of_tiles rnd(16,32) base_size FOREST_BASE set_circular_base clumping_factor FOREST_CLUMPING base_elevation FOREST_ELEVATION zone FOREST_ZONE other_zone_avoidance_distance FOREST_AVOIDANCE land_id FOREST_IDENTIFICATION land_position 74 92 }
+	create_land { terrain_type OUTSIDE_FOREST number_of_tiles rnd(16,32) base_size FOREST_BASE set_circular_base clumping_factor FOREST_CLUMPING base_elevation FOREST_ELEVATION zone FOREST_ZONE other_zone_avoidance_distance FOREST_AVOIDANCE land_id FOREST_IDENTIFICATION land_position 73 92 }
+	create_land { terrain_type OUTSIDE_FOREST number_of_tiles rnd(16,32) base_size FOREST_BASE set_circular_base clumping_factor FOREST_CLUMPING base_elevation FOREST_ELEVATION zone FOREST_ZONE other_zone_avoidance_distance FOREST_AVOIDANCE land_id FOREST_IDENTIFICATION land_position 72 93 }
+	create_land { terrain_type OUTSIDE_FOREST number_of_tiles rnd(16,32) base_size FOREST_BASE set_circular_base clumping_factor FOREST_CLUMPING base_elevation FOREST_ELEVATION zone FOREST_ZONE other_zone_avoidance_distance FOREST_AVOIDANCE land_id FOREST_IDENTIFICATION land_position 71 93 }
+	create_land { terrain_type OUTSIDE_FOREST number_of_tiles rnd(16,32) base_size FOREST_BASE set_circular_base clumping_factor FOREST_CLUMPING base_elevation FOREST_ELEVATION zone FOREST_ZONE other_zone_avoidance_distance FOREST_AVOIDANCE land_id FOREST_IDENTIFICATION land_position 69 94 }
+	create_land { terrain_type OUTSIDE_FOREST number_of_tiles rnd(16,32) base_size FOREST_BASE set_circular_base clumping_factor FOREST_CLUMPING base_elevation FOREST_ELEVATION zone FOREST_ZONE other_zone_avoidance_distance FOREST_AVOIDANCE land_id FOREST_IDENTIFICATION land_position 68 94 }
+	create_land { terrain_type OUTSIDE_FOREST number_of_tiles rnd(16,32) base_size FOREST_BASE set_circular_base clumping_factor FOREST_CLUMPING base_elevation FOREST_ELEVATION zone FOREST_ZONE other_zone_avoidance_distance FOREST_AVOIDANCE land_id FOREST_IDENTIFICATION land_position 67 95 }
+	create_land { terrain_type OUTSIDE_FOREST number_of_tiles rnd(16,32) base_size FOREST_BASE set_circular_base clumping_factor FOREST_CLUMPING base_elevation FOREST_ELEVATION zone FOREST_ZONE other_zone_avoidance_distance FOREST_AVOIDANCE land_id FOREST_IDENTIFICATION land_position 66 95 }
+	create_land { terrain_type OUTSIDE_FOREST number_of_tiles rnd(16,32) base_size FOREST_BASE set_circular_base clumping_factor FOREST_CLUMPING base_elevation FOREST_ELEVATION zone FOREST_ZONE other_zone_avoidance_distance FOREST_AVOIDANCE land_id FOREST_IDENTIFICATION land_position 65 96 }
+	create_land { terrain_type OUTSIDE_FOREST number_of_tiles rnd(16,32) base_size FOREST_BASE set_circular_base clumping_factor FOREST_CLUMPING base_elevation FOREST_ELEVATION zone FOREST_ZONE other_zone_avoidance_distance FOREST_AVOIDANCE land_id FOREST_IDENTIFICATION land_position 64 96 }
+	create_land { terrain_type OUTSIDE_FOREST number_of_tiles rnd(16,32) base_size FOREST_BASE set_circular_base clumping_factor FOREST_CLUMPING base_elevation FOREST_ELEVATION zone FOREST_ZONE other_zone_avoidance_distance FOREST_AVOIDANCE land_id FOREST_IDENTIFICATION land_position 63 96 }
+	create_land { terrain_type OUTSIDE_FOREST number_of_tiles rnd(16,32) base_size FOREST_BASE set_circular_base clumping_factor FOREST_CLUMPING base_elevation FOREST_ELEVATION zone FOREST_ZONE other_zone_avoidance_distance FOREST_AVOIDANCE land_id FOREST_IDENTIFICATION land_position 62 97 }
+	create_land { terrain_type OUTSIDE_FOREST number_of_tiles rnd(16,32) base_size FOREST_BASE set_circular_base clumping_factor FOREST_CLUMPING base_elevation FOREST_ELEVATION zone FOREST_ZONE other_zone_avoidance_distance FOREST_AVOIDANCE land_id FOREST_IDENTIFICATION land_position 61 97 }
+	create_land { terrain_type OUTSIDE_FOREST number_of_tiles rnd(16,32) base_size FOREST_BASE set_circular_base clumping_factor FOREST_CLUMPING base_elevation FOREST_ELEVATION zone FOREST_ZONE other_zone_avoidance_distance FOREST_AVOIDANCE land_id FOREST_IDENTIFICATION land_position 59 97 }
+	create_land { terrain_type OUTSIDE_FOREST number_of_tiles rnd(16,32) base_size FOREST_BASE set_circular_base clumping_factor FOREST_CLUMPING base_elevation FOREST_ELEVATION zone FOREST_ZONE other_zone_avoidance_distance FOREST_AVOIDANCE land_id FOREST_IDENTIFICATION land_position 58 97 }
+	create_land { terrain_type OUTSIDE_FOREST number_of_tiles rnd(16,32) base_size FOREST_BASE set_circular_base clumping_factor FOREST_CLUMPING base_elevation FOREST_ELEVATION zone FOREST_ZONE other_zone_avoidance_distance FOREST_AVOIDANCE land_id FOREST_IDENTIFICATION land_position 57 97 }
+	create_land { terrain_type OUTSIDE_FOREST number_of_tiles rnd(16,32) base_size FOREST_BASE set_circular_base clumping_factor FOREST_CLUMPING base_elevation FOREST_ELEVATION zone FOREST_ZONE other_zone_avoidance_distance FOREST_AVOIDANCE land_id FOREST_IDENTIFICATION land_position 56 98 }
+	create_land { terrain_type OUTSIDE_FOREST number_of_tiles rnd(16,32) base_size FOREST_BASE set_circular_base clumping_factor FOREST_CLUMPING base_elevation FOREST_ELEVATION zone FOREST_ZONE other_zone_avoidance_distance FOREST_AVOIDANCE land_id FOREST_IDENTIFICATION land_position 55 98 }
+	create_land { terrain_type OUTSIDE_FOREST number_of_tiles rnd(16,32) base_size FOREST_BASE set_circular_base clumping_factor FOREST_CLUMPING base_elevation FOREST_ELEVATION zone FOREST_ZONE other_zone_avoidance_distance FOREST_AVOIDANCE land_id FOREST_IDENTIFICATION land_position 54 98 }
+	create_land { terrain_type OUTSIDE_FOREST number_of_tiles rnd(16,32) base_size FOREST_BASE set_circular_base clumping_factor FOREST_CLUMPING base_elevation FOREST_ELEVATION zone FOREST_ZONE other_zone_avoidance_distance FOREST_AVOIDANCE land_id FOREST_IDENTIFICATION land_position 52 98 }
+	create_land { terrain_type OUTSIDE_FOREST number_of_tiles rnd(16,32) base_size FOREST_BASE set_circular_base clumping_factor FOREST_CLUMPING base_elevation FOREST_ELEVATION zone FOREST_ZONE other_zone_avoidance_distance FOREST_AVOIDANCE land_id FOREST_IDENTIFICATION land_position 51 98 }
+	create_land { terrain_type OUTSIDE_FOREST number_of_tiles rnd(16,32) base_size FOREST_BASE set_circular_base clumping_factor FOREST_CLUMPING base_elevation FOREST_ELEVATION zone FOREST_ZONE other_zone_avoidance_distance FOREST_AVOIDANCE land_id FOREST_IDENTIFICATION land_position 50 98 }
+	create_land { terrain_type OUTSIDE_FOREST number_of_tiles rnd(16,32) base_size FOREST_BASE set_circular_base clumping_factor FOREST_CLUMPING base_elevation FOREST_ELEVATION zone FOREST_ZONE other_zone_avoidance_distance FOREST_AVOIDANCE land_id FOREST_IDENTIFICATION land_position 49 98 }
+	create_land { terrain_type OUTSIDE_FOREST number_of_tiles rnd(16,32) base_size FOREST_BASE set_circular_base clumping_factor FOREST_CLUMPING base_elevation FOREST_ELEVATION zone FOREST_ZONE other_zone_avoidance_distance FOREST_AVOIDANCE land_id FOREST_IDENTIFICATION land_position 48 98 }
+	create_land { terrain_type OUTSIDE_FOREST number_of_tiles rnd(16,32) base_size FOREST_BASE set_circular_base clumping_factor FOREST_CLUMPING base_elevation FOREST_ELEVATION zone FOREST_ZONE other_zone_avoidance_distance FOREST_AVOIDANCE land_id FOREST_IDENTIFICATION land_position 46 98 }
+	create_land { terrain_type OUTSIDE_FOREST number_of_tiles rnd(16,32) base_size FOREST_BASE set_circular_base clumping_factor FOREST_CLUMPING base_elevation FOREST_ELEVATION zone FOREST_ZONE other_zone_avoidance_distance FOREST_AVOIDANCE land_id FOREST_IDENTIFICATION land_position 45 98 }
+	create_land { terrain_type OUTSIDE_FOREST number_of_tiles rnd(16,32) base_size FOREST_BASE set_circular_base clumping_factor FOREST_CLUMPING base_elevation FOREST_ELEVATION zone FOREST_ZONE other_zone_avoidance_distance FOREST_AVOIDANCE land_id FOREST_IDENTIFICATION land_position 44 98 }
+	create_land { terrain_type OUTSIDE_FOREST number_of_tiles rnd(16,32) base_size FOREST_BASE set_circular_base clumping_factor FOREST_CLUMPING base_elevation FOREST_ELEVATION zone FOREST_ZONE other_zone_avoidance_distance FOREST_AVOIDANCE land_id FOREST_IDENTIFICATION land_position 43 97 }
+	create_land { terrain_type OUTSIDE_FOREST number_of_tiles rnd(16,32) base_size FOREST_BASE set_circular_base clumping_factor FOREST_CLUMPING base_elevation FOREST_ELEVATION zone FOREST_ZONE other_zone_avoidance_distance FOREST_AVOIDANCE land_id FOREST_IDENTIFICATION land_position 42 97 }
+	create_land { terrain_type OUTSIDE_FOREST number_of_tiles rnd(16,32) base_size FOREST_BASE set_circular_base clumping_factor FOREST_CLUMPING base_elevation FOREST_ELEVATION zone FOREST_ZONE other_zone_avoidance_distance FOREST_AVOIDANCE land_id FOREST_IDENTIFICATION land_position 41 97 }
+	create_land { terrain_type OUTSIDE_FOREST number_of_tiles rnd(16,32) base_size FOREST_BASE set_circular_base clumping_factor FOREST_CLUMPING base_elevation FOREST_ELEVATION zone FOREST_ZONE other_zone_avoidance_distance FOREST_AVOIDANCE land_id FOREST_IDENTIFICATION land_position 39 97 }
+	create_land { terrain_type OUTSIDE_FOREST number_of_tiles rnd(16,32) base_size FOREST_BASE set_circular_base clumping_factor FOREST_CLUMPING base_elevation FOREST_ELEVATION zone FOREST_ZONE other_zone_avoidance_distance FOREST_AVOIDANCE land_id FOREST_IDENTIFICATION land_position 38 97 }
+	create_land { terrain_type OUTSIDE_FOREST number_of_tiles rnd(16,32) base_size FOREST_BASE set_circular_base clumping_factor FOREST_CLUMPING base_elevation FOREST_ELEVATION zone FOREST_ZONE other_zone_avoidance_distance FOREST_AVOIDANCE land_id FOREST_IDENTIFICATION land_position 37 96 }
+	create_land { terrain_type OUTSIDE_FOREST number_of_tiles rnd(16,32) base_size FOREST_BASE set_circular_base clumping_factor FOREST_CLUMPING base_elevation FOREST_ELEVATION zone FOREST_ZONE other_zone_avoidance_distance FOREST_AVOIDANCE land_id FOREST_IDENTIFICATION land_position 36 96 }
+	create_land { terrain_type OUTSIDE_FOREST number_of_tiles rnd(16,32) base_size FOREST_BASE set_circular_base clumping_factor FOREST_CLUMPING base_elevation FOREST_ELEVATION zone FOREST_ZONE other_zone_avoidance_distance FOREST_AVOIDANCE land_id FOREST_IDENTIFICATION land_position 35 96 }
+	create_land { terrain_type OUTSIDE_FOREST number_of_tiles rnd(16,32) base_size FOREST_BASE set_circular_base clumping_factor FOREST_CLUMPING base_elevation FOREST_ELEVATION zone FOREST_ZONE other_zone_avoidance_distance FOREST_AVOIDANCE land_id FOREST_IDENTIFICATION land_position 34 95 }
+	create_land { terrain_type OUTSIDE_FOREST number_of_tiles rnd(16,32) base_size FOREST_BASE set_circular_base clumping_factor FOREST_CLUMPING base_elevation FOREST_ELEVATION zone FOREST_ZONE other_zone_avoidance_distance FOREST_AVOIDANCE land_id FOREST_IDENTIFICATION land_position 33 95 }
+	create_land { terrain_type OUTSIDE_FOREST number_of_tiles rnd(16,32) base_size FOREST_BASE set_circular_base clumping_factor FOREST_CLUMPING base_elevation FOREST_ELEVATION zone FOREST_ZONE other_zone_avoidance_distance FOREST_AVOIDANCE land_id FOREST_IDENTIFICATION land_position 32 94 }
+	create_land { terrain_type OUTSIDE_FOREST number_of_tiles rnd(16,32) base_size FOREST_BASE set_circular_base clumping_factor FOREST_CLUMPING base_elevation FOREST_ELEVATION zone FOREST_ZONE other_zone_avoidance_distance FOREST_AVOIDANCE land_id FOREST_IDENTIFICATION land_position 31 94 }
+	create_land { terrain_type OUTSIDE_FOREST number_of_tiles rnd(16,32) base_size FOREST_BASE set_circular_base clumping_factor FOREST_CLUMPING base_elevation FOREST_ELEVATION zone FOREST_ZONE other_zone_avoidance_distance FOREST_AVOIDANCE land_id FOREST_IDENTIFICATION land_position 29 93 }
+	create_land { terrain_type OUTSIDE_FOREST number_of_tiles rnd(16,32) base_size FOREST_BASE set_circular_base clumping_factor FOREST_CLUMPING base_elevation FOREST_ELEVATION zone FOREST_ZONE other_zone_avoidance_distance FOREST_AVOIDANCE land_id FOREST_IDENTIFICATION land_position 28 93 }
+	create_land { terrain_type OUTSIDE_FOREST number_of_tiles rnd(16,32) base_size FOREST_BASE set_circular_base clumping_factor FOREST_CLUMPING base_elevation FOREST_ELEVATION zone FOREST_ZONE other_zone_avoidance_distance FOREST_AVOIDANCE land_id FOREST_IDENTIFICATION land_position 27 92 }
+	create_land { terrain_type OUTSIDE_FOREST number_of_tiles rnd(16,32) base_size FOREST_BASE set_circular_base clumping_factor FOREST_CLUMPING base_elevation FOREST_ELEVATION zone FOREST_ZONE other_zone_avoidance_distance FOREST_AVOIDANCE land_id FOREST_IDENTIFICATION land_position 26 92 }
+	create_land { terrain_type OUTSIDE_FOREST number_of_tiles rnd(16,32) base_size FOREST_BASE set_circular_base clumping_factor FOREST_CLUMPING base_elevation FOREST_ELEVATION zone FOREST_ZONE other_zone_avoidance_distance FOREST_AVOIDANCE land_id FOREST_IDENTIFICATION land_position 25 91 }
+	create_land { terrain_type OUTSIDE_FOREST number_of_tiles rnd(16,32) base_size FOREST_BASE set_circular_base clumping_factor FOREST_CLUMPING base_elevation FOREST_ELEVATION zone FOREST_ZONE other_zone_avoidance_distance FOREST_AVOIDANCE land_id FOREST_IDENTIFICATION land_position 24 91 }
+	create_land { terrain_type OUTSIDE_FOREST number_of_tiles rnd(16,32) base_size FOREST_BASE set_circular_base clumping_factor FOREST_CLUMPING base_elevation FOREST_ELEVATION zone FOREST_ZONE other_zone_avoidance_distance FOREST_AVOIDANCE land_id FOREST_IDENTIFICATION land_position 23 90 }
+	create_land { terrain_type OUTSIDE_FOREST number_of_tiles rnd(16,32) base_size FOREST_BASE set_circular_base clumping_factor FOREST_CLUMPING base_elevation FOREST_ELEVATION zone FOREST_ZONE other_zone_avoidance_distance FOREST_AVOIDANCE land_id FOREST_IDENTIFICATION land_position 22 89 }
+	create_land { terrain_type OUTSIDE_FOREST number_of_tiles rnd(16,32) base_size FOREST_BASE set_circular_base clumping_factor FOREST_CLUMPING base_elevation FOREST_ELEVATION zone FOREST_ZONE other_zone_avoidance_distance FOREST_AVOIDANCE land_id FOREST_IDENTIFICATION land_position 21 89 }
+	create_land { terrain_type OUTSIDE_FOREST number_of_tiles rnd(16,32) base_size FOREST_BASE set_circular_base clumping_factor FOREST_CLUMPING base_elevation FOREST_ELEVATION zone FOREST_ZONE other_zone_avoidance_distance FOREST_AVOIDANCE land_id FOREST_IDENTIFICATION land_position 20 88 }
+	create_land { terrain_type OUTSIDE_FOREST number_of_tiles rnd(16,32) base_size FOREST_BASE set_circular_base clumping_factor FOREST_CLUMPING base_elevation FOREST_ELEVATION zone FOREST_ZONE other_zone_avoidance_distance FOREST_AVOIDANCE land_id FOREST_IDENTIFICATION land_position 20 87 }
+	create_land { terrain_type OUTSIDE_FOREST number_of_tiles rnd(16,32) base_size FOREST_BASE set_circular_base clumping_factor FOREST_CLUMPING base_elevation FOREST_ELEVATION zone FOREST_ZONE other_zone_avoidance_distance FOREST_AVOIDANCE land_id FOREST_IDENTIFICATION land_position 19 86 }
+	create_land { terrain_type OUTSIDE_FOREST number_of_tiles rnd(16,32) base_size FOREST_BASE set_circular_base clumping_factor FOREST_CLUMPING base_elevation FOREST_ELEVATION zone FOREST_ZONE other_zone_avoidance_distance FOREST_AVOIDANCE land_id FOREST_IDENTIFICATION land_position 18 86 }
+	create_land { terrain_type OUTSIDE_FOREST number_of_tiles rnd(16,32) base_size FOREST_BASE set_circular_base clumping_factor FOREST_CLUMPING base_elevation FOREST_ELEVATION zone FOREST_ZONE other_zone_avoidance_distance FOREST_AVOIDANCE land_id FOREST_IDENTIFICATION land_position 17 85 }
+	create_land { terrain_type OUTSIDE_FOREST number_of_tiles rnd(16,32) base_size FOREST_BASE set_circular_base clumping_factor FOREST_CLUMPING base_elevation FOREST_ELEVATION zone FOREST_ZONE other_zone_avoidance_distance FOREST_AVOIDANCE land_id FOREST_IDENTIFICATION land_position 16 84 }
+	create_land { terrain_type OUTSIDE_FOREST number_of_tiles rnd(16,32) base_size FOREST_BASE set_circular_base clumping_factor FOREST_CLUMPING base_elevation FOREST_ELEVATION zone FOREST_ZONE other_zone_avoidance_distance FOREST_AVOIDANCE land_id FOREST_IDENTIFICATION land_position 15 83 }
+	create_land { terrain_type OUTSIDE_FOREST number_of_tiles rnd(16,32) base_size FOREST_BASE set_circular_base clumping_factor FOREST_CLUMPING base_elevation FOREST_ELEVATION zone FOREST_ZONE other_zone_avoidance_distance FOREST_AVOIDANCE land_id FOREST_IDENTIFICATION land_position 14 82 }
+	create_land { terrain_type OUTSIDE_FOREST number_of_tiles rnd(16,32) base_size FOREST_BASE set_circular_base clumping_factor FOREST_CLUMPING base_elevation FOREST_ELEVATION zone FOREST_ZONE other_zone_avoidance_distance FOREST_AVOIDANCE land_id FOREST_IDENTIFICATION land_position 14 81 }
+	create_land { terrain_type OUTSIDE_FOREST number_of_tiles rnd(16,32) base_size FOREST_BASE set_circular_base clumping_factor FOREST_CLUMPING base_elevation FOREST_ELEVATION zone FOREST_ZONE other_zone_avoidance_distance FOREST_AVOIDANCE land_id FOREST_IDENTIFICATION land_position 13 80 }
+	create_land { terrain_type OUTSIDE_FOREST number_of_tiles rnd(16,32) base_size FOREST_BASE set_circular_base clumping_factor FOREST_CLUMPING base_elevation FOREST_ELEVATION zone FOREST_ZONE other_zone_avoidance_distance FOREST_AVOIDANCE land_id FOREST_IDENTIFICATION land_position 12 80 }
+	create_land { terrain_type OUTSIDE_FOREST number_of_tiles rnd(16,32) base_size FOREST_BASE set_circular_base clumping_factor FOREST_CLUMPING base_elevation FOREST_ELEVATION zone FOREST_ZONE other_zone_avoidance_distance FOREST_AVOIDANCE land_id FOREST_IDENTIFICATION land_position 11 79 }
+	create_land { terrain_type OUTSIDE_FOREST number_of_tiles rnd(16,32) base_size FOREST_BASE set_circular_base clumping_factor FOREST_CLUMPING base_elevation FOREST_ELEVATION zone FOREST_ZONE other_zone_avoidance_distance FOREST_AVOIDANCE land_id FOREST_IDENTIFICATION land_position 11 78 }
+	create_land { terrain_type OUTSIDE_FOREST number_of_tiles rnd(16,32) base_size FOREST_BASE set_circular_base clumping_factor FOREST_CLUMPING base_elevation FOREST_ELEVATION zone FOREST_ZONE other_zone_avoidance_distance FOREST_AVOIDANCE land_id FOREST_IDENTIFICATION land_position 10 77 }
+	create_land { terrain_type OUTSIDE_FOREST number_of_tiles rnd(16,32) base_size FOREST_BASE set_circular_base clumping_factor FOREST_CLUMPING base_elevation FOREST_ELEVATION zone FOREST_ZONE other_zone_avoidance_distance FOREST_AVOIDANCE land_id FOREST_IDENTIFICATION land_position 9 76 }
+	create_land { terrain_type OUTSIDE_FOREST number_of_tiles rnd(16,32) base_size FOREST_BASE set_circular_base clumping_factor FOREST_CLUMPING base_elevation FOREST_ELEVATION zone FOREST_ZONE other_zone_avoidance_distance FOREST_AVOIDANCE land_id FOREST_IDENTIFICATION land_position 9 75 }
+	create_land { terrain_type OUTSIDE_FOREST number_of_tiles rnd(16,32) base_size FOREST_BASE set_circular_base clumping_factor FOREST_CLUMPING base_elevation FOREST_ELEVATION zone FOREST_ZONE other_zone_avoidance_distance FOREST_AVOIDANCE land_id FOREST_IDENTIFICATION land_position 8 74 }
+	create_land { terrain_type OUTSIDE_FOREST number_of_tiles rnd(16,32) base_size FOREST_BASE set_circular_base clumping_factor FOREST_CLUMPING base_elevation FOREST_ELEVATION zone FOREST_ZONE other_zone_avoidance_distance FOREST_AVOIDANCE land_id FOREST_IDENTIFICATION land_position 8 73 }
+	create_land { terrain_type OUTSIDE_FOREST number_of_tiles rnd(16,32) base_size FOREST_BASE set_circular_base clumping_factor FOREST_CLUMPING base_elevation FOREST_ELEVATION zone FOREST_ZONE other_zone_avoidance_distance FOREST_AVOIDANCE land_id FOREST_IDENTIFICATION land_position 7 72 }
+	create_land { terrain_type OUTSIDE_FOREST number_of_tiles rnd(16,32) base_size FOREST_BASE set_circular_base clumping_factor FOREST_CLUMPING base_elevation FOREST_ELEVATION zone FOREST_ZONE other_zone_avoidance_distance FOREST_AVOIDANCE land_id FOREST_IDENTIFICATION land_position 7 71 }
+	create_land { terrain_type OUTSIDE_FOREST number_of_tiles rnd(16,32) base_size FOREST_BASE set_circular_base clumping_factor FOREST_CLUMPING base_elevation FOREST_ELEVATION zone FOREST_ZONE other_zone_avoidance_distance FOREST_AVOIDANCE land_id FOREST_IDENTIFICATION land_position 6 69 }
+	create_land { terrain_type OUTSIDE_FOREST number_of_tiles rnd(16,32) base_size FOREST_BASE set_circular_base clumping_factor FOREST_CLUMPING base_elevation FOREST_ELEVATION zone FOREST_ZONE other_zone_avoidance_distance FOREST_AVOIDANCE land_id FOREST_IDENTIFICATION land_position 6 68 }
+	create_land { terrain_type OUTSIDE_FOREST number_of_tiles rnd(16,32) base_size FOREST_BASE set_circular_base clumping_factor FOREST_CLUMPING base_elevation FOREST_ELEVATION zone FOREST_ZONE other_zone_avoidance_distance FOREST_AVOIDANCE land_id FOREST_IDENTIFICATION land_position 5 67 }
+	create_land { terrain_type OUTSIDE_FOREST number_of_tiles rnd(16,32) base_size FOREST_BASE set_circular_base clumping_factor FOREST_CLUMPING base_elevation FOREST_ELEVATION zone FOREST_ZONE other_zone_avoidance_distance FOREST_AVOIDANCE land_id FOREST_IDENTIFICATION land_position 5 66 }
+	create_land { terrain_type OUTSIDE_FOREST number_of_tiles rnd(16,32) base_size FOREST_BASE set_circular_base clumping_factor FOREST_CLUMPING base_elevation FOREST_ELEVATION zone FOREST_ZONE other_zone_avoidance_distance FOREST_AVOIDANCE land_id FOREST_IDENTIFICATION land_position 4 65 }
+	create_land { terrain_type OUTSIDE_FOREST number_of_tiles rnd(16,32) base_size FOREST_BASE set_circular_base clumping_factor FOREST_CLUMPING base_elevation FOREST_ELEVATION zone FOREST_ZONE other_zone_avoidance_distance FOREST_AVOIDANCE land_id FOREST_IDENTIFICATION land_position 4 64 }
+	create_land { terrain_type OUTSIDE_FOREST number_of_tiles rnd(16,32) base_size FOREST_BASE set_circular_base clumping_factor FOREST_CLUMPING base_elevation FOREST_ELEVATION zone FOREST_ZONE other_zone_avoidance_distance FOREST_AVOIDANCE land_id FOREST_IDENTIFICATION land_position 4 63 }
+	create_land { terrain_type OUTSIDE_FOREST number_of_tiles rnd(16,32) base_size FOREST_BASE set_circular_base clumping_factor FOREST_CLUMPING base_elevation FOREST_ELEVATION zone FOREST_ZONE other_zone_avoidance_distance FOREST_AVOIDANCE land_id FOREST_IDENTIFICATION land_position 3 62 }
+	create_land { terrain_type OUTSIDE_FOREST number_of_tiles rnd(16,32) base_size FOREST_BASE set_circular_base clumping_factor FOREST_CLUMPING base_elevation FOREST_ELEVATION zone FOREST_ZONE other_zone_avoidance_distance FOREST_AVOIDANCE land_id FOREST_IDENTIFICATION land_position 3 61 }
+	create_land { terrain_type OUTSIDE_FOREST number_of_tiles rnd(16,32) base_size FOREST_BASE set_circular_base clumping_factor FOREST_CLUMPING base_elevation FOREST_ELEVATION zone FOREST_ZONE other_zone_avoidance_distance FOREST_AVOIDANCE land_id FOREST_IDENTIFICATION land_position 3 59 }
+	create_land { terrain_type OUTSIDE_FOREST number_of_tiles rnd(16,32) base_size FOREST_BASE set_circular_base clumping_factor FOREST_CLUMPING base_elevation FOREST_ELEVATION zone FOREST_ZONE other_zone_avoidance_distance FOREST_AVOIDANCE land_id FOREST_IDENTIFICATION land_position 3 58 }
+	create_land { terrain_type OUTSIDE_FOREST number_of_tiles rnd(16,32) base_size FOREST_BASE set_circular_base clumping_factor FOREST_CLUMPING base_elevation FOREST_ELEVATION zone FOREST_ZONE other_zone_avoidance_distance FOREST_AVOIDANCE land_id FOREST_IDENTIFICATION land_position 3 57 }
+	create_land { terrain_type OUTSIDE_FOREST number_of_tiles rnd(16,32) base_size FOREST_BASE set_circular_base clumping_factor FOREST_CLUMPING base_elevation FOREST_ELEVATION zone FOREST_ZONE other_zone_avoidance_distance FOREST_AVOIDANCE land_id FOREST_IDENTIFICATION land_position 2 56 }
+	create_land { terrain_type OUTSIDE_FOREST number_of_tiles rnd(16,32) base_size FOREST_BASE set_circular_base clumping_factor FOREST_CLUMPING base_elevation FOREST_ELEVATION zone FOREST_ZONE other_zone_avoidance_distance FOREST_AVOIDANCE land_id FOREST_IDENTIFICATION land_position 2 55 }
+	create_land { terrain_type OUTSIDE_FOREST number_of_tiles rnd(16,32) base_size FOREST_BASE set_circular_base clumping_factor FOREST_CLUMPING base_elevation FOREST_ELEVATION zone FOREST_ZONE other_zone_avoidance_distance FOREST_AVOIDANCE land_id FOREST_IDENTIFICATION land_position 2 54 }
+	create_land { terrain_type OUTSIDE_FOREST number_of_tiles rnd(16,32) base_size FOREST_BASE set_circular_base clumping_factor FOREST_CLUMPING base_elevation FOREST_ELEVATION zone FOREST_ZONE other_zone_avoidance_distance FOREST_AVOIDANCE land_id FOREST_IDENTIFICATION land_position 2 52 }
+	create_land { terrain_type OUTSIDE_FOREST number_of_tiles rnd(16,32) base_size FOREST_BASE set_circular_base clumping_factor FOREST_CLUMPING base_elevation FOREST_ELEVATION zone FOREST_ZONE other_zone_avoidance_distance FOREST_AVOIDANCE land_id FOREST_IDENTIFICATION land_position 2 51 }
+	create_land { terrain_type OUTSIDE_FOREST number_of_tiles rnd(16,32) base_size FOREST_BASE set_circular_base clumping_factor FOREST_CLUMPING base_elevation FOREST_ELEVATION zone FOREST_ZONE other_zone_avoidance_distance FOREST_AVOIDANCE land_id FOREST_IDENTIFICATION land_position 2 50 }
+	create_land { terrain_type OUTSIDE_FOREST number_of_tiles rnd(16,32) base_size FOREST_BASE set_circular_base clumping_factor FOREST_CLUMPING base_elevation FOREST_ELEVATION zone FOREST_ZONE other_zone_avoidance_distance FOREST_AVOIDANCE land_id FOREST_IDENTIFICATION land_position 2 49 }
+	create_land { terrain_type OUTSIDE_FOREST number_of_tiles rnd(16,32) base_size FOREST_BASE set_circular_base clumping_factor FOREST_CLUMPING base_elevation FOREST_ELEVATION zone FOREST_ZONE other_zone_avoidance_distance FOREST_AVOIDANCE land_id FOREST_IDENTIFICATION land_position 2 48 }
+	create_land { terrain_type OUTSIDE_FOREST number_of_tiles rnd(16,32) base_size FOREST_BASE set_circular_base clumping_factor FOREST_CLUMPING base_elevation FOREST_ELEVATION zone FOREST_ZONE other_zone_avoidance_distance FOREST_AVOIDANCE land_id FOREST_IDENTIFICATION land_position 2 46 }
+	create_land { terrain_type OUTSIDE_FOREST number_of_tiles rnd(16,32) base_size FOREST_BASE set_circular_base clumping_factor FOREST_CLUMPING base_elevation FOREST_ELEVATION zone FOREST_ZONE other_zone_avoidance_distance FOREST_AVOIDANCE land_id FOREST_IDENTIFICATION land_position 2 45 }
+	create_land { terrain_type OUTSIDE_FOREST number_of_tiles rnd(16,32) base_size FOREST_BASE set_circular_base clumping_factor FOREST_CLUMPING base_elevation FOREST_ELEVATION zone FOREST_ZONE other_zone_avoidance_distance FOREST_AVOIDANCE land_id FOREST_IDENTIFICATION land_position 2 44 }
+	create_land { terrain_type OUTSIDE_FOREST number_of_tiles rnd(16,32) base_size FOREST_BASE set_circular_base clumping_factor FOREST_CLUMPING base_elevation FOREST_ELEVATION zone FOREST_ZONE other_zone_avoidance_distance FOREST_AVOIDANCE land_id FOREST_IDENTIFICATION land_position 3 43 }
+	create_land { terrain_type OUTSIDE_FOREST number_of_tiles rnd(16,32) base_size FOREST_BASE set_circular_base clumping_factor FOREST_CLUMPING base_elevation FOREST_ELEVATION zone FOREST_ZONE other_zone_avoidance_distance FOREST_AVOIDANCE land_id FOREST_IDENTIFICATION land_position 3 42 }
+	create_land { terrain_type OUTSIDE_FOREST number_of_tiles rnd(16,32) base_size FOREST_BASE set_circular_base clumping_factor FOREST_CLUMPING base_elevation FOREST_ELEVATION zone FOREST_ZONE other_zone_avoidance_distance FOREST_AVOIDANCE land_id FOREST_IDENTIFICATION land_position 3 41 }
+	create_land { terrain_type OUTSIDE_FOREST number_of_tiles rnd(16,32) base_size FOREST_BASE set_circular_base clumping_factor FOREST_CLUMPING base_elevation FOREST_ELEVATION zone FOREST_ZONE other_zone_avoidance_distance FOREST_AVOIDANCE land_id FOREST_IDENTIFICATION land_position 3 39 }
+	create_land { terrain_type OUTSIDE_FOREST number_of_tiles rnd(16,32) base_size FOREST_BASE set_circular_base clumping_factor FOREST_CLUMPING base_elevation FOREST_ELEVATION zone FOREST_ZONE other_zone_avoidance_distance FOREST_AVOIDANCE land_id FOREST_IDENTIFICATION land_position 3 38 }
+	create_land { terrain_type OUTSIDE_FOREST number_of_tiles rnd(16,32) base_size FOREST_BASE set_circular_base clumping_factor FOREST_CLUMPING base_elevation FOREST_ELEVATION zone FOREST_ZONE other_zone_avoidance_distance FOREST_AVOIDANCE land_id FOREST_IDENTIFICATION land_position 4 37 }
+	create_land { terrain_type OUTSIDE_FOREST number_of_tiles rnd(16,32) base_size FOREST_BASE set_circular_base clumping_factor FOREST_CLUMPING base_elevation FOREST_ELEVATION zone FOREST_ZONE other_zone_avoidance_distance FOREST_AVOIDANCE land_id FOREST_IDENTIFICATION land_position 4 36 }
+	create_land { terrain_type OUTSIDE_FOREST number_of_tiles rnd(16,32) base_size FOREST_BASE set_circular_base clumping_factor FOREST_CLUMPING base_elevation FOREST_ELEVATION zone FOREST_ZONE other_zone_avoidance_distance FOREST_AVOIDANCE land_id FOREST_IDENTIFICATION land_position 4 35 }
+	create_land { terrain_type OUTSIDE_FOREST number_of_tiles rnd(16,32) base_size FOREST_BASE set_circular_base clumping_factor FOREST_CLUMPING base_elevation FOREST_ELEVATION zone FOREST_ZONE other_zone_avoidance_distance FOREST_AVOIDANCE land_id FOREST_IDENTIFICATION land_position 5 34 }
+	create_land { terrain_type OUTSIDE_FOREST number_of_tiles rnd(16,32) base_size FOREST_BASE set_circular_base clumping_factor FOREST_CLUMPING base_elevation FOREST_ELEVATION zone FOREST_ZONE other_zone_avoidance_distance FOREST_AVOIDANCE land_id FOREST_IDENTIFICATION land_position 5 33 }
+	create_land { terrain_type OUTSIDE_FOREST number_of_tiles rnd(16,32) base_size FOREST_BASE set_circular_base clumping_factor FOREST_CLUMPING base_elevation FOREST_ELEVATION zone FOREST_ZONE other_zone_avoidance_distance FOREST_AVOIDANCE land_id FOREST_IDENTIFICATION land_position 6 32 }
+	create_land { terrain_type OUTSIDE_FOREST number_of_tiles rnd(16,32) base_size FOREST_BASE set_circular_base clumping_factor FOREST_CLUMPING base_elevation FOREST_ELEVATION zone FOREST_ZONE other_zone_avoidance_distance FOREST_AVOIDANCE land_id FOREST_IDENTIFICATION land_position 6 31 }
+	create_land { terrain_type OUTSIDE_FOREST number_of_tiles rnd(16,32) base_size FOREST_BASE set_circular_base clumping_factor FOREST_CLUMPING base_elevation FOREST_ELEVATION zone FOREST_ZONE other_zone_avoidance_distance FOREST_AVOIDANCE land_id FOREST_IDENTIFICATION land_position 7 29 }
+	create_land { terrain_type OUTSIDE_FOREST number_of_tiles rnd(16,32) base_size FOREST_BASE set_circular_base clumping_factor FOREST_CLUMPING base_elevation FOREST_ELEVATION zone FOREST_ZONE other_zone_avoidance_distance FOREST_AVOIDANCE land_id FOREST_IDENTIFICATION land_position 7 28 }
+	create_land { terrain_type OUTSIDE_FOREST number_of_tiles rnd(16,32) base_size FOREST_BASE set_circular_base clumping_factor FOREST_CLUMPING base_elevation FOREST_ELEVATION zone FOREST_ZONE other_zone_avoidance_distance FOREST_AVOIDANCE land_id FOREST_IDENTIFICATION land_position 8 27 }
+	create_land { terrain_type OUTSIDE_FOREST number_of_tiles rnd(16,32) base_size FOREST_BASE set_circular_base clumping_factor FOREST_CLUMPING base_elevation FOREST_ELEVATION zone FOREST_ZONE other_zone_avoidance_distance FOREST_AVOIDANCE land_id FOREST_IDENTIFICATION land_position 8 26 }
+	create_land { terrain_type OUTSIDE_FOREST number_of_tiles rnd(16,32) base_size FOREST_BASE set_circular_base clumping_factor FOREST_CLUMPING base_elevation FOREST_ELEVATION zone FOREST_ZONE other_zone_avoidance_distance FOREST_AVOIDANCE land_id FOREST_IDENTIFICATION land_position 9 25 }
+	create_land { terrain_type OUTSIDE_FOREST number_of_tiles rnd(16,32) base_size FOREST_BASE set_circular_base clumping_factor FOREST_CLUMPING base_elevation FOREST_ELEVATION zone FOREST_ZONE other_zone_avoidance_distance FOREST_AVOIDANCE land_id FOREST_IDENTIFICATION land_position 9 24 }
+	create_land { terrain_type OUTSIDE_FOREST number_of_tiles rnd(16,32) base_size FOREST_BASE set_circular_base clumping_factor FOREST_CLUMPING base_elevation FOREST_ELEVATION zone FOREST_ZONE other_zone_avoidance_distance FOREST_AVOIDANCE land_id FOREST_IDENTIFICATION land_position 10 23 }
+	create_land { terrain_type OUTSIDE_FOREST number_of_tiles rnd(16,32) base_size FOREST_BASE set_circular_base clumping_factor FOREST_CLUMPING base_elevation FOREST_ELEVATION zone FOREST_ZONE other_zone_avoidance_distance FOREST_AVOIDANCE land_id FOREST_IDENTIFICATION land_position 11 22 }
+	create_land { terrain_type OUTSIDE_FOREST number_of_tiles rnd(16,32) base_size FOREST_BASE set_circular_base clumping_factor FOREST_CLUMPING base_elevation FOREST_ELEVATION zone FOREST_ZONE other_zone_avoidance_distance FOREST_AVOIDANCE land_id FOREST_IDENTIFICATION land_position 11 21 }
+	create_land { terrain_type OUTSIDE_FOREST number_of_tiles rnd(16,32) base_size FOREST_BASE set_circular_base clumping_factor FOREST_CLUMPING base_elevation FOREST_ELEVATION zone FOREST_ZONE other_zone_avoidance_distance FOREST_AVOIDANCE land_id FOREST_IDENTIFICATION land_position 12 20 }
+	create_land { terrain_type OUTSIDE_FOREST number_of_tiles rnd(16,32) base_size FOREST_BASE set_circular_base clumping_factor FOREST_CLUMPING base_elevation FOREST_ELEVATION zone FOREST_ZONE other_zone_avoidance_distance FOREST_AVOIDANCE land_id FOREST_IDENTIFICATION land_position 13 20 }
+	create_land { terrain_type OUTSIDE_FOREST number_of_tiles rnd(16,32) base_size FOREST_BASE set_circular_base clumping_factor FOREST_CLUMPING base_elevation FOREST_ELEVATION zone FOREST_ZONE other_zone_avoidance_distance FOREST_AVOIDANCE land_id FOREST_IDENTIFICATION land_position 14 19 }
+	create_land { terrain_type OUTSIDE_FOREST number_of_tiles rnd(16,32) base_size FOREST_BASE set_circular_base clumping_factor FOREST_CLUMPING base_elevation FOREST_ELEVATION zone FOREST_ZONE other_zone_avoidance_distance FOREST_AVOIDANCE land_id FOREST_IDENTIFICATION land_position 14 18 }
+	create_land { terrain_type OUTSIDE_FOREST number_of_tiles rnd(16,32) base_size FOREST_BASE set_circular_base clumping_factor FOREST_CLUMPING base_elevation FOREST_ELEVATION zone FOREST_ZONE other_zone_avoidance_distance FOREST_AVOIDANCE land_id FOREST_IDENTIFICATION land_position 15 17 }
+	create_land { terrain_type OUTSIDE_FOREST number_of_tiles rnd(16,32) base_size FOREST_BASE set_circular_base clumping_factor FOREST_CLUMPING base_elevation FOREST_ELEVATION zone FOREST_ZONE other_zone_avoidance_distance FOREST_AVOIDANCE land_id FOREST_IDENTIFICATION land_position 16 16 }
+	create_land { terrain_type OUTSIDE_FOREST number_of_tiles rnd(16,32) base_size FOREST_BASE set_circular_base clumping_factor FOREST_CLUMPING base_elevation FOREST_ELEVATION zone FOREST_ZONE other_zone_avoidance_distance FOREST_AVOIDANCE land_id FOREST_IDENTIFICATION land_position 17 15 }
+	create_land { terrain_type OUTSIDE_FOREST number_of_tiles rnd(16,32) base_size FOREST_BASE set_circular_base clumping_factor FOREST_CLUMPING base_elevation FOREST_ELEVATION zone FOREST_ZONE other_zone_avoidance_distance FOREST_AVOIDANCE land_id FOREST_IDENTIFICATION land_position 18 14 }
+	create_land { terrain_type OUTSIDE_FOREST number_of_tiles rnd(16,32) base_size FOREST_BASE set_circular_base clumping_factor FOREST_CLUMPING base_elevation FOREST_ELEVATION zone FOREST_ZONE other_zone_avoidance_distance FOREST_AVOIDANCE land_id FOREST_IDENTIFICATION land_position 19 14 }
+	create_land { terrain_type OUTSIDE_FOREST number_of_tiles rnd(16,32) base_size FOREST_BASE set_circular_base clumping_factor FOREST_CLUMPING base_elevation FOREST_ELEVATION zone FOREST_ZONE other_zone_avoidance_distance FOREST_AVOIDANCE land_id FOREST_IDENTIFICATION land_position 20 13 }
+	create_land { terrain_type OUTSIDE_FOREST number_of_tiles rnd(16,32) base_size FOREST_BASE set_circular_base clumping_factor FOREST_CLUMPING base_elevation FOREST_ELEVATION zone FOREST_ZONE other_zone_avoidance_distance FOREST_AVOIDANCE land_id FOREST_IDENTIFICATION land_position 20 12 }
+	create_land { terrain_type OUTSIDE_FOREST number_of_tiles rnd(16,32) base_size FOREST_BASE set_circular_base clumping_factor FOREST_CLUMPING base_elevation FOREST_ELEVATION zone FOREST_ZONE other_zone_avoidance_distance FOREST_AVOIDANCE land_id FOREST_IDENTIFICATION land_position 21 11 }
+	create_land { terrain_type OUTSIDE_FOREST number_of_tiles rnd(16,32) base_size FOREST_BASE set_circular_base clumping_factor FOREST_CLUMPING base_elevation FOREST_ELEVATION zone FOREST_ZONE other_zone_avoidance_distance FOREST_AVOIDANCE land_id FOREST_IDENTIFICATION land_position 22 11 }
+	create_land { terrain_type OUTSIDE_FOREST number_of_tiles rnd(16,32) base_size FOREST_BASE set_circular_base clumping_factor FOREST_CLUMPING base_elevation FOREST_ELEVATION zone FOREST_ZONE other_zone_avoidance_distance FOREST_AVOIDANCE land_id FOREST_IDENTIFICATION land_position 23 10 }
+	create_land { terrain_type OUTSIDE_FOREST number_of_tiles rnd(16,32) base_size FOREST_BASE set_circular_base clumping_factor FOREST_CLUMPING base_elevation FOREST_ELEVATION zone FOREST_ZONE other_zone_avoidance_distance FOREST_AVOIDANCE land_id FOREST_IDENTIFICATION land_position 24 9 }
+	create_land { terrain_type OUTSIDE_FOREST number_of_tiles rnd(16,32) base_size FOREST_BASE set_circular_base clumping_factor FOREST_CLUMPING base_elevation FOREST_ELEVATION zone FOREST_ZONE other_zone_avoidance_distance FOREST_AVOIDANCE land_id FOREST_IDENTIFICATION land_position 25 9 }
+	create_land { terrain_type OUTSIDE_FOREST number_of_tiles rnd(16,32) base_size FOREST_BASE set_circular_base clumping_factor FOREST_CLUMPING base_elevation FOREST_ELEVATION zone FOREST_ZONE other_zone_avoidance_distance FOREST_AVOIDANCE land_id FOREST_IDENTIFICATION land_position 26 8 }
+	create_land { terrain_type OUTSIDE_FOREST number_of_tiles rnd(16,32) base_size FOREST_BASE set_circular_base clumping_factor FOREST_CLUMPING base_elevation FOREST_ELEVATION zone FOREST_ZONE other_zone_avoidance_distance FOREST_AVOIDANCE land_id FOREST_IDENTIFICATION land_position 27 8 }
+	create_land { terrain_type OUTSIDE_FOREST number_of_tiles rnd(16,32) base_size FOREST_BASE set_circular_base clumping_factor FOREST_CLUMPING base_elevation FOREST_ELEVATION zone FOREST_ZONE other_zone_avoidance_distance FOREST_AVOIDANCE land_id FOREST_IDENTIFICATION land_position 28 7 }
+	create_land { terrain_type OUTSIDE_FOREST number_of_tiles rnd(16,32) base_size FOREST_BASE set_circular_base clumping_factor FOREST_CLUMPING base_elevation FOREST_ELEVATION zone FOREST_ZONE other_zone_avoidance_distance FOREST_AVOIDANCE land_id FOREST_IDENTIFICATION land_position 29 7 }
+	create_land { terrain_type OUTSIDE_FOREST number_of_tiles rnd(16,32) base_size FOREST_BASE set_circular_base clumping_factor FOREST_CLUMPING base_elevation FOREST_ELEVATION zone FOREST_ZONE other_zone_avoidance_distance FOREST_AVOIDANCE land_id FOREST_IDENTIFICATION land_position 31 6 }
+	create_land { terrain_type OUTSIDE_FOREST number_of_tiles rnd(16,32) base_size FOREST_BASE set_circular_base clumping_factor FOREST_CLUMPING base_elevation FOREST_ELEVATION zone FOREST_ZONE other_zone_avoidance_distance FOREST_AVOIDANCE land_id FOREST_IDENTIFICATION land_position 32 6 }
+	create_land { terrain_type OUTSIDE_FOREST number_of_tiles rnd(16,32) base_size FOREST_BASE set_circular_base clumping_factor FOREST_CLUMPING base_elevation FOREST_ELEVATION zone FOREST_ZONE other_zone_avoidance_distance FOREST_AVOIDANCE land_id FOREST_IDENTIFICATION land_position 33 5 }
+	create_land { terrain_type OUTSIDE_FOREST number_of_tiles rnd(16,32) base_size FOREST_BASE set_circular_base clumping_factor FOREST_CLUMPING base_elevation FOREST_ELEVATION zone FOREST_ZONE other_zone_avoidance_distance FOREST_AVOIDANCE land_id FOREST_IDENTIFICATION land_position 34 5 }
+	create_land { terrain_type OUTSIDE_FOREST number_of_tiles rnd(16,32) base_size FOREST_BASE set_circular_base clumping_factor FOREST_CLUMPING base_elevation FOREST_ELEVATION zone FOREST_ZONE other_zone_avoidance_distance FOREST_AVOIDANCE land_id FOREST_IDENTIFICATION land_position 35 4 }
+	create_land { terrain_type OUTSIDE_FOREST number_of_tiles rnd(16,32) base_size FOREST_BASE set_circular_base clumping_factor FOREST_CLUMPING base_elevation FOREST_ELEVATION zone FOREST_ZONE other_zone_avoidance_distance FOREST_AVOIDANCE land_id FOREST_IDENTIFICATION land_position 36 4 }
+	create_land { terrain_type OUTSIDE_FOREST number_of_tiles rnd(16,32) base_size FOREST_BASE set_circular_base clumping_factor FOREST_CLUMPING base_elevation FOREST_ELEVATION zone FOREST_ZONE other_zone_avoidance_distance FOREST_AVOIDANCE land_id FOREST_IDENTIFICATION land_position 37 4 }
+	create_land { terrain_type OUTSIDE_FOREST number_of_tiles rnd(16,32) base_size FOREST_BASE set_circular_base clumping_factor FOREST_CLUMPING base_elevation FOREST_ELEVATION zone FOREST_ZONE other_zone_avoidance_distance FOREST_AVOIDANCE land_id FOREST_IDENTIFICATION land_position 38 3 }
+	create_land { terrain_type OUTSIDE_FOREST number_of_tiles rnd(16,32) base_size FOREST_BASE set_circular_base clumping_factor FOREST_CLUMPING base_elevation FOREST_ELEVATION zone FOREST_ZONE other_zone_avoidance_distance FOREST_AVOIDANCE land_id FOREST_IDENTIFICATION land_position 39 3 }
+	create_land { terrain_type OUTSIDE_FOREST number_of_tiles rnd(16,32) base_size FOREST_BASE set_circular_base clumping_factor FOREST_CLUMPING base_elevation FOREST_ELEVATION zone FOREST_ZONE other_zone_avoidance_distance FOREST_AVOIDANCE land_id FOREST_IDENTIFICATION land_position 41 3 }
+	create_land { terrain_type OUTSIDE_FOREST number_of_tiles rnd(16,32) base_size FOREST_BASE set_circular_base clumping_factor FOREST_CLUMPING base_elevation FOREST_ELEVATION zone FOREST_ZONE other_zone_avoidance_distance FOREST_AVOIDANCE land_id FOREST_IDENTIFICATION land_position 42 3 }
+	create_land { terrain_type OUTSIDE_FOREST number_of_tiles rnd(16,32) base_size FOREST_BASE set_circular_base clumping_factor FOREST_CLUMPING base_elevation FOREST_ELEVATION zone FOREST_ZONE other_zone_avoidance_distance FOREST_AVOIDANCE land_id FOREST_IDENTIFICATION land_position 43 3 }
+	create_land { terrain_type OUTSIDE_FOREST number_of_tiles rnd(16,32) base_size FOREST_BASE set_circular_base clumping_factor FOREST_CLUMPING base_elevation FOREST_ELEVATION zone FOREST_ZONE other_zone_avoidance_distance FOREST_AVOIDANCE land_id FOREST_IDENTIFICATION land_position 44 2 }
+	create_land { terrain_type OUTSIDE_FOREST number_of_tiles rnd(16,32) base_size FOREST_BASE set_circular_base clumping_factor FOREST_CLUMPING base_elevation FOREST_ELEVATION zone FOREST_ZONE other_zone_avoidance_distance FOREST_AVOIDANCE land_id FOREST_IDENTIFICATION land_position 45 2 }
+	create_land { terrain_type OUTSIDE_FOREST number_of_tiles rnd(16,32) base_size FOREST_BASE set_circular_base clumping_factor FOREST_CLUMPING base_elevation FOREST_ELEVATION zone FOREST_ZONE other_zone_avoidance_distance FOREST_AVOIDANCE land_id FOREST_IDENTIFICATION land_position 46 2 }
+	create_land { terrain_type OUTSIDE_FOREST number_of_tiles rnd(16,32) base_size FOREST_BASE set_circular_base clumping_factor FOREST_CLUMPING base_elevation FOREST_ELEVATION zone FOREST_ZONE other_zone_avoidance_distance FOREST_AVOIDANCE land_id FOREST_IDENTIFICATION land_position 48 2 }
+	create_land { terrain_type OUTSIDE_FOREST number_of_tiles rnd(16,32) base_size FOREST_BASE set_circular_base clumping_factor FOREST_CLUMPING base_elevation FOREST_ELEVATION zone FOREST_ZONE other_zone_avoidance_distance FOREST_AVOIDANCE land_id FOREST_IDENTIFICATION land_position 49 2 }
+	create_land { terrain_type OUTSIDE_FOREST number_of_tiles rnd(16,32) base_size FOREST_BASE set_circular_base clumping_factor FOREST_CLUMPING base_elevation FOREST_ELEVATION zone FOREST_ZONE other_zone_avoidance_distance FOREST_AVOIDANCE land_id FOREST_IDENTIFICATION land_position 50 2 }
+	create_land { terrain_type OUTSIDE_FOREST number_of_tiles rnd(16,32) base_size FOREST_BASE set_circular_base clumping_factor FOREST_CLUMPING base_elevation FOREST_ELEVATION zone FOREST_ZONE other_zone_avoidance_distance FOREST_AVOIDANCE land_id FOREST_IDENTIFICATION land_position 51 2 }
+	create_land { terrain_type OUTSIDE_FOREST number_of_tiles rnd(16,32) base_size FOREST_BASE set_circular_base clumping_factor FOREST_CLUMPING base_elevation FOREST_ELEVATION zone FOREST_ZONE other_zone_avoidance_distance FOREST_AVOIDANCE land_id FOREST_IDENTIFICATION land_position 52 2 }
+	create_land { terrain_type OUTSIDE_FOREST number_of_tiles rnd(16,32) base_size FOREST_BASE set_circular_base clumping_factor FOREST_CLUMPING base_elevation FOREST_ELEVATION zone FOREST_ZONE other_zone_avoidance_distance FOREST_AVOIDANCE land_id FOREST_IDENTIFICATION land_position 54 2 }
+	create_land { terrain_type OUTSIDE_FOREST number_of_tiles rnd(16,32) base_size FOREST_BASE set_circular_base clumping_factor FOREST_CLUMPING base_elevation FOREST_ELEVATION zone FOREST_ZONE other_zone_avoidance_distance FOREST_AVOIDANCE land_id FOREST_IDENTIFICATION land_position 55 2 }
+	create_land { terrain_type OUTSIDE_FOREST number_of_tiles rnd(16,32) base_size FOREST_BASE set_circular_base clumping_factor FOREST_CLUMPING base_elevation FOREST_ELEVATION zone FOREST_ZONE other_zone_avoidance_distance FOREST_AVOIDANCE land_id FOREST_IDENTIFICATION land_position 56 2 }
+	create_land { terrain_type OUTSIDE_FOREST number_of_tiles rnd(16,32) base_size FOREST_BASE set_circular_base clumping_factor FOREST_CLUMPING base_elevation FOREST_ELEVATION zone FOREST_ZONE other_zone_avoidance_distance FOREST_AVOIDANCE land_id FOREST_IDENTIFICATION land_position 57 3 }
+	create_land { terrain_type OUTSIDE_FOREST number_of_tiles rnd(16,32) base_size FOREST_BASE set_circular_base clumping_factor FOREST_CLUMPING base_elevation FOREST_ELEVATION zone FOREST_ZONE other_zone_avoidance_distance FOREST_AVOIDANCE land_id FOREST_IDENTIFICATION land_position 58 3 }
+	create_land { terrain_type OUTSIDE_FOREST number_of_tiles rnd(16,32) base_size FOREST_BASE set_circular_base clumping_factor FOREST_CLUMPING base_elevation FOREST_ELEVATION zone FOREST_ZONE other_zone_avoidance_distance FOREST_AVOIDANCE land_id FOREST_IDENTIFICATION land_position 59 3 }
+	create_land { terrain_type OUTSIDE_FOREST number_of_tiles rnd(16,32) base_size FOREST_BASE set_circular_base clumping_factor FOREST_CLUMPING base_elevation FOREST_ELEVATION zone FOREST_ZONE other_zone_avoidance_distance FOREST_AVOIDANCE land_id FOREST_IDENTIFICATION land_position 61 3 }
+	create_land { terrain_type OUTSIDE_FOREST number_of_tiles rnd(16,32) base_size FOREST_BASE set_circular_base clumping_factor FOREST_CLUMPING base_elevation FOREST_ELEVATION zone FOREST_ZONE other_zone_avoidance_distance FOREST_AVOIDANCE land_id FOREST_IDENTIFICATION land_position 62 3 }
+	create_land { terrain_type OUTSIDE_FOREST number_of_tiles rnd(16,32) base_size FOREST_BASE set_circular_base clumping_factor FOREST_CLUMPING base_elevation FOREST_ELEVATION zone FOREST_ZONE other_zone_avoidance_distance FOREST_AVOIDANCE land_id FOREST_IDENTIFICATION land_position 63 4 }
+	create_land { terrain_type OUTSIDE_FOREST number_of_tiles rnd(16,32) base_size FOREST_BASE set_circular_base clumping_factor FOREST_CLUMPING base_elevation FOREST_ELEVATION zone FOREST_ZONE other_zone_avoidance_distance FOREST_AVOIDANCE land_id FOREST_IDENTIFICATION land_position 64 4 }
+	create_land { terrain_type OUTSIDE_FOREST number_of_tiles rnd(16,32) base_size FOREST_BASE set_circular_base clumping_factor FOREST_CLUMPING base_elevation FOREST_ELEVATION zone FOREST_ZONE other_zone_avoidance_distance FOREST_AVOIDANCE land_id FOREST_IDENTIFICATION land_position 65 4 }
+	create_land { terrain_type OUTSIDE_FOREST number_of_tiles rnd(16,32) base_size FOREST_BASE set_circular_base clumping_factor FOREST_CLUMPING base_elevation FOREST_ELEVATION zone FOREST_ZONE other_zone_avoidance_distance FOREST_AVOIDANCE land_id FOREST_IDENTIFICATION land_position 66 5 }
+	create_land { terrain_type OUTSIDE_FOREST number_of_tiles rnd(16,32) base_size FOREST_BASE set_circular_base clumping_factor FOREST_CLUMPING base_elevation FOREST_ELEVATION zone FOREST_ZONE other_zone_avoidance_distance FOREST_AVOIDANCE land_id FOREST_IDENTIFICATION land_position 67 5 }
+	create_land { terrain_type OUTSIDE_FOREST number_of_tiles rnd(16,32) base_size FOREST_BASE set_circular_base clumping_factor FOREST_CLUMPING base_elevation FOREST_ELEVATION zone FOREST_ZONE other_zone_avoidance_distance FOREST_AVOIDANCE land_id FOREST_IDENTIFICATION land_position 68 6 }
+	create_land { terrain_type OUTSIDE_FOREST number_of_tiles rnd(16,32) base_size FOREST_BASE set_circular_base clumping_factor FOREST_CLUMPING base_elevation FOREST_ELEVATION zone FOREST_ZONE other_zone_avoidance_distance FOREST_AVOIDANCE land_id FOREST_IDENTIFICATION land_position 69 6 }
+	create_land { terrain_type OUTSIDE_FOREST number_of_tiles rnd(16,32) base_size FOREST_BASE set_circular_base clumping_factor FOREST_CLUMPING base_elevation FOREST_ELEVATION zone FOREST_ZONE other_zone_avoidance_distance FOREST_AVOIDANCE land_id FOREST_IDENTIFICATION land_position 71 7 }
+	create_land { terrain_type OUTSIDE_FOREST number_of_tiles rnd(16,32) base_size FOREST_BASE set_circular_base clumping_factor FOREST_CLUMPING base_elevation FOREST_ELEVATION zone FOREST_ZONE other_zone_avoidance_distance FOREST_AVOIDANCE land_id FOREST_IDENTIFICATION land_position 72 7 }
+	create_land { terrain_type OUTSIDE_FOREST number_of_tiles rnd(16,32) base_size FOREST_BASE set_circular_base clumping_factor FOREST_CLUMPING base_elevation FOREST_ELEVATION zone FOREST_ZONE other_zone_avoidance_distance FOREST_AVOIDANCE land_id FOREST_IDENTIFICATION land_position 73 8 }
+	create_land { terrain_type OUTSIDE_FOREST number_of_tiles rnd(16,32) base_size FOREST_BASE set_circular_base clumping_factor FOREST_CLUMPING base_elevation FOREST_ELEVATION zone FOREST_ZONE other_zone_avoidance_distance FOREST_AVOIDANCE land_id FOREST_IDENTIFICATION land_position 74 8 }
+	create_land { terrain_type OUTSIDE_FOREST number_of_tiles rnd(16,32) base_size FOREST_BASE set_circular_base clumping_factor FOREST_CLUMPING base_elevation FOREST_ELEVATION zone FOREST_ZONE other_zone_avoidance_distance FOREST_AVOIDANCE land_id FOREST_IDENTIFICATION land_position 75 9 }
+	create_land { terrain_type OUTSIDE_FOREST number_of_tiles rnd(16,32) base_size FOREST_BASE set_circular_base clumping_factor FOREST_CLUMPING base_elevation FOREST_ELEVATION zone FOREST_ZONE other_zone_avoidance_distance FOREST_AVOIDANCE land_id FOREST_IDENTIFICATION land_position 76 9 }
+	create_land { terrain_type OUTSIDE_FOREST number_of_tiles rnd(16,32) base_size FOREST_BASE set_circular_base clumping_factor FOREST_CLUMPING base_elevation FOREST_ELEVATION zone FOREST_ZONE other_zone_avoidance_distance FOREST_AVOIDANCE land_id FOREST_IDENTIFICATION land_position 77 10 }
+	create_land { terrain_type OUTSIDE_FOREST number_of_tiles rnd(16,32) base_size FOREST_BASE set_circular_base clumping_factor FOREST_CLUMPING base_elevation FOREST_ELEVATION zone FOREST_ZONE other_zone_avoidance_distance FOREST_AVOIDANCE land_id FOREST_IDENTIFICATION land_position 78 11 }
+	create_land { terrain_type OUTSIDE_FOREST number_of_tiles rnd(16,32) base_size FOREST_BASE set_circular_base clumping_factor FOREST_CLUMPING base_elevation FOREST_ELEVATION zone FOREST_ZONE other_zone_avoidance_distance FOREST_AVOIDANCE land_id FOREST_IDENTIFICATION land_position 79 11 }
+	create_land { terrain_type OUTSIDE_FOREST number_of_tiles rnd(16,32) base_size FOREST_BASE set_circular_base clumping_factor FOREST_CLUMPING base_elevation FOREST_ELEVATION zone FOREST_ZONE other_zone_avoidance_distance FOREST_AVOIDANCE land_id FOREST_IDENTIFICATION land_position 80 12 }
+	create_land { terrain_type OUTSIDE_FOREST number_of_tiles rnd(16,32) base_size FOREST_BASE set_circular_base clumping_factor FOREST_CLUMPING base_elevation FOREST_ELEVATION zone FOREST_ZONE other_zone_avoidance_distance FOREST_AVOIDANCE land_id FOREST_IDENTIFICATION land_position 80 13 }
+	create_land { terrain_type OUTSIDE_FOREST number_of_tiles rnd(16,32) base_size FOREST_BASE set_circular_base clumping_factor FOREST_CLUMPING base_elevation FOREST_ELEVATION zone FOREST_ZONE other_zone_avoidance_distance FOREST_AVOIDANCE land_id FOREST_IDENTIFICATION land_position 81 14 }
+	create_land { terrain_type OUTSIDE_FOREST number_of_tiles rnd(16,32) base_size FOREST_BASE set_circular_base clumping_factor FOREST_CLUMPING base_elevation FOREST_ELEVATION zone FOREST_ZONE other_zone_avoidance_distance FOREST_AVOIDANCE land_id FOREST_IDENTIFICATION land_position 82 14 }
+	create_land { terrain_type OUTSIDE_FOREST number_of_tiles rnd(16,32) base_size FOREST_BASE set_circular_base clumping_factor FOREST_CLUMPING base_elevation FOREST_ELEVATION zone FOREST_ZONE other_zone_avoidance_distance FOREST_AVOIDANCE land_id FOREST_IDENTIFICATION land_position 83 15 }
+	create_land { terrain_type OUTSIDE_FOREST number_of_tiles rnd(16,32) base_size FOREST_BASE set_circular_base clumping_factor FOREST_CLUMPING base_elevation FOREST_ELEVATION zone FOREST_ZONE other_zone_avoidance_distance FOREST_AVOIDANCE land_id FOREST_IDENTIFICATION land_position 84 16 }
+	create_land { terrain_type OUTSIDE_FOREST number_of_tiles rnd(16,32) base_size FOREST_BASE set_circular_base clumping_factor FOREST_CLUMPING base_elevation FOREST_ELEVATION zone FOREST_ZONE other_zone_avoidance_distance FOREST_AVOIDANCE land_id FOREST_IDENTIFICATION land_position 85 17 }
+	create_land { terrain_type OUTSIDE_FOREST number_of_tiles rnd(16,32) base_size FOREST_BASE set_circular_base clumping_factor FOREST_CLUMPING base_elevation FOREST_ELEVATION zone FOREST_ZONE other_zone_avoidance_distance FOREST_AVOIDANCE land_id FOREST_IDENTIFICATION land_position 86 18 }
+	create_land { terrain_type OUTSIDE_FOREST number_of_tiles rnd(16,32) base_size FOREST_BASE set_circular_base clumping_factor FOREST_CLUMPING base_elevation FOREST_ELEVATION zone FOREST_ZONE other_zone_avoidance_distance FOREST_AVOIDANCE land_id FOREST_IDENTIFICATION land_position 86 19 }
+	create_land { terrain_type OUTSIDE_FOREST number_of_tiles rnd(16,32) base_size FOREST_BASE set_circular_base clumping_factor FOREST_CLUMPING base_elevation FOREST_ELEVATION zone FOREST_ZONE other_zone_avoidance_distance FOREST_AVOIDANCE land_id FOREST_IDENTIFICATION land_position 87 20 }
+	create_land { terrain_type OUTSIDE_FOREST number_of_tiles rnd(16,32) base_size FOREST_BASE set_circular_base clumping_factor FOREST_CLUMPING base_elevation FOREST_ELEVATION zone FOREST_ZONE other_zone_avoidance_distance FOREST_AVOIDANCE land_id FOREST_IDENTIFICATION land_position 88 20 }
+	create_land { terrain_type OUTSIDE_FOREST number_of_tiles rnd(16,32) base_size FOREST_BASE set_circular_base clumping_factor FOREST_CLUMPING base_elevation FOREST_ELEVATION zone FOREST_ZONE other_zone_avoidance_distance FOREST_AVOIDANCE land_id FOREST_IDENTIFICATION land_position 89 21 }
+	create_land { terrain_type OUTSIDE_FOREST number_of_tiles rnd(16,32) base_size FOREST_BASE set_circular_base clumping_factor FOREST_CLUMPING base_elevation FOREST_ELEVATION zone FOREST_ZONE other_zone_avoidance_distance FOREST_AVOIDANCE land_id FOREST_IDENTIFICATION land_position 89 22 }
+	create_land { terrain_type OUTSIDE_FOREST number_of_tiles rnd(16,32) base_size FOREST_BASE set_circular_base clumping_factor FOREST_CLUMPING base_elevation FOREST_ELEVATION zone FOREST_ZONE other_zone_avoidance_distance FOREST_AVOIDANCE land_id FOREST_IDENTIFICATION land_position 90 23 }
+	create_land { terrain_type OUTSIDE_FOREST number_of_tiles rnd(16,32) base_size FOREST_BASE set_circular_base clumping_factor FOREST_CLUMPING base_elevation FOREST_ELEVATION zone FOREST_ZONE other_zone_avoidance_distance FOREST_AVOIDANCE land_id FOREST_IDENTIFICATION land_position 91 24 }
+	create_land { terrain_type OUTSIDE_FOREST number_of_tiles rnd(16,32) base_size FOREST_BASE set_circular_base clumping_factor FOREST_CLUMPING base_elevation FOREST_ELEVATION zone FOREST_ZONE other_zone_avoidance_distance FOREST_AVOIDANCE land_id FOREST_IDENTIFICATION land_position 91 25 }
+	create_land { terrain_type OUTSIDE_FOREST number_of_tiles rnd(16,32) base_size FOREST_BASE set_circular_base clumping_factor FOREST_CLUMPING base_elevation FOREST_ELEVATION zone FOREST_ZONE other_zone_avoidance_distance FOREST_AVOIDANCE land_id FOREST_IDENTIFICATION land_position 92 26 }
+	create_land { terrain_type OUTSIDE_FOREST number_of_tiles rnd(16,32) base_size FOREST_BASE set_circular_base clumping_factor FOREST_CLUMPING base_elevation FOREST_ELEVATION zone FOREST_ZONE other_zone_avoidance_distance FOREST_AVOIDANCE land_id FOREST_IDENTIFICATION land_position 92 27 }
+	create_land { terrain_type OUTSIDE_FOREST number_of_tiles rnd(16,32) base_size FOREST_BASE set_circular_base clumping_factor FOREST_CLUMPING base_elevation FOREST_ELEVATION zone FOREST_ZONE other_zone_avoidance_distance FOREST_AVOIDANCE land_id FOREST_IDENTIFICATION land_position 93 28 }
+	create_land { terrain_type OUTSIDE_FOREST number_of_tiles rnd(16,32) base_size FOREST_BASE set_circular_base clumping_factor FOREST_CLUMPING base_elevation FOREST_ELEVATION zone FOREST_ZONE other_zone_avoidance_distance FOREST_AVOIDANCE land_id FOREST_IDENTIFICATION land_position 93 29 }
+	create_land { terrain_type OUTSIDE_FOREST number_of_tiles rnd(16,32) base_size FOREST_BASE set_circular_base clumping_factor FOREST_CLUMPING base_elevation FOREST_ELEVATION zone FOREST_ZONE other_zone_avoidance_distance FOREST_AVOIDANCE land_id FOREST_IDENTIFICATION land_position 94 31 }
+	create_land { terrain_type OUTSIDE_FOREST number_of_tiles rnd(16,32) base_size FOREST_BASE set_circular_base clumping_factor FOREST_CLUMPING base_elevation FOREST_ELEVATION zone FOREST_ZONE other_zone_avoidance_distance FOREST_AVOIDANCE land_id FOREST_IDENTIFICATION land_position 94 32 }
+	create_land { terrain_type OUTSIDE_FOREST number_of_tiles rnd(16,32) base_size FOREST_BASE set_circular_base clumping_factor FOREST_CLUMPING base_elevation FOREST_ELEVATION zone FOREST_ZONE other_zone_avoidance_distance FOREST_AVOIDANCE land_id FOREST_IDENTIFICATION land_position 95 33 }
+	create_land { terrain_type OUTSIDE_FOREST number_of_tiles rnd(16,32) base_size FOREST_BASE set_circular_base clumping_factor FOREST_CLUMPING base_elevation FOREST_ELEVATION zone FOREST_ZONE other_zone_avoidance_distance FOREST_AVOIDANCE land_id FOREST_IDENTIFICATION land_position 95 34 }
+	create_land { terrain_type OUTSIDE_FOREST number_of_tiles rnd(16,32) base_size FOREST_BASE set_circular_base clumping_factor FOREST_CLUMPING base_elevation FOREST_ELEVATION zone FOREST_ZONE other_zone_avoidance_distance FOREST_AVOIDANCE land_id FOREST_IDENTIFICATION land_position 96 35 }
+	create_land { terrain_type OUTSIDE_FOREST number_of_tiles rnd(16,32) base_size FOREST_BASE set_circular_base clumping_factor FOREST_CLUMPING base_elevation FOREST_ELEVATION zone FOREST_ZONE other_zone_avoidance_distance FOREST_AVOIDANCE land_id FOREST_IDENTIFICATION land_position 96 36 }
+	create_land { terrain_type OUTSIDE_FOREST number_of_tiles rnd(16,32) base_size FOREST_BASE set_circular_base clumping_factor FOREST_CLUMPING base_elevation FOREST_ELEVATION zone FOREST_ZONE other_zone_avoidance_distance FOREST_AVOIDANCE land_id FOREST_IDENTIFICATION land_position 96 37 }
+	create_land { terrain_type OUTSIDE_FOREST number_of_tiles rnd(16,32) base_size FOREST_BASE set_circular_base clumping_factor FOREST_CLUMPING base_elevation FOREST_ELEVATION zone FOREST_ZONE other_zone_avoidance_distance FOREST_AVOIDANCE land_id FOREST_IDENTIFICATION land_position 97 38 }
+	create_land { terrain_type OUTSIDE_FOREST number_of_tiles rnd(16,32) base_size FOREST_BASE set_circular_base clumping_factor FOREST_CLUMPING base_elevation FOREST_ELEVATION zone FOREST_ZONE other_zone_avoidance_distance FOREST_AVOIDANCE land_id FOREST_IDENTIFICATION land_position 97 39 }
+	create_land { terrain_type OUTSIDE_FOREST number_of_tiles rnd(16,32) base_size FOREST_BASE set_circular_base clumping_factor FOREST_CLUMPING base_elevation FOREST_ELEVATION zone FOREST_ZONE other_zone_avoidance_distance FOREST_AVOIDANCE land_id FOREST_IDENTIFICATION land_position 97 41 }
+	create_land { terrain_type OUTSIDE_FOREST number_of_tiles rnd(16,32) base_size FOREST_BASE set_circular_base clumping_factor FOREST_CLUMPING base_elevation FOREST_ELEVATION zone FOREST_ZONE other_zone_avoidance_distance FOREST_AVOIDANCE land_id FOREST_IDENTIFICATION land_position 97 42 }
+	create_land { terrain_type OUTSIDE_FOREST number_of_tiles rnd(16,32) base_size FOREST_BASE set_circular_base clumping_factor FOREST_CLUMPING base_elevation FOREST_ELEVATION zone FOREST_ZONE other_zone_avoidance_distance FOREST_AVOIDANCE land_id FOREST_IDENTIFICATION land_position 97 43 }
+	create_land { terrain_type OUTSIDE_FOREST number_of_tiles rnd(16,32) base_size FOREST_BASE set_circular_base clumping_factor FOREST_CLUMPING base_elevation FOREST_ELEVATION zone FOREST_ZONE other_zone_avoidance_distance FOREST_AVOIDANCE land_id FOREST_IDENTIFICATION land_position 98 44 }
+	create_land { terrain_type OUTSIDE_FOREST number_of_tiles rnd(16,32) base_size FOREST_BASE set_circular_base clumping_factor FOREST_CLUMPING base_elevation FOREST_ELEVATION zone FOREST_ZONE other_zone_avoidance_distance FOREST_AVOIDANCE land_id FOREST_IDENTIFICATION land_position 98 45 }
+	create_land { terrain_type OUTSIDE_FOREST number_of_tiles rnd(16,32) base_size FOREST_BASE set_circular_base clumping_factor FOREST_CLUMPING base_elevation FOREST_ELEVATION zone FOREST_ZONE other_zone_avoidance_distance FOREST_AVOIDANCE land_id FOREST_IDENTIFICATION land_position 98 46 }
+	create_land { terrain_type OUTSIDE_FOREST number_of_tiles rnd(16,32) base_size FOREST_BASE set_circular_base clumping_factor FOREST_CLUMPING base_elevation FOREST_ELEVATION zone FOREST_ZONE other_zone_avoidance_distance FOREST_AVOIDANCE land_id FOREST_IDENTIFICATION land_position 98 48 }
+	create_land { terrain_type OUTSIDE_FOREST number_of_tiles rnd(16,32) base_size FOREST_BASE set_circular_base clumping_factor FOREST_CLUMPING base_elevation FOREST_ELEVATION zone FOREST_ZONE other_zone_avoidance_distance FOREST_AVOIDANCE land_id FOREST_IDENTIFICATION land_position 98 49 }
+
+
+	create_player_lands
+	{
+		terrain_type SPAWN_TERRAIN
+		number_of_tiles 0
+		base_size 10
+		set_circular_base
+
+		if MAPSIZE_MINI
+			circle_radius 33 0
+		elseif MAPSIZE_TINY
+			circle_radius 34 1
+		elseif MAPSIZE_SMALL
+			circle_radius 34 1
+		elseif MAPSIZE_MEDIUM
+			circle_radius 35 2
+		elseif MAPSIZE_NORMAL
+			circle_radius 36 2
+		elseif MAPSIZE_LARGE
+			circle_radius 37 2
+		elseif MAPSIZE_HUGE
+			circle_radius 38 2
+		elseif MAPSIZE_GIANT
+			circle_radius 39 2
+		elseif MAPSIZE_MASSIVE
+			circle_radius 39 3
+		elseif MAPSIZE_ENORMOUS
+			circle_radius 39 3
+		elseif MAPSIZE_COLOSSAL
+			circle_radius 39 3
+		elseif MAPSIZE_INCREDIBLE
+			circle_radius 39 4
+		elseif MAPSIZE_MONSTROUS
+			circle_radius 39 4
+		elseif MAPSIZE_LUDICROUS
+			circle_radius 39 4
+		endif
+	}
+
+<CLIFF_GENERATION>
+	#include_drs includes/cliffs.inc
+	cliff_type CLIFF_TYPE
+
+<TERRAIN_GENERATION>
+	#include_drs includes/colour.inc
+	color_correction COLOUR_MOOD
+
+	if MAPSIZE_ABOVE_MONSTROUS
+		create_terrain PLACEHOLDER_TERRAIN_A { base_terrain SPAWN_TERRAIN land_percent 100 number_of_clumps 512 set_scale_by_groups spacing_to_other_terrain_types 1 }
+		create_terrain OUTSIDE_FOREST { base_terrain SPAWN_TERRAIN number_of_tiles (178 * MAPSCALE_SIDE) number_of_clumps (12 * MAPSCALE_SIDE) set_avoid_player_start_areas 20 }
+		create_terrain SPAWN_TERRAIN { base_terrain PLACEHOLDER_TERRAIN_A land_percent 100 number_of_clumps 512 set_scale_by_groups }
+
+		create_terrain PLACEHOLDER_TERRAIN_A { base_terrain SPAWN_TERRAIN land_percent 100 number_of_clumps 512 set_scale_by_groups spacing_to_other_terrain_types 1 }
+		create_terrain OUTSIDE_FOREST { base_terrain SPAWN_TERRAIN number_of_tiles (178 * MAPSCALE_SIDE) number_of_clumps (12 * MAPSCALE_SIDE) set_avoid_player_start_areas 20 }
+		create_terrain SPAWN_TERRAIN { base_terrain PLACEHOLDER_TERRAIN_A land_percent 100 number_of_clumps 512 set_scale_by_groups }
+
+		create_terrain PLACEHOLDER_TERRAIN_A { base_terrain SPAWN_TERRAIN land_percent 100 number_of_clumps 512 set_scale_by_groups spacing_to_other_terrain_types 1 }
+		create_terrain OUTSIDE_FOREST { base_terrain SPAWN_TERRAIN number_of_tiles (178 * MAPSCALE_SIDE) number_of_clumps (12 * MAPSCALE_SIDE) set_avoid_player_start_areas 20 }
+		create_terrain SPAWN_TERRAIN { base_terrain PLACEHOLDER_TERRAIN_A land_percent 100 number_of_clumps 512 set_scale_by_groups }
+
+		create_terrain PLACEHOLDER_TERRAIN_A { base_terrain SPAWN_TERRAIN land_percent 100 number_of_clumps 512 set_scale_by_groups spacing_to_other_terrain_types 1 }
+		create_terrain OUTSIDE_FOREST { base_terrain SPAWN_TERRAIN number_of_tiles (178 * MAPSCALE_SIDE) number_of_clumps (12 * MAPSCALE_SIDE) set_avoid_player_start_areas 20 }
+		create_terrain SPAWN_TERRAIN { base_terrain PLACEHOLDER_TERRAIN_A land_percent 100 number_of_clumps 512 set_scale_by_groups }
+
+		create_terrain PLACEHOLDER_TERRAIN_A { base_terrain SPAWN_TERRAIN land_percent 100 number_of_clumps 512 set_scale_by_groups spacing_to_other_terrain_types 1 }
+		create_terrain OUTSIDE_FOREST { base_terrain SPAWN_TERRAIN number_of_tiles (178 * MAPSCALE_SIDE) number_of_clumps (12 * MAPSCALE_SIDE) set_avoid_player_start_areas 20 }
+		create_terrain SPAWN_TERRAIN { base_terrain PLACEHOLDER_TERRAIN_A land_percent 100 number_of_clumps 512 set_scale_by_groups }
+	endif
+
+	if MAPSIZE_ABOVE_INCREDIBLE
+		create_terrain PLACEHOLDER_TERRAIN_A { base_terrain SPAWN_TERRAIN land_percent 100 number_of_clumps 512 set_scale_by_groups spacing_to_other_terrain_types 1 }
+		create_terrain OUTSIDE_FOREST { base_terrain SPAWN_TERRAIN number_of_tiles (178 * MAPSCALE_SIDE) number_of_clumps (12 * MAPSCALE_SIDE) set_avoid_player_start_areas 20 }
+		create_terrain SPAWN_TERRAIN { base_terrain PLACEHOLDER_TERRAIN_A land_percent 100 number_of_clumps 512 set_scale_by_groups }
+
+		create_terrain PLACEHOLDER_TERRAIN_A { base_terrain SPAWN_TERRAIN land_percent 100 number_of_clumps 512 set_scale_by_groups spacing_to_other_terrain_types 1 }
+		create_terrain OUTSIDE_FOREST { base_terrain SPAWN_TERRAIN number_of_tiles (178 * MAPSCALE_SIDE) number_of_clumps (12 * MAPSCALE_SIDE) set_avoid_player_start_areas 20 }
+		create_terrain SPAWN_TERRAIN { base_terrain PLACEHOLDER_TERRAIN_A land_percent 100 number_of_clumps 512 set_scale_by_groups }
+	endif
+
+	if MAPSIZE_ABOVE_COLOSSAL
+		create_terrain PLACEHOLDER_TERRAIN_A { base_terrain SPAWN_TERRAIN land_percent 100 number_of_clumps 512 set_scale_by_groups spacing_to_other_terrain_types 1 }
+		create_terrain OUTSIDE_FOREST { base_terrain SPAWN_TERRAIN number_of_tiles (178 * MAPSCALE_SIDE) number_of_clumps (12 * MAPSCALE_SIDE) set_avoid_player_start_areas 20 }
+		create_terrain SPAWN_TERRAIN { base_terrain PLACEHOLDER_TERRAIN_A land_percent 100 number_of_clumps 512 set_scale_by_groups }
+
+		create_terrain PLACEHOLDER_TERRAIN_A { base_terrain SPAWN_TERRAIN land_percent 100 number_of_clumps 512 set_scale_by_groups spacing_to_other_terrain_types 1 }
+		create_terrain OUTSIDE_FOREST { base_terrain SPAWN_TERRAIN number_of_tiles (178 * MAPSCALE_SIDE) number_of_clumps (12 * MAPSCALE_SIDE) set_avoid_player_start_areas 20 }
+		create_terrain SPAWN_TERRAIN { base_terrain PLACEHOLDER_TERRAIN_A land_percent 100 number_of_clumps 512 set_scale_by_groups }
+
+		create_terrain PLACEHOLDER_TERRAIN_A { base_terrain SPAWN_TERRAIN land_percent 100 number_of_clumps 512 set_scale_by_groups spacing_to_other_terrain_types 1 }
+		create_terrain OUTSIDE_FOREST { base_terrain SPAWN_TERRAIN number_of_tiles (178 * MAPSCALE_SIDE) number_of_clumps (12 * MAPSCALE_SIDE) set_avoid_player_start_areas 20 }
+		create_terrain SPAWN_TERRAIN { base_terrain PLACEHOLDER_TERRAIN_A land_percent 100 number_of_clumps 512 set_scale_by_groups }
+	endif
+
+	if MAPSIZE_ABOVE_ENORMOUS
+		create_terrain PLACEHOLDER_TERRAIN_A { base_terrain SPAWN_TERRAIN land_percent 100 number_of_clumps 512 set_scale_by_groups spacing_to_other_terrain_types 1 }
+		create_terrain OUTSIDE_FOREST { base_terrain SPAWN_TERRAIN number_of_tiles (178 * MAPSCALE_SIDE) number_of_clumps (12 * MAPSCALE_SIDE) set_avoid_player_start_areas 20 }
+		create_terrain SPAWN_TERRAIN { base_terrain PLACEHOLDER_TERRAIN_A land_percent 100 number_of_clumps 512 set_scale_by_groups }
+	endif
+
+	if MAPSIZE_ABOVE_MASSIVE
+		create_terrain PLACEHOLDER_TERRAIN_A { base_terrain SPAWN_TERRAIN land_percent 100 number_of_clumps 512 set_scale_by_groups spacing_to_other_terrain_types 1 }
+		create_terrain OUTSIDE_FOREST { base_terrain SPAWN_TERRAIN number_of_tiles (178 * MAPSCALE_SIDE) number_of_clumps (12 * MAPSCALE_SIDE) set_avoid_player_start_areas 20 }
+		create_terrain SPAWN_TERRAIN { base_terrain PLACEHOLDER_TERRAIN_A land_percent 100 number_of_clumps 512 set_scale_by_groups }
+
+		create_terrain PLACEHOLDER_TERRAIN_A { base_terrain SPAWN_TERRAIN land_percent 100 number_of_clumps 512 set_scale_by_groups spacing_to_other_terrain_types 1 }
+		create_terrain OUTSIDE_FOREST { base_terrain SPAWN_TERRAIN number_of_tiles (178 * MAPSCALE_SIDE) number_of_clumps (12 * MAPSCALE_SIDE) set_avoid_player_start_areas 20 }
+		create_terrain SPAWN_TERRAIN { base_terrain PLACEHOLDER_TERRAIN_A land_percent 100 number_of_clumps 512 set_scale_by_groups }
+	endif
+
+	if MAPSIZE_ABOVE_GIANT
+		create_terrain PLACEHOLDER_TERRAIN_A { base_terrain SPAWN_TERRAIN land_percent 100 number_of_clumps 512 set_scale_by_groups spacing_to_other_terrain_types 1 }
+		create_terrain OUTSIDE_FOREST { base_terrain SPAWN_TERRAIN number_of_tiles (178 * MAPSCALE_SIDE) number_of_clumps (12 * MAPSCALE_SIDE) set_avoid_player_start_areas 20 }
+		create_terrain SPAWN_TERRAIN { base_terrain PLACEHOLDER_TERRAIN_A land_percent 100 number_of_clumps 512 set_scale_by_groups }
+	endif
+
+	if MAPSIZE_ABOVE_HUGE
+		create_terrain PLACEHOLDER_TERRAIN_A { base_terrain SPAWN_TERRAIN land_percent 100 number_of_clumps 512 set_scale_by_groups spacing_to_other_terrain_types 1 }
+		create_terrain OUTSIDE_FOREST { base_terrain SPAWN_TERRAIN number_of_tiles (178 * MAPSCALE_SIDE) number_of_clumps (12 * MAPSCALE_SIDE) set_avoid_player_start_areas 20 }
+		create_terrain SPAWN_TERRAIN { base_terrain PLACEHOLDER_TERRAIN_A land_percent 100 number_of_clumps 512 set_scale_by_groups }
+	endif
+
+	if MAPSIZE_ABOVE_LARGE
+		create_terrain PLACEHOLDER_TERRAIN_A { base_terrain SPAWN_TERRAIN land_percent 100 number_of_clumps 512 set_scale_by_groups spacing_to_other_terrain_types 1 }
+		create_terrain OUTSIDE_FOREST { base_terrain SPAWN_TERRAIN number_of_tiles (178 * MAPSCALE_SIDE) number_of_clumps (12 * MAPSCALE_SIDE) set_avoid_player_start_areas 20 }
+		create_terrain SPAWN_TERRAIN { base_terrain PLACEHOLDER_TERRAIN_A land_percent 100 number_of_clumps 512 set_scale_by_groups }
+	endif
+
+	if MAPSIZE_ABOVE_NORMAL
+		create_terrain PLACEHOLDER_TERRAIN_A { base_terrain SPAWN_TERRAIN land_percent 100 number_of_clumps 512 set_scale_by_groups spacing_to_other_terrain_types 1 }
+		create_terrain OUTSIDE_FOREST { base_terrain SPAWN_TERRAIN number_of_tiles (178 * MAPSCALE_SIDE) number_of_clumps (12 * MAPSCALE_SIDE) set_avoid_player_start_areas 20 }
+		create_terrain SPAWN_TERRAIN { base_terrain PLACEHOLDER_TERRAIN_A land_percent 100 number_of_clumps 512 set_scale_by_groups }
+	endif
+
+	if MAPSIZE_ABOVE_MEDIUM
+		create_terrain PLACEHOLDER_TERRAIN_A { base_terrain SPAWN_TERRAIN land_percent 100 number_of_clumps 512 set_scale_by_groups spacing_to_other_terrain_types 1 }
+		create_terrain OUTSIDE_FOREST { base_terrain SPAWN_TERRAIN number_of_tiles (178 * MAPSCALE_SIDE) number_of_clumps (12 * MAPSCALE_SIDE) set_avoid_player_start_areas 20 }
+		create_terrain SPAWN_TERRAIN { base_terrain PLACEHOLDER_TERRAIN_A land_percent 100 number_of_clumps 512 set_scale_by_groups }
+
+		create_terrain PLACEHOLDER_TERRAIN_A { base_terrain SPAWN_TERRAIN land_percent 100 number_of_clumps 512 set_scale_by_groups spacing_to_other_terrain_types 1 }
+		create_terrain OUTSIDE_FOREST { base_terrain SPAWN_TERRAIN number_of_tiles (178 * MAPSCALE_SIDE) number_of_clumps (12 * MAPSCALE_SIDE) set_avoid_player_start_areas 20 }
+		create_terrain SPAWN_TERRAIN { base_terrain PLACEHOLDER_TERRAIN_A land_percent 100 number_of_clumps 512 set_scale_by_groups }
+	endif
+
+	if MAPSIZE_ABOVE_SMALL
+		create_terrain PLACEHOLDER_TERRAIN_A { base_terrain SPAWN_TERRAIN land_percent 100 number_of_clumps 512 set_scale_by_groups spacing_to_other_terrain_types 1 }
+		create_terrain OUTSIDE_FOREST { base_terrain SPAWN_TERRAIN number_of_tiles (178 * MAPSCALE_SIDE) number_of_clumps (12 * MAPSCALE_SIDE) set_avoid_player_start_areas 20 }
+		create_terrain SPAWN_TERRAIN { base_terrain PLACEHOLDER_TERRAIN_A land_percent 100 number_of_clumps 512 set_scale_by_groups }
+
+		create_terrain PLACEHOLDER_TERRAIN_A { base_terrain SPAWN_TERRAIN land_percent 100 number_of_clumps 512 set_scale_by_groups spacing_to_other_terrain_types 1 }
+		create_terrain OUTSIDE_FOREST { base_terrain SPAWN_TERRAIN number_of_tiles (178 * MAPSCALE_SIDE) number_of_clumps (12 * MAPSCALE_SIDE) set_avoid_player_start_areas 20 }
+		create_terrain SPAWN_TERRAIN { base_terrain PLACEHOLDER_TERRAIN_A land_percent 100 number_of_clumps 512 set_scale_by_groups }
+	endif
+
+	if MAPSIZE_ABOVE_TINY
+		create_terrain PLACEHOLDER_TERRAIN_A { base_terrain SPAWN_TERRAIN land_percent 100 number_of_clumps 512 set_scale_by_groups spacing_to_other_terrain_types 1 }
+		create_terrain OUTSIDE_FOREST { base_terrain SPAWN_TERRAIN number_of_tiles (178 * MAPSCALE_SIDE) number_of_clumps (12 * MAPSCALE_SIDE) set_avoid_player_start_areas 20 }
+		create_terrain SPAWN_TERRAIN { base_terrain PLACEHOLDER_TERRAIN_A land_percent 100 number_of_clumps 512 set_scale_by_groups }
+	endif
+
+	if MAPSIZE_ABOVE_MINI
+		create_terrain PLACEHOLDER_TERRAIN_A { base_terrain SPAWN_TERRAIN land_percent 100 number_of_clumps 512 set_scale_by_groups spacing_to_other_terrain_types 1 }
+		create_terrain OUTSIDE_FOREST { base_terrain SPAWN_TERRAIN number_of_tiles (178 * MAPSCALE_SIDE) number_of_clumps (12 * MAPSCALE_SIDE) set_avoid_player_start_areas 20 }
+		create_terrain SPAWN_TERRAIN { base_terrain PLACEHOLDER_TERRAIN_A land_percent 100 number_of_clumps 512 set_scale_by_groups }
+
+		create_terrain PLACEHOLDER_TERRAIN_A { base_terrain SPAWN_TERRAIN land_percent 100 number_of_clumps 512 set_scale_by_groups spacing_to_other_terrain_types 1 }
+		create_terrain OUTSIDE_FOREST { base_terrain SPAWN_TERRAIN number_of_tiles (178 * MAPSCALE_SIDE) number_of_clumps (12 * MAPSCALE_SIDE) set_avoid_player_start_areas 20 }
+		create_terrain SPAWN_TERRAIN { base_terrain PLACEHOLDER_TERRAIN_A land_percent 100 number_of_clumps 512 set_scale_by_groups }
+
+		create_terrain PLACEHOLDER_TERRAIN_A { base_terrain SPAWN_TERRAIN land_percent 100 number_of_clumps 512 set_scale_by_groups spacing_to_other_terrain_types 1 }
+		create_terrain OUTSIDE_FOREST { base_terrain SPAWN_TERRAIN number_of_tiles (178 * MAPSCALE_SIDE) number_of_clumps (12 * MAPSCALE_SIDE) set_avoid_player_start_areas 20 }
+		create_terrain SPAWN_TERRAIN { base_terrain PLACEHOLDER_TERRAIN_A land_percent 100 number_of_clumps 512 set_scale_by_groups }
+	endif
+
+	create_terrain PLACEHOLDER_TERRAIN_A { base_terrain SPAWN_TERRAIN land_percent 100 number_of_clumps 512 set_scale_by_groups spacing_to_other_terrain_types 1 }
+	create_terrain OUTSIDE_FOREST { base_terrain SPAWN_TERRAIN number_of_tiles (178 * MAPSCALE_SIDE) number_of_clumps (12 * MAPSCALE_SIDE) set_avoid_player_start_areas 20 }
+	create_terrain SPAWN_TERRAIN { base_terrain PLACEHOLDER_TERRAIN_A land_percent 100 number_of_clumps 512 set_scale_by_groups }
+
+	create_terrain PLACEHOLDER_TERRAIN_A { base_terrain SPAWN_TERRAIN land_percent 100 number_of_clumps 512 set_scale_by_groups spacing_to_other_terrain_types 1 }
+	create_terrain OUTSIDE_FOREST { base_terrain SPAWN_TERRAIN number_of_tiles (178 * MAPSCALE_SIDE) number_of_clumps (12 * MAPSCALE_SIDE) set_avoid_player_start_areas 20 }
+	create_terrain SPAWN_TERRAIN { base_terrain PLACEHOLDER_TERRAIN_A land_percent 100 number_of_clumps 512 set_scale_by_groups }
+
+	create_terrain PLACEHOLDER_TERRAIN_A { base_terrain SPAWN_TERRAIN land_percent 100 number_of_clumps 512 set_scale_by_groups spacing_to_other_terrain_types 1 }
+	create_terrain OUTSIDE_FOREST { base_terrain SPAWN_TERRAIN number_of_tiles (178 * MAPSCALE_SIDE) number_of_clumps (12 * MAPSCALE_SIDE) set_avoid_player_start_areas 20 }
+	create_terrain SPAWN_TERRAIN { base_terrain PLACEHOLDER_TERRAIN_A land_percent 100 number_of_clumps 512 set_scale_by_groups }
+
+	create_terrain SPAWN_TERRAIN { base_terrain PLACEHOLDER_TERRAIN_A land_percent 100 number_of_clumps 512 set_scale_by_groups }
+	create_terrain SPAWN_TERRAIN { base_terrain PLACEHOLDER_TERRAIN_A land_percent 100 number_of_clumps 512 set_scale_by_groups }
+	create_terrain SPAWN_TERRAIN { base_terrain PLACEHOLDER_TERRAIN_A land_percent 100 number_of_clumps 512 set_scale_by_groups }
+	create_terrain SPAWN_TERRAIN { base_terrain PLACEHOLDER_TERRAIN_A land_percent 100 number_of_clumps 512 set_scale_by_groups }
+	create_terrain SPAWN_TERRAIN { base_terrain PLACEHOLDER_TERRAIN_A land_percent 100 number_of_clumps 512 set_scale_by_groups }
+	create_terrain SPAWN_TERRAIN { base_terrain PLACEHOLDER_TERRAIN_A land_percent 100 number_of_clumps 512 set_scale_by_groups }
+	create_terrain SPAWN_TERRAIN { base_terrain PLACEHOLDER_TERRAIN_A land_percent 100 number_of_clumps 512 set_scale_by_groups }
+	create_terrain SPAWN_TERRAIN { base_terrain PLACEHOLDER_TERRAIN_A land_percent 100 number_of_clumps 512 set_scale_by_groups }
+	create_terrain SPAWN_TERRAIN { base_terrain PLACEHOLDER_TERRAIN_A land_percent 100 number_of_clumps 512 set_scale_by_groups }
+	create_terrain SPAWN_TERRAIN { base_terrain PLACEHOLDER_TERRAIN_A land_percent 100 number_of_clumps 512 set_scale_by_groups }
+	create_terrain SPAWN_TERRAIN { base_terrain PLACEHOLDER_TERRAIN_A land_percent 100 number_of_clumps 512 set_scale_by_groups }
+	create_terrain SPAWN_TERRAIN { base_terrain PLACEHOLDER_TERRAIN_A land_percent 100 number_of_clumps 512 set_scale_by_groups }
+	create_terrain SPAWN_TERRAIN { base_terrain PLACEHOLDER_TERRAIN_A land_percent 100 number_of_clumps 512 set_scale_by_groups }
+	create_terrain SPAWN_TERRAIN { base_terrain PLACEHOLDER_TERRAIN_A land_percent 100 number_of_clumps 512 set_scale_by_groups }
+	create_terrain SPAWN_TERRAIN { base_terrain PLACEHOLDER_TERRAIN_A land_percent 100 number_of_clumps 512 set_scale_by_groups }
+	create_terrain SPAWN_TERRAIN { base_terrain PLACEHOLDER_TERRAIN_A land_percent 100 number_of_clumps 512 set_scale_by_groups }
+	create_terrain SPAWN_TERRAIN { base_terrain PLACEHOLDER_TERRAIN_A land_percent 100 number_of_clumps 512 set_scale_by_groups }
+	create_terrain SPAWN_TERRAIN { base_terrain PLACEHOLDER_TERRAIN_A land_percent 100 number_of_clumps 512 set_scale_by_groups }
+	create_terrain SPAWN_TERRAIN { base_terrain PLACEHOLDER_TERRAIN_A land_percent 100 number_of_clumps 512 set_scale_by_groups }
+	create_terrain SPAWN_TERRAIN { base_terrain PLACEHOLDER_TERRAIN_A land_percent 100 number_of_clumps 512 set_scale_by_groups }
+	create_terrain SPAWN_TERRAIN { base_terrain PLACEHOLDER_TERRAIN_A land_percent 100 number_of_clumps 512 set_scale_by_groups }
+	create_terrain SPAWN_TERRAIN { base_terrain PLACEHOLDER_TERRAIN_A land_percent 100 number_of_clumps 512 set_scale_by_groups }
+	create_terrain SPAWN_TERRAIN { base_terrain PLACEHOLDER_TERRAIN_A land_percent 100 number_of_clumps 512 set_scale_by_groups }
+	create_terrain SPAWN_TERRAIN { base_terrain PLACEHOLDER_TERRAIN_A land_percent 100 number_of_clumps 512 set_scale_by_groups }
+
+	create_terrain BASE_TERRAIN
+	{
+		base_terrain SPAWN_TERRAIN
+		land_percent 100
+		number_of_clumps 512
+		set_scale_by_groups
+		set_avoid_player_start_areas 12
+	}
+
+	create_terrain BASE_FOREST
+	{
+		base_terrain BASE_TERRAIN
+		land_percent 2
+		number_of_clumps 16
+		set_scale_by_groups
+		spacing_to_other_terrain_types 4
+	}
+
+	create_terrain BASE_TERRAIN
+	{
+		base_terrain EDGE_TERRAIN
+		land_percent 100
+		number_of_clumps 512
+		set_scale_by_groups
+		spacing_to_other_terrain_types 1
+	}
+
+	create_terrain PLACEHOLDER_TERRAIN_A
+	{
+		base_terrain BASE_TERRAIN
+		land_percent 100
+		number_of_clumps 512
+		spacing_to_other_terrain_types 1
+	}
+
+	create_terrain EDGE_TERRAIN
+	{
+		base_terrain BASE_TERRAIN
+		number_of_tiles (256 * MAPSCALE_SIDE)
+		number_of_clumps (128 * MAPSCALE_SIDE)
+		terrain_mask 1
+	}
+
+	create_terrain BASE_TERRAIN
+	{
+		base_terrain PLACEHOLDER_TERRAIN_A
+		land_percent 100
+		number_of_clumps 512
+	}
+
+	create_terrain PLACEHOLDER_TERRAIN_A
+	{
+		base_terrain BASE_TERRAIN
+		land_percent 100
+		number_of_clumps 512
+		spacing_to_other_terrain_types 2
+	}
+
+	create_terrain EDGE_TERRAIN
+	{
+		base_terrain BASE_TERRAIN
+		number_of_tiles (256 * MAPSCALE_SIDE)
+		number_of_clumps (128 * MAPSCALE_SIDE)
+		terrain_mask 1
+	}
+
+	create_terrain BASE_TERRAIN
+	{
+		base_terrain PLACEHOLDER_TERRAIN_A
+		land_percent 100
+		number_of_clumps 512
+	}
+
+	create_terrain PLACEHOLDER_TERRAIN_A
+	{
+		base_terrain BASE_TERRAIN
+		land_percent 100
+		number_of_clumps 512
+		spacing_to_other_terrain_types 2
+	}
+
+	create_terrain SPAWN_TERRAIN
+	{
+		base_terrain BASE_TERRAIN
+		number_of_tiles (512 * MAPSCALE_SIDE)
+		number_of_clumps (256 * MAPSCALE_SIDE)
+		terrain_mask 1
+	}
+
+	create_terrain BASE_TERRAIN { base_terrain PLACEHOLDER_TERRAIN_A land_percent 100 number_of_clumps 512 }
+	create_terrain BASE_TERRAIN { base_terrain PLACEHOLDER_TERRAIN_A land_percent 100 number_of_clumps 512 }
+	create_terrain BASE_TERRAIN { base_terrain PLACEHOLDER_TERRAIN_A land_percent 100 number_of_clumps 512 }
+	create_terrain BASE_TERRAIN { base_terrain PLACEHOLDER_TERRAIN_A land_percent 100 number_of_clumps 512 }
+	create_terrain BASE_TERRAIN { base_terrain PLACEHOLDER_TERRAIN_A land_percent 100 number_of_clumps 512 }
+	create_terrain BASE_TERRAIN { base_terrain PLACEHOLDER_TERRAIN_A land_percent 100 number_of_clumps 512 }
+	create_terrain BASE_TERRAIN { base_terrain PLACEHOLDER_TERRAIN_A land_percent 100 number_of_clumps 512 }
+	create_terrain BASE_TERRAIN { base_terrain PLACEHOLDER_TERRAIN_A land_percent 100 number_of_clumps 512 }
+	create_terrain BASE_TERRAIN { base_terrain PLACEHOLDER_TERRAIN_A land_percent 100 number_of_clumps 512 }
+	create_terrain BASE_TERRAIN { base_terrain PLACEHOLDER_TERRAIN_A land_percent 100 number_of_clumps 512 }
+	create_terrain BASE_TERRAIN { base_terrain PLACEHOLDER_TERRAIN_A land_percent 100 number_of_clumps 512 }
+	create_terrain BASE_TERRAIN { base_terrain PLACEHOLDER_TERRAIN_A land_percent 100 number_of_clumps 512 }
+	create_terrain BASE_TERRAIN { base_terrain PLACEHOLDER_TERRAIN_A land_percent 100 number_of_clumps 512 }
+	create_terrain BASE_TERRAIN { base_terrain PLACEHOLDER_TERRAIN_A land_percent 100 number_of_clumps 512 }
+	create_terrain BASE_TERRAIN { base_terrain PLACEHOLDER_TERRAIN_A land_percent 100 number_of_clumps 512 }
+	create_terrain BASE_TERRAIN { base_terrain PLACEHOLDER_TERRAIN_A land_percent 100 number_of_clumps 512 }
+
+	create_terrain BASE_BLEND_A
+	{
+		base_terrain BASE_TERRAIN
+		land_percent 8
+		number_of_clumps 16
+		set_scale_by_groups
+		terrain_mask 1
+	}
+
+	create_terrain BASE_BLEND_B
+	{
+		base_terrain BASE_TERRAIN
+		land_percent 2
+		number_of_clumps 12
+		clumping_factor -10
+		set_scale_by_groups
+		terrain_mask 1
+	}
+
+	create_terrain BASE_BLEND_C
+	{
+		base_terrain BASE_TERRAIN
+		land_percent 8
+		number_of_clumps 12
+		set_scale_by_groups
+		terrain_mask 1
+	}
+
+	create_terrain BASE_BLEND_D
+	{
+		base_terrain BASE_TERRAIN
+		land_percent 2
+		number_of_clumps 24
+		set_scale_by_groups
+		terrain_mask 1
+	}
+
+	create_terrain OUTSIDE_FOREST_VARIATION
+	{
+		base_terrain OUTSIDE_FOREST
+		land_percent 6
+		number_of_clumps 160
+		set_scale_by_groups
+		spacing_to_other_terrain_types 16
+		terrain_mask 2
+	}
+
+	create_terrain OUTSIDE_FOREST_VARIATION
+	{
+		base_terrain OUTSIDE_FOREST
+		land_percent 2
+		number_of_clumps 128
+		set_scale_by_groups
+		spacing_to_other_terrain_types 10
+		terrain_mask 2
+	}
+
+	create_terrain OUTSIDE_FOREST_VARIATION
+	{
+		base_terrain OUTSIDE_FOREST
+		land_percent 2
+		number_of_clumps 128
+		set_scale_by_groups
+		spacing_to_other_terrain_types 24
+		terrain_mask 2
+	}
+
+	create_terrain OUTSIDE_FOREST_VARIATION
+	{
+		base_terrain OUTSIDE_FOREST
+		land_percent 4
+		number_of_clumps 128
+		set_scale_by_groups
+		spacing_to_other_terrain_types 32
+		terrain_mask 2
+	}
+
+	create_terrain OUTSIDE_FOREST_VARIATION
+	{
+		base_terrain OUTSIDE_FOREST
+		land_percent 10
+		number_of_clumps 128
+		set_scale_by_groups
+		spacing_to_other_terrain_types 40
+		terrain_mask 2
+	}
+
+	create_terrain BASE_TERRAIN
+	{
+		base_terrain SPAWN_TERRAIN
+		number_of_tiles (74 * PLAYER_COUNT)
+		number_of_clumps (6 * PLAYER_COUNT)
+		terrain_mask 1
+	}
+
+	create_terrain SPAWN_BLEND_A
+	{
+		base_terrain SPAWN_TERRAIN
+		number_of_tiles (48 * PLAYER_COUNT)
+		number_of_clumps (6 * PLAYER_COUNT)
+		terrain_mask 1
+	}
+
+	create_terrain SPAWN_BLEND_B
+	{
+		base_terrain SPAWN_TERRAIN
+		number_of_tiles (32 * PLAYER_COUNT)
+		number_of_clumps (6 * PLAYER_COUNT)
+		terrain_mask 1
+	}
+
+	create_terrain WATER_SHALLOW
+	{
+		base_terrain SHALLOWS
+		number_of_tiles 84
+		number_of_clumps 10
+		terrain_mask 1
+	}
+
+<CONNECTION_GENERATION>
+	create_connect_land_zones -9 10
+	{
+		replace_terrain BASE_TERRAIN WATER_SHALLOW
+		replace_terrain BEACH_TERRAIN WATER_SHALLOW
+		replace_terrain OUTSIDE_FOREST WATER_SHALLOW
+
+		terrain_cost BASE_TERRAIN 1
+		terrain_cost BEACH_TERRAIN 1
+		terrain_cost BASE_FOREST 0
+		terrain_cost BASE_FOREST_VARIATION 0
+		terrain_cost EDGE_TERRAIN 0
+
+		terrain_size BASE_TERRAIN 2 2
+		terrain_size BEACH_TERRAIN 2 2
+		terrain_size OUTSIDE_FOREST 2 2
+	}
+
+	create_connect_land_zones -8 10
+	{
+		replace_terrain BASE_TERRAIN WATER_SHALLOW
+		replace_terrain BEACH_TERRAIN WATER_SHALLOW
+		replace_terrain OUTSIDE_FOREST WATER_SHALLOW
+
+		terrain_cost BASE_TERRAIN 1
+		terrain_cost BEACH_TERRAIN 1
+		terrain_cost BASE_FOREST 0
+		terrain_cost BASE_FOREST_VARIATION 0
+		terrain_cost EDGE_TERRAIN 0
+
+		terrain_size BASE_TERRAIN 2 2
+		terrain_size BEACH_TERRAIN 2 2
+		terrain_size OUTSIDE_FOREST 2 2
+	}
+
+	create_connect_land_zones -7 10
+	{
+		replace_terrain BASE_TERRAIN WATER_SHALLOW
+		replace_terrain BEACH_TERRAIN WATER_SHALLOW
+		replace_terrain OUTSIDE_FOREST WATER_SHALLOW
+
+		terrain_cost BASE_TERRAIN 1
+		terrain_cost BEACH_TERRAIN 1
+		terrain_cost BASE_FOREST 0
+		terrain_cost BASE_FOREST_VARIATION 0
+		terrain_cost EDGE_TERRAIN 0
+
+		terrain_size BASE_TERRAIN 2 2
+		terrain_size BEACH_TERRAIN 2 2
+		terrain_size OUTSIDE_FOREST 2 2
+	}
+
+	create_connect_land_zones -6 10
+	{
+		replace_terrain BASE_TERRAIN WATER_SHALLOW
+		replace_terrain BEACH_TERRAIN WATER_SHALLOW
+		replace_terrain OUTSIDE_FOREST WATER_SHALLOW
+
+		terrain_cost BASE_TERRAIN 1
+		terrain_cost BEACH_TERRAIN 1
+		terrain_cost BASE_FOREST 0
+		terrain_cost BASE_FOREST_VARIATION 0
+		terrain_cost EDGE_TERRAIN 0
+
+		terrain_size BASE_TERRAIN 2 2
+		terrain_size BEACH_TERRAIN 2 2
+		terrain_size OUTSIDE_FOREST 2 2
+	}
+
+	create_connect_land_zones -5 10
+	{
+		replace_terrain BASE_TERRAIN WATER_SHALLOW
+		replace_terrain BEACH_TERRAIN WATER_SHALLOW
+		replace_terrain OUTSIDE_FOREST WATER_SHALLOW
+
+		terrain_cost BASE_TERRAIN 1
+		terrain_cost BEACH_TERRAIN 1
+		terrain_cost BASE_FOREST 0
+		terrain_cost BASE_FOREST_VARIATION 0
+		terrain_cost EDGE_TERRAIN 0
+
+		terrain_size BASE_TERRAIN 2 2
+		terrain_size BEACH_TERRAIN 2 2
+		terrain_size OUTSIDE_FOREST 2 2
+	}
+
+	create_connect_land_zones -4 10
+	{
+		replace_terrain BASE_TERRAIN WATER_SHALLOW
+		replace_terrain BEACH_TERRAIN WATER_SHALLOW
+		replace_terrain OUTSIDE_FOREST WATER_SHALLOW
+
+		terrain_cost BASE_TERRAIN 1
+		terrain_cost BEACH_TERRAIN 1
+		terrain_cost BASE_FOREST 0
+		terrain_cost BASE_FOREST_VARIATION 0
+		terrain_cost EDGE_TERRAIN 0
+
+		terrain_size BASE_TERRAIN 2 2
+		terrain_size BEACH_TERRAIN 2 2
+		terrain_size OUTSIDE_FOREST 2 2
+	}
+
+	create_connect_land_zones -3 10
+	{
+		replace_terrain BASE_TERRAIN WATER_SHALLOW
+		replace_terrain BEACH_TERRAIN WATER_SHALLOW
+		replace_terrain OUTSIDE_FOREST WATER_SHALLOW
+
+		terrain_cost BASE_TERRAIN 1
+		terrain_cost BEACH_TERRAIN 1
+		terrain_cost BASE_FOREST 0
+		terrain_cost BASE_FOREST_VARIATION 0
+		terrain_cost EDGE_TERRAIN 0
+
+		terrain_size BASE_TERRAIN 2 2
+		terrain_size BEACH_TERRAIN 2 2
+		terrain_size OUTSIDE_FOREST 2 2
+	}
+
+	create_connect_land_zones -2 10
+	{
+		replace_terrain BASE_TERRAIN WATER_SHALLOW
+		replace_terrain BEACH_TERRAIN WATER_SHALLOW
+		replace_terrain OUTSIDE_FOREST WATER_SHALLOW
+
+		terrain_cost BASE_TERRAIN 1
+		terrain_cost BEACH_TERRAIN 1
+		terrain_cost BASE_FOREST 0
+		terrain_cost BASE_FOREST_VARIATION 0
+		terrain_cost EDGE_TERRAIN 0
+
+		terrain_size BASE_TERRAIN 2 2
+		terrain_size BEACH_TERRAIN 2 2
+		terrain_size OUTSIDE_FOREST 2 2
+	}
+
+<OBJECTS_GENERATION>
+	if TERRAIN_DEBUGGING
+	else
+		#define PRELIMINARIES
+		if PRELIMINARIES
+			#const RESOURCE_SPACING_DEFAULT 10
+			#const RESOURCE_SPACING_FAR 18
+			#const RESOURCE_RESTRICTION 2
+
+			#include_drs includes/object_setup.inc
+			#include_drs includes/market_objects.inc
+		endif
+
+		#include_drs includes/town_centres.inc
+		#include_drs includes/villagers.inc
+		#include_drs includes/scouts.inc
+		#include_drs includes/walls.inc
+		
+		#include_drs includes/defend_wonder.inc
+		#include_drs includes/regicide.inc
+		#include_drs includes/capture_relic.inc
+
+		if NOMAD_START
+		else
+			#include_drs includes/stragglers.inc
+
+			#define FORAGE_BUSH_PRIMARY
+			#define GOLD_PRIMARY
+			#define GOLD_SECONDARY
+			#define GOLD_TERTIARY
+			#define STONE_PRIMARY
+			#define STONE_SECONDARY
+
+			#include_drs includes/starting_resources.inc
+
+			if DEATH_MATCH
+			elseif INFINITE_RESOURCES
+			else
+				#define HERDABLE_STARTING_COUNT_FOUR
+
+				#include_drs includes/herdable_starting.inc
+
+				#const HERDABLE_GROUPS 0
+
+				#include_drs includes/herdable.inc
+
+				start_random
+					percent_chance 50 #define GAME_HUNTABLE
+					percent_chance 50 #define GAME_CHICKEN
+				end_random
+
+				if GAME_HUNTABLE
+					start_random
+						percent_chance 20
+							#const HUNTABLE_COUNT 2
+						percent_chance 45
+							#const HUNTABLE_COUNT 3
+						percent_chance 35
+							#const HUNTABLE_COUNT 4
+					end_random
+
+					#const HUNTABLE_GROUPS 1
+				endif
+
+				if GAME_CHICKEN
+					start_random
+						percent_chance 20
+							#const HUNTABLE_SMALL_COUNT 6
+						percent_chance 45
+							#const HUNTABLE_SMALL_COUNT 7
+						percent_chance 35
+							#const HUNTABLE_SMALL_COUNT 8
+					end_random
+
+					#const HUNTABLE_SMALL_GROUPS 1
+				endif
+
+				#const HUNTABLE_SMALL_DISTANCE 18
+				#const HUNTABLE_DISTANCE 24
+
+				#include_drs includes/huntable.inc
+
+				#const LUREABLE_ADDITIONAL_COUNT 1
+				#const LUREABLE_ADDITIONAL_GROUPS 2
+				#const LUREABLE_ADDITIONAL_DISTANCE 38
+				#const LUREABLE_ADDITIONAL_FOREST_DISTANCE 2
+
+				#include_drs includes/lureable.inc
+				#include_drs includes/furbearers.inc
+			endif
+		endif
+
+		/* Neutral Resources */
+
+		if DEATH_MATCH
+		else
+			#const PREDATOR_GROUPS 0
+
+			#include_drs includes/predators.inc
+			#include_drs includes/riparian.inc
+		endif
+
+		create_object PLACEHOLDER_GENERIC_TILE
+		{
+			second_object NERITIC_A
+			set_place_for_every_player
+			set_gaia_object_only
+			number_of_objects 3
+			temp_min_distance_group_placement 1
+			find_closest
+			terrain_to_place_on WATER_SHALLOW
+
+			actor_area 1200
+			actor_area_radius 6
+		}
+
+		#include_drs includes/neritic.inc
+
+		create_object OYSTERS
+		{
+			second_object PLANT_WEEDS
+			number_of_objects 2
+			number_of_groups 1024
+			set_loose_grouping
+			group_placement_radius 2
+			temp_min_distance_group_placement 10
+			terrain_to_place_on SHALLOWS
+
+			min_distance_group_placement 1
+			max_distance_to_other_zones 1
+			avoid_forest_zone 1
+			avoid_cliff_zone 1
+			min_distance_to_map_edge 1
+
+			actor_area 1210
+			actor_area_radius 4
+
+			avoid_actor_area 1210 /* Oysters */
+
+			avoid_actor_area 5550 /* Neutral Market or Dock */
+		}
+
+		create_object OYSTERS
+		{
+			second_object PLANT_WEEDS
+			number_of_objects 1
+			number_of_groups 1024
+			set_loose_grouping
+			group_placement_radius 2
+			temp_min_distance_group_placement 8
+			terrain_to_place_on SHALLOWS
+
+			min_distance_group_placement 1
+			max_distance_to_other_zones 1
+			avoid_forest_zone 1
+			avoid_cliff_zone 1
+			min_distance_to_map_edge 1
+
+			actor_area 1210
+			actor_area_radius 2
+
+			avoid_actor_area 1210 /* Oysters */
+
+			avoid_actor_area 5550 /* Neutral Market or Dock */
+		}
+
+		#const FRESHWATER_COUNT 0
+
+		#include_drs includes/aquatic_freshwater.inc
+
+		#const SALTWATER_COUNT 0
+
+		#include_drs includes/aquatic_saltwater.inc
+
+		if DEATH_MATCH
+		else
+			#include_drs includes/stragglers_neutral.inc
+			#include_drs includes/stragglers_coastal.inc
+			#include_drs includes/reeds.inc
+		endif
+
+		#define RELIC_TYPE_BALANCED
+
+		#include_drs includes/relics.inc
+		#include_drs includes/remote_resources.inc
+
+		#define EXTRA_STUFF
+		if EXTRA_STUFF
+			if EMPIRE_WARS_MODE
+				#define EMPIRE_WARS_FORAGERS
+
+				#include_drs includes/empire_wars.inc
+				#include_drs includes/empire_food.inc
+				#include_drs includes/empire_gold.inc
+				#include_drs includes/empire_wood.inc
+				#include_drs includes/empire_buildings.inc
+			elseif ESCALATION_MODE
+				#include_drs includes/escalation_mode.inc
+			endif
+
+			#define AESTHETICS
+			if AESTHETICS
+				#include_drs includes/birds.inc
+
+				create_object STUMP
+				{
+					number_of_objects 1024
+					temp_min_distance_group_placement 16
+					place_on_forest_zone
+					terrain_to_place_on BASE_TERRAIN
+
+					actor_area 8000
+					actor_area_radius 0
+
+					avoid_actor_area 1300 /* Neutral Straggler */
+					avoid_actor_area 11300 /* Neutral Straggler, Avoider */
+					avoid_actor_area 1310 /* Coastal Straggler */
+					avoid_actor_area 11310 /* Coastal Straggler, Avoider */
+					avoid_actor_area 1320 /* Reeds */
+					
+					avoid_actor_area 8000 /* Stump */
+				}
+
+				create_object STUMP
+				{
+					number_of_objects 1024
+					temp_min_distance_group_placement 12
+					place_on_forest_zone
+					terrain_to_place_on BASE_TERRAIN
+
+					actor_area 8000
+					actor_area_radius 0
+
+					avoid_actor_area 1300 /* Neutral Straggler */
+					avoid_actor_area 11300 /* Neutral Straggler, Avoider */
+					avoid_actor_area 1310 /* Coastal Straggler */
+					avoid_actor_area 11310 /* Coastal Straggler, Avoider */
+					avoid_actor_area 1320 /* Reeds */
+					
+					avoid_actor_area 8000 /* Stump */
+				}
+
+				create_object STUMP
+				{
+					number_of_objects 1024
+					temp_min_distance_group_placement 10
+					place_on_forest_zone
+					terrain_to_place_on BASE_TERRAIN
+
+					actor_area 8000
+					actor_area_radius 0
+
+					avoid_actor_area 1300 /* Neutral Straggler */
+					avoid_actor_area 11300 /* Neutral Straggler, Avoider */
+					avoid_actor_area 1310 /* Coastal Straggler */
+					avoid_actor_area 11310 /* Coastal Straggler, Avoider */
+					avoid_actor_area 1320 /* Reeds */
+					
+					avoid_actor_area 8000 /* Stump */
+				}
+
+				create_object PLACEHOLDER_HYBRID_TILE
+				{
+					second_object SEA_ROCKS_A
+					number_of_objects 32
+					temp_min_distance_group_placement 32
+
+					max_distance_to_other_zones 3
+
+					actor_area 8001
+					actor_area_radius 2
+
+					avoid_actor_area 1210 /* Oysters */
+					avoid_actor_area 8001 /* Sea Rocks */
+				}
+
+				create_object PLACEHOLDER_HYBRID_TILE
+				{
+					second_object SEA_ROCKS_B
+					number_of_objects 32
+					temp_min_distance_group_placement 20
+
+					max_distance_to_other_zones 3
+
+					actor_area 8001
+					actor_area_radius 2
+
+					avoid_actor_area 1210 /* Oysters */
+					avoid_actor_area 8001 /* Sea Rocks */
+				}
+			endif
+		endif
+	endif

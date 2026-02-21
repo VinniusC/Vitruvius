@@ -1,0 +1,335 @@
+
+/* Salt Marsh for Forgotten Empires */
+
+/* Note: random_map.def is automatically included in every rms script */
+
+/* ****************************************************** */
+<PLAYER_SETUP>
+  random_placement
+
+#include_drs thebr_setup.inc
+
+/* ****************************************************** */
+
+
+/* PH SEASONS */
+
+/* Originally also contained spring and asian */
+
+start_random
+percent_chance 50 #define PH_TROPHICALSOUTH
+percent_chance 50 #define PH_TROPHICALEAST
+end_random
+
+#include_drs F_seasons.inc
+
+<LAND_GENERATION>
+
+base_terrain VODA
+enable_waves 0 
+
+create_player_lands 
+{            
+  terrain_type                     LAYER_A
+  land_percent                     65
+  base_size                        12
+set_zone_randomly
+if BATTLE_ROYALE
+	circle_radius 38
+  border_fuzziness                   1
+else
+  border_fuzziness                   8
+endif
+other_zone_avoidance_distance      4
+clumping_factor                    15
+}
+
+create_land 
+{
+  terrain_type                     MELCINA
+  land_percent                     12
+  border_fuzziness                 10
+  other_zone_avoidance_distance    7
+top_border	28
+bottom_border	28
+left_border	28
+right_border	28
+ }
+
+/* BONUS ISLAND */
+
+create_land 
+{
+  terrain_type                     LAYER_A
+  land_percent                     1
+  border_fuzziness                 10
+  other_zone_avoidance_distance    7
+  land_id                          20
+top_border	28
+bottom_border	28
+left_border	28
+right_border	28
+ }
+
+/* NUISANCE ISLAND 1 */
+
+create_land 
+{
+  terrain_type                     LAYER_A
+  land_percent                     1
+  border_fuzziness                 10
+  other_zone_avoidance_distance    7
+  land_id                          25
+top_border	28
+bottom_border	28
+left_border	28
+right_border	28
+ }
+
+/* NUISANCE ISLAND 2 */
+
+create_land 
+{
+  terrain_type                     LAYER_A
+  land_percent                     1
+  border_fuzziness                 10
+  other_zone_avoidance_distance    7
+  land_id                          25
+top_border	28
+bottom_border	28
+left_border	28
+right_border	28
+ }
+
+/* ****************************************************** */
+<TERRAIN_GENERATION>
+
+/* COLOR CORRECTION CHUNK */
+
+#include_drs F_ColorCorrection.inc
+
+/* SWAMP IT */
+
+create_terrain MELCINA
+{
+base_terrain VODA
+land_percent 30
+number_of_clumps 150
+spacing_to_other_terrain_types 0
+}
+
+create_terrain VODA
+{
+base_terrain MELCINA
+land_percent 3
+number_of_clumps 10
+spacing_to_other_terrain_types 3
+}
+
+create_terrain MELCINA
+{
+base_terrain VODA
+land_percent 30
+number_of_clumps 150
+spacing_to_other_terrain_types 0
+}
+
+create_terrain VODA
+{
+base_terrain MELCINA
+land_percent 3
+number_of_clumps 10
+spacing_to_other_terrain_types 3
+}
+
+
+create_terrain MELCINA
+{
+base_terrain VODA
+land_percent 30
+number_of_clumps 150
+spacing_to_other_terrain_types 0
+}
+
+create_terrain VODA
+{
+base_terrain MELCINA
+land_percent 3
+number_of_clumps 10
+spacing_to_other_terrain_types 3
+}
+
+
+create_terrain MELCINA
+{
+base_terrain VODA
+land_percent 30
+number_of_clumps 150
+spacing_to_other_terrain_types 0
+}
+
+create_terrain VODA
+{
+base_terrain MELCINA
+land_percent 3
+number_of_clumps 10
+spacing_to_other_terrain_types 3
+}
+
+
+/* PRIMARY FOREST */
+
+create_terrain WOODIES
+{
+  base_terrain                   LAYER_A
+  spacing_to_other_terrain_types 5
+  land_percent                   12
+  number_of_clumps               14
+  set_avoid_player_start_areas     
+  set_scale_by_groups
+}
+
+/* SECONDARY FOREST */
+
+create_terrain WOODIES_B
+{
+  base_terrain                   LAYER_A
+  spacing_to_other_terrain_types 3
+  land_percent                   1
+  number_of_clumps               3
+  set_avoid_player_start_areas     
+  set_scale_by_groups
+}
+
+/* PH Masking Patch */
+
+   create_terrain LAYER_A
+{
+  base_terrain                   LAYER_B
+  number_of_clumps               1000
+  land_percent                   100
+}
+
+   create_terrain LAYER_B
+{
+  base_terrain                   LAYER_A
+  number_of_clumps               36
+  spacing_to_other_terrain_types 0
+  land_percent                   rnd(14,28)
+  set_scale_by_size
+}
+
+   create_terrain ROAD
+{
+  base_terrain                   LAYER_B
+  number_of_clumps               1000
+  spacing_to_other_terrain_types 2
+  land_percent                   100
+}
+   create_terrain LAYER_A
+{
+  base_terrain                   LAYER_B
+  number_of_clumps               1000
+  land_percent                   100
+terrain_mask 2
+}
+   create_terrain LAYER_A
+{
+  base_terrain                   LAYER_B
+  number_of_clumps               1000
+  land_percent                   100
+terrain_mask 2
+}
+   create_terrain LAYER_B
+{
+  base_terrain                   ROAD
+  number_of_clumps               1000
+  land_percent                   100
+}
+   create_terrain LAYER_B
+{
+  base_terrain                   ROAD
+  number_of_clumps               1000
+  land_percent                   100
+}
+
+   create_terrain LAYER_C
+{
+  base_terrain                   LAYER_A
+  number_of_clumps               24
+  spacing_to_other_terrain_types 0
+  land_percent                   rnd(2,6)
+  set_scale_by_size
+terrain_mask 1
+}
+
+/* PH Masking Patch End */
+
+#define WMASK_VODA
+#include_drs F_WaterMasking.inc
+
+/* ****************************************************** */
+<OBJECTS_GENERATION>
+
+#define GNR_NORMALTC
+#define GNR_STARTVILLS
+#define GNR_CLASSICSCOUT
+#define GNR_REGICIDECLASSIC
+
+#define GNR_GIVERELICS
+#define GNR_RELICMODERN_MEDIUM
+
+#define GNR_6KER
+
+#define GNR_STARTINGGOLD
+#define GNR_STARTINGSTONE
+#define GNR_STARTGOLD744CL
+#define GNR_STARTSTONE54CL
+
+#define GNR_GIVEHERD_A
+#define GNR_GIVEHERD_B
+#define GNR_HERD4CLASSIC_A
+#define GNR_HERD22CLASSIC_B
+#define GNR_GIVEHUNT
+#define GNR_HUNT3OR4CLASSIC
+#define GNR_GIVELURES
+#define GNR_CLASSICLURES
+
+#define GNR_CLASSICPRED
+
+#define GNR_RESBYMAP_KER
+
+#define GNR_FARGORIG_GIVE
+#define GNR_FARSORIG_GIVE
+
+#define GNR_FARGORIG_TYPE1
+#define GNR_FARSORIG_TYPE1
+
+#define GNR_HOMESTRAGGLE
+#define GNR_ABIRDS_ONLY
+
+#define GNR_ADDITIONALPRED
+#define GNR_MAPSTRAGGLE
+/*
+#define GNR_STANDARDFISH
+*/
+
+#include_drs GeneratingObjects.inc
+
+
+create_object FISH_A
+{
+  number_of_objects 140
+  set_scaling_to_map_size
+  set_gaia_object_only
+  max_distance_to_other_zones 5
+     temp_min_distance_group_placement 7
+}
+
+create_object MELKARYBA
+{
+  number_of_objects                   25
+  set_scaling_to_map_size
+  set_gaia_object_only
+ min_distance_group_placement  3
+}

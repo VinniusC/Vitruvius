@@ -1,0 +1,748 @@
+[
+  {
+    "name": "Kyo All Fallen",
+    "players": [
+      152
+    ],
+    "id": 1
+  },
+  {
+    "name": "Gaucho",
+    "players": [
+      226,
+      496
+    ],
+    "id": 2
+  },
+  {
+    "name": "Heresy",
+    "players": [
+      8,
+      39,
+      106
+    ],
+    "id": 3
+  },
+  {
+    "name": "Clan Sigma",
+    "players": [
+      248,
+      442,
+      545,
+      577,
+      668
+    ],
+    "id": 4
+  },
+  {
+    "name": "Age4greeks",
+    "players": [
+      161
+    ],
+    "id": 5
+  },
+  {
+    "name": "QueNaNiNa",
+    "players": [
+      420
+    ],
+    "id": 6
+  },
+  {
+    "name": "The Amigos",
+    "players": [
+      12,
+      14,
+      17,
+      50,
+      228,
+      353,
+      636
+    ],
+    "id": 7
+  },
+  {
+    "name": "Vietnam Legends",
+    "players": [
+      3,
+      15,
+      22,
+      88,
+      219
+    ],
+    "id": 8
+  },
+  {
+    "name": "PUB",
+    "players": [
+      192,
+      315,
+      361,
+      375,
+      424,
+      437,
+      498,
+      576
+    ],
+    "id": 9
+  },
+  {
+    "name": "Sucky WizZards",
+    "players": [
+      452
+    ],
+    "id": 10
+  },
+  {
+    "name": "The BrotherHood Kappa",
+    "players": [
+      338,
+      413,
+      433,
+      435,
+      446,
+      449
+    ],
+    "id": 11
+  },
+  {
+    "name": "Rookies",
+    "players": [
+      224,
+      231
+    ],
+    "id": 12
+  },
+  {
+    "name": "Nocturna eSports",
+    "players": [
+      150,
+      275,
+      404,
+      411,
+      548,
+      604,
+      625,
+      643,
+      650,
+      656,
+      658
+    ],
+    "id": 13
+  },
+  {
+    "name": "Tuna's Wet Market",
+    "players": [
+      467,
+      529,
+      640
+    ],
+    "id": 14
+  },
+  {
+    "name": "Rulers of Rome",
+    "players": [
+      49,
+      77,
+      82,
+      113,
+      138,
+      145,
+      214,
+      262,
+      289,
+      306,
+      357,
+      527,
+      536,
+      587,
+      597,
+      677,
+      753,
+      754
+    ],
+    "id": 15
+  },
+  {
+    "name": "Taiwan Aoe Gamer",
+    "players": [
+      2,
+      24,
+      46,
+      154,
+      220,
+      246,
+      368,
+      471
+    ],
+    "id": 16
+  },
+  {
+    "name": "Dreamers",
+    "players": [
+      265,
+      281
+    ],
+    "id": 17
+  },
+  {
+    "name": "FellowSheep Gaming",
+    "players": [
+      73,
+      100,
+      549
+    ],
+    "id": 18
+  },
+  {
+    "name": "BLACKSAILS",
+    "players": [
+      1,
+      140,
+      377,
+      418,
+      421,
+      557,
+      642,
+      729,
+      739
+    ],
+    "id": 19
+  },
+  {
+    "name": "SalzZ",
+    "players": [
+      91,
+      254,
+      579,
+      641
+    ],
+    "id": 20
+  },
+  {
+    "name": "QuEnDi",
+    "players": [
+      172,
+      204,
+      208,
+      209,
+      284,
+      285,
+      286,
+      287,
+      300,
+      305,
+      464,
+      492,
+      523
+    ],
+    "id": 21
+  },
+  {
+    "name": "Gentle Mates",
+    "players": [
+      309
+    ],
+    "id": 22
+  },
+  {
+    "name": "LingYuan",
+    "players": [
+      4,
+      5,
+      34,
+      36,
+      52,
+      217
+    ],
+    "id": 23
+  },
+  {
+    "name": "Old School",
+    "players": [
+      16,
+      156,
+      354,
+      387,
+      644,
+      651,
+      675,
+      718,
+      730,
+      738,
+      759,
+      761
+    ],
+    "id": 24
+  },
+  {
+    "name": "Sweety Boys",
+    "players": [
+      592
+    ],
+    "id": 25
+  },
+  {
+    "name": "Dagorhir Gaming",
+    "players": [
+      713
+    ],
+    "id": 26
+  },
+  {
+    "name": "Saint Hell",
+    "players": [
+      670,
+      733
+    ],
+    "id": 27
+  },
+  {
+    "name": "Wonders",
+    "players": [
+      20,
+      37,
+      55,
+      84,
+      94,
+      324,
+      412,
+      461,
+      511,
+      637
+    ],
+    "id": 28
+  },
+  {
+    "name": "Olympus",
+    "players": [
+      57
+    ],
+    "id": 29
+  },
+  {
+    "name": "R1",
+    "players": [
+      595,
+      666
+    ],
+    "id": 30
+  },
+  {
+    "name": "Onimaru Esports",
+    "players": [
+      9,
+      11,
+      38,
+      43,
+      80,
+      274,
+      294,
+      402,
+      672
+    ],
+    "id": 31
+  },
+  {
+    "name": "CDSG",
+    "players": [
+      198
+    ],
+    "id": 32
+  },
+  {
+    "name": "Team Virtus",
+    "players": [
+      53,
+      191,
+      279,
+      345,
+      673,
+      700
+    ],
+    "id": 33
+  },
+  {
+    "name": "ANKR",
+    "players": [
+      630,
+      743,
+      750
+    ],
+    "id": 34
+  },
+  {
+    "name": "NuMa",
+    "players": [
+      369,
+      752
+    ],
+    "id": 35
+  },
+  {
+    "name": "ELEOS",
+    "players": [
+      473,
+      530
+    ],
+    "id": 36
+  },
+  {
+    "name": "Uxmal Esports",
+    "players": [
+      241,
+      253,
+      392,
+      747,
+      753
+    ],
+    "id": 37
+  },
+  {
+    "name": "Team Venon Esports",
+    "players": [
+      504,
+      547,
+      682,
+      740,
+      744
+    ],
+    "id": 38
+  },
+  {
+    "name": "Unholy Disciples",
+    "players": [
+      63,
+      76,
+      162
+    ],
+    "id": 39
+  },
+  {
+    "name": "Team Vitality",
+    "players": [
+      23,
+      27,
+      102
+    ],
+    "id": 40
+  },
+  {
+    "name": "Gaberianss",
+    "players": [
+      280,
+      594,
+      647
+    ],
+    "id": 41
+  },
+  {
+    "name": "Vikingos N\u00f3madas",
+    "players": [
+      292,
+      459,
+      542
+    ],
+    "id": 42
+  },
+  {
+    "name": "Russia F",
+    "players": [
+      270,
+      297,
+      313,
+      317
+    ],
+    "id": 43
+  },
+  {
+    "name": "Stackers",
+    "players": [
+      290
+    ],
+    "id": 44
+  },
+  {
+    "name": "White Wolf Palace",
+    "players": [
+      18,
+      21,
+      25,
+      85,
+      89,
+      97,
+      116,
+      197,
+      218,
+      227,
+      330,
+      382
+    ],
+    "id": 45
+  },
+  {
+    "name": "ChileAoE",
+    "players": [
+      243,
+      332,
+      345
+    ],
+    "id": 46
+  },
+  {
+    "name": "The Immortals",
+    "players": [
+      103,
+      107
+    ],
+    "id": 47
+  },
+  {
+    "name": "DarkSidE",
+    "players": [
+      44,
+      48,
+      159,
+      229,
+      260,
+      266,
+      410
+    ],
+    "id": 48
+  },
+  {
+    "name": "New Chapter",
+    "players": [
+      158,
+      160,
+      283,
+      388
+    ],
+    "id": 49
+  },
+  {
+    "name": "Age of Queens",
+    "players": [
+      316,
+      329,
+      466,
+      639
+    ],
+    "id": 50
+  },
+  {
+    "name": "Killing Generation of Brazil",
+    "players": [
+      42,
+      489
+    ],
+    "id": 51
+  },
+  {
+    "name": "Hot Young Masters",
+    "players": [
+      147,
+      339
+    ],
+    "id": 52
+  },
+  {
+    "name": "MYinsanity",
+    "players": [
+      293,
+      534
+    ],
+    "id": 53
+  },
+  {
+    "name": "SuPeRNovA",
+    "players": [
+      206,
+      207,
+      296,
+      343,
+      501
+    ],
+    "id": 54
+  },
+  {
+    "name": "Deities of Death",
+    "players": [
+      71,
+      137,
+      482
+    ],
+    "id": 55
+  },
+  {
+    "name": "Suomi",
+    "players": [
+      17,
+      30,
+      40,
+      41,
+      47,
+      81,
+      111
+    ],
+    "id": 56
+  },
+  {
+    "name": "Dark Empire",
+    "players": [
+      68,
+      258,
+      277,
+      390
+    ],
+    "id": 57
+  },
+  {
+    "name": "TheUnCrapAbles",
+    "players": [
+      572
+    ],
+    "id": 58
+  },
+  {
+    "name": "Team Maswi",
+    "players": [
+      408,
+      429,
+      460,
+      503,
+      506
+    ],
+    "id": 59
+  },
+  {
+    "name": "XEVER",
+    "players": [
+      221,
+      448,
+      598,
+      667,
+      715
+    ],
+    "id": 60
+  },
+  {
+    "name": "Deceptive Baguettes",
+    "players": [
+      467
+    ],
+    "id": 61
+  },
+  {
+    "name": "AAOE",
+    "players": [
+      431
+    ],
+    "id": 62
+  },
+  {
+    "name": "One Punch",
+    "players": [
+      384
+    ],
+    "id": 63
+  },
+  {
+    "name": "True Clown Legion",
+    "players": [
+      521
+    ],
+    "id": 64
+  },
+  {
+    "name": "The Legion Clan",
+    "players": [
+      144,
+      161
+    ],
+    "id": 65
+  },
+  {
+    "name": "PL",
+    "players": [
+      530
+    ],
+    "id": 66
+  },
+  {
+    "name": "NoobsQad",
+    "players": [
+      505,
+      534
+    ],
+    "id": 67
+  },
+  {
+    "name": "Berserkers",
+    "players": [
+      62
+    ],
+    "id": 68
+  },
+  {
+    "name": "Poison of Zone",
+    "players": [
+      120
+    ],
+    "id": 69
+  },
+  {
+    "name": "Dumbos",
+    "players": [
+      654
+    ],
+    "id": 70
+  },
+  {
+    "name": "new Chapter",
+    "players": [
+      158,
+      160,
+      283,
+      388
+    ],
+    "id": 71
+  },
+  {
+    "name": " AreS ",
+    "players": [
+      18,
+      85
+    ],
+    "id": 72
+  },
+  {
+    "name": "AoeFrance",
+    "players": [
+      291,
+      465
+    ],
+    "id": 73
+  },
+  {
+    "name": "Austral imperium",
+    "players": [
+      250
+    ],
+    "id": 74
+  },
+  {
+    "name": "hkbb",
+    "players": [
+      197
+    ],
+    "id": 75
+  },
+  {
+    "name": "Pcific",
+    "players": [
+      271
+    ],
+    "id": 76
+  }
+]

@@ -1,0 +1,105 @@
+/*
+Forest Nothing Teams for DE ONLY
+
+created 25 July 2020
+by Zetnus
+zetnus@outlook.com
+
+-For DE only
+
+Forest nothing with small clearings.
+Team members are closer to each other than to enemies, and everyone is in a perfect circle.
+
+Learn about random map scripting: https://docs.google.com/document/d/e/2PACX-1vR_I1I9u-hI2FFm-EYyjoM_-9dNJFOfTaIgr05wXNbdpv9tI18b6r18ARULy3Jqyvlq6-lc2VjX6xP4/pub
+
+
+*/
+
+/* =================================================================================================== */
+<PLAYER_SETUP>
+grouped_by_team
+ai_info_map_type CUSTOM 0 1 0
+behavior_version 1
+
+<LAND_GENERATION>
+base_terrain GRASS
+create_player_lands
+{
+    terrain_type GRASS
+    number_of_tiles 100
+	base_size 22
+	circle_radius 40 0
+}
+
+
+<TERRAIN_GENERATION>
+create_terrain FOREST
+{
+	base_terrain GRASS
+	land_percent 100
+	number_of_clumps 9320
+	set_avoid_player_start_areas
+}
+
+create_terrain LEAVES
+{
+	base_terrain GRASS
+	land_percent 100
+	number_of_clumps 9320
+	spacing_to_other_terrain_types 4
+}
+
+create_terrain FOREST
+{
+	base_terrain GRASS
+	land_percent 100
+	number_of_clumps 9320
+}
+create_terrain FOREST
+{
+	base_terrain GRASS
+	land_percent 100
+	number_of_clumps 9320
+}
+create_terrain FOREST
+{
+	base_terrain GRASS
+	land_percent 100
+	number_of_clumps 9320
+}
+create_terrain FOREST
+{
+	base_terrain GRASS
+	land_percent 100
+	number_of_clumps 9320
+}
+create_terrain FOREST
+{
+	base_terrain GRASS
+	land_percent 100
+	number_of_clumps 9320
+}
+
+<OBJECTS_GENERATION>
+
+create_object TOWN_CENTER
+{
+	set_place_for_every_player
+	max_distance_to_players 0
+}
+
+create_object VILLAGER
+{	
+	set_place_for_every_player
+	find_closest
+}
+
+if REGICIDE
+create_object KING
+{	
+	set_place_for_every_player
+	find_closest
+}
+endif
+
+

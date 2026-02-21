@@ -1,0 +1,8 @@
+[run]
+relative_files = True
+omit =
+    wand/cdefs/*
+    wand/api.py
+    wand/compat.py
+    wand/display.py
+

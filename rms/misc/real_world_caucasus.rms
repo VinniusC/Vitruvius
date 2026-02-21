@@ -1,0 +1,236 @@
+/* CAUCASUS */
+
+#include_drs random_map.def
+
+<TERRAIN_GENERATION>
+
+create_terrain SNOW
+{
+  base_terrain                   DIRT2
+  land_percent                   100
+  number_of_clumps               1000
+spacing_to_other_terrain_types 6
+}
+
+create_terrain GRASS
+{
+  base_terrain                   DIRT2
+  land_percent                   100
+  number_of_clumps               100
+}
+
+create_terrain DLC_DRYGRASS
+{
+  base_terrain                   GRASS
+  land_percent                   20
+  number_of_clumps               120
+terrain_mask 1
+}
+
+#define WMASK_NOSEASONS
+#include_drs F_WaterMasking.inc
+
+create_terrain SNOW_FOREST
+{
+base_terrain SNOW
+number_of_clumps 16
+spacing_to_other_terrain_types 2
+land_percent 4
+set_avoid_player_start_areas
+}
+
+create_terrain GRASS
+{
+  base_terrain                   SNOW
+  land_percent                   100
+  number_of_clumps               1000
+terrain_mask 1
+}
+
+create_terrain DLC_FORESTAUTUMN
+{
+base_terrain GRASS
+number_of_clumps 20
+spacing_to_other_terrain_types 2
+land_percent 8
+set_avoid_player_start_areas
+}
+
+create_terrain DIRT
+{
+  base_terrain                   DIRT3
+  land_percent                   1
+  number_of_clumps               19
+spacing_to_other_terrain_types 2
+}
+
+create_terrain DIRT2
+{
+  base_terrain                   DIRT
+  land_percent                   100
+  number_of_clumps               1000
+spacing_to_other_terrain_types 3
+}
+
+create_terrain DIRT3
+{
+  base_terrain                   DIRT
+  land_percent                   100
+  number_of_clumps               1000
+terrain_mask 1
+}
+
+create_terrain DIRT
+{
+  base_terrain                   DIRT2
+  land_percent                   100
+  number_of_clumps               1000
+}
+
+create_terrain DIRT
+{
+  base_terrain                   DIRT2
+  land_percent                   100
+  number_of_clumps               1000
+}
+
+create_terrain DESERT
+{
+  base_terrain                   DIRT
+  land_percent                   1
+  number_of_clumps               14
+terrain_mask 1
+}
+
+<OBJECTS_GENERATION>
+
+#define GNR_NORMALTC
+#define GNR_STARTVILLS
+#define GNR_CLASSICSCOUT
+
+#define GNR_REGICIDE_SPECIALTOWER
+
+#const HERDABLE_A 1245
+#const HERDABLE_B 1243
+
+#define GNR_GIVEHERD_A
+#define GNR_GIVEHERD_B
+
+#define GNR_HERD4CLASSIC_A
+#define GNR_HERD22CLASSIC_B
+#define GNR_HERDBDIST_CL
+
+#const HUNTABLE 1239
+#const KERICEK 59
+
+#define GNR_GIVEHUNT
+#define GNR_HUNTGROUPS_2
+#define GNR_HUNT4MODERN
+#define GNR_6KER
+
+#const LURABLE_A 48
+#const LURABLE_B 48
+
+#define GNR_GIVELURES
+#define GNR_CLASSICLURES_ONE
+
+#define GNR_STARTINGGOLD
+#define GNR_STARTINGSTONE
+#define GNR_EMP_CLUMPLUMBER
+#define GNR_EMP_LIMITTO5FARMS
+
+#define GNR_STARTGOLD7M
+#define GNR_STARTSTONE4M
+
+#define GNR_STARTGS_3WBLOCK
+
+#define GNR_FARGMODERN_GIVE
+#define GNR_FARSMODERN_GIVE
+#define GNR_FARG_AVOID20PL
+#define GNR_FARS_AVOID20PL
+#define GNR_FARS_GENEROUSPLUS
+#define GNR_FARG_GENEROUSPLUS
+
+#const STRAGGLER 1248
+#define GNR_HOMESTRAGGLE
+
+#define GNR_GIVERELICS
+#define GNR_RELICMODERN_MEDIUM
+
+#include_drs GeneratingObjects.inc
+
+/* Captain Fin New */
+
+create_object TUNA
+{
+  number_of_objects 8
+     set_scaling_to_map_size
+   max_distance_to_other_zones 4
+     set_gaia_object_only
+}
+
+create_object SALMON
+{
+  number_of_objects 20
+     set_scaling_to_map_size
+     temp_min_distance_group_placement 24
+   max_distance_to_other_zones 4
+     set_gaia_object_only
+}
+
+create_object DORADO
+{
+  number_of_objects 1
+number_of_groups 999
+     set_scaling_to_map_size
+     temp_min_distance_group_placement 36
+   max_distance_to_other_zones 4
+     set_gaia_object_only
+}
+
+create_object SHORE_FISH
+{
+  number_of_objects 999
+     set_scaling_to_map_size
+     temp_min_distance_group_placement 15
+     set_gaia_object_only
+}
+
+if BATTLE_ROYALE
+else
+create_object WOLF
+{
+     number_of_groups 999
+     set_loose_grouping
+        number_of_objects 1
+     set_gaia_object_only
+     temp_min_distance_group_placement 68
+     min_distance_to_players 24
+}
+endif
+
+create_object HAWK
+{
+     number_of_objects 4
+     set_scaling_to_map_size
+}
+
+<ELEVATION_GENERATION>
+
+create_elevation        5
+{
+  base_terrain                DIRT3
+  number_of_clumps 		36
+  number_of_tiles 		2000
+  set_scale_by_groups
+  set_scale_by_size           
+}
+
+create_elevation        7
+{
+  base_terrain                DIRT2
+  number_of_clumps 		9999
+  number_of_tiles 		99999
+  set_scale_by_groups
+  set_scale_by_size           
+}

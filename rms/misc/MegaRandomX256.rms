@@ -1,0 +1,2 @@
+#includeXS x256tech.xs
+#include_drs Megarandom.rms2

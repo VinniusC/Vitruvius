@@ -1,0 +1,983 @@
+; Jadwiga - Part VI: The Fruits of Her Labor
+; Player 8: Vytautas (Ally)
+; AI by Lord Basse
+
+; Difficulty levels & dodging missiles * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * 
+
+(defrule
+	(true)
+=>
+	(set-goal 1 1) ; army, civilian & building creation
+	(set-goal 2 0) ; finale mechanics
+	(disable-self)
+)
+
+(defrule
+	(true)
+	(difficulty == easy)
+	=>
+	(set-signal 1); for trigger mechanics
+	(set-difficulty-parameter ability-to-maintain-distance 60)
+	(set-difficulty-parameter ability-to-dodge-missiles 60)
+	(disable-self)
+)
+
+(defrule
+	(true)
+	(difficulty == moderate)
+	=>
+	(set-signal 2); for trigger mechanics
+	(set-difficulty-parameter ability-to-maintain-distance 40)
+	(set-difficulty-parameter ability-to-dodge-missiles 40)
+	(disable-self)
+)
+
+(defrule
+	(true)
+	(difficulty == hard)
+	=>
+	(set-signal 3); for trigger mechanics
+	(set-difficulty-parameter ability-to-maintain-distance 30)
+	(set-difficulty-parameter ability-to-dodge-missiles 30)
+	(disable-self)
+)
+
+
+; B&D opening * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * 
+
+(defrule ;villagers
+	(goal 2 0)
+=>
+	(set-strategic-number sn-percent-civilian-explorers 0)
+	(set-strategic-number sn-percent-civilian-builders 10)
+	(set-strategic-number sn-percent-civilian-gatherers 90)
+	(set-strategic-number sn-cap-civilian-explorers 0)
+	(set-strategic-number sn-cap-civilian-gatherers 100)
+	(set-strategic-number sn-food-gatherer-percentage  40)
+	(set-strategic-number sn-wood-gatherer-percentage  30)
+	(set-strategic-number sn-gold-gatherer-percentage  20)
+	(set-strategic-number sn-stone-gatherer-percentage 10)
+	(set-strategic-number sn-maximum-gold-drop-distance 10)
+	(set-strategic-number sn-maximum-stone-drop-distance 10)
+	(set-strategic-number sn-maximum-food-drop-distance 10) 
+	(set-strategic-number sn-maximum-wood-drop-distance 10)
+	(set-strategic-number sn-number-forward-builders 0)  
+	(set-strategic-number sn-maximum-town-size 20)
+        (set-strategic-number sn-camp-max-distance 20)
+        (set-strategic-number sn-mill-max-distance 20)
+	(set-strategic-number sn-blot-exploration-map 1)
+	(set-strategic-number sn-do-not-scale-for-difficulty-level 1)
+	(disable-self)
+)
+
+(defrule ; military across the board
+	(goal 2 0)
+=>
+	(set-strategic-number sn-group-form-distance 20)
+	(set-strategic-number sn-percent-attack-soldiers 100)
+	(set-strategic-number sn-attack-group-size-randomness 0)
+	(set-strategic-number sn-number-explore-groups 1)
+	(set-strategic-number sn-task-ungrouped-soldiers 0)
+	(set-strategic-number sn-total-number-explorers 1)
+;	(set-strategic-number sn-wall-targeting-mode 0)
+	(set-strategic-number sn-special-attack-type1 109)
+	(set-strategic-number sn-special-attack-influence1 100)
+	(set-strategic-number sn-attack-intelligence 1)
+	(set-strategic-number sn-percent-enemy-sighted-response 60)
+	(set-strategic-number sn-gather-defense-units 1)
+	(set-strategic-number sn-total-number-explorers 1)
+)
+
+(defrule
+	(difficulty == easy)
+	(goal 2 0)
+=>
+	(set-strategic-number sn-maximum-attack-group-size 30)
+	(set-strategic-number sn-minimum-attack-group-size 8)
+	(set-strategic-number sn-enemy-sighted-response-distance 24)
+	(set-strategic-number sn-defense-distance 15)
+	(set-strategic-number sn-sentry-distance 15)
+	(disable-self)
+)
+
+(defrule
+	(difficulty == moderate)
+	(goal 2 0)
+=>
+	(set-strategic-number sn-maximum-attack-group-size 35)
+	(set-strategic-number sn-minimum-attack-group-size 12)
+	(set-strategic-number sn-enemy-sighted-response-distance 20)
+	(set-strategic-number sn-defense-distance 12)
+	(set-strategic-number sn-sentry-distance 12)
+	(disable-self)
+)
+
+(defrule
+	(difficulty == hard)
+	(goal 2 0)
+=>
+	(set-strategic-number sn-maximum-attack-group-size 40)
+	(set-strategic-number sn-minimum-attack-group-size 15)
+	(set-strategic-number sn-enemy-sighted-response-distance 16)
+	(set-strategic-number sn-defense-distance 10)
+	(set-strategic-number sn-sentry-distance 10)
+	(disable-self)
+)
+
+; Attacking * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * 
+
+; First attack
+
+(defrule
+	(game-time greater-or-equal 60)
+	(goal 2 0)
+=>
+	(attack-now)
+	(set-signal 4)
+	(enable-timer 1 60)
+	(disable-self)
+)
+
+; Regular attacks
+
+(defrule
+	(timer-triggered 1)
+	(goal 2 0)
+	(military-population >= 10)
+=>
+	(enable-timer 1 60) ; New interval
+	(attack-now)
+
+)
+
+; Player focus
+
+(defrule
+	(true)
+=>
+	(set-strategic-number sn-focus-player-number 3)
+	(set-strategic-number sn-target-player-number 3)
+	(disable-self)
+)
+
+(defrule
+	(event-detected trigger 10) ; focus on Soldau Castle
+=>
+	(set-strategic-number sn-focus-player-number 2)
+	(set-strategic-number sn-target-player-number 2)
+	(disable-self)
+)
+
+(defrule
+	(event-detected trigger 11) ; focus on Prussia again
+=>
+	(set-strategic-number sn-focus-player-number 3)
+	(set-strategic-number sn-target-player-number 3)
+	(disable-self)
+)
+
+; Army creation * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * 
+
+; Cavalry
+
+(defrule
+	(goal 1 1)
+	(civilian-population greater-or-equal 10)
+	(unit-type-count-total knight-line < 15)
+	(can-train knight-line)
+	(difficulty == easy)
+=>
+	(train knight-line)
+)
+
+(defrule
+	(goal 1 1)
+	(civilian-population greater-or-equal 10)
+	(unit-type-count-total knight-line < 20)
+	(can-train knight-line)
+	(difficulty == moderate)
+=>
+	(train knight-line)
+)
+
+(defrule
+	(goal 1 1)
+	(civilian-population greater-or-equal 10)
+	(unit-type-count-total knight-line < 25)
+	(can-train knight-line)
+	(difficulty == hard)
+=>
+	(train knight-line)
+)
+
+; Halberdiers
+
+(defrule
+	(goal 1 1)
+	(civilian-population greater-or-equal 10)
+	(unit-type-count-total spearman-line < 10)
+	(can-train spearman-line)
+	(difficulty == easy)
+=>
+	(train spearman-line)
+)
+
+(defrule
+	(goal 1 1)
+	(civilian-population greater-or-equal 20)
+	(unit-type-count-total spearman-line < 13)
+	(can-train spearman-line)
+	(difficulty == moderate)
+=>
+	(train spearman-line)
+)
+
+(defrule
+	(goal 1 1)
+	(civilian-population greater-or-equal 10)
+	(unit-type-count-total spearman-line < 16)
+	(can-train spearman-line)
+	(difficulty == hard)
+=>
+	(train spearman-line)
+)
+
+; Leitis
+
+(defrule
+	(goal 1 1)
+	(civilian-population greater-or-equal 10)
+	(unit-type-count-total my-unique-unit-line < 20)
+	(can-train my-unique-unit-line)
+	(difficulty == easy)
+=>
+	(train my-unique-unit-line)
+)
+
+(defrule
+	(goal 1 1)
+	(civilian-population greater-or-equal 10)
+	(unit-type-count-total my-unique-unit-line < 25)
+	(can-train my-unique-unit-line)
+	(difficulty == moderate)
+=>
+	(train my-unique-unit-line)
+)
+
+
+(defrule
+	(goal 1 1)
+	(civilian-population greater-or-equal 10)
+	(unit-type-count-total my-unique-unit-line < 30)
+	(can-train my-unique-unit-line)
+	(difficulty == hard)
+=>
+	(train my-unique-unit-line)
+)
+
+; Light cavalry
+
+(defrule
+	(goal 1 1)
+	(civilian-population greater-or-equal 10)
+	(unit-type-count-total scout-cavalry-line < 8)
+	(can-train scout-cavalry-line)
+	(difficulty == easy)
+=>
+	(train scout-cavalry-line)
+)
+
+(defrule
+	(goal 1 1)
+	(civilian-population greater-or-equal 10)
+	(unit-type-count-total scout-cavalry-line < 10)
+	(can-train scout-cavalry-line)
+	(difficulty == moderate)
+=>
+	(train scout-cavalry-line)
+)
+
+(defrule
+	(goal 1 1)
+	(civilian-population greater-or-equal 10)
+	(unit-type-count-total scout-cavalry-line < 15)
+	(can-train scout-cavalry-line)
+	(difficulty == hard)
+=>
+	(train scout-cavalry-line)
+)
+
+; Cavalry Archers
+
+(defrule
+	(goal 1 1)
+	(civilian-population greater-or-equal 10)
+	(unit-type-count-total cavalry-archer-line < 8)
+	(can-train cavalry-archer-line)
+	(difficulty == easy)
+=>
+	(train cavalry-archer-line)
+)
+
+(defrule
+	(goal 1 1)
+	(civilian-population greater-or-equal 10)
+	(unit-type-count-total cavalry-archer-line < 10)
+	(can-train cavalry-archer-line)
+	(difficulty == moderate)
+=>
+	(train cavalry-archer-line)
+)
+
+(defrule
+	(goal 1 1)
+	(civilian-population greater-or-equal 10)
+	(unit-type-count-total cavalry-archer-line < 15)
+	(can-train cavalry-archer-line)
+	(difficulty == hard)
+=>
+	(train cavalry-archer-line)
+)
+
+; Siege 
+
+(defrule
+	(goal 1 1)
+	(civilian-population greater-or-equal 10)
+	(unit-type-count-total trebuchet-set < 3)
+	(can-train trebuchet)
+=>
+	(train trebuchet)
+)
+
+; Villagers * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * 
+
+(defrule
+	(unit-type-count-total villager less-than 30)
+	(can-train villager)
+	(goal 1 1)
+=>
+	(train villager)
+	(chat-local-to-self "villager")
+)
+
+; Construction work * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * 
+
+(defrule
+	(goal 1 1)
+	(housing-headroom less-than 4)
+	(population-headroom greater-than 0)
+	(can-build house)
+=>
+	(build house)
+	(chat-local-to-self "house")
+)
+
+(defrule
+	(goal 1 1)
+	(building-type-count town-center less-than 1)
+	(can-build town-center)
+=>
+	(build town-center)
+)
+
+(defrule
+	(goal 1 1)
+	(building-type-count barracks less-than 1)
+	(can-build barracks)
+=>
+	(build barracks)
+)
+
+(defrule
+	(goal 1 1)
+	(building-type-count archery-range less-than 1)
+	(can-build archery-range)
+=>
+	(build archery-range)
+)
+
+(defrule
+	(goal 1 1)
+	(building-type-count stable less-than 2)
+	(can-build stable)
+=>
+	(build stable)
+)
+
+(defrule
+	(building-type-count university less-than 1)
+	(can-build university)
+=>
+	(build university)
+)
+
+(defrule
+	(building-type-count blacksmith less-than 1)
+	(can-build blacksmith)
+=>
+	(build blacksmith)
+)
+
+(defrule
+	(goal 1 1)
+	(building-type-count-total farm less-than 20)
+	(sheep-and-forage-too-far)
+	(can-build farm)
+=>
+	(build farm)
+)
+
+(defrule
+	(goal 1 1)
+	(resource-found wood)
+	(building-type-count-total lumber-camp < 3)
+	(dropsite-min-distance wood > 5)
+	(can-build lumber-camp)
+=>
+	(build lumber-camp)
+	(chat-local-to-self "wood place")
+)
+
+(defrule
+	(goal 1 1)
+	(resource-found gold)
+	(building-type-count-total mining-camp < 3)
+	(dropsite-min-distance gold > 7)
+	(can-build mining-camp)
+=>
+	(build mining-camp)
+	(chat-local-to-self "gold place")
+)
+
+(defrule
+	(goal 1 1)
+	(resource-found stone)
+	(building-type-count-total mining-camp < 3)
+	(dropsite-min-distance stone > 7)
+	(can-build mining-camp)
+=>
+	(build mining-camp)
+	(chat-local-to-self "stone place")
+)
+
+(defrule
+	(goal 1 1)
+	(dropsite-min-distance food greater-than 4)
+	(building-type-count-total mill less-than 3)
+	(can-build mill)
+=>
+	(build mill)
+	(chat-local-to-self "mill")
+)
+
+
+; Keep reserves for upgrades * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * 
+
+(defrule
+	(or
+		(or
+			(escrow-amount wood > 1000)
+			(escrow-amount food > 1000)
+		)
+		(or
+			(escrow-amount gold > 1000)
+			(escrow-amount stone > 1000)
+		)
+	)
+=>
+	(release-escrow wood)
+	(release-escrow food)
+	(release-escrow gold)
+	(release-escrow stone)
+)
+
+(defrule
+	(true)
+=>
+	(set-escrow-percentage wood 30)
+	(set-escrow-percentage food 30)
+	(set-escrow-percentage gold 30)
+	(set-escrow-percentage stone 30)
+)
+
+; Upgrades  * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * 
+
+(defrule
+	(goal 1 1)
+	(can-research-with-escrow ri-halberdier)
+=>
+	(release-escrow wood)
+	(release-escrow food)
+	(release-escrow gold)
+	(release-escrow stone)
+        (research ri-halberdier)
+)
+
+(defrule
+	(goal 1 1)
+	(can-research-with-escrow ri-elite-leitis)
+=>
+	(release-escrow wood)
+	(release-escrow food)
+	(release-escrow gold)
+	(release-escrow stone)
+        (research ri-elite-leitis)
+)
+
+(defrule
+	(goal 1 1)
+	(can-research-with-escrow ri-paladin)
+=>
+	(release-escrow wood)
+	(release-escrow food)
+	(release-escrow gold)
+	(release-escrow stone)
+        (research ri-paladin)
+)
+
+(defrule
+	(goal 1 1)
+	(can-research-with-escrow ri-bracer)
+=>
+	(release-escrow wood)
+	(release-escrow food)
+	(release-escrow gold)
+	(release-escrow stone)
+        (research ri-bracer)
+)
+
+(defrule
+	(goal 1 1)
+	(can-research-with-escrow ri-plate-barding)
+=>
+	(release-escrow wood)
+	(release-escrow food)
+	(release-escrow gold)
+	(release-escrow stone)
+        (research ri-plate-barding)
+)
+
+(defrule
+	(goal 1 1)
+	(can-research-with-escrow ri-ring-archer-armor)
+=>
+	(release-escrow wood)
+	(release-escrow food)
+	(release-escrow gold)
+	(release-escrow stone)
+        (research ri-ring-archer-armor)
+)
+
+(defrule
+	(goal 1 1)
+	(can-research-with-escrow ri-hand-cart)
+=>
+	(release-escrow wood)
+	(release-escrow food)
+	(release-escrow gold)
+	(release-escrow stone)
+        (research ri-hand-cart)
+)
+
+(defrule
+	(goal 1 1)
+	(can-research-with-escrow ri-chemistry)
+=>
+	(release-escrow wood)
+	(release-escrow food)
+	(release-escrow gold)
+	(release-escrow stone)
+        (research ri-chemistry)
+)
+
+(defrule
+	(goal 1 1)
+	(research-completed imperial-age)
+	(can-research-with-escrow ri-tower-shields)
+=>
+	(release-escrow wood)
+	(release-escrow food)
+	(release-escrow gold)
+	(release-escrow stone)
+        (research ri-tower-shields)
+)
+
+; Resign conditions * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * 
+
+(defrule
+	(military-population <= 1)
+	(goal 2 1)
+=>
+	(resign)
+	(disable-self)
+)
+
+; Taunt commands * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * 
+
+(defrule
+	(goal 1 1)
+=>
+	(acknowledge-taunt 1 4)
+	(acknowledge-taunt 1 5)
+	(acknowledge-taunt 1 6)
+	(acknowledge-taunt 1 7)
+	(acknowledge-taunt 1 31)
+	(disable-self)
+)
+
+(defrule
+	(goal 1 1)
+	(goal 2 0)
+	(taunt-detected 1 31)
+	(not(town-under-attack))
+	(military-population greater-than 16)
+=>
+	(acknowledge-taunt 1 31)
+;	(chat-to-player 1 "You require assistance, 'ey? Very well, I shall send my best men!")
+	(set-signal 20)
+	(attack-now)
+)
+
+(defrule
+	(goal 1 1)
+	(goal 2 0)
+	(taunt-detected 1 31)
+	(not(town-under-attack))
+	(military-population less-or-equal 16)
+=>
+	(acknowledge-taunt 1 31)
+;	(chat-to-player 1 "You are a demanding one, aren't you? Ask me again once I have replenished my forces.")
+	(set-signal 21)
+)
+
+(defrule
+	(goal 1 1)
+	(goal 2 0)
+	(taunt-detected 1 31)
+	(town-under-attack)
+=>
+	(acknowledge-taunt 1 31)
+;	(chat-to-player 1 "I will send my men to help you as soon as I have cleared out the Teutons from my own camp!")
+	(set-signal 22)
+)
+
+(defrule
+	(goal 1 1)
+	(goal 2 0)
+	(or
+		(taunt-detected 1 4)
+		(taunt-detected 1 5)
+	)
+	(or
+		(taunt-detected 1 6)
+		(taunt-detected 1 7)
+	)
+=>
+	(acknowledge-taunt 1 4)
+	(acknowledge-taunt 1 5)
+	(acknowledge-taunt 1 6)
+	(acknowledge-taunt 1 7)
+;	(chat-to-player 1 "My army needs these resources. You will have to find your own!")
+	(set-signal 23)
+)	
+
+; B&D ends - go immobile  * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * 
+
+(defrule 
+	(event-detected trigger 2)
+=>
+	(set-goal 1 0) ; stop unit production
+	(disable-timer 1) ; stop attacking
+	(set-goal 2 1)
+	(set-strategic-number sn-special-attack-type1 -1)
+	(set-strategic-number sn-special-attack-influence1 0)
+	(disable-self)
+)
+
+(defrule ; military
+	(goal 2 1)
+=>
+	(set-strategic-number sn-group-form-distance 0)
+	(set-strategic-number sn-percent-attack-soldiers 0)
+	(set-strategic-number sn-attack-group-size-randomness 0)
+	(set-strategic-number sn-number-explore-groups 0)
+	(set-strategic-number sn-total-number-explorers 0)
+	(set-strategic-number sn-task-ungrouped-soldiers 0)
+	(set-strategic-number sn-total-number-explorers 0)
+	(set-strategic-number sn-wall-targeting-mode 0)
+	(set-strategic-number sn-attack-intelligence 0)
+	(set-strategic-number sn-percent-enemy-sighted-response 0)
+	(set-strategic-number sn-gather-defense-units 0)
+	(set-strategic-number sn-maximum-attack-group-size 0)
+	(set-strategic-number sn-minimum-attack-group-size 0)
+	(set-strategic-number sn-enemy-sighted-response-distance 0)
+	(set-strategic-number sn-defense-distance 0)
+	(set-strategic-number sn-sentry-distance 0)
+	(set-strategic-number sn-hits-before-alliance-change 25)
+	(set-strategic-number sn-relic-return-distance 0)
+	(set-strategic-number sn-minimum-town-size 0)
+	(set-strategic-number sn-maximum-town-size 0)
+)
+
+(defrule ;villagers
+	(goal 2 1)
+=>
+	(set-strategic-number sn-maximum-food-drop-distance 0)
+	(set-strategic-number sn-maximum-wood-drop-distance 0)
+	(set-strategic-number sn-maximum-gold-drop-distance 0)
+	(set-strategic-number sn-maximum-hunt-drop-distance 0)
+	(set-strategic-number sn-maximum-stone-drop-distance 0)
+	(set-strategic-number sn-food-gatherer-percentage 0)
+	(set-strategic-number sn-wood-gatherer-percentage 0)
+	(set-strategic-number sn-gold-gatherer-percentage 0)
+	(set-strategic-number sn-stone-gatherer-percentage 0)
+	(set-strategic-number sn-cap-civilian-explorers 0)
+	(set-strategic-number sn-percent-civilian-explorers 0) 
+)
+
+; Final battle * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * 
+
+(defrule
+	(event-detected trigger 5) ; after feigned retreat
+=>
+	(set-goal 2 2)
+	(set-strategic-number sn-focus-player-number 3)
+	(set-strategic-number sn-target-player-number 3)
+	(set-strategic-number sn-focus-player-number 2)
+	(set-strategic-number sn-target-player-number 2)
+	(disable-self)
+)
+
+(defrule
+	(goal 2 2)
+=>
+	(set-strategic-number sn-total-number-explorers 0)
+	(set-strategic-number sn-percent-enemy-sighted-response 25)
+	(set-strategic-number sn-enemy-sighted-response-distance 20)
+	(set-strategic-number sn-hits-before-alliance-change 25)
+	(set-strategic-number sn-minimum-attack-group-size 2)
+	(set-strategic-number sn-maximum-attack-group-size 20)
+	(set-strategic-number sn-percent-attack-soldiers 100)
+	(set-strategic-number sn-group-form-distance 50)
+	(set-strategic-number sn-attack-group-size-randomness 0)
+	(set-strategic-number sn-attack-intelligence 1)
+)
+
+(defrule
+	(goal 2 2)
+=>
+	(set-strategic-number sn-number-explore-groups 0)
+	(set-strategic-number sn-task-ungrouped-soldiers 0)
+	(set-strategic-number sn-total-number-explorers 0)
+	(set-strategic-number sn-wall-targeting-mode 0)
+	(set-strategic-number sn-gather-defense-units 0)
+	(set-strategic-number sn-defense-distance 30)
+	(set-strategic-number sn-sentry-distance 30)
+	(set-strategic-number sn-relic-return-distance 0)
+	(set-strategic-number sn-minimum-town-size 0)
+	(set-strategic-number sn-maximum-town-size 0)
+)
+
+(defrule
+	(goal 2 2)
+=>
+	(attack-now)
+	(enable-timer 4 30)
+	(disable-self)
+)
+
+(defrule
+	(timer-triggered 4)
+	(goal 2 2)
+	(difficulty == easy)
+=>
+	(disable-timer 4)
+	(attack-now)
+	(enable-timer 4 20)
+)
+
+(defrule
+	(timer-triggered 4)
+	(goal 2 2)
+	(difficulty == moderate)
+=>
+	(disable-timer 4)
+	(attack-now)
+	(enable-timer 4 12)
+)
+
+(defrule
+	(timer-triggered 4)
+	(goal 2 2)
+	(difficulty == hard)
+=>
+	(disable-timer 4)
+	(attack-now)
+	(enable-timer 4 5)
+)
+
+
+
+; TROOPS IGNORE WALLS FOR A WHILE
+; AFTER DEFEATING A TOWN
+
+
+;Focus on TCs
+(defrule
+	(true)
+=>
+	(set-strategic-number sn-enable-offensive-priority 1)
+	(up-set-offense-priority c: town-center c: 11)
+	(disable-self)
+)
+
+;Do not focus on TCs anymore -- loop
+(defrule 
+	(event-detected trigger 2)
+=>
+	(set-strategic-number sn-enable-offensive-priority 0)
+	(up-set-offense-priority c: town-center c: 0)
+)
+
+(defrule
+(cc-players-building-type-count 3 town-center < 5)
+=>
+	(up-reset-unit c: spearman-line) ;like trigger effect Stop Unit
+	(up-reset-unit c: my-unique-unit-line)
+	(up-reset-unit c: scout-cavalry-line)
+	(up-reset-unit c: cavalry-archer-line)
+	(up-reset-attack-now)
+	(set-strategic-number sn-building-targeting-mode 1) ;ignore walls and gates
+	(enable-timer 10 100)
+	(disable-self)
+)
+
+(defrule
+	(timer-triggered 10)
+=>
+	(up-set-offense-priority c: town-center c: 11)
+	(set-strategic-number sn-building-targeting-mode 0) ;attack all buildings again
+	(disable-timer 10)
+)
+
+(defrule
+(cc-players-building-type-count 3 town-center < 4)
+=>
+	(up-reset-unit c: spearman-line) ;like trigger effect Stop Unit
+	(up-reset-unit c: my-unique-unit-line)
+	(up-reset-unit c: scout-cavalry-line)
+	(up-reset-unit c: cavalry-archer-line)
+	(up-reset-attack-now)
+	(set-strategic-number sn-building-targeting-mode 1) ;ignore walls and gates
+	(enable-timer 11 100)
+	(disable-self)
+)
+
+(defrule
+	(timer-triggered 11)
+=>
+	(up-set-offense-priority c: town-center c: 11)
+	(set-strategic-number sn-building-targeting-mode 0) ;attack all buildings again
+	(disable-timer 11)
+)
+
+(defrule
+(cc-players-building-type-count 3 town-center < 3)
+=>
+	(up-reset-unit c: spearman-line) ;like trigger effect Stop Unit
+	(up-reset-unit c: my-unique-unit-line)
+	(up-reset-unit c: scout-cavalry-line)
+	(up-reset-unit c: cavalry-archer-line)
+	(up-reset-attack-now)
+	(set-strategic-number sn-building-targeting-mode 1) ;ignore walls and gates
+	(enable-timer 12 100)
+	(disable-self)
+)
+
+(defrule
+	(timer-triggered 12)
+=>
+	(up-set-offense-priority c: town-center c: 11)
+	(set-strategic-number sn-building-targeting-mode 0) ;attack all buildings again
+	(disable-timer 12)
+)
+
+(defrule
+(cc-players-building-type-count 3 town-center < 2)
+=>
+	(up-reset-unit c: spearman-line) ;like trigger effect Stop Unit
+	(up-reset-unit c: my-unique-unit-line)
+	(up-reset-unit c: scout-cavalry-line)
+	(up-reset-unit c: cavalry-archer-line)
+	(up-reset-attack-now)
+	(set-strategic-number sn-building-targeting-mode 1) ;ignore walls and gates
+	(enable-timer 13 100)
+	(disable-self)
+)
+
+(defrule
+	(timer-triggered 13)
+=>
+	(up-set-offense-priority c: town-center c: 11)
+	(set-strategic-number sn-building-targeting-mode 0) ;attack all buildings again
+	(disable-timer 13)
+)
+
+(defrule
+(cc-players-building-type-count 3 town-center < 1)
+=>
+	(up-reset-unit c: spearman-line) ;like trigger effect Stop Unit
+	(up-reset-unit c: my-unique-unit-line)
+	(up-reset-unit c: scout-cavalry-line)
+	(up-reset-unit c: cavalry-archer-line)
+	(up-reset-attack-now)
+	(set-strategic-number sn-building-targeting-mode 1) ;ignore walls and gates
+	(enable-timer 14 100)
+	(disable-self)
+)
+
+(defrule
+	(timer-triggered 14)
+=>
+	(up-set-offense-priority c: town-center c: 11)
+	(set-strategic-number sn-building-targeting-mode 0) ;attack all buildings again
+	(disable-timer 14)
+)
+
+; VYTAUTAS GAHTERS HIS SOLDIERS
+; IN THE CENTER OF THE MAP
+
+(defrule
+	(not(town-under-attack))
+	(not (event-detected trigger 2))
+	(event-detected trigger 250) ;Teutons in the center defeated
+	(military-population > 10)
+=>
+	(set-strategic-number sn-gather-defense-units 1)
+	(set-strategic-number sn-gather-idle-soldiers-at-center 1)
+)
+
+(defrule
+	(town-under-attack)
+	(not (event-detected trigger 2))
+	(event-detected trigger 250)
+	(military-population < 11)
+=>
+	(set-strategic-number sn-gather-defense-units 0)
+	(set-strategic-number sn-gather-idle-soldiers-at-center 0)
+)
+
+(defrule
+	(event-detected trigger 2) ;Final Battle, no gathering
+=>
+	(set-strategic-number sn-gather-defense-units 0)
+	(set-strategic-number sn-gather-idle-soldiers-at-center 0)
+)
+
+(defrule
+	(event-detected trigger 2) ;Final Battle, stop B&D Attack Groups
+=>
+	(up-reset-attack-now)
+	(disable-self)
+)

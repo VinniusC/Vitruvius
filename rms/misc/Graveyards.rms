@@ -1,0 +1,1275 @@
+/*
+
+	Graveyards by Ensemble Studios
+	Reimagined by Forgotten Empires
+
+	Created: Likely in late 2000.
+	Updated: 27/10/2024
+	
+	Version: 2.0
+
+*/
+
+#const MAPSCALE_MODIFIER 1
+#include_drs includes/scaling.inc
+
+/* ----------------------------------- Debug Settings */
+
+/* #define DEBUG_MODE */
+/* #define TERRAIN_DEBUGGING */
+/* #define EMPIRE_WARS_TESTING */
+#define COLLAPSE
+
+/* ----------------------------------- Generation Settings */
+
+#define PALAEARCTIC_EUROPE_TEMPERATE
+/* #define CENTRALISE_SPAWN */
+/* #define RESTRICTED_SPAWN */
+
+/* ----------------------------------- Nomad Settings */
+
+/* #define NOMAD_MAP */
+/* #define NOMAD_SCATTERED */
+/* #define NOMAD_UNIT */
+#define NOMAD_TREATY
+/* #define NOMAD_HERDABLE */
+
+/* ----------------------------------- Themes & Overwrites */
+
+#define OVERWRITES
+if OVERWRITES
+endif
+
+#define MAP_CONSTANTS
+if MAP_CONSTANTS
+	#const STRAGGLER_SPAWN 1250 /* Dead Tree */
+	#const STRAGGLER_NEUTRAL 1250 /* Dead Tree */
+	
+	#const BEACH_TERRAIN 107
+
+	#const SPAWN_FOREST 10
+	#const SPAWN_TERRAIN 0
+
+	#const BASE_FOREST 10
+	#const BASE_FOREST_VARIATION 48
+
+	#const BASE_TERRAIN 0
+	#const BASE_BLEND_A 5
+	#const BASE_BLEND_B 76
+	#const BASE_BLEND_C 100
+	#const BASE_BLEND_D 12
+	#const BASE_BLEND_E 71
+
+	#const GRAVEYARD_EDGE 71
+	#const GRAVEYARD_TERRAIN 5
+
+	#const AESTHETIC_A 1091 /* Animal Skeleton */
+	#const AESTHETIC_B 709 /* Cactus */
+	
+	#const PREDATOR_TERRAIN 5
+	#const RELIC_TERRAIN 5
+endif
+
+#include_drs includes/themes.inc
+#include_drs includes/constants.inc
+#include_drs includes/decay.inc
+
+<PLAYER_SETUP>
+	#include_drs includes/preliminaries.inc
+	#include_drs includes/gaia_civilisation.inc
+
+	#define WATER_POND
+	#include_drs includes/water_preset.inc
+	water_definition WATER_PRESET
+
+	random_placement
+	ai_info_map_type ARABIA 0 0
+
+	if CONFINED_SETUP
+		#const CONFINED_INCREASE 1.2
+	else
+		#const CONFINED_INCREASE 1
+	endif
+	
+<LAND_GENERATION>
+	base_terrain BASE_TERRAIN
+
+	if MAPSIZE_ABOVE_NORMAL
+		#const GRAVEYARD_CONSTRAINT 28
+	elseif MAPSIZE_ABOVE_MEDIUM
+		#const GRAVEYARD_CONSTRAINT 25
+	else
+		#const GRAVEYARD_CONSTRAINT 15
+	endif
+
+	#const GRAVEYARD_AVOIDANCE 7
+	#const GRAVEYARD_FUZZINESS 1
+	#const GRAVEYARD_SPACING 32
+
+	create_land
+	{
+		terrain_type GRAVEYARD_TERRAIN
+		number_of_tiles (MAPSCALE_AREA * 254)
+		base_size 4
+		clumping_factor 15
+		top_border GRAVEYARD_CONSTRAINT
+		left_border GRAVEYARD_CONSTRAINT
+		right_border GRAVEYARD_CONSTRAINT
+		bottom_border GRAVEYARD_CONSTRAINT
+		generate_mode 1
+		border_fuzziness GRAVEYARD_FUZZINESS
+		min_placement_distance GRAVEYARD_SPACING
+		other_zone_avoidance_distance GRAVEYARD_AVOIDANCE
+		zone 50
+		land_position 50 50
+		land_id 500
+	}
+
+	create_land
+	{
+		terrain_type GRAVEYARD_TERRAIN
+		number_of_tiles (MAPSCALE_AREA * 254)
+		base_size 4
+		clumping_factor 15
+		top_border GRAVEYARD_CONSTRAINT
+		left_border GRAVEYARD_CONSTRAINT
+		right_border GRAVEYARD_CONSTRAINT
+		bottom_border GRAVEYARD_CONSTRAINT
+		generate_mode 1
+		border_fuzziness GRAVEYARD_FUZZINESS
+		min_placement_distance GRAVEYARD_SPACING
+		other_zone_avoidance_distance GRAVEYARD_AVOIDANCE
+		zone 51
+		land_id 500
+	}
+
+	create_land
+	{
+		terrain_type GRAVEYARD_TERRAIN
+		number_of_tiles (MAPSCALE_AREA * 254)
+		base_size 4
+		clumping_factor 15
+		top_border GRAVEYARD_CONSTRAINT
+		left_border GRAVEYARD_CONSTRAINT
+		right_border GRAVEYARD_CONSTRAINT
+		bottom_border GRAVEYARD_CONSTRAINT
+		generate_mode 1
+		border_fuzziness GRAVEYARD_FUZZINESS
+		min_placement_distance GRAVEYARD_SPACING
+		other_zone_avoidance_distance GRAVEYARD_AVOIDANCE
+		zone 52
+		land_id 500
+	}
+
+	create_land
+	{
+		terrain_type GRAVEYARD_TERRAIN
+		number_of_tiles (MAPSCALE_AREA * 254)
+		base_size 4
+		clumping_factor 15
+		top_border GRAVEYARD_CONSTRAINT
+		left_border GRAVEYARD_CONSTRAINT
+		right_border GRAVEYARD_CONSTRAINT
+		bottom_border GRAVEYARD_CONSTRAINT
+		generate_mode 1
+		border_fuzziness GRAVEYARD_FUZZINESS
+		min_placement_distance GRAVEYARD_SPACING
+		other_zone_avoidance_distance GRAVEYARD_AVOIDANCE
+		zone 53
+		land_id 500
+	}
+
+	create_land
+	{
+		terrain_type GRAVEYARD_TERRAIN
+		number_of_tiles (MAPSCALE_AREA * 254)
+		base_size 4
+		clumping_factor 15
+		top_border GRAVEYARD_CONSTRAINT
+		left_border GRAVEYARD_CONSTRAINT
+		right_border GRAVEYARD_CONSTRAINT
+		bottom_border GRAVEYARD_CONSTRAINT
+		generate_mode 1
+		border_fuzziness GRAVEYARD_FUZZINESS
+		min_placement_distance GRAVEYARD_SPACING
+		other_zone_avoidance_distance GRAVEYARD_AVOIDANCE
+		zone 54
+		land_id 500
+	}
+
+	if MAPSIZE_ABOVE_MEDIUM
+		create_land
+		{
+			terrain_type GRAVEYARD_TERRAIN
+			number_of_tiles (MAPSCALE_AREA * 254)
+			base_size 4
+			clumping_factor 15
+			top_border GRAVEYARD_CONSTRAINT
+			left_border GRAVEYARD_CONSTRAINT
+			right_border GRAVEYARD_CONSTRAINT
+			bottom_border GRAVEYARD_CONSTRAINT
+			generate_mode 1
+			border_fuzziness GRAVEYARD_FUZZINESS
+			min_placement_distance GRAVEYARD_SPACING
+			other_zone_avoidance_distance GRAVEYARD_AVOIDANCE
+			zone 55
+			land_id 500
+		}
+	endif
+
+	if MAPSIZE_ABOVE_HUGE
+		create_land
+		{
+			terrain_type GRAVEYARD_TERRAIN
+			number_of_tiles (MAPSCALE_AREA * 254)
+			base_size 4
+			clumping_factor 15
+			top_border GRAVEYARD_CONSTRAINT
+			left_border GRAVEYARD_CONSTRAINT
+			right_border GRAVEYARD_CONSTRAINT
+			bottom_border GRAVEYARD_CONSTRAINT
+			generate_mode 1
+			border_fuzziness GRAVEYARD_FUZZINESS
+			min_placement_distance GRAVEYARD_SPACING
+			other_zone_avoidance_distance GRAVEYARD_AVOIDANCE
+			zone 56
+			land_id 500
+		}
+	endif
+
+	if MAPSIZE_ABOVE_MASSIVE
+		create_land
+		{
+			terrain_type GRAVEYARD_TERRAIN
+			number_of_tiles (MAPSCALE_AREA * 254)
+			base_size 4
+			clumping_factor 15
+			top_border GRAVEYARD_CONSTRAINT
+			left_border GRAVEYARD_CONSTRAINT
+			right_border GRAVEYARD_CONSTRAINT
+			bottom_border GRAVEYARD_CONSTRAINT
+			generate_mode 1
+			border_fuzziness GRAVEYARD_FUZZINESS
+			min_placement_distance GRAVEYARD_SPACING
+			other_zone_avoidance_distance GRAVEYARD_AVOIDANCE
+			zone 57
+			land_id 500
+		}
+	endif
+
+	create_player_lands
+	{
+		terrain_type SPAWN_TERRAIN
+		number_of_tiles 1024
+		base_size 14
+
+		if MAPSIZE_MINI
+			circle_radius 33 0
+		elseif MAPSIZE_TINY
+			circle_radius 34 1
+		elseif MAPSIZE_SMALL
+			circle_radius 34 1
+		elseif MAPSIZE_MEDIUM
+			circle_radius 35 2
+		elseif MAPSIZE_NORMAL
+			circle_radius 36 3
+		elseif MAPSIZE_LARGE
+			circle_radius 37 4
+		elseif MAPSIZE_HUGE
+			circle_radius 38 5
+		elseif MAPSIZE_GIANT
+			circle_radius 39 6
+		elseif MAPSIZE_MASSIVE
+			circle_radius 39 6
+		elseif MAPSIZE_ENORMOUS
+			circle_radius 39 6
+		elseif MAPSIZE_COLOSSAL
+			circle_radius 39 6
+		elseif MAPSIZE_INCREDIBLE
+			circle_radius 39 6
+		elseif MAPSIZE_MONSTROUS
+			circle_radius 39 6
+		elseif MAPSIZE_LUDICROUS
+			circle_radius 39 6
+		endif
+	}
+
+<ELEVATION_GENERATION>
+	create_elevation 5
+	{
+		enable_balanced_elevation
+		base_terrain BASE_TERRAIN
+
+		number_of_tiles (2048 * MAPSCALE_AREA)
+		number_of_clumps (24 * MAPSCALE_AREA)
+	}
+
+<CLIFF_GENERATION>
+	#include_drs includes/cliffs.inc
+	cliff_type CLIFF_TYPE
+
+<TERRAIN_GENERATION>
+	start_random
+		percent_chance 33 color_correction CC_BRUMOUS
+		percent_chance 34 color_correction CC_EVENING
+		percent_chance 33 color_correction CC_MISTY
+	end_random
+
+
+
+	create_terrain SHALLOWS_SWAMP
+	{
+		base_terrain BASE_TERRAIN
+		land_percent 2
+		number_of_clumps 4
+		clumping_factor 20
+		set_scale_by_groups
+		set_avoid_player_start_areas 34
+		set_flat_terrain_only
+		height_limits 0 0
+		spacing_to_other_terrain_types 4
+	}
+
+	create_terrain BASE_FOREST
+	{
+		base_terrain BASE_TERRAIN
+		land_percent 12
+		number_of_clumps 16
+		set_scale_by_groups
+		set_avoid_player_start_areas
+		spacing_to_other_terrain_types 4
+	}
+
+	create_terrain PLACEHOLDER_TERRAIN_A
+	{
+		base_terrain BASE_TERRAIN
+		land_percent 100
+		number_of_clumps 512
+		set_scale_by_groups
+		spacing_to_other_terrain_types 1
+	}
+
+	create_terrain GRAVEYARD_TERRAIN
+	{
+		base_terrain BASE_TERRAIN
+		land_percent 100
+		number_of_clumps 512
+		set_scale_by_groups
+		beach_terrain BEACH_TERRAIN
+		terrain_mask 1
+	}
+
+	create_terrain GRAVEYARD_TERRAIN
+	{
+		base_terrain BASE_TERRAIN
+		land_percent 100
+		number_of_clumps 512
+		set_scale_by_groups
+		beach_terrain BEACH_TERRAIN
+		terrain_mask 1
+	}
+
+	create_terrain GRAVEYARD_TERRAIN
+	{
+		base_terrain BASE_TERRAIN
+		land_percent 100
+		number_of_clumps 512
+		set_scale_by_groups
+		beach_terrain BEACH_TERRAIN
+		terrain_mask 1
+	}
+
+	create_terrain GRAVEYARD_TERRAIN
+	{
+		base_terrain BASE_TERRAIN
+		land_percent 100
+		number_of_clumps 512
+		set_scale_by_groups
+		beach_terrain BEACH_TERRAIN
+		terrain_mask 1
+	}
+
+	create_terrain BASE_TERRAIN
+	{
+		base_terrain PLACEHOLDER_TERRAIN_A
+		land_percent 100
+		number_of_clumps 512
+		set_scale_by_groups
+		beach_terrain BEACH_TERRAIN
+	}
+
+	create_terrain BASE_TERRAIN
+	{
+		base_terrain PLACEHOLDER_TERRAIN_A
+		land_percent 100
+		number_of_clumps 512
+		set_scale_by_groups
+	}
+
+	create_terrain BASE_TERRAIN
+	{
+		base_terrain PLACEHOLDER_TERRAIN_A
+		land_percent 100
+		number_of_clumps 512
+		set_scale_by_groups
+	}
+
+	create_terrain BASE_TERRAIN
+	{
+		base_terrain PLACEHOLDER_TERRAIN_A
+		land_percent 100
+		number_of_clumps 512
+		set_scale_by_groups
+	}
+
+	create_terrain BASE_BLEND_A
+	{
+		base_terrain BASE_TERRAIN
+		land_percent 12
+		number_of_clumps 16
+		set_scale_by_groups
+		beach_terrain BEACH_TERRAIN
+		terrain_mask 1
+	}
+
+	create_terrain BASE_BLEND_E
+	{
+		base_terrain BASE_TERRAIN
+		land_percent 12
+		number_of_clumps 16
+		set_scale_by_groups
+		beach_terrain BEACH_TERRAIN
+		terrain_mask 1
+	}
+
+	create_terrain BASE_BLEND_B
+	{
+		base_terrain BASE_TERRAIN
+		land_percent 6
+		number_of_clumps 18
+		clumping_factor -10
+		set_scale_by_groups
+		beach_terrain BEACH_TERRAIN
+		terrain_mask 1
+	}
+
+	create_terrain BASE_BLEND_C
+	{
+		base_terrain BASE_TERRAIN
+		land_percent 8
+		number_of_clumps 12
+		set_scale_by_groups
+		beach_terrain BEACH_TERRAIN
+		terrain_mask 1
+	}
+
+	create_terrain BASE_BLEND_D
+	{
+		base_terrain BASE_TERRAIN
+		land_percent 4
+		number_of_clumps 24
+		set_scale_by_groups
+		beach_terrain BEACH_TERRAIN
+		terrain_mask 1
+	}
+
+	create_terrain SHALLOWS_YELLOW
+	{
+		base_terrain SHALLOWS_SWAMP
+		land_percent 1
+		number_of_clumps 32
+		set_scale_by_groups
+		terrain_mask 2
+	}
+
+	create_terrain BASE_BLEND_E
+	{
+		base_terrain GRAVEYARD_TERRAIN
+		land_percent 4
+		number_of_clumps 64
+		set_scale_by_groups
+		terrain_mask 1
+	}
+
+<OBJECTS_GENERATION>
+	if TERRAIN_DEBUGGING
+	else
+		#define PRELIMINARIES
+		if PRELIMINARIES
+			#const RESOURCE_SPACING_DEFAULT 10
+			#const RESOURCE_SPACING_FAR 16
+			#const RESOURCE_RESTRICTION 2
+
+			#include_drs includes/object_setup.inc
+			#include_drs includes/market_objects.inc
+
+			create_object PLACEHOLDER_GENERIC
+			{
+				number_of_objects 2048
+				set_scaling_to_map_size
+				temp_min_distance_group_placement 1
+				layer_to_place_on GRAVEYARD_TERRAIN
+
+				actor_area 7000
+				actor_area_radius 3
+			}
+
+			create_object PLACEHOLDER_GENERIC
+			{
+				number_of_objects 2048
+				set_scaling_to_map_size
+				temp_min_distance_group_placement 1
+				terrain_to_place_on GRAVEYARD_TERRAIN
+
+				actor_area 7001
+				actor_area_radius 6
+			}
+		endif
+
+		#include_drs includes/town_centres.inc
+		#include_drs includes/villagers.inc
+		#include_drs includes/scouts.inc
+		#include_drs includes/walls.inc
+
+		#include_drs includes/defend_wonder.inc
+		#include_drs includes/regicide.inc
+		#include_drs includes/capture_relic.inc
+
+		if NOMAD_START
+		else
+			#include_drs includes/stragglers.inc
+
+			#const FORAGE_BUSH_PRIMARY_CAA_A 7001 /* Graveyards */
+			#define FORAGE_BUSH_PRIMARY
+
+			#const GOLD_PRIMARY_CAA_A 7001 /* Graveyards */
+			#define GOLD_PRIMARY
+			
+			#const STONE_PRIMARY_CAA_A 7001 /* Graveyards */
+			#define STONE_PRIMARY
+
+			#include_drs includes/starting_resources.inc
+
+			if DEATH_MATCH
+			elseif INFINITE_RESOURCES
+			else
+				#define HERDABLE_STARTING_COUNT_FOUR
+
+				#include_drs includes/herdable_starting.inc
+				#include_drs includes/herdable.inc
+
+				start_random
+					percent_chance 50 #define GAME_HUNTABLE
+					percent_chance 50 #define GAME_CHICKEN
+				end_random
+
+				if GAME_HUNTABLE
+					start_random
+						percent_chance 80
+							#const HUNTABLE_COUNT 3
+						percent_chance 20
+							#const HUNTABLE_COUNT 4
+					end_random
+
+					#const HUNTABLE_GROUPS 1
+				endif
+
+				if GAME_CHICKEN
+					start_random
+						percent_chance 20
+							#const HUNTABLE_SMALL_COUNT 6
+						percent_chance 40
+							#const HUNTABLE_SMALL_COUNT 7
+						percent_chance 40
+							#const HUNTABLE_SMALL_COUNT 8
+					end_random
+
+					#const HUNTABLE_SMALL_GROUPS 1
+				endif
+				
+				#include_drs includes/huntable.inc
+				#include_drs includes/lureable.inc
+				#include_drs includes/furbearers.inc
+			endif
+		endif
+
+		if INFINITE_RESOURCES
+		else
+			create_object GOLD
+			{
+				number_of_objects 2
+				number_of_groups 1024
+				set_tight_grouping
+				group_placement_radius 1
+				temp_min_distance_group_placement 8
+				terrain_to_place_on GRAVEYARD_TERRAIN
+
+				min_distance_group_placement 2
+				max_distance_to_other_zones 4
+				avoid_forest_zone 2
+				avoid_cliff_zone 2
+				min_distance_to_map_edge 2
+
+				actor_area 1010
+				actor_area_radius 3
+
+				avoid_actor_area 1010 /* Neutral Gold */
+				avoid_actor_area 1011 /* Neutral Gold, Additional A */
+				avoid_actor_area 1012 /* Neutral Gold, Additional B */
+				avoid_actor_area 1020 /* Neutral Stone */
+				avoid_actor_area 1021 /* Neutral Stone, Additional A */
+				avoid_actor_area 1022 /* Neutral Stone, Additional B */
+
+				avoid_actor_area 7000 /* Graveyard Edge Avoider */
+			}
+
+			create_object STONE
+			{
+				number_of_objects 2
+				number_of_groups 1024
+				set_tight_grouping
+				group_placement_radius 1
+				temp_min_distance_group_placement 8
+				terrain_to_place_on GRAVEYARD_TERRAIN
+
+				min_distance_group_placement 2
+				max_distance_to_other_zones 4
+				avoid_forest_zone 2
+				avoid_cliff_zone 2
+				min_distance_to_map_edge 2
+
+				actor_area 1020
+				actor_area_radius 2
+
+				avoid_actor_area 1010 /* Neutral Gold */
+				avoid_actor_area 1011 /* Neutral Gold, Additional A */
+				avoid_actor_area 1012 /* Neutral Gold, Additional B */
+				avoid_actor_area 1020 /* Neutral Stone */
+				avoid_actor_area 1021 /* Neutral Stone, Additional A */
+				avoid_actor_area 1022 /* Neutral Stone, Additional B */
+
+				avoid_actor_area 7000 /* Graveyard Edge Avoider */
+			}
+		endif
+
+		if DEATH_MATCH
+		else
+			#const PREDATOR_GROUPS 8
+			#const PREDATOR_SPACING 12
+
+			#include_drs includes/predators.inc
+			#include_drs includes/riparian.inc
+		endif
+
+		#include_drs includes/neritic.inc
+		#include_drs includes/oysters.inc
+
+		#const FRESHWATER_COUNT 0
+
+		#include_drs includes/aquatic_freshwater.inc
+
+		#const SALTWATER_COUNT 0
+
+		#include_drs includes/aquatic_saltwater.inc
+
+		if DEATH_MATCH
+		else
+			#const STRAGGLER_GROUPS 12
+			#const STRAGGLER_CAA_A 7000 /* Graveyards */
+			#const STRAGGLER_CAA_A 7001 /* Graveyards */
+	
+			#include_drs includes/stragglers_neutral.inc
+			#include_drs includes/stragglers_coastal.inc
+			#include_drs includes/reeds.inc
+		endif
+
+		#define RELIC_TYPE_SCATTER
+		#const RELIC_SPACING 12
+
+		#include_drs includes/relics.inc
+		#include_drs includes/remote_resources.inc
+
+		#define EXTRA_STUFF
+		if EXTRA_STUFF
+			if EMPIRE_WARS_MODE
+				#define EMPIRE_WARS_FORAGERS
+
+				#include_drs includes/empire_wars.inc
+				#include_drs includes/empire_food.inc
+				#include_drs includes/empire_gold.inc
+				#include_drs includes/empire_wood.inc
+				#include_drs includes/empire_buildings.inc
+			elseif ESCALATION_MODE
+				#include_drs includes/escalation_mode.inc
+			endif
+
+			#define AESTHETICS
+			if AESTHETICS
+				#include_drs includes/birds.inc
+				
+				create_object HERO_SHRINE
+				{
+					number_of_objects 1024
+					temp_min_distance_group_placement 32
+					terrain_to_place_on GRAVEYARD_TERRAIN
+
+					actor_area 8000
+					actor_area_radius 1
+
+					avoid_actor_area 1020 /* Neutral Gold */
+					avoid_actor_area 1000 /* Neutral Stone */
+					avoid_actor_area 7000 /* Graveyard Edge */
+				}
+
+				create_object GRAVE
+				{
+					number_of_objects 1024
+					temp_min_distance_group_placement 8
+					terrain_to_place_on GRAVEYARD_TERRAIN
+
+					actor_area 8001
+					actor_area_radius 0
+
+					avoid_actor_area 8001 /* Grave */
+				}
+
+				create_object GRAVE
+				{
+					number_of_objects 1024
+					temp_min_distance_group_placement 8
+					terrain_to_place_on GRAVEYARD_TERRAIN
+
+					actor_area 8001
+					actor_area_radius 0
+
+					avoid_actor_area 8001 /* Grave */
+				}
+
+				create_object GRAVE
+				{
+					number_of_objects 1024
+					temp_min_distance_group_placement 8
+					terrain_to_place_on GRAVEYARD_TERRAIN
+
+					actor_area 8001
+					actor_area_radius 0
+
+					avoid_actor_area 8001 /* Grave */
+				}
+
+				create_object GRAVE
+				{
+					number_of_objects 1024
+					temp_min_distance_group_placement 8
+					terrain_to_place_on GRAVEYARD_TERRAIN
+
+					actor_area 8001
+					actor_area_radius 0
+
+					avoid_actor_area 8001 /* Grave */
+				}
+
+				create_object GRAVE
+				{
+					number_of_objects 1024
+					temp_min_distance_group_placement 8
+					terrain_to_place_on GRAVEYARD_TERRAIN
+
+					actor_area 8001
+					actor_area_radius 0
+
+					avoid_actor_area 8001 /* Grave */
+				}
+
+				create_object GRAVE
+				{
+					number_of_objects 1024
+					temp_min_distance_group_placement 8
+					terrain_to_place_on GRAVEYARD_TERRAIN
+
+					actor_area 8001
+					actor_area_radius 0
+
+					avoid_actor_area 8001 /* Grave */
+				}
+
+				create_object GRAVE
+				{
+					number_of_objects 1024
+					temp_min_distance_group_placement 8
+					terrain_to_place_on GRAVEYARD_TERRAIN
+
+					actor_area 8001
+					actor_area_radius 0
+
+					avoid_actor_area 8001 /* Grave */
+				}
+
+				create_object GRAVE
+				{
+					number_of_objects 1024
+					temp_min_distance_group_placement 8
+					terrain_to_place_on GRAVEYARD_TERRAIN
+
+					actor_area 8001
+					actor_area_radius 0
+
+					avoid_actor_area 8001 /* Grave */
+				}
+
+				create_object PLANT_DEAD
+				{
+					number_of_objects 1024
+					temp_min_distance_group_placement 16
+					terrain_to_place_on GRAVEYARD_TERRAIN
+
+					actor_area 8001
+					actor_area_radius 0
+
+					avoid_actor_area 8001 /* Grave & Dead Plant */
+				}
+
+				create_object PLANT_DEAD
+				{
+					number_of_objects 1024
+					temp_min_distance_group_placement 16
+					terrain_to_place_on GRAVEYARD_TERRAIN
+
+					actor_area 8001
+					actor_area_radius 0
+
+					avoid_actor_area 8001 /* Grave & Dead Plant */
+				}
+
+				create_object PLANT_DEAD
+				{
+					number_of_objects 1024
+					temp_min_distance_group_placement 16
+					terrain_to_place_on GRAVEYARD_TERRAIN
+
+					actor_area 8001
+					actor_area_radius 0
+
+					avoid_actor_area 8001 /* Grave & Dead Plant */
+				}
+
+				create_object PLANT_DEAD
+				{
+					number_of_objects 1024
+					temp_min_distance_group_placement 16
+					terrain_to_place_on GRAVEYARD_TERRAIN
+
+					actor_area 8001
+					actor_area_radius 0
+
+					avoid_actor_area 8001 /* Grave & Dead Plant */
+				}
+
+				create_object SKELETON
+				{
+					number_of_objects 1024
+					temp_min_distance_group_placement 8
+					terrain_to_place_on GRAVEYARD_TERRAIN
+
+					actor_area 8002
+					actor_area_radius 1
+
+					avoid_actor_area 8001 /* Grave & Dead Plant */
+					avoid_actor_area 8002 /* Skeleton */
+				}
+
+				create_object SKELETON
+				{
+					number_of_objects 1024
+					temp_min_distance_group_placement 8
+					terrain_to_place_on GRAVEYARD_TERRAIN
+
+					actor_area 8002
+					actor_area_radius 1
+
+					avoid_actor_area 8001 /* Grave & Dead Plant */
+					avoid_actor_area 8002 /* Skeleton */
+				}
+
+				create_object SKELETON
+				{
+					number_of_objects 1024
+					temp_min_distance_group_placement 8
+					terrain_to_place_on GRAVEYARD_TERRAIN
+
+					actor_area 8002
+					actor_area_radius 1
+
+					avoid_actor_area 8001 /* Grave & Dead Plant */
+					avoid_actor_area 8002 /* Skeleton */
+				}
+				
+				create_object STATUE_CIVILISATION
+				{
+					set_facet 6
+					number_of_objects 1024
+					temp_min_distance_group_placement 16
+					terrain_to_place_on GRAVEYARD_TERRAIN
+
+					actor_area 8003
+					actor_area_radius 2
+
+					avoid_actor_area 1020 /* Neutral Gold */
+					avoid_actor_area 1000 /* Neutral Stone */
+					avoid_actor_area 8000 /* Hero Shrine */
+					avoid_actor_area 8001 /* Grave & Dead Plant */
+					avoid_actor_area 8002 /* Skeleton */
+					avoid_actor_area 8003 /* Large Grave */
+					avoid_actor_area 7000 /* Graveyard Edge */
+				}
+				
+				create_object STATUE_CIVILISATION
+				{
+					set_facet 7
+					number_of_objects 1024
+					temp_min_distance_group_placement 16
+					terrain_to_place_on GRAVEYARD_TERRAIN
+
+					actor_area 8003
+					actor_area_radius 2
+
+					avoid_actor_area 1020 /* Neutral Gold */
+					avoid_actor_area 1000 /* Neutral Stone */
+					avoid_actor_area 8000 /* Hero Shrine */
+					avoid_actor_area 8001 /* Grave & Dead Plant */
+					avoid_actor_area 8002 /* Skeleton */
+					avoid_actor_area 8003 /* Large Grave */
+					avoid_actor_area 7000 /* Graveyard Edge */
+				}
+				
+				create_object TREE_DEAD
+				{
+					number_of_objects 1024
+					temp_min_distance_group_placement 6
+					terrain_to_place_on GRAVEYARD_TERRAIN
+
+					actor_area 8004
+					actor_area_radius 0
+
+					avoid_actor_area 1020 /* Neutral Gold */
+					avoid_actor_area 1000 /* Neutral Stone */
+					avoid_actor_area 8000 /* Hero Shrine */
+					avoid_actor_area 8001 /* Grave & Dead Plant */
+					avoid_actor_area 8002 /* Skeleton */
+					avoid_actor_area 8003 /* Large Grave */
+					avoid_actor_area 8004 /* Dead Tree */
+				}
+				
+				create_object TREE_DEAD
+				{
+					number_of_objects 1024
+					temp_min_distance_group_placement 6
+					terrain_to_place_on GRAVEYARD_TERRAIN
+
+					actor_area 8004
+					actor_area_radius 0
+
+					avoid_actor_area 1020 /* Neutral Gold */
+					avoid_actor_area 1000 /* Neutral Stone */
+					avoid_actor_area 8000 /* Hero Shrine */
+					avoid_actor_area 8001 /* Grave & Dead Plant */
+					avoid_actor_area 8002 /* Skeleton */
+					avoid_actor_area 8003 /* Large Grave */
+					avoid_actor_area 8004 /* Dead Tree */
+				}
+				
+				create_object TREE_DEAD
+				{
+					number_of_objects 1024
+					temp_min_distance_group_placement 6
+					terrain_to_place_on GRAVEYARD_TERRAIN
+
+					actor_area 8004
+					actor_area_radius 0
+
+					avoid_actor_area 1020 /* Neutral Gold */
+					avoid_actor_area 1000 /* Neutral Stone */
+					avoid_actor_area 8000 /* Hero Shrine */
+					avoid_actor_area 8001 /* Grave & Dead Plant */
+					avoid_actor_area 8002 /* Skeleton */
+					avoid_actor_area 8003 /* Large Grave */
+					avoid_actor_area 8004 /* Dead Tree */
+				}
+				
+				create_object TREE_REEDS
+				{
+					number_of_objects 1024
+					temp_min_distance_group_placement 6
+					terrain_to_place_on SHALLOWS_YELLOW
+
+					actor_area 8005
+					actor_area_radius 0
+
+					avoid_actor_area 8005 /* Reeds */
+				}
+				
+				create_object TREE_REEDS
+				{
+					number_of_objects 1024
+					temp_min_distance_group_placement 6
+					terrain_to_place_on SHALLOWS_YELLOW
+
+					actor_area 8005
+					actor_area_radius 0
+
+					avoid_actor_area 8005 /* Reeds */
+				}
+				
+				create_object TREE_REEDS
+				{
+					number_of_objects 1024
+					temp_min_distance_group_placement 6
+					terrain_to_place_on SHALLOWS_YELLOW
+
+					actor_area 8005
+					actor_area_radius 0
+
+					avoid_actor_area 8005 /* Reeds */
+				}
+				
+				create_object TREE_REEDS
+				{
+					number_of_objects 1024
+					temp_min_distance_group_placement 6
+					terrain_to_place_on SHALLOWS_YELLOW
+
+					actor_area 8005
+					actor_area_radius 0
+
+					avoid_actor_area 8005 /* Reeds */
+				}
+				
+				create_object TREE_REEDS
+				{
+					number_of_objects 1024
+					temp_min_distance_group_placement 6
+					terrain_to_place_on SHALLOWS_YELLOW
+
+					actor_area 8005
+					actor_area_radius 0
+
+					avoid_actor_area 8005 /* Reeds */
+				}
+				
+				create_object GRASS_SINGLE_GREEN
+				{
+					number_of_objects 1024
+					temp_min_distance_group_placement 6
+					terrain_to_place_on SHALLOWS_SWAMP
+
+					actor_area 8005
+					actor_area_radius 0
+
+					avoid_actor_area 8005 /* Reeds */
+				}
+				
+				create_object GRASS_SINGLE_GREEN
+				{
+					number_of_objects 1024
+					temp_min_distance_group_placement 6
+					terrain_to_place_on SHALLOWS_SWAMP
+
+					actor_area 8005
+					actor_area_radius 0
+
+					avoid_actor_area 8005 /* Reeds */
+				}
+				
+				create_object GRASS_SINGLE_GREEN
+				{
+					number_of_objects 1024
+					temp_min_distance_group_placement 6
+					terrain_to_place_on SHALLOWS_SWAMP
+
+					actor_area 8005
+					actor_area_radius 0
+
+					avoid_actor_area 8005 /* Reeds */
+				}
+				
+				create_object GRASS_SINGLE_GREEN
+				{
+					number_of_objects 1024
+					temp_min_distance_group_placement 6
+					terrain_to_place_on SHALLOWS_SWAMP
+
+					actor_area 8005
+					actor_area_radius 0
+
+					avoid_actor_area 8005 /* Reeds */
+				}
+				
+				create_object GRASS_SINGLE_GREEN
+				{
+					number_of_objects 1024
+					temp_min_distance_group_placement 6
+					terrain_to_place_on SHALLOWS_SWAMP
+
+					actor_area 8005
+					actor_area_radius 0
+
+					avoid_actor_area 8005 /* Reeds */
+				}
+				
+				create_object GRASS_SINGLE_GREEN
+				{
+					number_of_objects 1024
+					temp_min_distance_group_placement 6
+					terrain_to_place_on SHALLOWS_SWAMP
+
+					actor_area 8005
+					actor_area_radius 0
+
+					avoid_actor_area 8005 /* Reeds */
+				}
+				
+				create_object PLACEHOLDER_HYBRID_TILE
+				{
+					second_object NERITIC_B
+					number_of_objects 1024
+					temp_min_distance_group_placement 8
+					terrain_to_place_on SHALLOWS_SWAMP
+
+					actor_area 8006
+					actor_area_radius 1
+
+					avoid_actor_area 8005 /* Reeds */
+					avoid_actor_area 8006 /* Swamp Neritic */
+				}
+				
+				create_object PLACEHOLDER_HYBRID_TILE
+				{
+					second_object NERITIC_B
+					number_of_objects 1024
+					temp_min_distance_group_placement 8
+					terrain_to_place_on SHALLOWS_SWAMP
+
+					actor_area 8006
+					actor_area_radius 1
+
+					avoid_actor_area 8005 /* Reeds */
+					avoid_actor_area 8006 /* Swamp Neritic */
+				}
+				
+				create_object PLANT_DEAD
+				{
+					number_of_objects 24
+					set_scaling_to_map_size
+					temp_min_distance_group_placement 2
+					terrain_to_place_on BASE_TERRAIN
+
+					actor_area 8007
+					actor_area_radius 1
+
+					avoid_actor_area 7000 /* Graveyard */
+					avoid_actor_area 7001 /* Graveyard */
+				}
+				
+				create_object SKELETON
+				{
+					number_of_objects 12
+					set_scaling_to_map_size
+					temp_min_distance_group_placement 2
+					terrain_to_place_on BASE_TERRAIN
+
+					actor_area 8007
+					actor_area_radius 1
+
+					avoid_actor_area 7000 /* Graveyard */
+					avoid_actor_area 7001 /* Graveyard */
+				}
+				
+				create_object BROKEN_CART
+				{
+					set_facet 1
+					number_of_objects 1024
+					min_distance_to_players 24
+					set_circular_placement
+					temp_min_distance_group_placement 70
+					terrain_to_place_on BASE_TERRAIN
+
+					actor_area 8008
+					actor_area_radius 26
+
+					avoid_actor_area 7000 /* Graveyard */
+					avoid_actor_area 7001 /* Graveyard */
+					avoid_actor_area 8007 /* Dead Plant */
+					avoid_actor_area 8008 /* Broken Cart */
+				}
+				
+				create_object BROKEN_CART
+				{
+					set_facet 2
+					number_of_objects 1024
+					min_distance_to_players 24
+					set_circular_placement
+					temp_min_distance_group_placement 70
+					terrain_to_place_on BASE_TERRAIN
+
+					actor_area 8008
+					actor_area_radius 26
+
+					avoid_actor_area 7000 /* Graveyard */
+					avoid_actor_area 7001 /* Graveyard */
+					avoid_actor_area 8007 /* Dead Plant */
+					avoid_actor_area 8008 /* Broken Cart */
+				}
+				
+				create_object BROKEN_CART
+				{
+					set_facet 3
+					number_of_objects 1024
+					min_distance_to_players 24
+					set_circular_placement
+					temp_min_distance_group_placement 70
+					terrain_to_place_on BASE_TERRAIN
+
+					actor_area 8008
+					actor_area_radius 26
+
+					avoid_actor_area 7000 /* Graveyard */
+					avoid_actor_area 7001 /* Graveyard */
+					avoid_actor_area 8007 /* Dead Plant */
+					avoid_actor_area 8008 /* Broken Cart */
+				}
+				
+				create_object BROKEN_CART
+				{
+					set_facet 4
+					number_of_objects 1024
+					min_distance_to_players 24
+					set_circular_placement
+					temp_min_distance_group_placement 70
+					terrain_to_place_on BASE_TERRAIN
+
+					actor_area 8008
+					actor_area_radius 26
+
+					avoid_actor_area 7000 /* Graveyard */
+					avoid_actor_area 7001 /* Graveyard */
+					avoid_actor_area 8007 /* Dead Plant */
+					avoid_actor_area 8008 /* Broken Cart */
+				}
+			endif
+		endif
+	endif
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

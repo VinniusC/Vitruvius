@@ -1,0 +1,8 @@
+enc_temp_folder/
+*debug/
+*release/
+.vs/
+*.aps
+*.ini
+*.user
+gulog.txt

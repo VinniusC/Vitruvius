@@ -1,0 +1,11 @@
+include README.rst
+include LICENSE
+graft docs
+prune docs/_build
+prune sample
+prune support
+prune */__pycache__
+graft tests
+global-exclude __pycache__
+global-exclude *.py[co]
+global-exclude .mypy_cache

@@ -1,0 +1,753 @@
+/* BR - The Majapahit Empire 2020 */
+
+<PLAYER_SETUP>
+  random_placement 
+  set_gaia_civilization 29
+
+#include_drs BR_conditions.inc
+
+<LAND_GENERATION>
+
+base_terrain DESERT
+
+#const SUPERMUD 76
+
+
+create_player_lands 
+{
+  terrain_type                     DLC_BEACH2
+  land_percent                     100
+  base_size                        15
+  border_fuzziness                 20
+  other_zone_avoidance_distance    14
+  circle_radius 60 0
+}
+
+
+create_land
+{            
+  terrain_type                    DLC_DESERTGRAVEL /* DLC_BEACH4 */
+  /* land_percent 100 */
+  number_of_tiles 12
+  land_position 50 50
+  base_size                        0
+  zone 98
+  other_zone_avoidance_distance 0
+}
+
+create_land
+{            
+  terrain_type                    DLC_DRYGRASS /* DLC_BEACH4 */
+  land_percent 100
+  base_size                        1
+  bottom_border  39
+  top_border     39
+  left_border    39
+  right_border   39
+  zone 98
+  other_zone_avoidance_distance 0
+}
+
+create_land
+{            
+  terrain_type                     SUPERMUD
+  number_of_tiles		   120
+  base_size                        3
+  land_position 		   rnd(35,37) rnd(63,65)
+  other_zone_avoidance_distance    3
+  zone 				   4
+}
+
+create_land
+{            
+  terrain_type                     SUPERMUD
+  number_of_tiles		   120
+  base_size                        3
+  land_position 		   rnd(35,37) rnd(35,37)
+  other_zone_avoidance_distance    3
+  zone 				   5
+}
+
+create_land
+{            
+terrain_type                     SUPERMUD
+number_of_tiles			 120
+base_size                        3
+land_position rnd(63,65) rnd(63,65)
+other_zone_avoidance_distance 3
+zone 6
+}
+
+create_land
+{            
+terrain_type                     SUPERMUD
+number_of_tiles			 120
+base_size                        3
+land_position rnd(63,65) rnd(35,37)
+other_zone_avoidance_distance 3
+zone 7
+}
+
+<TERRAIN_GENERATION>
+
+#const SPECIALLEAVES 77
+
+create_terrain DLC_MANGROVESHALLOW
+{
+base_terrain DLC_BEACH4
+number_of_clumps               100
+land_percent 100
+spacing_to_other_terrain_types 3
+}
+
+
+create_terrain DLC_WATER5
+{
+base_terrain DLC_MANGROVESHALLOW
+number_of_clumps               100
+land_percent 100
+spacing_to_other_terrain_types 1
+}
+
+create_terrain DLC_WATER5
+{
+base_terrain DLC_MANGROVESHALLOW
+number_of_clumps               100
+land_percent 100
+terrain_mask 1
+}
+
+create_terrain GRASS
+{
+base_terrain DLC_BEACH2
+number_of_clumps               100
+land_percent 100
+spacing_to_other_terrain_types 2
+}
+
+create_terrain GRASS
+{
+base_terrain DLC_BEACH2
+number_of_clumps               100
+land_percent 100
+spacing_to_other_terrain_types 2
+}
+
+create_terrain GRASS
+{
+base_terrain DLC_BEACH2
+number_of_clumps               100
+land_percent 100
+spacing_to_other_terrain_types 2
+}
+
+create_terrain GRASS
+{
+base_terrain DLC_BEACH2
+number_of_clumps               100
+land_percent 100
+spacing_to_other_terrain_types 2
+}
+
+create_terrain DLC_JUNGLEGRASS
+{
+base_terrain GRASS
+number_of_clumps               100
+land_percent 100
+spacing_to_other_terrain_types 1
+}
+
+create_terrain DLC_JUNGLEGRASS
+{
+base_terrain GRASS
+number_of_clumps               100
+land_percent 100
+spacing_to_other_terrain_types 1
+}
+
+create_terrain DLC_JUNGLEGRASS
+{
+base_terrain GRASS
+number_of_clumps               100
+land_percent 100
+spacing_to_other_terrain_types 1
+}
+
+create_terrain DLC_JUNGLEGRASS
+{
+base_terrain GRASS
+number_of_clumps               100
+land_percent 100
+spacing_to_other_terrain_types 1
+}
+
+create_terrain SPECIALLEAVES 
+{
+base_terrain DLC_JUNGLEGRASS
+number_of_clumps               100
+land_percent 100
+spacing_to_other_terrain_types 4
+}
+
+create_terrain SPECIALLEAVES 
+{
+base_terrain DLC_JUNGLEGRASS
+number_of_clumps               100
+land_percent 100
+spacing_to_other_terrain_types 4
+}
+
+create_terrain SPECIALLEAVES 
+{
+base_terrain DLC_JUNGLEGRASS
+number_of_clumps               100
+land_percent 100
+spacing_to_other_terrain_types 4
+}
+
+create_terrain SPECIALLEAVES 
+{
+base_terrain DLC_JUNGLEGRASS
+number_of_clumps               100
+land_percent 100
+spacing_to_other_terrain_types 4
+}
+
+
+create_terrain DLC_BEACH3
+{
+base_terrain GRASS
+number_of_clumps               100
+land_percent 100
+terrain_mask 1
+}
+
+create_terrain DLC_BEACH3
+{
+base_terrain GRASS
+number_of_clumps               100
+land_percent 100
+terrain_mask 1
+}
+
+create_terrain DLC_BEACH3
+{
+base_terrain GRASS
+number_of_clumps               100
+land_percent 100
+terrain_mask 1
+}
+
+create_terrain DLC_BEACH3
+{
+base_terrain GRASS
+number_of_clumps               100
+land_percent 100
+terrain_mask 1
+}
+
+
+create_terrain DLC_MANGROVESHALLOW
+{
+base_terrain DESERT
+number_of_clumps               100
+spacing_to_other_terrain_types 0
+land_percent 100
+set_scale_by_groups
+}
+
+create_terrain DLC_MANGROVESHALLOW
+{
+base_terrain DESERT
+number_of_clumps               100
+spacing_to_other_terrain_types 0
+land_percent 100
+set_scale_by_groups
+}
+
+
+create_terrain DLC_MANGROVESHALLOW
+{
+base_terrain DESERT
+number_of_clumps               100
+spacing_to_other_terrain_types 0
+land_percent 100
+set_scale_by_groups
+}
+
+
+create_terrain DLC_RAINFOREST
+{
+base_terrain SPECIALLEAVES 
+number_of_clumps               20
+spacing_to_other_terrain_types 6
+set_avoid_player_start_areas
+set_scale_by_groups
+land_percent 9 /* 12 */
+clumping_factor 100
+}
+
+create_terrain DLC_JUNGLEGRASS
+{
+base_terrain SPECIALLEAVES 
+number_of_clumps               100
+spacing_to_other_terrain_types 0
+set_avoid_player_start_areas
+land_percent 100
+terrain_mask 1
+}
+
+create_terrain DLC_MANGROVEFOREST
+{
+base_terrain DLC_MANGROVESHALLOW
+number_of_clumps               5
+spacing_to_other_terrain_types 2
+land_percent 5
+set_scale_by_groups
+}
+
+create_terrain DLC_WATER5
+{
+base_terrain DLC_MANGROVESHALLOW
+number_of_clumps               5
+spacing_to_other_terrain_types 2
+land_percent 5
+set_scale_by_groups
+}
+
+
+create_terrain DLC_DESERTGRAVEL 
+{
+base_terrain DLC_DRYGRASS
+number_of_clumps               1000
+land_percent 100
+terrain_mask 1
+}
+
+create_terrain DLC_DESERTGRAVEL 
+{
+base_terrain DLC_DRYGRASS
+number_of_clumps               1000
+land_percent 100
+terrain_mask 1
+}
+
+create_terrain DLC_DESERTGRAVEL 
+{
+base_terrain DLC_DRYGRASS
+number_of_clumps               1000
+land_percent 100
+terrain_mask 1
+}
+
+create_terrain DLC_DESERTGRAVEL 
+{
+base_terrain DLC_DRYGRASS
+number_of_clumps               1000
+land_percent 100
+terrain_mask 1
+}
+
+<OBJECTS_GENERATION>
+
+/* starting heroes */
+
+/*
+
+defining heroes
+
+*/
+
+#const MRNEVSKI 197
+#const MRBOYAR 878
+#const MRFRANCISCO 425
+#const MRGONZALO 427
+#const MSYODIT 1066
+#const MRYEKUNO 1064
+#const MRGAJAH 1157
+#const MRJAYAVIRA 1164
+
+#const GUARD_AMAZONWARRIOR 825
+#const GUARD_AMAZONARCHER 850
+
+create_object MRGAJAH 
+{
+   number_of_objects 1
+   set_place_for_every_player
+   min_distance_to_players 0
+   max_distance_to_players 3
+}
+
+if REGICIDE
+
+create_object KING
+{
+   number_of_objects 1
+   set_place_for_every_player
+   min_distance_to_players 0
+   max_distance_to_players 3
+}
+
+endif
+
+
+
+if TINY_MAP
+	if 1_PLAYER_GAME
+		#define MAJAPAHIT_ST_DISTANCE
+	elseif 2_PLAYER_GAME
+		#define MAJAPAHIT_ST_DISTANCE
+	elseif 3_PLAYER_GAME
+		#define MAJAPAHIT_ST_DISTANCE
+	elseif 4_PLAYER_GAME
+		#define MAJAPAHIT_ST_DISTANCE
+	else
+		#define MAJAPAHIT_CL_DISTANCE
+	endif
+elseif SMALL_MAP
+	if 1_PLAYER_GAME
+		#define MAJAPAHIT_ST_DISTANCE
+	elseif 2_PLAYER_GAME
+		#define MAJAPAHIT_ST_DISTANCE
+	elseif 3_PLAYER_GAME
+		#define MAJAPAHIT_ST_DISTANCE
+	elseif 4_PLAYER_GAME
+		#define MAJAPAHIT_ST_DISTANCE
+	else
+		#define MAJAPAHIT_CL_DISTANCE
+	endif
+elseif MEDIUM_MAP
+	if 1_PLAYER_GAME
+		#define MAJAPAHIT_ST_DISTANCE
+	elseif 2_PLAYER_GAME
+		#define MAJAPAHIT_ST_DISTANCE
+	elseif 3_PLAYER_GAME
+		#define MAJAPAHIT_ST_DISTANCE
+	elseif 4_PLAYER_GAME
+		#define MAJAPAHIT_ST_DISTANCE
+	else
+		#define MAJAPAHIT_CL_DISTANCE
+	endif
+else
+	#define MAJAPAHIT_ST_DISTANCE
+endif
+
+create_object MRJAYAVIRA 
+{
+   number_of_objects 1
+   set_place_for_every_player
+   min_distance_to_players 0
+   max_distance_to_players 3
+
+	if MAJAPAHIT_ST_DISTANCE
+   min_distance_group_placement 20
+	elseif MAJAPAHIT_CL_DISTANCE
+   min_distance_group_placement 10
+	endif
+
+}
+
+#const STRANGETRADE 1647
+
+#const NOVASOCHA 1279
+
+#const BROKENCARTIE 858
+#const GOODSIES 1321
+#const NICEPAV_A 624
+#const NICEPAV_B 625
+#const NICEPAV_C 626
+
+#const SOMEBARRELS 1330
+#const PEKNASOCHA 1279
+
+
+/* castle in the center */
+
+#const BLANKOBJECT 647
+
+
+create_object BLANKOBJECT 
+{
+  number_of_objects 1
+  number_of_groups 9999
+  set_gaia_object_only
+  terrain_to_place_on DLC_DESERTGRAVEL 
+  actor_area 1795
+  actor_area_radius 6
+  temp_min_distance_group_placement 2
+}
+
+create_object DLC_ROCKBEACH 
+{
+  number_of_objects 1
+  number_of_groups 9999
+  set_gaia_object_only
+  terrain_to_place_on DLC_BEACH4
+  temp_min_distance_group_placement 10
+}
+
+/* central camps */
+
+#const HARBOUR 45
+
+create_object HARBOUR
+{
+  number_of_objects 9999
+  set_gaia_object_only
+  actor_area 3500
+  actor_area_radius 4
+  temp_min_distance_group_placement 12
+  avoid_forest_zone 2
+  avoid_actor_area 1795
+}
+
+
+create_object BLANKOBJECT
+{
+  number_of_objects 9999
+  set_gaia_object_only
+  actor_area 3521
+  actor_area_radius 0
+  temp_min_distance_group_placement 16
+  terrain_to_place_on DLC_JUNGLEGRASS
+}
+
+create_object BLANKOBJECT
+{
+  number_of_objects 9999
+  set_gaia_object_only
+  actor_area 3522
+  actor_area_radius 2
+  actor_area_to_place_in 3521
+  temp_min_distance_group_placement 6
+}
+
+create_object BLANKOBJECT
+{
+  number_of_objects 9999
+  set_gaia_object_only
+  actor_area 3523
+  actor_area_radius 3
+  actor_area_to_place_in 3521
+  temp_min_distance_group_placement 6
+}
+
+create_object BLANKOBJECT
+{
+  number_of_objects 9999
+  set_gaia_object_only
+  actor_area 3524
+  actor_area_radius 6
+  actor_area_to_place_in 3521
+  temp_min_distance_group_placement 6
+}
+
+create_object STRANGETRADE
+{
+  number_of_objects 9999
+  set_gaia_object_only
+  actor_area_to_place_in 3522
+  temp_min_distance_group_placement 8
+}
+
+create_object GOODSIES
+{
+  number_of_objects 9999
+  set_gaia_object_only
+  actor_area_to_place_in 3523
+  avoid_actor_area 3522
+  temp_min_distance_group_placement 4
+  set_gaia_unconvertible
+}
+
+create_object DLC_KARAMBIT 
+{
+  number_of_objects 9999
+  set_gaia_object_only
+  actor_area_to_place_in 3523
+  avoid_actor_area 3522
+  temp_min_distance_group_placement 3
+  set_gaia_unconvertible
+}
+
+create_object STABLE
+{
+  number_of_objects 9999
+  set_gaia_object_only
+  actor_area_to_place_in 3524
+  avoid_actor_area 3523
+  temp_min_distance_group_placement 20
+  min_distance_group_placement 5
+}
+
+create_object ARCHERY_RANGE
+{
+  number_of_objects 9999
+  set_gaia_object_only
+  actor_area_to_place_in 3524
+  avoid_actor_area 3523
+  temp_min_distance_group_placement 20
+  min_distance_group_placement 5
+}
+
+create_object BARRACKS
+{
+  number_of_objects 9999
+  set_gaia_object_only
+  actor_area_to_place_in 3524
+  avoid_actor_area 3523
+  temp_min_distance_group_placement 20
+  min_distance_group_placement 5
+}
+
+
+create_object MONASTERY
+{
+  number_of_objects 9999
+  set_gaia_object_only
+  actor_area_to_place_in 3524
+  avoid_actor_area 3523
+  temp_min_distance_group_placement 30
+  min_distance_group_placement 4
+}
+
+create_object SIEGE_WORKSHOP
+{
+  number_of_objects 9999
+  set_gaia_object_only
+  actor_area_to_place_in 3524
+  avoid_actor_area 3523
+  temp_min_distance_group_placement 40
+}
+
+/* island camps */
+
+create_object CASTLE
+{
+  number_of_objects 999
+  set_gaia_object_only
+  terrain_to_place_on SUPERMUD
+  temp_min_distance_group_placement 12
+  actor_area 5001
+  actor_area_radius 6
+}
+
+
+create_object STRANGETRADE 
+{
+  number_of_objects 999
+  set_gaia_object_only
+  terrain_to_place_on SUPERMUD
+  temp_min_distance_group_placement 12
+  actor_area_to_place_in 5001
+}
+
+create_object HARBOUR
+{
+  number_of_objects 1
+  number_of_groups 9999
+  set_gaia_object_only
+  temp_min_distance_group_placement 4
+  actor_area_to_place_in 5001
+  avoid_actor_area 3500
+}
+
+
+create_object CASTLE
+{
+  number_of_objects 999
+  set_gaia_object_only
+  terrain_to_place_on DLC_DESERTGRAVEL
+  temp_min_distance_group_placement 12
+  actor_area 5001
+  actor_area_radius 6
+}
+
+create_object DLC_ELITEBATTLEELEPHANT
+{
+  number_of_objects 9999
+  set_gaia_object_only
+  actor_area_to_place_in 5001
+  temp_min_distance_group_placement 3
+  avoid_forest_zone 2
+  set_gaia_unconvertible
+}
+
+
+
+
+create_object STRANGETRADE 
+{
+  number_of_objects 999
+  set_gaia_object_only
+  terrain_to_place_on DLC_DRYGRASS
+  temp_min_distance_group_placement 12
+}
+
+create_object STABLE
+{
+  number_of_objects 9999
+  set_gaia_object_only
+  temp_min_distance_group_placement 12
+  min_distance_group_placement 2
+  actor_area 4180
+  actor_area_radius 4
+  terrain_to_place_on DLC_DRYGRASS
+}
+
+create_object ARCHERY_RANGE
+{
+  number_of_objects 9999
+  set_gaia_object_only
+  temp_min_distance_group_placement 12
+  min_distance_group_placement 2
+  actor_area 4181
+  actor_area_radius 4
+  avoid_actor_area 4180
+  terrain_to_place_on DLC_DRYGRASS
+}
+
+create_object BARRACKS
+{
+  number_of_objects 9999
+  set_gaia_object_only
+  temp_min_distance_group_placement 12
+  min_distance_group_placement 2
+  actor_area 4182
+  actor_area_radius 4
+  avoid_actor_area 4181
+  avoid_actor_area 4180
+  terrain_to_place_on DLC_DRYGRASS
+}
+
+create_object SIEGE_WORKSHOP
+{
+  number_of_objects 9999
+  set_gaia_object_only
+  temp_min_distance_group_placement 12
+  min_distance_group_placement 2
+  actor_area 4183
+  actor_area_radius 4
+  avoid_actor_area 4182
+  avoid_actor_area 4181
+  avoid_actor_area 4180
+  terrain_to_place_on DLC_DRYGRASS
+}
+
+create_object DLC_ELITEKARAMBIT 
+{
+  number_of_objects 9999
+  set_gaia_object_only
+  temp_min_distance_group_placement 4
+  set_gaia_unconvertible
+  terrain_to_place_on DLC_DRYGRASS
+}
+
+create_object DLC_ELITEBATTLEELEPHANT
+{
+  number_of_objects 9999
+  set_gaia_object_only
+  temp_min_distance_group_placement 7
+  set_gaia_unconvertible
+  terrain_to_place_on DLC_DRYGRASS
+}

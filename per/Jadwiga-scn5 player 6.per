@@ -1,0 +1,1154 @@
+; Jadwiga - Part V: Vytautas' Crusade
+; Player 6: Crimean Tatars
+; AI by Lord Basse
+
+; Difficulty levels & dodging missiles * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * 
+; 0 = perfect dodging
+; 100 = no dodging
+; yes, it makes no sense
+
+(defrule
+	(difficulty == easy)
+	=>
+	(set-signal 1); for trigger mechanics
+	(set-difficulty-parameter ability-to-maintain-distance 100)
+	(set-difficulty-parameter ability-to-dodge-missiles 100)
+	(disable-self)
+)
+
+(defrule
+	(difficulty == moderate)
+	=>
+	(set-signal 2); for trigger mechanics
+	(set-difficulty-parameter ability-to-maintain-distance 80)
+	(set-difficulty-parameter ability-to-dodge-missiles 80)
+	(disable-self)
+)
+
+(defrule
+	(difficulty == hard)
+	=>
+	(set-signal 3); for trigger mechanics
+	(set-difficulty-parameter ability-to-maintain-distance 60)
+	(set-difficulty-parameter ability-to-dodge-missiles 60)
+	(disable-self)
+)
+
+
+; Passive army at the start * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * 
+
+(defrule ;villagers
+	(true)
+=>
+	(set-goal 1 0)
+	(set-strategic-number sn-percent-civilian-explorers 0)
+	(set-strategic-number sn-percent-civilian-builders 20)
+	(set-strategic-number sn-percent-civilian-gatherers 80)
+	(set-strategic-number sn-cap-civilian-explorers 0)
+	(set-strategic-number sn-cap-civilian-gatherers 100)
+	(set-strategic-number sn-cap-civilian-builders 10)
+	(set-strategic-number sn-food-gatherer-percentage  40)
+	(set-strategic-number sn-wood-gatherer-percentage  30)
+	(set-strategic-number sn-gold-gatherer-percentage  20)
+	(set-strategic-number sn-stone-gatherer-percentage 10)
+	(set-strategic-number sn-maximum-gold-drop-distance 20)
+	(set-strategic-number sn-maximum-stone-drop-distance 20)
+	(set-strategic-number sn-maximum-food-drop-distance 10) 
+	(set-strategic-number sn-maximum-wood-drop-distance 10)
+	(set-strategic-number sn-number-forward-builders 0)  
+	(set-strategic-number sn-maximum-town-size 20)
+        (set-strategic-number sn-camp-max-distance 25)
+        (set-strategic-number sn-mill-max-distance 25)
+	(set-strategic-number sn-blot-exploration-map 1)
+	(set-strategic-number sn-do-not-scale-for-difficulty-level 1) 
+	(disable-self)
+)
+
+(defrule ;military
+	(goal 1 0)
+=>
+	(set-strategic-number sn-percent-enemy-sighted-response 100)
+	(set-strategic-number sn-hits-before-alliance-change 25)
+	(set-strategic-number sn-number-explore-groups 0)
+	(set-strategic-number sn-percent-attack-soldiers 0)
+	(set-strategic-number sn-task-ungrouped-soldiers 0)
+	(set-strategic-number sn-number-attack-groups 0)
+	(set-strategic-number sn-enemy-sighted-response-distance 10)
+	(set-strategic-number sn-total-number-explorers 0)
+	(set-strategic-number sn-relic-return-distance 0)
+	(set-strategic-number sn-minimum-town-size 0)
+	(set-strategic-number sn-maximum-town-size 0)
+	(disable-self)
+)
+
+; Activate military 
+
+(defrule
+	(event-detected trigger 9) ; all trade workshops destroyed
+=>
+	(set-goal 1 1)
+	(chat-local-to-self "Gonna start working now!")
+	(disable-self)
+)
+
+(defrule
+	(difficulty == easy)
+	(not(event-detected trigger 9))
+	(game-time greater-or-equal 1200)
+=>
+	(set-goal 1 1)
+	(chat-local-to-self "Gonna start working now!")
+	(disable-self)
+)
+
+(defrule
+	(difficulty == moderate)
+	(not(event-detected trigger 9))
+	(game-time greater-or-equal 1050)
+=>
+	(set-goal 1 1)
+	(chat-local-to-self "Gonna start working now!")
+	(disable-self)
+)
+
+(defrule
+	(difficulty == hard)
+	(not(event-detected trigger 9))
+	(game-time greater-or-equal 900)
+=>
+	(set-goal 1 1)
+	(chat-local-to-self "Gonna start working now!")
+	(disable-self)
+)
+
+(defrule ;military
+	(goal 1 1)
+	(difficulty == easy)
+=>
+	(set-strategic-number sn-group-form-distance 50)
+	(set-strategic-number sn-maximum-attack-group-size 14)
+	(set-strategic-number sn-minimum-attack-group-size 8)
+	(set-strategic-number sn-percent-attack-soldiers 40)
+	(set-strategic-number sn-attack-group-size-randomness 0)
+	(set-strategic-number sn-percent-enemy-sighted-response 40)
+	(set-strategic-number sn-enemy-sighted-response-distance 20)
+	(set-strategic-number sn-number-explore-groups 1)
+	(set-strategic-number sn-task-ungrouped-soldiers 0)
+	(set-strategic-number sn-total-number-explorers 1)
+	(set-strategic-number sn-defense-distance 10)
+	(set-strategic-number sn-sentry-distance 10)
+	(set-strategic-number sn-wall-targeting-mode 1)
+	(set-strategic-number sn-attack-intelligence 0)
+	(set-strategic-number sn-gather-defense-units 1) ; prevents AI units from clumping up in weird locations
+	(disable-self)
+)
+
+(defrule
+	(goal 1 1)
+	(difficulty == moderate)
+=>
+	(set-strategic-number sn-group-form-distance 50)
+	(set-strategic-number sn-maximum-attack-group-size 20)
+	(set-strategic-number sn-minimum-attack-group-size 10)
+	(set-strategic-number sn-percent-attack-soldiers 50)
+	(set-strategic-number sn-attack-group-size-randomness 0)
+	(set-strategic-number sn-percent-enemy-sighted-response 50)
+	(set-strategic-number sn-enemy-sighted-response-distance 20)
+	(set-strategic-number sn-number-explore-groups 1)
+	(set-strategic-number sn-task-ungrouped-soldiers 0)
+	(set-strategic-number sn-total-number-explorers 1)
+	(set-strategic-number sn-defense-distance 15)
+	(set-strategic-number sn-sentry-distance 15)
+	(set-strategic-number sn-wall-targeting-mode 1)
+	(set-strategic-number sn-attack-intelligence 1)
+	(set-strategic-number sn-gather-defense-units 1) ; prevents AI units from clumping up in weird locations
+	(disable-self)
+)
+
+(defrule
+	(goal 1 1)
+	(difficulty == hard)
+=>
+	(set-strategic-number sn-group-form-distance 50)
+	(set-strategic-number sn-maximum-attack-group-size 27)
+	(set-strategic-number sn-minimum-attack-group-size 14)
+	(set-strategic-number sn-percent-attack-soldiers 60)
+	(set-strategic-number sn-attack-group-size-randomness 0)
+	(set-strategic-number sn-percent-enemy-sighted-response 50)
+	(set-strategic-number sn-enemy-sighted-response-distance 20)
+	(set-strategic-number sn-number-explore-groups 1)
+	(set-strategic-number sn-task-ungrouped-soldiers 0)
+	(set-strategic-number sn-total-number-explorers 1)
+	(set-strategic-number sn-defense-distance 20)
+	(set-strategic-number sn-sentry-distance 20)
+	(set-strategic-number sn-wall-targeting-mode 1)
+	(set-strategic-number sn-attack-intelligence 1)
+	(set-strategic-number sn-gather-defense-units 1) ; prevents AI units from clumping up in weird locations
+	(disable-self)
+)
+
+
+(defrule ;villagers
+	(goal 1 1)
+=>
+	(set-strategic-number sn-percent-civilian-explorers 0)
+	(set-strategic-number sn-percent-civilian-builders 10)
+	(set-strategic-number sn-percent-civilian-gatherers 90)
+	(set-strategic-number sn-cap-civilian-explorers 0)
+	(set-strategic-number sn-cap-civilian-gatherers 100)
+	(set-strategic-number sn-cap-civilian-builders 2)
+	(set-strategic-number sn-food-gatherer-percentage  40)
+	(set-strategic-number sn-wood-gatherer-percentage  30)
+	(set-strategic-number sn-gold-gatherer-percentage  20)
+	(set-strategic-number sn-stone-gatherer-percentage 10)
+	(set-strategic-number sn-maximum-gold-drop-distance 20)
+	(set-strategic-number sn-maximum-stone-drop-distance 20)
+	(set-strategic-number sn-maximum-food-drop-distance 10) 
+	(set-strategic-number sn-maximum-wood-drop-distance 10)
+	(set-strategic-number sn-number-forward-builders 0)  
+	(set-strategic-number sn-maximum-town-size 20)
+        (set-strategic-number sn-camp-max-distance 25)
+        (set-strategic-number sn-mill-max-distance 25)
+	(set-strategic-number sn-blot-exploration-map 1)
+	(set-strategic-number sn-do-not-scale-for-difficulty-level 1) 
+	(set-strategic-number sn-maximum-hunt-drop-distance 15)
+	(disable-self)
+)
+
+
+; Attacking * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * 
+
+; First attack
+
+(defrule
+	(goal 1 1)
+=>
+	(attack-now)
+	(enable-timer 1 400)
+	(chat-local-to-self "First attack!")
+	(disable-self)
+)
+
+; Regular attacks
+
+(defrule
+	(goal 1 1)
+	(difficulty == easy)
+	(timer-triggered 1)
+	(military-population >= 10)
+	(defend-soldier-count >= 10)
+	(not (town-under-attack))
+=>
+	(enable-timer 1 500) ; New interval
+	(attack-now)
+)
+
+(defrule
+	(goal 1 1)
+	(difficulty == moderate)
+	(timer-triggered 1)
+	(military-population >= 10)
+	(defend-soldier-count >= 10)
+	(not (town-under-attack))
+=>
+	(enable-timer 1 400) ; New interval
+	(attack-now)
+)
+
+(defrule
+	(goal 1 1)
+	(difficulty == hard)
+	(timer-triggered 1)
+	(military-population >= 10)
+	(defend-soldier-count >= 10)
+	(not (town-under-attack))
+=>
+	(enable-timer 1 340) ; New interval
+	(attack-now)
+)
+
+; Player focus
+
+(defrule
+	(true) ; intro
+=>
+	(set-strategic-number sn-focus-player-number 1)
+	(set-strategic-number sn-target-player-number 1)
+	(disable-self)
+)
+
+(defrule
+	(event-detected trigger 1) ; players settle down
+=>
+	(set-strategic-number sn-focus-player-number 3)
+	(set-strategic-number sn-target-player-number 3)
+	(disable-self)
+)
+
+(defrule
+	(player-resigned 3)
+=>
+	(set-strategic-number sn-focus-player-number 4)
+	(set-strategic-number sn-target-player-number 4)
+	(disable-self)
+)
+
+(defrule
+	(player-resigned 3)
+	(player-resigned 4)
+=>
+	(set-strategic-number sn-focus-player-number 1)
+	(set-strategic-number sn-target-player-number 1)
+	(disable-self)
+)
+
+
+; Army creation * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * 
+
+; Light cavalry
+
+(defrule
+	(unit-type-count-total scout-cavalry-line < 14)
+	(can-train scout-cavalry-line)
+	(difficulty == easy)
+	(not(town-under-attack))
+=>
+	(train scout-cavalry-line)
+)
+
+(defrule
+	(unit-type-count-total scout-cavalry-line < 20)
+	(can-train scout-cavalry-line)
+	(difficulty == moderate)
+	(not(town-under-attack))
+=>
+	(train scout-cavalry-line)
+)
+
+(defrule
+	(unit-type-count-total scout-cavalry-line < 28)
+	(can-train scout-cavalry-line)
+	(difficulty == hard)
+	(not(town-under-attack))
+=>
+	(train scout-cavalry-line)
+)
+
+; Cavalry archers
+
+(defrule
+	(unit-type-count-total cavalry-archer-line < 12)
+	(can-train cavalry-archer-line)
+	(difficulty == easy)
+=>
+	(train cavalry-archer-line)
+)
+
+(defrule
+	(unit-type-count-total cavalry-archer-line < 16)
+	(can-train cavalry-archer-line)
+	(difficulty == moderate)
+=>
+	(train cavalry-archer-line)
+)
+
+(defrule
+	(unit-type-count-total cavalry-archer-line < 20)
+	(can-train cavalry-archer-line)
+	(difficulty == hard)
+=>
+	(train cavalry-archer-line)
+)
+
+; Steppe lancers
+
+(defrule
+	(unit-type-count-total steppe-lancer-line < 6)
+	(can-train steppe-lancer-line)
+	(difficulty == easy)
+	(not(town-under-attack))
+=>
+	(train steppe-lancer-line)
+)
+
+(defrule
+	(unit-type-count-total steppe-lancer-line < 10)
+	(can-train steppe-lancer-line)
+	(difficulty == moderate)
+	(not(town-under-attack))
+=>
+	(train steppe-lancer-line)
+)
+
+(defrule
+	(unit-type-count-total steppe-lancer-line < 12)
+	(can-train steppe-lancer-line)
+	(difficulty == hard)
+	(not(town-under-attack))
+=>
+	(train steppe-lancer-line)
+)
+
+; Keshiks
+
+(defrule
+	(unit-type-count-total my-unique-unit-line < 6)
+	(can-train my-unique-unit-line)
+	(difficulty == easy)
+=>
+	(train my-unique-unit-line)
+)
+
+(defrule
+	(unit-type-count-total my-unique-unit-line < 8)
+	(can-train my-unique-unit-line)
+	(difficulty == moderate)
+=>
+	(train my-unique-unit-line)
+)
+
+(defrule
+	(unit-type-count-total my-unique-unit-line < 12)
+	(can-train my-unique-unit-line)
+	(difficulty == hard)
+=>
+	(train my-unique-unit-line)
+)
+
+; Villagers & trade carts * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * 
+
+(defrule
+	(unit-type-count-total villager less-than 30)
+	(can-train villager)
+	(difficulty == easy)
+=>
+	(train villager)
+	(chat-local-to-self "villager")
+)
+
+(defrule
+	(unit-type-count-total villager less-than 35)
+	(can-train villager)
+	(difficulty == moderate)
+=>
+	(train villager)
+	(chat-local-to-self "villager")
+)
+
+(defrule
+	(unit-type-count-total villager less-than 40)
+	(can-train villager)
+	(difficulty == hard)
+=>
+	(train villager)
+	(chat-local-to-self "villager")
+)
+
+(defrule
+	(true)
+=>
+	(set-goal 7 0)
+	(disable-self)
+)
+
+(defrule
+	(goal 7 0)
+	(unit-type-count-total trade-cart less-than 6)
+	(can-train trade-cart)
+=>
+	(train trade-cart)
+	(chat-local-to-self "trade cart")
+)
+
+(defrule
+	(event-detected trigger 10); Kazikermen defeated
+=>
+	(set-goal 7 1)
+	(disable-self)
+)
+
+(defrule
+	(goal 7 1)
+=>
+	(delete-unit trade-cart)
+)
+
+; Construction work * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * 
+
+(defrule
+	(housing-headroom less-than 4)
+	(population-headroom greater-than 0)
+	(can-build house)
+=>
+	(build house)
+	(chat-local-to-self "house")
+)
+
+(defrule
+	(building-type-count archery-range less-than 2)
+	(can-build archery-range)
+=>
+	(build archery-range)
+)
+
+(defrule
+	(building-type-count stable less-than 2)
+	(can-build stable)
+=>
+	(build stable)
+)
+
+(defrule
+	(difficulty == moderate)
+	(building-type-count castle less-than 1)
+	(can-build castle)
+=>
+	(build castle)
+)
+
+(defrule
+	(difficulty == hard)
+	(building-type-count castle less-than 2)
+	(can-build castle)
+=>
+	(build castle)
+)
+
+(defrule
+	(building-type-count market less-than 1)
+	(can-build market)
+=>
+	(build market)
+)
+
+(defrule
+	(not(difficulty == easy))
+	(not(research-completed ri-murder-holes))
+	(not(research-completed ri-ballistics))
+	(not(research-completed ri-masonry))
+	(building-type-count university less-than 1)
+	(can-build university)
+=>
+	(build university)
+)
+
+(defrule
+	(building-type-count blacksmith less-than 1)
+	(can-build blacksmith)
+=>
+	(build blacksmith)
+)
+
+(defrule
+	(building-type-count-total farm less-than 12)
+	(sheep-and-forage-too-far)
+	(can-build farm)
+=>
+	(build farm)
+)
+
+(defrule
+	(resource-found wood)
+	(building-type-count-total lumber-camp < 3)
+	(dropsite-min-distance wood > 5)
+	(can-build lumber-camp)
+=>
+	(build lumber-camp)
+	(chat-local-to-self "wood place")
+)
+
+(defrule
+	(resource-found gold)
+	(building-type-count-total mining-camp < 3)
+	(dropsite-min-distance gold > 7)
+	(can-build mining-camp)
+=>
+	(build mining-camp)
+	(chat-local-to-self "gold place")
+)
+
+(defrule
+	(resource-found stone)
+	(building-type-count-total mining-camp < 3)
+	(dropsite-min-distance stone > 7)
+	(can-build mining-camp)
+=>
+	(build mining-camp)
+	(chat-local-to-self "stone place")
+)
+
+(defrule
+	(dropsite-min-distance food greater-than 4)
+	(building-type-count-total mill less-than 3)
+	(can-build mill)
+=>
+	(build mill)
+	(chat-local-to-self "mill")
+)
+
+; Keep reserves for upgrades * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * 
+
+(defrule
+	(or
+		(or
+			(escrow-amount wood > 1000)
+			(escrow-amount food > 1000)
+		)
+		(or
+			(escrow-amount gold > 1000)
+			(escrow-amount stone > 1000)
+		)
+	)
+=>
+	(release-escrow wood)
+	(release-escrow food)
+	(release-escrow gold)
+	(release-escrow stone)
+)
+
+(defrule
+	(true)
+=>
+	(set-escrow-percentage wood 30)
+	(set-escrow-percentage food 30)
+	(set-escrow-percentage gold 30)
+	(set-escrow-percentage stone 30)
+)
+
+; Upgrades  * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * 
+
+(defrule
+	(unit-type-count-total cavalry-archer-line > 8)
+	(can-research-with-escrow ri-thumb-ring)
+=>
+	(release-escrow wood)
+	(release-escrow food)
+	(release-escrow gold)
+	(release-escrow stone)
+        (research ri-thumb-ring)
+)
+
+(defrule
+	(not (difficulty == easy)) 
+	(can-research-with-escrow ri-bloodlines)
+=>
+	(release-escrow wood)
+	(release-escrow food)
+	(release-escrow gold)
+	(release-escrow stone)
+        (research ri-bloodlines)
+)
+
+(defrule
+	(unit-type-count-total scout-cavalry-line > 8)
+	(can-research-with-escrow ri-husbandry)
+=>
+	(release-escrow wood)
+	(release-escrow food)
+	(release-escrow gold)
+	(release-escrow stone)
+        (research ri-husbandry)
+)
+
+(defrule
+	(can-research-with-escrow ri-padded-archer-armor)
+=>
+	(release-escrow wood)
+	(release-escrow food)
+	(release-escrow gold)
+	(release-escrow stone)
+        (research ri-padded-archer-armor)
+)
+
+(defrule
+	(can-research-with-escrow ri-fletching)
+=>
+	(release-escrow wood)
+	(release-escrow food)
+	(release-escrow gold)
+	(release-escrow stone)
+        (research ri-fletching)
+)
+
+(defrule
+	(can-research-with-escrow ri-forging)
+=>
+	(release-escrow wood)
+	(release-escrow food)
+	(release-escrow gold)
+	(release-escrow stone)
+        (research ri-forging)
+)
+
+(defrule
+	(can-research-with-escrow ri-scale-barding)
+=>
+	(release-escrow wood)
+	(release-escrow food)
+	(release-escrow gold)
+	(release-escrow stone)
+        (research ri-scale-barding)
+)
+
+(defrule
+	(can-research-with-escrow ri-scale-mail)
+=>
+	(release-escrow wood)
+	(release-escrow food)
+	(release-escrow gold)
+	(release-escrow stone)
+        (research ri-scale-mail)
+)
+
+(defrule
+	(not (difficulty == easy)) 
+	(can-research-with-escrow ri-iron-casting)
+=>
+	(release-escrow wood)
+	(release-escrow food)
+	(release-escrow gold)
+	(release-escrow stone)
+        (research ri-iron-casting)
+)
+
+(defrule
+	(not (difficulty == easy)) 
+	(can-research-with-escrow ri-chain-barding)
+=>
+	(release-escrow wood)
+	(release-escrow food)
+	(release-escrow gold)
+	(release-escrow stone)
+        (research ri-chain-barding)
+)
+
+(defrule
+	(not (difficulty == easy)) 
+	(can-research-with-escrow ri-leather-archer-armor)
+=>
+	(release-escrow wood)
+	(release-escrow food)
+	(release-escrow gold)
+	(release-escrow stone)
+        (research ri-leather-archer-armor)
+)
+
+(defrule
+	(not (difficulty == easy)) 
+	(can-research-with-escrow ri-murder-holes)
+=>
+	(release-escrow wood)
+	(release-escrow food)
+	(release-escrow gold)
+	(release-escrow stone)
+        (research ri-murder-holes)
+)
+
+(defrule
+	(not (difficulty == easy)) 
+	(can-research-with-escrow ri-ballistics)
+=>
+	(release-escrow wood)
+	(release-escrow food)
+	(release-escrow gold)
+	(release-escrow stone)
+        (research ri-ballistics)
+)
+
+(defrule
+	(not (difficulty == easy)) 
+	(can-research-with-escrow ri-masonry)
+=>
+	(release-escrow wood)
+	(release-escrow food)
+	(release-escrow gold)
+	(release-escrow stone)
+        (research ri-masonry)
+)
+
+(defrule
+	(not (difficulty == easy)) 
+	(can-research-with-escrow ri-hand-cart)
+=>
+	(release-escrow wood)
+	(release-escrow food)
+	(release-escrow gold)
+	(release-escrow stone)
+        (research ri-hand-cart)
+)
+
+(defrule
+	(can-research-with-escrow ri-wheel-barrow)
+=>
+	(release-escrow wood)
+	(release-escrow food)
+	(release-escrow gold)
+	(release-escrow stone)
+        (research ri-wheel-barrow)
+)
+
+(defrule
+	(not (difficulty == easy)) 
+	(can-research-with-escrow ri-heavy-plow)
+=>
+	(release-escrow wood)
+	(release-escrow food)
+	(release-escrow gold)
+	(release-escrow stone)
+        (research ri-heavy-plow)
+)
+
+(defrule
+	(not (difficulty == easy)) 
+	(can-research-with-escrow ri-caravan)
+=>
+	(release-escrow wood)
+	(release-escrow food)
+	(release-escrow gold)
+	(release-escrow stone)
+        (research ri-caravan)
+)
+
+(defrule
+	(not (difficulty == easy)) 
+	(can-research-with-escrow my-unique-research)
+=>
+	(release-escrow wood)
+	(release-escrow food)
+	(release-escrow gold)
+	(release-escrow stone)
+        (research my-unique-research)
+)
+
+; Market * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * 
+
+(defrule
+	(gold-amount >= 1500)
+	(wood-amount <= 200)
+	(commodity-buying-price wood <= 150)
+	(can-buy-commodity wood)
+=>
+	(buy-commodity wood)
+)
+
+(defrule
+	(gold-amount >= 1500)
+	(food-amount <= 200)
+	(commodity-buying-price food <= 150)
+	(can-buy-commodity food)
+=>
+	(buy-commodity food)
+)
+
+(defrule
+	(gold-amount >= 500)
+	(food-amount <= 100)
+	(can-buy-commodity food)
+=>
+	(buy-commodity food)
+)
+
+(defrule
+	(gold-amount >= 2000)
+	(stone-amount <= 500)
+	(commodity-buying-price stone <= 100)
+	(can-buy-commodity stone)
+=>
+	(buy-commodity stone)
+)
+
+(defrule
+	(gold-amount >= 1500)
+	(stone-amount <= 200)
+	(commodity-buying-price stone <= 200)
+	(can-buy-commodity stone)
+=>
+	(buy-commodity stone)
+)
+
+(defrule
+	(wood-amount >= 2000)
+	(or
+		(gold-amount < 200)
+		(food-amount < 200)
+	)
+	(can-sell-commodity wood)
+=>
+	(sell-commodity wood)
+)
+
+(defrule
+	(food-amount >= 2000)
+	(or
+		(gold-amount < 200)
+		(wood-amount < 200)
+	)
+	(can-sell-commodity food)
+=>
+	(sell-commodity food)
+)
+
+(defrule
+	(stone-amount >= 1500)
+	(or
+		(or
+			(gold-amount < 200)
+			(wood-amount < 200)
+		)
+		(food-amount < 200)
+	)
+	(commodity-selling-price stone >= 70)
+	(can-sell-commodity stone)
+=>
+	(sell-commodity stone)
+)
+
+; Resign conditions * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * 
+
+(defrule
+        (building-type-count town-center < 1)
+        (building-type-count castle < 1)
+=>
+	(set-goal 2 1)
+	(enable-timer 42 20)
+	(disable-self)
+)
+
+(defrule
+	(goal 2 1)
+=>
+	(delete-building town-center)
+	(delete-unit villager)
+	(delete-building barracks)
+	(delete-building archery-range)
+	(delete-building stable)
+	(delete-building university)
+	(delete-building mill)
+	(delete-building mining-camp)
+	(delete-building lumber-camp)
+	(delete-building monastery)
+)
+
+(defrule
+	(goal 2 1)
+	(timer-triggered 42)
+=>
+	(resign)
+	(disable-self)
+)
+
+; Resource cheating if the game runs late * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * 
+
+(defrule
+	(true)
+=>
+	(enable-timer 2 1800) ; starts cheating after 30 minutes of B&D
+	(enable-timer 3 1800) ; never run out of gold
+	(disable-self)
+)
+
+(defrule
+	(timer-triggered 2)
+=>
+	(chat-local-to-self "I think I need some resources")
+	(cc-add-resource food 500)
+	(cc-add-resource wood 500)
+	(cc-add-resource gold 500)
+	(cc-add-resource stone 125)
+	(disable-timer 2)
+	(enable-timer 2 900) ; cheat again after 15 minutes
+)
+
+(defrule
+	(timer-triggered 3)
+	(difficulty == easy)
+	(gold-amount < 200)
+=>
+	(cc-add-resource gold 60)
+	(disable-timer 3)
+	(enable-timer 3 60)
+)
+
+(defrule
+	(timer-triggered 3)
+	(difficulty == moderate)
+	(gold-amount < 300)
+=>
+	(cc-add-resource gold 60)
+	(disable-timer 3)
+	(enable-timer 3 60)
+)
+
+(defrule
+	(timer-triggered 3)
+	(difficulty == hard)
+	(gold-amount < 400)
+=>
+	(cc-add-resource gold 60)
+	(disable-timer 3)
+	(enable-timer 3 60)
+)
+
+; Imperial Age (code borrowed from Henning, adapted to suit this scenario) 
+
+;use market to advance to imperial if need be
+(defrule
+	(game-time greater-than 2700)
+	(unit-type-count-total villager > 20)
+	(current-age == castle-age)
+	(not(difficulty == easy))
+=>
+	(set-goal 16 99)
+	(disable-self)
+)
+
+(defrule
+	(goal 16 99)
+	(wood-amount greater-than 600)
+	(can-sell-commodity wood)
+=>
+	(chat-local-to-self "selling wood for imperial gold")
+	(sell-commodity wood)
+)
+
+(defrule
+	(goal 16 99)
+	(stone-amount greater-than 500)
+	(commodity-selling-price stone greater-than 50)
+	(can-sell-commodity stone)
+=>
+	(chat-local-to-self "selling stone for imperial gold")
+	(sell-commodity stone)
+)
+
+(defrule
+	(goal 16 99)
+	(food-amount greater-or-equal 1100)
+	(can-sell-commodity food)
+=>
+	(chat-local-to-self "selling food for imperial gold")
+	(sell-commodity food)
+)
+
+;getting needed food
+(defrule
+	(goal 16 99)
+	(gold-amount greater-or-equal 1000)
+	(commodity-buying-price food less-than 200)
+	(can-buy-commodity food)
+=>
+	(chat-local-to-self "buying imperial food")
+	(buy-commodity food)
+)
+
+; advance to imperial age if possible.
+(defrule
+	(goal 16 99)
+	(can-research-with-escrow imperial-age)
+=>
+	(release-escrow wood)
+	(release-escrow food)
+	(release-escrow gold)
+	(release-escrow stone)
+	(research imperial-age)
+	(chat-local-to-self "rising to imperial")
+	(set-goal 16 0)
+)
+
+; Imperial Boost
+(defrule
+	(can-research-with-escrow imperial-age)
+=>
+	(cc-add-resource wood 1000)
+	(cc-add-resource gold 1000)
+	(cc-add-resource food 1000)
+	(chat-local-to-self "rising to imperial")
+	(disable-self)
+)
+
+(defrule
+	(not(difficulty == easy))
+	(can-research-with-escrow ri-heavy-camel)
+=>
+	(release-escrow wood)
+	(release-escrow food)
+	(release-escrow gold)
+	(release-escrow stone)
+        (research ri-heavy-camel)
+)
+
+(defrule
+	(not(difficulty == easy))
+	(can-research-with-escrow ri-heavy-cavalry-archer)
+=>
+	(release-escrow wood)
+	(release-escrow food)
+	(release-escrow gold)
+	(release-escrow stone)
+        (research ri-heavy-cavalry-archer)
+)
+
+(defrule
+	(can-research-with-escrow ri-elite-steppe-lancer)
+=>
+	(release-escrow wood)
+	(release-escrow food)
+	(release-escrow gold)
+	(release-escrow stone)
+        (research ri-elite-steppe-lancer)
+)
+
+(defrule
+	(not(difficulty == easy))
+	(can-research-with-escrow ri-elite-keshik)
+=>
+	(release-escrow wood)
+	(release-escrow food)
+	(release-escrow gold)
+	(release-escrow stone)
+        (research ri-elite-keshik)
+)
+
+(defrule
+	(not (difficulty == easy)) 
+	(can-research-with-escrow ri-bracer)
+=>
+	(release-escrow wood)
+	(release-escrow food)
+	(release-escrow gold)
+	(release-escrow stone)
+        (research ri-bracer)
+)
+
+(defrule
+	(difficulty == hard)
+	(can-research-with-escrow ri-blast-furnace)
+=>
+	(release-escrow wood)
+	(release-escrow food)
+	(release-escrow gold)
+	(release-escrow stone)
+        (research ri-blast-furnace)
+)
+
+(defrule
+	(difficulty == hard) 
+	(can-research-with-escrow ri-plate-barding)
+=>
+	(release-escrow wood)
+	(release-escrow food)
+	(release-escrow gold)
+	(release-escrow stone)
+        (research ri-plate-barding)
+)
+
+(defrule
+	(difficulty == hard)
+	(can-research-with-escrow ri-crop-rotation)
+=>
+	(release-escrow wood)
+	(release-escrow food)
+	(release-escrow gold)
+	(release-escrow stone)
+        (research ri-crop-rotation)
+)

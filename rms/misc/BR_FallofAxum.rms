@@ -1,0 +1,4415 @@
+/* BR - Fall of Axum 2022 */
+/* WIP 1-16 version */
+
+<PLAYER_SETUP>
+  random_placement 
+  set_gaia_civilization 25
+
+#include_drs BR_conditions.inc
+
+<LAND_GENERATION>
+  base_terrain DLC_SAVANNAH
+
+  create_player_lands
+{            
+  terrain_type                     DLC_SAVANNAH
+  number_of_tiles		   	 	   100
+  base_size                        3
+  border_fuzziness                 20
+if MAPSIZE_MINI
+  circle_radius 		   60
+elseif MAPSIZE_TINY
+  circle_radius 		   60
+elseif MAPSIZE_SMALL
+  circle_radius 		   60
+elseif MAPSIZE_MEDIUM
+  circle_radius 		   60
+elseif MAPSIZE_NORMAL
+  circle_radius 		   55
+elseif MAPSIZE_HUGE
+  circle_radius 		   50
+elseif MAPSIZE_GIANT
+  circle_radius 		   50
+elseif MAPSIZE_MASSIVE
+  circle_radius 		   50
+else
+  circle_radius 		   50
+endif
+  zone 				   4
+}
+
+#const SUPERMUD 76
+
+/* middle land */
+
+create_land
+{            
+  terrain_type                     DIRT
+  number_of_tiles		   		   500
+
+if MAPSIZE_MINI
+  base_size                        28
+elseif MAPSIZE_TINY
+  base_size                        28
+elseif MAPSIZE_SMALL
+  base_size                        28
+elseif MAPSIZE_MEDIUM
+  base_size                        34
+elseif MAPSIZE_NORMAL
+  base_size                        34
+elseif MAPSIZE_LARGE
+  base_size                        34
+elseif MAPSIZE_HUGE
+  base_size                        34
+elseif MAPSIZE_GIANT
+  base_size                        44
+elseif MAPSIZE_MASSIVE
+  base_size                        44
+else
+  base_size                        54
+endif
+
+  border_fuzziness                 20
+
+if MAPSIZE_TINY
+  base_elevation 4
+elseif MAPSIZE_SMALL
+  base_elevation 4
+elseif MAPSIZE_MEDIUM
+  base_elevation 4
+else
+  base_elevation 4
+endif
+
+  land_position 50 50
+  zone 4
+}
+
+create_land
+{            
+  terrain_type                     DIRT
+  number_of_tiles		   0
+  base_size                        1
+  base_elevation 7
+  land_position 50 50
+  zone 4
+}
+
+
+/* cracked siege workshop camps */
+
+if MAPSIZE_TINY
+
+/* 8 camps */
+
+create_land
+{            
+  terrain_type                     DLC_CRACKED
+number_of_tiles 		120
+base_size                        1
+border_fuzziness                 100
+zone 40
+land_position 14 14
+}
+
+
+create_land
+{            
+  terrain_type                     DLC_CRACKED
+number_of_tiles 		120
+base_size                        1
+border_fuzziness                 100
+zone 40
+land_position 86 86
+}
+
+create_land
+{            
+  terrain_type                     DLC_CRACKED
+number_of_tiles 		120
+base_size                        1
+border_fuzziness                 100
+zone 40
+land_position 14 86
+}
+
+create_land
+{            
+  terrain_type                     DLC_CRACKED
+number_of_tiles 		120
+base_size                        1
+border_fuzziness                 100
+zone 40
+land_position 86 14
+}
+
+create_land
+{            
+  terrain_type                     DLC_CRACKED
+number_of_tiles 		120
+base_size                        1
+border_fuzziness                 100
+zone 40
+land_position 50 8
+}
+
+create_land
+{            
+  terrain_type                     DLC_CRACKED
+number_of_tiles 		120
+base_size                        1
+border_fuzziness                 100
+zone 40
+land_position 50 92
+}
+
+create_land
+{            
+  terrain_type                     DLC_CRACKED
+number_of_tiles 		120
+base_size                        1
+border_fuzziness                 100
+zone 40
+land_position 8 50
+}
+
+create_land
+{            
+  terrain_type                     DLC_CRACKED
+number_of_tiles 		120
+base_size                        1
+border_fuzziness                 100
+zone 40
+land_position 92 50
+}
+
+elseif MAPSIZE_SMALL
+
+/* 8 camps */
+
+create_land
+{            
+  terrain_type                     DLC_CRACKED
+number_of_tiles 		120
+base_size                        1
+border_fuzziness                 100
+zone 40
+land_position 17 17
+}
+
+
+create_land
+{            
+  terrain_type                     DLC_CRACKED
+number_of_tiles 		120
+base_size                        1
+border_fuzziness                 100
+zone 40
+land_position 83 83
+}
+
+create_land
+{            
+  terrain_type                     DLC_CRACKED
+number_of_tiles 		120
+base_size                        1
+border_fuzziness                 100
+zone 40
+land_position 17 83
+}
+
+create_land
+{            
+  terrain_type                     DLC_CRACKED
+number_of_tiles 		120
+base_size                        1
+border_fuzziness                 100
+zone 40
+land_position 83 17
+}
+
+create_land
+{            
+  terrain_type                     DLC_CRACKED
+number_of_tiles 		120
+base_size                        1
+border_fuzziness                 100
+zone 40
+land_position 50 12
+}
+
+create_land
+{            
+  terrain_type                     DLC_CRACKED
+number_of_tiles 		120
+base_size                        1
+border_fuzziness                 100
+zone 40
+land_position 50 88
+}
+
+create_land
+{            
+  terrain_type                     DLC_CRACKED
+number_of_tiles 		120
+base_size                        1
+border_fuzziness                 100
+zone 40
+land_position 12 50
+}
+
+create_land
+{            
+  terrain_type                     DLC_CRACKED
+number_of_tiles 		120
+base_size                        1
+border_fuzziness                 100
+zone 40
+land_position 88 50
+}
+
+
+elseif MAPSIZE_MEDIUM
+
+/* 12 camps */
+
+create_land
+{            
+  terrain_type                     DLC_CRACKED
+number_of_tiles 		120
+base_size                        1
+border_fuzziness                 100
+zone 40
+land_position 18 18
+}
+
+
+create_land
+{            
+  terrain_type                     DLC_CRACKED
+number_of_tiles 		120
+base_size                        1
+border_fuzziness                 100
+zone 40
+land_position 82 82
+}
+
+create_land
+{            
+  terrain_type                     DLC_CRACKED
+number_of_tiles 		120
+base_size                        1
+border_fuzziness                 100
+zone 40
+land_position 18 82
+}
+
+create_land
+{            
+  terrain_type                     DLC_CRACKED
+number_of_tiles 		120
+base_size                        1
+border_fuzziness                 100
+zone 40
+land_position 82 18
+}
+
+create_land
+{            
+  terrain_type                     DLC_CRACKED
+number_of_tiles 		120
+base_size                        1
+border_fuzziness                 100
+zone 40
+land_position 39 14
+}
+
+
+create_land
+{            
+  terrain_type                     DLC_CRACKED
+number_of_tiles 		120
+base_size                        1
+border_fuzziness                 100
+zone 40
+land_position 60 14
+}
+
+
+create_land
+{            
+  terrain_type                     DLC_CRACKED
+number_of_tiles 		120
+base_size                        1
+border_fuzziness                 100
+zone 40
+land_position 39 86
+}
+
+create_land
+{            
+  terrain_type                     DLC_CRACKED
+number_of_tiles 		120
+base_size                        1
+border_fuzziness                 100
+zone 40
+land_position 60 86
+}
+
+create_land
+{            
+  terrain_type                     DLC_CRACKED
+number_of_tiles 		120
+base_size                        1
+border_fuzziness                 100
+zone 40
+land_position 14 39
+}
+
+create_land
+{            
+  terrain_type                     DLC_CRACKED
+number_of_tiles 		120
+base_size                        1
+border_fuzziness                 100
+zone 40
+land_position 14 60
+}
+
+create_land
+{            
+  terrain_type                     DLC_CRACKED
+number_of_tiles 		120
+base_size                        1
+border_fuzziness                 100
+zone 40
+land_position 86 39
+}
+
+create_land
+{            
+  terrain_type                     DLC_CRACKED
+number_of_tiles 		120
+base_size                        1
+border_fuzziness                 100
+zone 40
+land_position 86 60
+}
+
+
+elseif MAPSIZE_NORMAL
+#define AXUMLARGERMAP
+elseif MAPSIZE_LARGE
+#define AXUMLARGERMAP
+elseif MAPSIZE_HUGE
+#define AXUMLARGERMAP
+elseif MAPSIZE_GIANT
+#define AXUMLARGERMAP
+elseif MAPSIZE_MASSIVE
+#define AXUMLARGERMAP
+else
+
+
+/* 12 camps ludicrous distances */
+
+create_land
+{            
+  terrain_type                     DLC_CRACKED
+number_of_tiles 		120
+base_size                        1
+border_fuzziness                 100
+zone 40
+land_position 30 30
+}
+
+
+create_land
+{            
+  terrain_type                     DLC_CRACKED
+number_of_tiles 		120
+base_size                        1
+border_fuzziness                 100
+zone 40
+land_position 70 70
+}
+
+create_land
+{            
+  terrain_type                     DLC_CRACKED
+number_of_tiles 		120
+base_size                        1
+border_fuzziness                 100
+zone 40
+land_position 30 70
+}
+
+create_land
+{            
+  terrain_type                     DLC_CRACKED
+number_of_tiles 		120
+base_size                        1
+border_fuzziness                 100
+zone 40
+land_position 70 30
+}
+
+create_land
+{            
+  terrain_type                     DLC_CRACKED
+number_of_tiles 		120
+base_size                        1
+border_fuzziness                 100
+zone 40
+land_position 43 23
+}
+
+
+create_land
+{            
+  terrain_type                     DLC_CRACKED
+number_of_tiles 		120
+base_size                        1
+border_fuzziness                 100
+zone 40
+land_position 54 23
+}
+
+
+create_land
+{            
+  terrain_type                     DLC_CRACKED
+number_of_tiles 		120
+base_size                        1
+border_fuzziness                 100
+zone 40
+land_position 43 77
+}
+
+create_land
+{            
+  terrain_type                     DLC_CRACKED
+number_of_tiles 		120
+base_size                        1
+border_fuzziness                 100
+zone 40
+land_position 55 77
+}
+
+create_land
+{            
+  terrain_type                     DLC_CRACKED
+number_of_tiles 		120
+base_size                        1
+border_fuzziness                 100
+zone 40
+land_position 23 43
+}
+
+create_land
+{            
+  terrain_type                     DLC_CRACKED
+number_of_tiles 		120
+base_size                        1
+border_fuzziness                 100
+zone 40
+land_position 23 55
+}
+
+create_land
+{            
+  terrain_type                     DLC_CRACKED
+number_of_tiles 		120
+base_size                        1
+border_fuzziness                 100
+zone 40
+land_position 77 43
+}
+
+create_land
+{            
+  terrain_type                     DLC_CRACKED
+number_of_tiles 		120
+base_size                        1
+border_fuzziness                 100
+zone 40
+land_position 77 55
+}
+
+endif
+
+if AXUMLARGERMAP
+
+
+/* 12 camps */
+
+create_land
+{            
+  terrain_type                     DLC_CRACKED
+number_of_tiles 		120
+base_size                        1
+border_fuzziness                 100
+zone 40
+land_position 25 25
+}
+
+
+create_land
+{            
+  terrain_type                     DLC_CRACKED
+number_of_tiles 		120
+base_size                        1
+border_fuzziness                 100
+zone 40
+land_position 75 75
+}
+
+create_land
+{            
+  terrain_type                     DLC_CRACKED
+number_of_tiles 		120
+base_size                        1
+border_fuzziness                 100
+zone 40
+land_position 25 75
+}
+
+create_land
+{            
+  terrain_type                     DLC_CRACKED
+number_of_tiles 		120
+base_size                        1
+border_fuzziness                 100
+zone 40
+land_position 75 25
+}
+
+create_land
+{            
+  terrain_type                     DLC_CRACKED
+number_of_tiles 		120
+base_size                        1
+border_fuzziness                 100
+zone 40
+land_position 41 18
+}
+
+
+create_land
+{            
+  terrain_type                     DLC_CRACKED
+number_of_tiles 		120
+base_size                        1
+border_fuzziness                 100
+zone 40
+land_position 58 18
+}
+
+
+create_land
+{            
+  terrain_type                     DLC_CRACKED
+number_of_tiles 		120
+base_size                        1
+border_fuzziness                 100
+zone 40
+land_position 41 82
+}
+
+create_land
+{            
+  terrain_type                     DLC_CRACKED
+number_of_tiles 		120
+base_size                        1
+border_fuzziness                 100
+zone 40
+land_position 58 82
+}
+
+create_land
+{            
+  terrain_type                     DLC_CRACKED
+number_of_tiles 		120
+base_size                        1
+border_fuzziness                 100
+zone 40
+land_position 18 41
+}
+
+create_land
+{            
+  terrain_type                     DLC_CRACKED
+number_of_tiles 		120
+base_size                        1
+border_fuzziness                 100
+zone 40
+land_position 18 58
+}
+
+create_land
+{            
+  terrain_type                     DLC_CRACKED
+number_of_tiles 		120
+base_size                        1
+border_fuzziness                 100
+zone 40
+land_position 82 41
+}
+
+create_land
+{            
+  terrain_type                     DLC_CRACKED
+number_of_tiles 		120
+base_size                        1
+border_fuzziness                 100
+zone 40
+land_position 82 58
+}
+
+/*
+
+create_land
+{            
+  terrain_type                     DLC_CRACKED
+number_of_tiles 		80
+base_size                        1
+border_fuzziness                 100
+zone 40
+land_position 74 50
+}
+
+
+create_land
+{            
+  terrain_type                     DLC_CRACKED
+number_of_tiles 		80
+base_size                        1
+border_fuzziness                 100
+zone 40
+land_position 50 74
+}
+
+
+
+create_land
+{            
+  terrain_type                     DLC_CRACKED
+number_of_tiles 		80
+base_size                        1
+border_fuzziness                 100
+zone 40
+land_position 26 50
+}
+
+
+
+create_land
+{            
+  terrain_type                     DLC_CRACKED
+number_of_tiles 		80
+base_size                        1
+border_fuzziness                 100
+zone 40
+land_position 50 26
+}
+
+*/
+
+endif
+
+
+
+
+
+<TERRAIN_GENERATION>
+
+
+create_terrain DLC_DIRT4
+{
+  base_terrain                   DLC_SAVANNAH
+  land_percent			100
+  number_of_clumps               1000
+  height_limits 1 7
+}
+
+create_terrain DLC_DESERTGRAVEL
+{
+  base_terrain                   DLC_DIRT4
+  land_percent			100
+  number_of_clumps               1000
+  height_limits 2 7
+  terrain_mask 1
+}
+
+create_terrain DLC_ACACIAFOREST
+{
+  base_terrain                   DLC_SAVANNAH
+  land_percent			2
+  number_of_clumps               23
+  spacing_to_other_terrain_types 6
+  set_scale_by_groups
+}
+
+/* cracked used as a visual mask */
+
+create_terrain DLC_QUICKSAND
+{
+  base_terrain                   DLC_CRACKED
+  land_percent			100
+  number_of_clumps               1000
+  spacing_to_other_terrain_types 2
+}
+
+create_terrain DLC_QUICKSAND
+{
+  base_terrain                   DLC_CRACKED
+  land_percent			100
+  number_of_clumps               1000
+  spacing_to_other_terrain_types 2
+}
+
+
+create_terrain DLC_QUICKSAND
+{
+  base_terrain                   DLC_CRACKED
+  land_percent			100
+  number_of_clumps               1000
+  spacing_to_other_terrain_types 2
+}
+
+
+create_terrain DLC_CRACKED
+{
+  base_terrain                   DLC_QUICKSAND
+  land_percent			100
+  number_of_clumps               1000
+  terrain_mask 1
+}
+
+create_terrain DLC_CRACKED
+{
+  base_terrain                   DLC_QUICKSAND
+  land_percent			100
+  number_of_clumps               1000
+  terrain_mask 1
+}
+
+create_terrain DLC_CRACKED
+{
+  base_terrain                   DLC_QUICKSAND
+  land_percent			100
+  number_of_clumps               1000
+  terrain_mask 1
+}
+
+/*
+
+create_terrain DLC_CRACKED
+{
+  base_terrain                   DLC_SAVANNAH
+  land_percent			14
+  number_of_clumps               6
+  spacing_to_other_terrain_types 3
+  set_scale_by_groups
+}
+
+create_terrain DLC_ROCK
+{
+  base_terrain                   DLC_CRACKED
+  land_percent			100
+  number_of_clumps               1000
+  spacing_to_other_terrain_types 2
+}
+
+create_terrain DLC_ROCK
+{
+  base_terrain                   DLC_CRACKED
+  land_percent			100
+  number_of_clumps               1000
+  spacing_to_other_terrain_types 2
+}
+
+create_terrain DLC_ROCK
+{
+  base_terrain                   DLC_CRACKED
+  land_percent			100
+  number_of_clumps               1000
+  spacing_to_other_terrain_types 2
+}
+
+create_terrain DLC_ROCK
+{
+  base_terrain                   DLC_CRACKED
+  land_percent			100
+  number_of_clumps               1000
+  spacing_to_other_terrain_types 2
+}
+
+create_terrain DLC_SAVANNAH
+{
+  base_terrain                   DLC_CRACKED
+  land_percent			100
+  number_of_clumps               1000
+  terrain_mask 1
+}
+
+create_terrain DLC_SAVANNAH
+{
+  base_terrain                   DLC_CRACKED
+  land_percent			100
+  number_of_clumps               1000
+  terrain_mask 1
+}
+
+create_terrain DLC_SAVANNAH
+{
+  base_terrain                   DLC_CRACKED
+  land_percent			100
+  number_of_clumps               1000
+  terrain_mask 1
+}
+
+create_terrain DLC_SAVANNAH
+{
+  base_terrain                   DLC_CRACKED
+  land_percent			100
+  number_of_clumps               1000
+  terrain_mask 1
+}
+
+create_terrain DLC_CRACKED
+{
+  base_terrain                   DLC_ROCK
+  land_percent			100
+  number_of_clumps               1000
+}
+
+create_terrain DLC_CRACKED
+{
+  base_terrain                   DLC_ROCK
+  land_percent			100
+  number_of_clumps               1000
+}
+
+create_terrain DLC_CRACKED
+{
+  base_terrain                   DLC_ROCK
+  land_percent			100
+  number_of_clumps               1000
+}
+
+create_terrain DLC_CRACKED
+{
+  base_terrain                   DLC_ROCK
+  land_percent			100
+  number_of_clumps               1000
+}
+
+*/
+
+
+
+/* desert used as a visual mask */
+
+
+create_terrain DESERT
+{
+  base_terrain                   DLC_SAVANNAH
+  land_percent			 4
+  number_of_clumps               6
+  spacing_to_other_terrain_types 3
+  set_scale_by_groups
+}
+
+create_terrain DLC_ROCK
+{
+  base_terrain                   DESERT
+  land_percent			100
+  number_of_clumps               1000
+  spacing_to_other_terrain_types 2
+}
+
+create_terrain DLC_ROCK
+{
+  base_terrain                   DESERT
+  land_percent			100
+  number_of_clumps               1000
+  spacing_to_other_terrain_types 2
+}
+
+create_terrain DLC_ROCK
+{
+  base_terrain                   DESERT
+  land_percent			100
+  number_of_clumps               1000
+  spacing_to_other_terrain_types 2
+}
+
+create_terrain DLC_ROCK
+{
+  base_terrain                   DESERT
+  land_percent			100
+  number_of_clumps               1000
+  spacing_to_other_terrain_types 2
+}
+
+create_terrain DLC_SAVANNAH
+{
+  base_terrain                   DESERT
+  land_percent			100
+  number_of_clumps               1000
+  terrain_mask 1
+}
+
+create_terrain DLC_SAVANNAH
+{
+  base_terrain                   DESERT
+  land_percent			100
+  number_of_clumps               1000
+  terrain_mask 1
+}
+
+create_terrain DLC_SAVANNAH
+{
+  base_terrain                   DESERT
+  land_percent			100
+  number_of_clumps               1000
+  terrain_mask 1
+}
+
+create_terrain DLC_SAVANNAH
+{
+  base_terrain                   DESERT
+  land_percent			100
+  number_of_clumps               1000
+  terrain_mask 1
+}
+
+create_terrain DESERT
+{
+  base_terrain                   DLC_ROCK
+  land_percent			100
+  number_of_clumps               1000
+}
+
+create_terrain DESERT
+{
+  base_terrain                   DLC_ROCK
+  land_percent			100
+  number_of_clumps               1000
+}
+
+create_terrain DESERT
+{
+  base_terrain                   DLC_ROCK
+  land_percent			100
+  number_of_clumps               1000
+}
+
+create_terrain DESERT
+{
+  base_terrain                   DLC_ROCK
+  land_percent			100
+  number_of_clumps               1000
+}
+
+
+
+
+create_terrain DLC_DIRT4
+{
+  base_terrain                   DLC_SAVANNAH
+  land_percent			14
+  number_of_clumps               48
+  set_scale_by_groups
+}
+
+create_terrain DLC_ROCK
+{
+  base_terrain                   DLC_DIRT4
+  land_percent			100
+  number_of_clumps               1000
+  spacing_to_other_terrain_types 2
+}
+
+create_terrain DLC_ROCK
+{
+  base_terrain                   DLC_DIRT4
+  land_percent			100
+  number_of_clumps               1000
+  spacing_to_other_terrain_types 2
+}
+
+create_terrain DLC_ROCK
+{
+  base_terrain                   DLC_DIRT4
+  land_percent			100
+  number_of_clumps               1000
+  spacing_to_other_terrain_types 2
+}
+
+create_terrain DLC_ROCK
+{
+  base_terrain                   DLC_DIRT4
+  land_percent			100
+  number_of_clumps               1000
+  spacing_to_other_terrain_types 2
+}
+
+create_terrain DLC_SAVANNAH
+{
+  base_terrain                   DLC_DIRT4
+  land_percent			100
+  number_of_clumps               1000
+  terrain_mask 1
+}
+
+create_terrain DLC_SAVANNAH
+{
+  base_terrain                   DLC_DIRT4
+  land_percent			100
+  number_of_clumps               1000
+  terrain_mask 1
+}
+
+create_terrain DLC_SAVANNAH
+{
+  base_terrain                   DLC_DIRT4
+  land_percent			100
+  number_of_clumps               1000
+  terrain_mask 1
+}
+
+create_terrain DLC_SAVANNAH
+{
+  base_terrain                   DLC_DIRT4
+  land_percent			100
+  number_of_clumps               1000
+  terrain_mask 1
+}
+
+create_terrain DLC_DIRT4
+{
+  base_terrain                   DLC_ROCK
+  land_percent			100
+  number_of_clumps               1000
+}
+
+create_terrain DLC_DIRT4
+{
+  base_terrain                   DLC_ROCK
+  land_percent			100
+  number_of_clumps               1000
+}
+
+create_terrain DLC_DIRT4
+{
+  base_terrain                   DLC_ROCK
+  land_percent			100
+  number_of_clumps               1000
+}
+
+create_terrain DLC_DIRT4
+{
+  base_terrain                   DLC_ROCK
+  land_percent			100
+  number_of_clumps               1000
+}
+
+
+
+
+create_terrain ROAD2
+{
+  base_terrain                   DIRT
+  land_percent			100
+  number_of_clumps               1000
+  spacing_to_other_terrain_types 1
+}
+
+create_terrain DIRT
+{
+  base_terrain                   ROAD2
+  land_percent			100
+  number_of_clumps               1000
+if MAPSIZE_MINI
+  spacing_to_other_terrain_types 14
+elseif MAPSIZE_TINY
+  spacing_to_other_terrain_types 15
+elseif MAPSIZE_SMALL
+  spacing_to_other_terrain_types 15
+elseif MAPSIZE_MEDIUM
+  spacing_to_other_terrain_types 18
+elseif MAPSIZE_NORMAL
+  spacing_to_other_terrain_types 18
+elseif MAPSIZE_LARGE
+  spacing_to_other_terrain_types 18
+elseif MAPSIZE_HUGE
+  spacing_to_other_terrain_types 18
+elseif MAPSIZE_GIANT
+  spacing_to_other_terrain_types 20
+elseif MAPSIZE_MASSIVE
+  spacing_to_other_terrain_types 20
+else
+  spacing_to_other_terrain_types 24
+endif
+}
+
+create_terrain ROAD
+{
+  base_terrain                   DIRT
+  land_percent			100
+  number_of_clumps               1000
+  spacing_to_other_terrain_types 1
+}
+
+create_terrain ROAD2
+{
+  base_terrain                   ROAD
+  land_percent			100
+  number_of_clumps               1000
+  spacing_to_other_terrain_types 0
+}
+
+create_terrain DESERT
+{
+  base_terrain                   ROAD2
+  land_percent			100
+  number_of_clumps               1000
+  spacing_to_other_terrain_types 1
+}
+
+create_terrain DLC_DESERTGRAVEL
+{
+  base_terrain                   ROAD2
+  land_percent			100
+  number_of_clumps               1000
+}
+
+create_terrain ROAD
+{
+  base_terrain                   DESERT
+  land_percent			100
+  number_of_clumps               1000
+  height_limits 5 7
+}
+
+create_terrain SNOW
+{
+  base_terrain                   ROAD
+  land_percent			 100
+  number_of_clumps               1000
+  height_limits 7 7
+}
+
+create_terrain SUPERMUD 
+{
+  base_terrain                   SNOW
+  land_percent			 100
+  number_of_clumps               1000
+  spacing_to_other_terrain_types 1
+}
+
+create_terrain ROAD
+{
+  base_terrain                   SNOW
+  land_percent			 100
+  number_of_clumps               1000
+}
+
+create_terrain ROAD
+{
+  base_terrain                   SNOW
+  land_percent			 100
+  number_of_clumps               1000
+}
+
+create_terrain ROAD2
+{
+  base_terrain                   DESERT
+  land_percent			100
+  number_of_clumps               1000
+  height_limits 4 4
+}
+
+create_terrain ROAD2
+{
+  base_terrain                   ROAD
+  land_percent			100
+  number_of_clumps               1000
+  terrain_mask 1
+}
+
+create_terrain ROAD
+{
+  base_terrain                   SUPERMUD
+  land_percent			100
+  number_of_clumps               1000
+  terrain_mask 1
+}
+
+create_terrain ROAD2
+{
+  base_terrain                   DLC_DESERTGRAVEL
+  land_percent			100
+  number_of_clumps               1000
+  terrain_mask 2
+}
+
+create_terrain DESERT
+{
+  base_terrain                   ROAD2
+  land_percent			1
+  number_of_clumps               1
+  set_scale_by_groups
+  terrain_mask 1
+}
+
+
+
+<ELEVATION_GENERATION>
+
+/* creating the inner fortress */
+
+create_elevation 5
+{
+ base_terrain DIRT
+  number_of_clumps 3000
+  number_of_tiles 400000
+spacing_to_other_terrain_types 18
+clumping_factor 1
+if MAPSIZE_MINI
+spacing 14
+elseif MAPSIZE_TINY
+spacing 15
+elseif MAPSIZE_SMALL
+spacing 15
+elseif MAPSIZE_MEDIUM
+spacing 18
+elseif MAPSIZE_NORMAL
+spacing 18
+elseif MAPSIZE_LARGE
+spacing 18
+elseif MAPSIZE_HUGE
+spacing 18
+elseif MAPSIZE_GIANT
+spacing 20
+elseif MAPSIZE_MASSIVE
+spacing 20
+else
+spacing 24
+endif
+}
+
+
+
+
+<OBJECTS_GENERATION>
+
+
+/* starting heroes */
+
+/*
+
+defining heroes
+
+*/
+
+#const MRNEVSKI 197
+#const MRBOYAR 878
+#const MRFRANCISCO 425
+#const MRGONZALO 427
+#const MSYODIT 1066
+#const MRYEKUNO 1064
+#const MRGAJAH 1157
+#const MRJAYAVIRA 1164
+
+#const GUARD_AMAZONWARRIOR 825
+#const GUARD_AMAZONARCHER 850
+#const GUARD_KARAMBIT 1123
+#const GUARD_BATTLEELEPHANT 1132
+
+#const ACACIA_TREE 1063
+#const BAOBAB_TREE 1052
+
+
+
+if REGICIDE
+
+create_object KING
+{
+   number_of_objects 1
+   set_place_for_every_player
+   min_distance_to_players 0
+   max_distance_to_players 3
+}
+
+endif
+
+create_object MSYODIT 
+{
+   number_of_objects 1
+   set_place_for_every_player
+   min_distance_to_players 0
+   max_distance_to_players 3
+   min_distance_group_placement 1
+}
+
+create_object MRYEKUNO 
+{
+   number_of_objects 1
+   set_place_for_every_player
+   min_distance_to_players 0
+   max_distance_to_players 3
+}
+
+
+
+
+#const STRANGETRADE 1647
+
+/* eye candy consts */
+
+#const MRTORCH 1377
+#const NOVASOCHA 1279
+
+#const BROKENCARTIE 1094
+#const GOODSIES 1321
+#const NICEPAV_A 624
+#const NICEPAV_B 625
+#const NICEPAV_C 626
+
+#const SOMEBARRELS 1330
+#const PEKNASOCHA 1279
+
+
+/* castle in the center */
+
+#const BLANKOBJECT 647
+
+
+create_object BLANKOBJECT 
+{
+  number_of_objects 1
+  number_of_groups 9999
+  set_gaia_object_only
+  terrain_to_place_on DIRT
+  set_gaia_unconvertible
+  actor_area 2007
+  actor_area_radius 0
+  
+}
+
+create_object BLANKOBJECT
+{
+  number_of_objects 1
+  number_of_groups 9999
+  set_gaia_object_only
+  actor_area_to_place_in 2007
+  actor_area 2012
+  actor_area_radius 4
+  
+}
+
+create_object STONE_WALL
+{
+  number_of_objects 1
+  number_of_groups 9999
+  set_gaia_object_only
+  set_gaia_unconvertible
+  actor_area_to_place_in 2007
+  actor_area 2008
+  actor_area_radius 1
+  
+}
+
+create_object BLANKOBJECT
+{
+  number_of_objects 1
+  number_of_groups 9999
+  set_gaia_object_only
+  actor_area_to_place_in 2008
+  actor_area 2018
+  actor_area_radius 2
+  
+}
+
+#const CENTRALBUILDING 1378
+
+create_object BLANKOBJECT 
+{
+  number_of_objects 1
+  number_of_groups 1
+  set_gaia_object_only
+  terrain_to_place_on SUPERMUD
+  actor_area 1795
+  actor_area_radius 1
+}
+
+
+create_object BLANKOBJECT 
+{
+  number_of_objects 1
+  number_of_groups 1
+  set_gaia_object_only
+  actor_area_to_place_in 1795
+  actor_area 1796
+  actor_area_radius 2
+}
+
+create_object BLANKOBJECT 
+{
+  number_of_objects 1
+  number_of_groups 1
+  set_gaia_object_only
+  actor_area_to_place_in 1795
+  actor_area 1799
+if MAPSIZE_TINY
+  actor_area_radius 6
+elseif MAPSIZE_SMALL
+  actor_area_radius 6
+else
+  actor_area_radius 10 /* 11 */
+endif
+}
+
+create_object CENTRALBUILDING
+{
+  number_of_objects 1
+  number_of_groups 1
+  set_gaia_object_only
+  terrain_to_place_on SUPERMUD
+  actor_area 10
+if MAPSIZE_TINY
+  actor_area_radius 16
+elseif MAPSIZE_SMALL
+  actor_area_radius 16
+elseif MAPSIZE_MEDIUM
+  actor_area_radius 18
+else
+  actor_area_radius 20
+endif
+}
+
+/* RESOURCE-GENERATING CAMPS */
+
+  #const ECOCAMPTERRAIN 46
+  #define STRANGEROOM
+
+/* OUTSIDE CAMPS */
+
+/* 1 */
+
+create_object MAP_REVEALER
+{
+  number_of_objects 1
+  number_of_groups 1
+  set_gaia_object_only
+  actor_area 20
+  actor_area_radius 0
+  terrain_to_place_on ECOCAMPTERRAIN 
+}
+
+create_object MAP_REVEALER
+{
+  number_of_objects 1
+  set_gaia_object_only
+  set_loose grouping
+  actor_area_to_place_in 20
+  actor_area 22
+  actor_area_radius 6
+}
+
+create_object MAP_REVEALER
+{
+  number_of_objects 1
+  number_of_groups 1
+  set_gaia_object_only
+  actor_area_to_place_in 20
+  actor_area 23
+  actor_area_radius 3
+}
+
+create_object DLC_STELAE_C
+{
+  number_of_objects 1
+  number_of_groups 1
+  set_gaia_object_only
+  actor_area_to_place_in 20
+  actor_area 21
+  actor_area_radius 14
+  min_distance_group_placement 1
+}
+
+create_object MAP_REVEALER
+{
+  number_of_objects 1
+  number_of_groups 1
+  set_gaia_object_only
+  actor_area_to_place_in 22
+  avoid_actor_area 23
+  actor_area 24
+  actor_area_radius 0
+}
+
+create_object MAP_REVEALER
+{
+  number_of_objects 1
+  number_of_groups 1
+  set_gaia_object_only
+  actor_area_to_place_in 24
+  actor_area 27
+if STRANGEROOM
+  if MAPSIZE_TINY
+  actor_area_radius 5
+  elseif MAPSIZE_SMALL
+  actor_area_radius 5
+  else
+  actor_area_radius 4
+  endif
+else
+  actor_area_radius 2
+endif
+}
+
+create_object MAP_REVEALER
+{
+  number_of_objects 1
+  number_of_groups 1
+  set_gaia_object_only
+  actor_area_to_place_in 24
+  actor_area 25
+  actor_area_radius 3
+}
+
+create_object STRANGETRADE 
+{
+  number_of_objects 1
+  number_of_groups 1
+  set_gaia_object_only
+  actor_area_to_place_in 27
+  min_distance_group_placement 4
+  avoid_actor_area 2018
+}
+
+create_object SIEGE_WORKSHOP
+{
+  number_of_objects 1
+  number_of_groups 1
+  set_gaia_object_only
+  actor_area_to_place_in 22
+  avoid_actor_area 23
+  min_distance_group_placement 4
+}
+
+create_object MAP_REVEALER
+{
+  number_of_objects 1
+  number_of_groups 1
+  set_gaia_object_only
+  actor_area_to_place_in 22
+  avoid_actor_area 23
+/*  min_distance_group_placement 3 */
+  actor_area 3373
+  actor_area_radius 5
+}
+
+create_object SKELETON
+{
+  number_of_objects 1
+  number_of_groups 5
+  set_gaia_object_only
+  actor_area_to_place_in 23
+  temp_min_distance_group_placement 2
+  avoid_actor_area 3373
+}
+
+create_object MRTORCH
+{
+  number_of_objects 1
+  set_gaia_object_only
+  set_loose grouping
+  actor_area_to_place_in 23
+  avoid_actor_area 26
+  min_distance_group_placement 1
+  avoid_actor_area 3373
+}
+
+create_object GOODSIES
+{
+  number_of_objects 1
+  number_of_groups 1
+  set_gaia_object_only
+  actor_area_to_place_in 25
+  temp_min_distance_group_placement 1
+  avoid_actor_area 3373
+}
+
+create_object SOMEBARRELS 
+{
+  number_of_objects 1
+  number_of_groups 1
+  set_gaia_object_only
+  actor_area_to_place_in 25
+  temp_min_distance_group_placement 1
+  avoid_actor_area 3373
+}
+
+create_object DLC_SHOTELWARRIOR 
+{
+  number_of_objects 1
+  number_of_groups 2
+  set_gaia_object_only
+  set_gaia_unconvertible
+  actor_area_to_place_in 23
+  temp_min_distance_group_placement 2
+  min_distance_group_placement 1
+  avoid_actor_area 3373
+}
+
+create_object BAOBAB_TREE
+{
+  number_of_objects 1
+  number_of_groups 4
+  set_gaia_object_only
+  actor_area_to_place_in 22
+  temp_min_distance_group_placement 4
+  avoid_actor_area 3373
+}
+
+create_object ACACIA_TREE
+{
+  number_of_objects 1
+  number_of_groups 4
+  set_gaia_object_only
+  actor_area_to_place_in 22
+  temp_min_distance_group_placement 6
+  avoid_actor_area 3373
+}
+
+
+
+
+
+
+/* 2 */
+
+create_object MAP_REVEALER
+{
+  number_of_objects 1
+  number_of_groups 1
+  set_gaia_object_only
+  actor_area 30
+  avoid_actor_area 21
+  actor_area_radius 0
+  terrain_to_place_on ECOCAMPTERRAIN 
+}
+
+create_object MAP_REVEALER
+{
+  number_of_objects 1
+  set_gaia_object_only
+  set_loose grouping
+  actor_area_to_place_in 30
+  actor_area 32
+  actor_area_radius 6
+}
+
+create_object MAP_REVEALER
+{
+  number_of_objects 1
+  number_of_groups 1
+  set_gaia_object_only
+  actor_area_to_place_in 30
+  actor_area 33
+  actor_area_radius 3
+}
+
+create_object DLC_STELAE_C
+{
+  number_of_objects 1
+  number_of_groups 1
+  set_gaia_object_only
+  actor_area_to_place_in 30
+  actor_area 31
+  actor_area_radius 14
+  min_distance_group_placement 1
+}
+
+create_object MAP_REVEALER
+{
+  number_of_objects 1
+  number_of_groups 1
+  set_gaia_object_only
+  actor_area_to_place_in 32
+  avoid_actor_area 33
+  actor_area 34
+  actor_area_radius 0
+}
+
+create_object MAP_REVEALER
+{
+  number_of_objects 1
+  number_of_groups 1
+  set_gaia_object_only
+  actor_area_to_place_in 34
+  actor_area 37
+if STRANGEROOM
+  if MAPSIZE_TINY
+  actor_area_radius 5
+  elseif MAPSIZE_SMALL
+  actor_area_radius 5
+  else
+  actor_area_radius 4
+  endif
+else
+  actor_area_radius 2
+endif
+}
+
+create_object MAP_REVEALER
+{
+  number_of_objects 1
+  number_of_groups 1
+  set_gaia_object_only
+  actor_area_to_place_in 34
+  actor_area 35
+  actor_area_radius 3
+}
+
+create_object STRANGETRADE 
+{
+  number_of_objects 1
+  number_of_groups 1
+  set_gaia_object_only
+  actor_area_to_place_in 37
+  min_distance_group_placement 4
+  avoid_actor_area 2018
+}
+
+create_object SIEGE_WORKSHOP
+{
+  number_of_objects 1
+  number_of_groups 1
+  set_gaia_object_only
+  actor_area_to_place_in 32
+  avoid_actor_area 33
+  min_distance_group_placement 4
+}
+
+create_object MAP_REVEALER
+{
+  number_of_objects 1
+  number_of_groups 1
+  set_gaia_object_only
+  actor_area_to_place_in 32
+  avoid_actor_area 33
+/*  min_distance_group_placement 3 */
+  actor_area 3373
+  actor_area_radius 5
+}
+
+create_object SKELETON
+{
+  number_of_objects 1
+  number_of_groups 5
+  set_gaia_object_only
+  actor_area_to_place_in 33
+  temp_min_distance_group_placement 2
+  avoid_actor_area 3373
+}
+
+create_object MRTORCH
+{
+  number_of_objects 1
+  set_gaia_object_only
+  set_loose grouping
+  actor_area_to_place_in 33
+  avoid_actor_area 36
+  min_distance_group_placement 1
+  avoid_actor_area 3373
+}
+
+create_object GOODSIES
+{
+  number_of_objects 1
+  number_of_groups 1
+  set_gaia_object_only
+  actor_area_to_place_in 35
+  temp_min_distance_group_placement 1
+  avoid_actor_area 3373
+}
+
+create_object SOMEBARRELS 
+{
+  number_of_objects 1
+  number_of_groups 1
+  set_gaia_object_only
+  actor_area_to_place_in 35
+  temp_min_distance_group_placement 1
+  avoid_actor_area 3373
+}
+
+create_object DLC_SHOTELWARRIOR 
+{
+  number_of_objects 1
+  number_of_groups 2
+  set_gaia_object_only
+  set_gaia_unconvertible
+  actor_area_to_place_in 33
+  temp_min_distance_group_placement 2
+  min_distance_group_placement 1
+  avoid_actor_area 3373
+}
+
+create_object BAOBAB_TREE
+{
+  number_of_objects 1
+  number_of_groups 4
+  set_gaia_object_only
+  actor_area_to_place_in 32
+  temp_min_distance_group_placement 4
+  avoid_actor_area 3373
+}
+
+create_object ACACIA_TREE
+{
+  number_of_objects 1
+  number_of_groups 4
+  set_gaia_object_only
+  actor_area_to_place_in 32
+  temp_min_distance_group_placement 6
+  avoid_actor_area 3373
+}
+
+
+
+
+
+
+/* 3 */
+
+create_object MAP_REVEALER
+{
+  number_of_objects 1
+  number_of_groups 1
+  set_gaia_object_only
+  actor_area 40
+  avoid_actor_area 21
+  avoid_actor_area 31
+  actor_area_radius 0
+  terrain_to_place_on ECOCAMPTERRAIN 
+}
+
+create_object MAP_REVEALER
+{
+  number_of_objects 1
+  set_gaia_object_only
+  set_loose grouping
+  actor_area_to_place_in 40
+  actor_area 42
+  actor_area_radius 6
+}
+
+create_object MAP_REVEALER
+{
+  number_of_objects 1
+  number_of_groups 1
+  set_gaia_object_only
+  actor_area_to_place_in 40
+  actor_area 43
+  actor_area_radius 3
+}
+
+create_object DLC_STELAE_C
+{
+  number_of_objects 1
+  number_of_groups 1
+  set_gaia_object_only
+  actor_area_to_place_in 40
+  actor_area 41
+  actor_area_radius 14
+  min_distance_group_placement 1
+}
+
+create_object MAP_REVEALER
+{
+  number_of_objects 1
+  number_of_groups 1
+  set_gaia_object_only
+  actor_area_to_place_in 42
+  avoid_actor_area 43
+  actor_area 44
+  actor_area_radius 0
+}
+
+create_object MAP_REVEALER
+{
+  number_of_objects 1
+  number_of_groups 1
+  set_gaia_object_only
+  actor_area_to_place_in 44
+  actor_area 47
+if STRANGEROOM
+  if MAPSIZE_TINY
+  actor_area_radius 5
+  elseif MAPSIZE_SMALL
+  actor_area_radius 5
+  else
+  actor_area_radius 4
+  endif
+else
+  actor_area_radius 2
+endif
+}
+
+create_object MAP_REVEALER
+{
+  number_of_objects 1
+  number_of_groups 1
+  set_gaia_object_only
+  actor_area_to_place_in 44
+  actor_area 45
+  actor_area_radius 3
+}
+
+create_object STRANGETRADE 
+{
+  number_of_objects 1
+  number_of_groups 1
+  set_gaia_object_only
+  actor_area_to_place_in 47
+  min_distance_group_placement 4
+  avoid_actor_area 2018
+}
+
+create_object SIEGE_WORKSHOP
+{
+  number_of_objects 1
+  number_of_groups 1
+  set_gaia_object_only
+  actor_area_to_place_in 42
+  avoid_actor_area 43
+  min_distance_group_placement 4
+}
+
+create_object MAP_REVEALER
+{
+  number_of_objects 1
+  number_of_groups 1
+  set_gaia_object_only
+  actor_area_to_place_in 42
+  avoid_actor_area 43
+/*  min_distance_group_placement 3 */
+  actor_area 3373
+  actor_area_radius 5
+}
+
+create_object SKELETON
+{
+  number_of_objects 1
+  number_of_groups 5
+  set_gaia_object_only
+  actor_area_to_place_in 43
+  temp_min_distance_group_placement 2
+  avoid_actor_area 3373
+}
+
+create_object MRTORCH
+{
+  number_of_objects 1
+  set_gaia_object_only
+  set_loose grouping
+  actor_area_to_place_in 43
+  avoid_actor_area 46
+  min_distance_group_placement 1
+  avoid_actor_area 3373
+}
+
+create_object GOODSIES
+{
+  number_of_objects 1
+  number_of_groups 1
+  set_gaia_object_only
+  actor_area_to_place_in 45
+  temp_min_distance_group_placement 1
+  avoid_actor_area 3373
+}
+
+create_object SOMEBARRELS 
+{
+  number_of_objects 1
+  number_of_groups 1
+  set_gaia_object_only
+  actor_area_to_place_in 45
+  temp_min_distance_group_placement 1
+  avoid_actor_area 3373
+}
+
+create_object DLC_SHOTELWARRIOR 
+{
+  number_of_objects 1
+  number_of_groups 2
+  set_gaia_object_only
+  set_gaia_unconvertible
+  actor_area_to_place_in 43
+  temp_min_distance_group_placement 2
+  min_distance_group_placement 1
+  avoid_actor_area 3373
+}
+
+create_object BAOBAB_TREE
+{
+  number_of_objects 1
+  number_of_groups 4
+  set_gaia_object_only
+  actor_area_to_place_in 42
+  temp_min_distance_group_placement 4
+  avoid_actor_area 3373
+}
+
+create_object ACACIA_TREE
+{
+  number_of_objects 1
+  number_of_groups 4
+  set_gaia_object_only
+  actor_area_to_place_in 42
+  temp_min_distance_group_placement 6
+  avoid_actor_area 3373
+}
+
+
+
+
+
+
+
+
+
+
+
+
+/* 4 */
+
+
+create_object MAP_REVEALER
+{
+  number_of_objects 1
+  number_of_groups 1
+  set_gaia_object_only
+  actor_area 50
+  avoid_actor_area 21
+  avoid_actor_area 31
+  avoid_actor_area 41
+  actor_area_radius 0
+  terrain_to_place_on ECOCAMPTERRAIN 
+}
+
+create_object MAP_REVEALER
+{
+  number_of_objects 1
+  set_gaia_object_only
+  set_loose grouping
+  actor_area_to_place_in 50
+  actor_area 52
+  actor_area_radius 6
+}
+
+create_object MAP_REVEALER
+{
+  number_of_objects 1
+  number_of_groups 1
+  set_gaia_object_only
+  actor_area_to_place_in 50
+  actor_area 53
+  actor_area_radius 3
+}
+
+create_object DLC_STELAE_C
+{
+  number_of_objects 1
+  number_of_groups 1
+  set_gaia_object_only
+  actor_area_to_place_in 50
+  actor_area 51
+  actor_area_radius 14
+  min_distance_group_placement 1
+}
+
+create_object MAP_REVEALER
+{
+  number_of_objects 1
+  number_of_groups 1
+  set_gaia_object_only
+  actor_area_to_place_in 52
+  avoid_actor_area 53
+  actor_area 54
+  actor_area_radius 0
+}
+
+create_object MAP_REVEALER
+{
+  number_of_objects 1
+  number_of_groups 1
+  set_gaia_object_only
+  actor_area_to_place_in 54
+  actor_area 57
+if STRANGEROOM
+  if MAPSIZE_TINY
+  actor_area_radius 5
+  elseif MAPSIZE_SMALL
+  actor_area_radius 5
+  else
+  actor_area_radius 4
+  endif
+else
+  actor_area_radius 2
+endif
+}
+
+create_object MAP_REVEALER
+{
+  number_of_objects 1
+  number_of_groups 1
+  set_gaia_object_only
+  actor_area_to_place_in 54
+  actor_area 55
+  actor_area_radius 3
+}
+
+create_object STRANGETRADE 
+{
+  number_of_objects 1
+  number_of_groups 1
+  set_gaia_object_only
+  actor_area_to_place_in 57
+  min_distance_group_placement 4
+  avoid_actor_area 2018
+}
+
+create_object SIEGE_WORKSHOP
+{
+  number_of_objects 1
+  number_of_groups 1
+  set_gaia_object_only
+  actor_area_to_place_in 52
+  avoid_actor_area 53
+  min_distance_group_placement 4
+}
+
+create_object MAP_REVEALER
+{
+  number_of_objects 1
+  number_of_groups 1
+  set_gaia_object_only
+  actor_area_to_place_in 52
+  avoid_actor_area 53
+/*  min_distance_group_placement 3 */
+  actor_area 3373
+  actor_area_radius 5
+}
+
+create_object SKELETON
+{
+  number_of_objects 1
+  number_of_groups 5
+  set_gaia_object_only
+  actor_area_to_place_in 53
+  temp_min_distance_group_placement 2
+  avoid_actor_area 3373
+}
+
+create_object MRTORCH
+{
+  number_of_objects 1
+  set_gaia_object_only
+  set_loose grouping
+  actor_area_to_place_in 53
+  avoid_actor_area 56
+  min_distance_group_placement 1
+  avoid_actor_area 3373
+}
+
+create_object GOODSIES
+{
+  number_of_objects 1
+  number_of_groups 1
+  set_gaia_object_only
+  actor_area_to_place_in 55
+  temp_min_distance_group_placement 1
+  avoid_actor_area 3373
+}
+
+create_object SOMEBARRELS 
+{
+  number_of_objects 1
+  number_of_groups 1
+  set_gaia_object_only
+  actor_area_to_place_in 55
+  temp_min_distance_group_placement 1
+  avoid_actor_area 3373
+}
+
+create_object DLC_SHOTELWARRIOR 
+{
+  number_of_objects 1
+  number_of_groups 2
+  set_gaia_object_only
+  set_gaia_unconvertible
+  actor_area_to_place_in 53
+  temp_min_distance_group_placement 2
+  min_distance_group_placement 1
+  avoid_actor_area 3373
+}
+
+create_object BAOBAB_TREE
+{
+  number_of_objects 1
+  number_of_groups 4
+  set_gaia_object_only
+  actor_area_to_place_in 52
+  temp_min_distance_group_placement 4
+  avoid_actor_area 3373
+}
+
+create_object ACACIA_TREE
+{
+  number_of_objects 1
+  number_of_groups 4
+  set_gaia_object_only
+  actor_area_to_place_in 52
+  temp_min_distance_group_placement 6
+  avoid_actor_area 3373
+}
+
+
+
+
+
+
+/* 5 */
+
+
+create_object MAP_REVEALER
+{
+  number_of_objects 1
+  number_of_groups 1
+  set_gaia_object_only
+  actor_area 60
+  avoid_actor_area 21
+  avoid_actor_area 31
+  avoid_actor_area 41
+  avoid_actor_area 51
+  actor_area_radius 0
+  terrain_to_place_on ECOCAMPTERRAIN 
+}
+
+create_object MAP_REVEALER
+{
+  number_of_objects 1
+  set_gaia_object_only
+  set_loose grouping
+  actor_area_to_place_in 60
+  actor_area 62
+  actor_area_radius 6
+}
+
+create_object MAP_REVEALER
+{
+  number_of_objects 1
+  number_of_groups 1
+  set_gaia_object_only
+  actor_area_to_place_in 60
+  actor_area 63
+  actor_area_radius 3
+}
+
+create_object DLC_STELAE_C
+{
+  number_of_objects 1
+  number_of_groups 1
+  set_gaia_object_only
+  actor_area_to_place_in 60
+  actor_area 61
+  actor_area_radius 14
+  min_distance_group_placement 1
+}
+
+create_object MAP_REVEALER
+{
+  number_of_objects 1
+  number_of_groups 1
+  set_gaia_object_only
+  actor_area_to_place_in 62
+  avoid_actor_area 63
+  actor_area 64
+  actor_area_radius 0
+}
+
+create_object MAP_REVEALER
+{
+  number_of_objects 1
+  number_of_groups 1
+  set_gaia_object_only
+  actor_area_to_place_in 64
+  actor_area 67
+if STRANGEROOM
+  if MAPSIZE_TINY
+  actor_area_radius 5
+  elseif MAPSIZE_SMALL
+  actor_area_radius 5
+  else
+  actor_area_radius 4
+  endif
+else
+  actor_area_radius 2
+endif
+}
+
+create_object MAP_REVEALER
+{
+  number_of_objects 1
+  number_of_groups 1
+  set_gaia_object_only
+  actor_area_to_place_in 64
+  actor_area 65
+  actor_area_radius 3
+}
+
+create_object STRANGETRADE 
+{
+  number_of_objects 1
+  number_of_groups 1
+  set_gaia_object_only
+  actor_area_to_place_in 67
+  min_distance_group_placement 4
+  avoid_actor_area 2018
+}
+
+create_object SIEGE_WORKSHOP
+{
+  number_of_objects 1
+  number_of_groups 1
+  set_gaia_object_only
+  actor_area_to_place_in 62
+  avoid_actor_area 63
+  min_distance_group_placement 4
+}
+
+create_object MAP_REVEALER
+{
+  number_of_objects 1
+  number_of_groups 1
+  set_gaia_object_only
+  actor_area_to_place_in 62
+  avoid_actor_area 63
+/*  min_distance_group_placement 3 */
+  actor_area 3373
+  actor_area_radius 5
+}
+
+create_object SKELETON
+{
+  number_of_objects 1
+  number_of_groups 5
+  set_gaia_object_only
+  actor_area_to_place_in 63
+  temp_min_distance_group_placement 2
+  avoid_actor_area 3373
+}
+
+create_object MRTORCH
+{
+  number_of_objects 1
+  set_gaia_object_only
+  set_loose grouping
+  actor_area_to_place_in 63
+  avoid_actor_area 66
+  min_distance_group_placement 1
+  avoid_actor_area 3373
+}
+
+create_object GOODSIES
+{
+  number_of_objects 1
+  number_of_groups 1
+  set_gaia_object_only
+  actor_area_to_place_in 65
+  temp_min_distance_group_placement 1
+  avoid_actor_area 3373
+}
+
+create_object SOMEBARRELS 
+{
+  number_of_objects 1
+  number_of_groups 1
+  set_gaia_object_only
+  actor_area_to_place_in 65
+  temp_min_distance_group_placement 1
+  avoid_actor_area 3373
+}
+
+create_object DLC_SHOTELWARRIOR 
+{
+  number_of_objects 1
+  number_of_groups 2
+  set_gaia_object_only
+  set_gaia_unconvertible
+  actor_area_to_place_in 63
+  temp_min_distance_group_placement 2
+  min_distance_group_placement 1
+  avoid_actor_area 3373
+}
+
+create_object BAOBAB_TREE
+{
+  number_of_objects 1
+  number_of_groups 4
+  set_gaia_object_only
+  actor_area_to_place_in 62
+  temp_min_distance_group_placement 4
+  avoid_actor_area 3373
+}
+
+create_object ACACIA_TREE
+{
+  number_of_objects 1
+  number_of_groups 4
+  set_gaia_object_only
+  actor_area_to_place_in 62
+  temp_min_distance_group_placement 6
+  avoid_actor_area 3373
+}
+
+
+/* 6 */
+
+
+
+
+create_object MAP_REVEALER
+{
+  number_of_objects 1
+  number_of_groups 1
+  set_gaia_object_only
+  actor_area 70
+  avoid_actor_area 21
+  avoid_actor_area 31
+  avoid_actor_area 41
+  avoid_actor_area 51
+  avoid_actor_area 61
+  actor_area_radius 0
+  terrain_to_place_on ECOCAMPTERRAIN 
+}
+
+create_object MAP_REVEALER
+{
+  number_of_objects 1
+  set_gaia_object_only
+  set_loose grouping
+  actor_area_to_place_in 70
+  actor_area 72
+  actor_area_radius 6
+}
+
+create_object MAP_REVEALER
+{
+  number_of_objects 1
+  number_of_groups 1
+  set_gaia_object_only
+  actor_area_to_place_in 72
+  actor_area 73
+  actor_area_radius 3
+}
+
+create_object DLC_STELAE_C
+{
+  number_of_objects 1
+  number_of_groups 1
+  set_gaia_object_only
+  actor_area_to_place_in 70
+  actor_area 71
+  actor_area_radius 14
+  min_distance_group_placement 1
+}
+
+create_object MAP_REVEALER
+{
+  number_of_objects 1
+  number_of_groups 1
+  set_gaia_object_only
+  actor_area_to_place_in 72
+  avoid_actor_area 73
+  actor_area 74
+  actor_area_radius 0
+}
+
+create_object MAP_REVEALER
+{
+  number_of_objects 1
+  number_of_groups 1
+  set_gaia_object_only
+  actor_area_to_place_in 74
+  actor_area 77
+if STRANGEROOM
+  if MAPSIZE_TINY
+  actor_area_radius 5
+  elseif MAPSIZE_SMALL
+  actor_area_radius 5
+  else
+  actor_area_radius 4
+  endif
+else
+  actor_area_radius 2
+endif
+}
+
+create_object MAP_REVEALER
+{
+  number_of_objects 1
+  number_of_groups 1
+  set_gaia_object_only
+  actor_area_to_place_in 74
+  actor_area 75
+  actor_area_radius 3
+}
+
+create_object STRANGETRADE 
+{
+  number_of_objects 1
+  number_of_groups 1
+  set_gaia_object_only
+  actor_area_to_place_in 77
+  min_distance_group_placement 4
+  avoid_actor_area 2018
+}
+
+create_object SIEGE_WORKSHOP
+{
+  number_of_objects 1
+  number_of_groups 1
+  set_gaia_object_only
+  actor_area_to_place_in 72
+  avoid_actor_area 73
+  min_distance_group_placement 4
+}
+
+create_object MAP_REVEALER
+{
+  number_of_objects 1
+  number_of_groups 1
+  set_gaia_object_only
+  actor_area_to_place_in 72
+  avoid_actor_area 73
+/*  min_distance_group_placement 3 */
+  actor_area 3373
+  actor_area_radius 5
+}
+
+create_object SKELETON
+{
+  number_of_objects 1
+  number_of_groups 5
+  set_gaia_object_only
+  actor_area_to_place_in 73
+  temp_min_distance_group_placement 2
+  avoid_actor_area 3373
+}
+
+create_object MRTORCH
+{
+  number_of_objects 1
+  set_gaia_object_only
+  set_loose grouping
+  actor_area_to_place_in 73
+  avoid_actor_area 76
+  min_distance_group_placement 1
+  avoid_actor_area 3373
+}
+
+create_object GOODSIES
+{
+  number_of_objects 1
+  number_of_groups 1
+  set_gaia_object_only
+  actor_area_to_place_in 75
+  temp_min_distance_group_placement 1
+  avoid_actor_area 3373
+}
+
+create_object SOMEBARRELS 
+{
+  number_of_objects 1
+  number_of_groups 1
+  set_gaia_object_only
+  actor_area_to_place_in 75
+  temp_min_distance_group_placement 1
+  avoid_actor_area 3373
+}
+
+create_object DLC_SHOTELWARRIOR 
+{
+  number_of_objects 1
+  number_of_groups 2
+  set_gaia_object_only
+  set_gaia_unconvertible
+  actor_area_to_place_in 73
+  temp_min_distance_group_placement 2
+  min_distance_group_placement 1
+  avoid_actor_area 3373
+}
+
+create_object BAOBAB_TREE
+{
+  number_of_objects 1
+  number_of_groups 4
+  set_gaia_object_only
+  actor_area_to_place_in 72
+  temp_min_distance_group_placement 4
+  avoid_actor_area 3373
+}
+
+create_object ACACIA_TREE
+{
+  number_of_objects 1
+  number_of_groups 4
+  set_gaia_object_only
+  actor_area_to_place_in 72
+  temp_min_distance_group_placement 6
+  avoid_actor_area 3373
+}
+
+
+/* 7 */
+
+
+
+
+create_object MAP_REVEALER
+{
+  number_of_objects 1
+  number_of_groups 1
+  set_gaia_object_only
+  actor_area 80
+  avoid_actor_area 21
+  avoid_actor_area 31
+  avoid_actor_area 41
+  avoid_actor_area 51
+  avoid_actor_area 61
+  avoid_actor_area 71
+  actor_area_radius 0
+  terrain_to_place_on ECOCAMPTERRAIN 
+}
+
+create_object MAP_REVEALER
+{
+  number_of_objects 1
+  set_gaia_object_only
+  set_loose grouping
+  actor_area_to_place_in 80
+  actor_area 82
+  actor_area_radius 6
+}
+
+create_object MAP_REVEALER
+{
+  number_of_objects 1
+  number_of_groups 1
+  set_gaia_object_only
+  actor_area_to_place_in 80
+  actor_area 83
+  actor_area_radius 3
+}
+
+create_object DLC_STELAE_C
+{
+  number_of_objects 1
+  number_of_groups 1
+  set_gaia_object_only
+  actor_area_to_place_in 80
+  actor_area 81
+  actor_area_radius 14
+  min_distance_group_placement 1
+}
+
+create_object MAP_REVEALER
+{
+  number_of_objects 1
+  number_of_groups 1
+  set_gaia_object_only
+  actor_area_to_place_in 82
+  avoid_actor_area 83
+  actor_area 84
+  actor_area_radius 0
+}
+
+create_object MAP_REVEALER
+{
+  number_of_objects 1
+  number_of_groups 1
+  set_gaia_object_only
+  actor_area_to_place_in 84
+  actor_area 87
+if STRANGEROOM
+  if MAPSIZE_TINY
+  actor_area_radius 5
+  elseif MAPSIZE_SMALL
+  actor_area_radius 5
+  else
+  actor_area_radius 4
+  endif
+else
+  actor_area_radius 2
+endif
+}
+
+create_object MAP_REVEALER
+{
+  number_of_objects 1
+  number_of_groups 1
+  set_gaia_object_only
+  actor_area_to_place_in 84
+  actor_area 85
+  actor_area_radius 3
+}
+
+create_object STRANGETRADE 
+{
+  number_of_objects 1
+  number_of_groups 1
+  set_gaia_object_only
+  actor_area_to_place_in 87
+  min_distance_group_placement 4
+  avoid_actor_area 2018
+}
+
+create_object SIEGE_WORKSHOP
+{
+  number_of_objects 1
+  number_of_groups 1
+  set_gaia_object_only
+  actor_area_to_place_in 82
+  avoid_actor_area 83
+  min_distance_group_placement 4
+}
+
+create_object MAP_REVEALER
+{
+  number_of_objects 1
+  number_of_groups 1
+  set_gaia_object_only
+  actor_area_to_place_in 82
+  avoid_actor_area 83
+/*  min_distance_group_placement 3 */
+  actor_area 3373
+  actor_area_radius 5
+}
+
+create_object SKELETON
+{
+  number_of_objects 1
+  number_of_groups 5
+  set_gaia_object_only
+  actor_area_to_place_in 83
+  temp_min_distance_group_placement 2
+  avoid_actor_area 3373
+}
+
+create_object MRTORCH
+{
+  number_of_objects 1
+  set_gaia_object_only
+  set_loose grouping
+  actor_area_to_place_in 83
+  avoid_actor_area 86
+  min_distance_group_placement 1
+  avoid_actor_area 3373
+}
+
+create_object GOODSIES
+{
+  number_of_objects 1
+  number_of_groups 1
+  set_gaia_object_only
+  actor_area_to_place_in 85
+  temp_min_distance_group_placement 1
+  avoid_actor_area 3373
+}
+
+create_object SOMEBARRELS 
+{
+  number_of_objects 1
+  number_of_groups 1
+  set_gaia_object_only
+  actor_area_to_place_in 85
+  temp_min_distance_group_placement 1
+  avoid_actor_area 3373
+}
+
+create_object DLC_SHOTELWARRIOR 
+{
+  number_of_objects 1
+  number_of_groups 2
+  set_gaia_object_only
+  set_gaia_unconvertible
+  actor_area_to_place_in 83
+  temp_min_distance_group_placement 2
+  min_distance_group_placement 1
+  avoid_actor_area 3373
+}
+
+create_object BAOBAB_TREE
+{
+  number_of_objects 1
+  number_of_groups 4
+  set_gaia_object_only
+  actor_area_to_place_in 82
+  temp_min_distance_group_placement 4
+  avoid_actor_area 3373
+}
+
+create_object ACACIA_TREE
+{
+  number_of_objects 1
+  number_of_groups 4
+  set_gaia_object_only
+  actor_area_to_place_in 82
+  temp_min_distance_group_placement 6
+  avoid_actor_area 3373
+}
+
+
+/* 8 */
+
+
+
+
+
+create_object MAP_REVEALER
+{
+  number_of_objects 1
+  number_of_groups 1
+  set_gaia_object_only
+  actor_area 90
+  avoid_actor_area 21
+  avoid_actor_area 31
+  avoid_actor_area 41
+  avoid_actor_area 51
+  avoid_actor_area 61
+  avoid_actor_area 71
+  avoid_actor_area 81
+  actor_area_radius 0
+  terrain_to_place_on ECOCAMPTERRAIN 
+}
+
+create_object MAP_REVEALER
+{
+  number_of_objects 1
+  set_gaia_object_only
+  set_loose grouping
+  actor_area_to_place_in 90
+  actor_area 92
+  actor_area_radius 6
+}
+
+create_object MAP_REVEALER
+{
+  number_of_objects 1
+  number_of_groups 1
+  set_gaia_object_only
+  actor_area_to_place_in 90
+  actor_area 93
+  actor_area_radius 3
+}
+
+create_object DLC_STELAE_C
+{
+  number_of_objects 1
+  number_of_groups 1
+  set_gaia_object_only
+  actor_area_to_place_in 90
+  actor_area 91
+  actor_area_radius 14
+  min_distance_group_placement 1
+}
+
+create_object MAP_REVEALER
+{
+  number_of_objects 1
+  number_of_groups 1
+  set_gaia_object_only
+  actor_area_to_place_in 92
+  avoid_actor_area 93
+  actor_area 94
+  actor_area_radius 0
+}
+
+create_object MAP_REVEALER
+{
+  number_of_objects 1
+  number_of_groups 1
+  set_gaia_object_only
+  actor_area_to_place_in 94
+  actor_area 97
+if STRANGEROOM
+  actor_area_radius 4
+else
+  actor_area_radius 2
+endif
+}
+
+create_object MAP_REVEALER
+{
+  number_of_objects 1
+  number_of_groups 1
+  set_gaia_object_only
+  actor_area_to_place_in 94
+  actor_area 95
+  actor_area_radius 3
+}
+
+create_object STRANGETRADE 
+{
+  number_of_objects 1
+  number_of_groups 1
+  set_gaia_object_only
+  actor_area_to_place_in 97
+  min_distance_group_placement 4
+  avoid_actor_area 2018
+}
+
+create_object SIEGE_WORKSHOP
+{
+  number_of_objects 1
+  number_of_groups 1
+  set_gaia_object_only
+  actor_area_to_place_in 92
+  avoid_actor_area 93
+  min_distance_group_placement 4
+}
+
+create_object MAP_REVEALER
+{
+  number_of_objects 1
+  number_of_groups 1
+  set_gaia_object_only
+  actor_area_to_place_in 92
+  avoid_actor_area 93
+/*  min_distance_group_placement 3 */
+  actor_area 3373
+  actor_area_radius 5
+}
+
+create_object SKELETON
+{
+  number_of_objects 1
+  number_of_groups 5
+  set_gaia_object_only
+  actor_area_to_place_in 93
+  temp_min_distance_group_placement 2
+  avoid_actor_area 3373
+}
+
+create_object MRTORCH
+{
+  number_of_objects 1
+  set_gaia_object_only
+  set_loose grouping
+  actor_area_to_place_in 93
+  avoid_actor_area 96
+  min_distance_group_placement 1
+  avoid_actor_area 3373
+}
+
+create_object GOODSIES
+{
+  number_of_objects 1
+  number_of_groups 1
+  set_gaia_object_only
+  actor_area_to_place_in 95
+  temp_min_distance_group_placement 1
+  avoid_actor_area 3373
+}
+
+create_object SOMEBARRELS 
+{
+  number_of_objects 1
+  number_of_groups 1
+  set_gaia_object_only
+  actor_area_to_place_in 95
+  temp_min_distance_group_placement 1
+  avoid_actor_area 3373
+}
+
+create_object DLC_SHOTELWARRIOR 
+{
+  number_of_objects 1
+  number_of_groups 2
+  set_gaia_object_only
+  set_gaia_unconvertible
+  actor_area_to_place_in 93
+  temp_min_distance_group_placement 2
+  min_distance_group_placement 1
+  avoid_actor_area 3373
+}
+
+create_object BAOBAB_TREE
+{
+  number_of_objects 1
+  number_of_groups 4
+  set_gaia_object_only
+  actor_area_to_place_in 92
+  temp_min_distance_group_placement 4
+  avoid_actor_area 3373
+}
+
+create_object ACACIA_TREE
+{
+  number_of_objects 1
+  number_of_groups 4
+  set_gaia_object_only
+  actor_area_to_place_in 92
+  temp_min_distance_group_placement 6
+  avoid_actor_area 3373
+}
+
+
+
+
+
+
+
+/* 9 */
+
+
+
+
+create_object MAP_REVEALER
+{
+  number_of_objects 1
+  number_of_groups 1
+  set_gaia_object_only
+  actor_area 100
+  avoid_actor_area 21
+  avoid_actor_area 31
+  avoid_actor_area 41
+  avoid_actor_area 51
+  avoid_actor_area 61
+  avoid_actor_area 71
+  avoid_actor_area 81
+  avoid_actor_area 91
+  actor_area_radius 0
+  terrain_to_place_on ECOCAMPTERRAIN 
+}
+
+create_object MAP_REVEALER
+{
+  number_of_objects 1
+  set_gaia_object_only
+  set_loose grouping
+  actor_area_to_place_in 100
+  actor_area 102
+  actor_area_radius 6
+}
+
+create_object MAP_REVEALER
+{
+  number_of_objects 1
+  number_of_groups 1
+  set_gaia_object_only
+  actor_area_to_place_in 100
+  actor_area 103
+  actor_area_radius 3
+}
+
+create_object DLC_STELAE_C
+{
+  number_of_objects 1
+  number_of_groups 1
+  set_gaia_object_only
+  actor_area_to_place_in 100
+  actor_area 101
+  actor_area_radius 14
+  min_distance_group_placement 1
+}
+
+create_object MAP_REVEALER
+{
+  number_of_objects 1
+  number_of_groups 1
+  set_gaia_object_only
+  actor_area_to_place_in 102
+  avoid_actor_area 103
+  actor_area 104
+  actor_area_radius 0
+}
+
+create_object MAP_REVEALER
+{
+  number_of_objects 1
+  number_of_groups 1
+  set_gaia_object_only
+  actor_area_to_place_in 104
+  actor_area 107
+if STRANGEROOM
+  actor_area_radius 4
+else
+  actor_area_radius 2
+endif
+}
+
+create_object MAP_REVEALER
+{
+  number_of_objects 1
+  number_of_groups 1
+  set_gaia_object_only
+  actor_area_to_place_in 104
+  actor_area 105
+  actor_area_radius 3
+}
+
+create_object STRANGETRADE 
+{
+  number_of_objects 1
+  number_of_groups 1
+  set_gaia_object_only
+  actor_area_to_place_in 107
+  min_distance_group_placement 4
+}
+
+create_object SIEGE_WORKSHOP
+{
+  number_of_objects 1
+  number_of_groups 1
+  set_gaia_object_only
+  actor_area_to_place_in 102
+  avoid_actor_area 103
+  min_distance_group_placement 4
+}
+
+create_object MAP_REVEALER
+{
+  number_of_objects 1
+  number_of_groups 1
+  set_gaia_object_only
+  actor_area_to_place_in 102
+  avoid_actor_area 103
+/*  min_distance_group_placement 3 */
+  actor_area 3373
+  actor_area_radius 5
+}
+
+create_object SKELETON
+{
+  number_of_objects 1
+  number_of_groups 5
+  set_gaia_object_only
+  actor_area_to_place_in 103
+  temp_min_distance_group_placement 2
+  avoid_actor_area 3373
+}
+
+create_object MRTORCH
+{
+  number_of_objects 1
+  set_gaia_object_only
+  set_loose grouping
+  actor_area_to_place_in 103
+  avoid_actor_area 106
+  min_distance_group_placement 1
+  avoid_actor_area 3373
+}
+
+create_object GOODSIES
+{
+  number_of_objects 1
+  number_of_groups 1
+  set_gaia_object_only
+  actor_area_to_place_in 105
+  temp_min_distance_group_placement 1
+  avoid_actor_area 3373
+}
+
+create_object SOMEBARRELS 
+{
+  number_of_objects 1
+  number_of_groups 1
+  set_gaia_object_only
+  actor_area_to_place_in 105
+  temp_min_distance_group_placement 1
+  avoid_actor_area 3373
+}
+
+create_object DLC_SHOTELWARRIOR 
+{
+  number_of_objects 1
+  number_of_groups 2
+  set_gaia_object_only
+  set_gaia_unconvertible
+  actor_area_to_place_in 103
+  temp_min_distance_group_placement 2
+  min_distance_group_placement 1
+  avoid_actor_area 3373
+}
+
+create_object BAOBAB_TREE
+{
+  number_of_objects 1
+  number_of_groups 4
+  set_gaia_object_only
+  actor_area_to_place_in 102
+  temp_min_distance_group_placement 4
+  avoid_actor_area 3373
+}
+
+create_object ACACIA_TREE
+{
+  number_of_objects 1
+  number_of_groups 4
+  set_gaia_object_only
+  actor_area_to_place_in 102
+  temp_min_distance_group_placement 6
+  avoid_actor_area 3373
+}
+
+
+/* 10 */
+
+
+
+
+create_object MAP_REVEALER
+{
+  number_of_objects 1
+  number_of_groups 1
+  set_gaia_object_only
+  actor_area 110
+  avoid_actor_area 21
+  avoid_actor_area 31
+  avoid_actor_area 41
+  avoid_actor_area 51
+  avoid_actor_area 61
+  avoid_actor_area 71
+  avoid_actor_area 81
+  avoid_actor_area 91
+  avoid_actor_area 101
+  actor_area_radius 0
+  terrain_to_place_on ECOCAMPTERRAIN 
+}
+
+create_object MAP_REVEALER
+{
+  number_of_objects 1
+  set_gaia_object_only
+  set_loose grouping
+  actor_area_to_place_in 110
+  actor_area 112
+  actor_area_radius 6
+}
+
+create_object MAP_REVEALER
+{
+  number_of_objects 1
+  number_of_groups 1
+  set_gaia_object_only
+  actor_area_to_place_in 110
+  actor_area 113
+  actor_area_radius 3
+}
+
+create_object DLC_STELAE_C
+{
+  number_of_objects 1
+  number_of_groups 1
+  set_gaia_object_only
+  actor_area_to_place_in 110
+  actor_area 111
+  actor_area_radius 14
+  min_distance_group_placement 1
+}
+
+create_object MAP_REVEALER
+{
+  number_of_objects 1
+  number_of_groups 1
+  set_gaia_object_only
+  actor_area_to_place_in 112
+  avoid_actor_area 113
+  actor_area 114
+  actor_area_radius 0
+}
+
+create_object MAP_REVEALER
+{
+  number_of_objects 1
+  number_of_groups 1
+  set_gaia_object_only
+  actor_area_to_place_in 114
+  actor_area 117
+if STRANGEROOM
+  actor_area_radius 4
+else
+  actor_area_radius 2
+endif
+}
+
+create_object MAP_REVEALER
+{
+  number_of_objects 1
+  number_of_groups 1
+  set_gaia_object_only
+  actor_area_to_place_in 114
+  actor_area 115
+  actor_area_radius 3
+}
+
+create_object STRANGETRADE 
+{
+  number_of_objects 1
+  number_of_groups 1
+  set_gaia_object_only
+  actor_area_to_place_in 117
+  min_distance_group_placement 4
+}
+
+create_object SIEGE_WORKSHOP
+{
+  number_of_objects 1
+  number_of_groups 1
+  set_gaia_object_only
+  actor_area_to_place_in 112
+  avoid_actor_area 113
+  min_distance_group_placement 4
+}
+
+create_object MAP_REVEALER
+{
+  number_of_objects 1
+  number_of_groups 1
+  set_gaia_object_only
+  actor_area_to_place_in 112
+  avoid_actor_area 113
+/*  min_distance_group_placement 3 */
+  actor_area 3373
+  actor_area_radius 5
+}
+
+create_object SKELETON
+{
+  number_of_objects 1
+  number_of_groups 5
+  set_gaia_object_only
+  actor_area_to_place_in 113
+  temp_min_distance_group_placement 2
+  avoid_actor_area 3373
+}
+
+create_object MRTORCH
+{
+  number_of_objects 1
+  set_gaia_object_only
+  set_loose grouping
+  actor_area_to_place_in 113
+  avoid_actor_area 116
+  min_distance_group_placement 1
+  avoid_actor_area 3373
+}
+
+create_object GOODSIES
+{
+  number_of_objects 1
+  number_of_groups 1
+  set_gaia_object_only
+  actor_area_to_place_in 115
+  temp_min_distance_group_placement 1
+  avoid_actor_area 3373
+}
+
+create_object SOMEBARRELS 
+{
+  number_of_objects 1
+  number_of_groups 1
+  set_gaia_object_only
+  actor_area_to_place_in 115
+  temp_min_distance_group_placement 1
+  avoid_actor_area 3373
+}
+
+create_object DLC_SHOTELWARRIOR 
+{
+  number_of_objects 1
+  number_of_groups 2
+  set_gaia_object_only
+  set_gaia_unconvertible
+  actor_area_to_place_in 113
+  temp_min_distance_group_placement 2
+  min_distance_group_placement 1
+  avoid_actor_area 3373
+}
+
+create_object BAOBAB_TREE
+{
+  number_of_objects 1
+  number_of_groups 4
+  set_gaia_object_only
+  actor_area_to_place_in 112
+  temp_min_distance_group_placement 4
+  avoid_actor_area 3373
+}
+
+create_object ACACIA_TREE
+{
+  number_of_objects 1
+  number_of_groups 4
+  set_gaia_object_only
+  actor_area_to_place_in 112
+  temp_min_distance_group_placement 6
+  avoid_actor_area 3373
+}
+
+
+/* 11 */
+
+
+
+
+
+create_object MAP_REVEALER
+{
+  number_of_objects 1
+  number_of_groups 1
+  set_gaia_object_only
+  actor_area 120
+  avoid_actor_area 21
+  avoid_actor_area 31
+  avoid_actor_area 41
+  avoid_actor_area 51
+  avoid_actor_area 61
+  avoid_actor_area 71
+  avoid_actor_area 81
+  avoid_actor_area 91
+  avoid_actor_area 101
+  avoid_actor_area 111
+  actor_area_radius 0
+  terrain_to_place_on ECOCAMPTERRAIN 
+}
+
+create_object MAP_REVEALER
+{
+  number_of_objects 1
+  set_gaia_object_only
+  set_loose grouping
+  actor_area_to_place_in 120
+  actor_area 122
+  actor_area_radius 6
+}
+
+create_object MAP_REVEALER
+{
+  number_of_objects 1
+  number_of_groups 1
+  set_gaia_object_only
+  actor_area_to_place_in 120
+  actor_area 123
+  actor_area_radius 3
+}
+
+create_object DLC_STELAE_C
+{
+  number_of_objects 1
+  number_of_groups 1
+  set_gaia_object_only
+  actor_area_to_place_in 120
+  actor_area 121
+  actor_area_radius 14
+  min_distance_group_placement 1
+}
+
+create_object MAP_REVEALER
+{
+  number_of_objects 1
+  number_of_groups 1
+  set_gaia_object_only
+  actor_area_to_place_in 122
+  avoid_actor_area 123
+  actor_area 124
+  actor_area_radius 0
+}
+
+create_object MAP_REVEALER
+{
+  number_of_objects 1
+  number_of_groups 1
+  set_gaia_object_only
+  actor_area_to_place_in 124
+  actor_area 127
+if STRANGEROOM
+  actor_area_radius 4
+else
+  actor_area_radius 2
+endif
+}
+
+create_object MAP_REVEALER
+{
+  number_of_objects 1
+  number_of_groups 1
+  set_gaia_object_only
+  actor_area_to_place_in 124
+  actor_area 125
+  actor_area_radius 3
+}
+
+create_object STRANGETRADE 
+{
+  number_of_objects 1
+  number_of_groups 1
+  set_gaia_object_only
+  actor_area_to_place_in 127
+  min_distance_group_placement 4
+}
+
+create_object SIEGE_WORKSHOP
+{
+  number_of_objects 1
+  number_of_groups 1
+  set_gaia_object_only
+  actor_area_to_place_in 122
+  avoid_actor_area 123
+  min_distance_group_placement 4
+}
+
+create_object MAP_REVEALER
+{
+  number_of_objects 1
+  number_of_groups 1
+  set_gaia_object_only
+  actor_area_to_place_in 122
+  avoid_actor_area 123
+/*  min_distance_group_placement 3 */
+  actor_area 3373
+  actor_area_radius 5
+}
+
+create_object SKELETON
+{
+  number_of_objects 1
+  number_of_groups 5
+  set_gaia_object_only
+  actor_area_to_place_in 123
+  temp_min_distance_group_placement 2
+  avoid_actor_area 3373
+}
+
+create_object MRTORCH
+{
+  number_of_objects 1
+  set_gaia_object_only
+  set_loose grouping
+  actor_area_to_place_in 123
+  avoid_actor_area 126
+  min_distance_group_placement 1
+  avoid_actor_area 3373
+}
+
+create_object GOODSIES
+{
+  number_of_objects 1
+  number_of_groups 1
+  set_gaia_object_only
+  actor_area_to_place_in 125
+  temp_min_distance_group_placement 1
+  avoid_actor_area 3373
+}
+
+create_object SOMEBARRELS 
+{
+  number_of_objects 1
+  number_of_groups 1
+  set_gaia_object_only
+  actor_area_to_place_in 125
+  temp_min_distance_group_placement 1
+  avoid_actor_area 3373
+}
+
+create_object DLC_SHOTELWARRIOR 
+{
+  number_of_objects 1
+  number_of_groups 2
+  set_gaia_object_only
+  set_gaia_unconvertible
+  actor_area_to_place_in 123
+  temp_min_distance_group_placement 2
+  min_distance_group_placement 1
+  avoid_actor_area 3373
+}
+
+create_object BAOBAB_TREE
+{
+  number_of_objects 1
+  number_of_groups 4
+  set_gaia_object_only
+  actor_area_to_place_in 122
+  temp_min_distance_group_placement 4
+  avoid_actor_area 3373
+}
+
+create_object ACACIA_TREE
+{
+  number_of_objects 1
+  number_of_groups 4
+  set_gaia_object_only
+  actor_area_to_place_in 122
+  temp_min_distance_group_placement 6
+  avoid_actor_area 3373
+}
+
+
+/* 12 */
+
+
+
+
+
+create_object MAP_REVEALER
+{
+  number_of_objects 1
+  number_of_groups 1
+  set_gaia_object_only
+  actor_area 130
+  avoid_actor_area 21
+  avoid_actor_area 31
+  avoid_actor_area 41
+  avoid_actor_area 51
+  avoid_actor_area 61
+  avoid_actor_area 71
+  avoid_actor_area 81
+  avoid_actor_area 91
+  avoid_actor_area 101
+  avoid_actor_area 111
+  avoid_actor_area 121
+  actor_area_radius 0
+  terrain_to_place_on ECOCAMPTERRAIN 
+}
+
+create_object MAP_REVEALER
+{
+  number_of_objects 1
+  set_gaia_object_only
+  set_loose grouping
+  actor_area_to_place_in 130
+  actor_area 132
+  actor_area_radius 6
+}
+
+create_object MAP_REVEALER
+{
+  number_of_objects 1
+  number_of_groups 1
+  set_gaia_object_only
+  actor_area_to_place_in 130
+  actor_area 133
+  actor_area_radius 3
+}
+
+create_object DLC_STELAE_C
+{
+  number_of_objects 1
+  number_of_groups 1
+  set_gaia_object_only
+  actor_area_to_place_in 130
+  actor_area 131
+  actor_area_radius 14
+  min_distance_group_placement 1
+}
+
+create_object MAP_REVEALER
+{
+  number_of_objects 1
+  number_of_groups 1
+  set_gaia_object_only
+  actor_area_to_place_in 132
+  avoid_actor_area 133
+  actor_area 134
+  actor_area_radius 0
+}
+
+create_object MAP_REVEALER
+{
+  number_of_objects 1
+  number_of_groups 1
+  set_gaia_object_only
+  actor_area_to_place_in 134
+  actor_area 137
+if STRANGEROOM
+  actor_area_radius 4
+else
+  actor_area_radius 2
+endif
+}
+
+create_object MAP_REVEALER
+{
+  number_of_objects 1
+  number_of_groups 1
+  set_gaia_object_only
+  actor_area_to_place_in 134
+  actor_area 135
+  actor_area_radius 3
+}
+
+create_object STRANGETRADE 
+{
+  number_of_objects 1
+  number_of_groups 1
+  set_gaia_object_only
+  actor_area_to_place_in 137
+  min_distance_group_placement 4
+}
+
+create_object SIEGE_WORKSHOP
+{
+  number_of_objects 1
+  number_of_groups 1
+  set_gaia_object_only
+  actor_area_to_place_in 132
+  avoid_actor_area 133
+  min_distance_group_placement 4
+}
+
+create_object MAP_REVEALER
+{
+  number_of_objects 1
+  number_of_groups 1
+  set_gaia_object_only
+  actor_area_to_place_in 132
+  avoid_actor_area 133
+/*  min_distance_group_placement 3 */
+  actor_area 3373
+  actor_area_radius 5
+}
+
+create_object SKELETON
+{
+  number_of_objects 1
+  number_of_groups 5
+  set_gaia_object_only
+  actor_area_to_place_in 133
+  temp_min_distance_group_placement 2
+  avoid_actor_area 3373
+}
+
+create_object MRTORCH
+{
+  number_of_objects 1
+  set_gaia_object_only
+  set_loose grouping
+  actor_area_to_place_in 133
+  avoid_actor_area 136
+  min_distance_group_placement 1
+  avoid_actor_area 3373
+}
+
+create_object GOODSIES
+{
+  number_of_objects 1
+  number_of_groups 1
+  set_gaia_object_only
+  actor_area_to_place_in 135
+  temp_min_distance_group_placement 1
+  avoid_actor_area 3373
+}
+
+create_object SOMEBARRELS 
+{
+  number_of_objects 1
+  number_of_groups 1
+  set_gaia_object_only
+  actor_area_to_place_in 135
+  temp_min_distance_group_placement 1
+  avoid_actor_area 3373
+}
+
+create_object DLC_SHOTELWARRIOR 
+{
+  number_of_objects 1
+  number_of_groups 2
+  set_gaia_object_only
+  set_gaia_unconvertible
+  actor_area_to_place_in 133
+  temp_min_distance_group_placement 2
+  min_distance_group_placement 1
+  avoid_actor_area 3373
+}
+
+create_object BAOBAB_TREE
+{
+  number_of_objects 1
+  number_of_groups 4
+  set_gaia_object_only
+  actor_area_to_place_in 132
+  temp_min_distance_group_placement 4
+  avoid_actor_area 3373
+}
+
+create_object ACACIA_TREE
+{
+  number_of_objects 1
+  number_of_groups 4
+  set_gaia_object_only
+  actor_area_to_place_in 132
+  temp_min_distance_group_placement 6
+  avoid_actor_area 3373
+}
+
+
+
+
+
+
+
+if MAPSIZE_MINI
+
+#define AXUM_8OUTSIDE
+
+elseif MAPSIZE_TINY
+
+#define AXUM_8OUTSIDE
+
+elseif MAPSIZE_SMALL
+
+#define AXUM_8OUTSIDE
+
+elseif MAPSIZE_MEDIUM
+
+#define AXUM_12MEDIUM
+
+elseif MAPSIZE_NORMAL
+
+#define AXUM_12OUTSIDE
+
+elseif MAPSIZE_LARGE
+
+#define AXUM_12OUTSIDE
+
+elseif MAPSIZE_HUGE
+
+#define AXUM_12FAR
+
+elseif MAPSIZE_GIANT
+
+#define AXUM_12FAR
+
+elseif MAPSIZE_MASSIVE
+
+#define AXUM_12FAR
+
+else
+
+#define AXUM_12VERYFAR
+
+endif
+
+if AXUM_8OUTSIDE
+
+create_object BARRACKS
+{
+  number_of_objects 8
+  set_gaia_object_only
+  actor_area_to_place_in 3373
+  temp_min_distance_group_placement 12
+  actor_area 3374
+  actor_area_radius 2
+}
+
+create_object ARCHERY_RANGE
+{
+  number_of_objects 8
+  set_gaia_object_only
+  actor_area_to_place_in 3373
+  temp_min_distance_group_placement 12
+  actor_area 3375
+  actor_area_radius 2
+  avoid_actor_area 3374
+}
+
+create_object STABLE
+{
+  number_of_objects 8
+  set_gaia_object_only
+  actor_area_to_place_in 3373
+  temp_min_distance_group_placement 10
+  avoid_actor_area 3374
+  avoid_actor_area 3375
+}
+
+
+elseif AXUM_12MEDIUM
+
+
+
+create_object BARRACKS
+{
+  number_of_objects 12
+  set_gaia_object_only
+  actor_area_to_place_in 3373
+  temp_min_distance_group_placement 12
+  actor_area 3374
+  actor_area_radius 2
+}
+
+create_object ARCHERY_RANGE
+{
+  number_of_objects 12
+  set_gaia_object_only
+  actor_area_to_place_in 3373
+  temp_min_distance_group_placement 12
+  actor_area 3375
+  actor_area_radius 2
+  avoid_actor_area 3374
+}
+
+
+create_object STABLE
+{
+  number_of_objects 12
+  set_gaia_object_only
+  actor_area_to_place_in 3373
+  temp_min_distance_group_placement 10
+  avoid_actor_area 3374
+  avoid_actor_area 3375
+}
+
+elseif AXUM_12OUTSIDE
+
+
+
+create_object BARRACKS
+{
+  number_of_objects 12
+  set_gaia_object_only
+  actor_area_to_place_in 3373
+  temp_min_distance_group_placement 12
+  actor_area 3374
+  actor_area_radius 2
+}
+
+create_object ARCHERY_RANGE
+{
+  number_of_objects 12
+  set_gaia_object_only
+  actor_area_to_place_in 3373
+  temp_min_distance_group_placement 12
+  actor_area 3375
+  actor_area_radius 2
+  avoid_actor_area 3374
+}
+
+
+create_object STABLE
+{
+  number_of_objects 12
+  set_gaia_object_only
+  actor_area_to_place_in 3373
+  temp_min_distance_group_placement 10
+  avoid_actor_area 3374
+  avoid_actor_area 3375
+}
+
+
+elseif AXUM_12FAR
+
+
+
+create_object BARRACKS
+{
+  number_of_objects 12
+  set_gaia_object_only
+  actor_area_to_place_in 3373
+  temp_min_distance_group_placement 14
+  actor_area 3374
+  actor_area_radius 2
+}
+
+create_object ARCHERY_RANGE
+{
+  number_of_objects 12
+  set_gaia_object_only
+  actor_area_to_place_in 3373
+  temp_min_distance_group_placement 14
+  actor_area 3375
+  actor_area_radius 2
+  avoid_actor_area 3374
+}
+
+
+create_object STABLE
+{
+  number_of_objects 12
+  set_gaia_object_only
+  actor_area_to_place_in 3373
+  temp_min_distance_group_placement 10
+  avoid_actor_area 3374
+  avoid_actor_area 3375
+}
+
+
+
+elseif AXUM_12VERYFAR
+
+
+
+create_object BARRACKS
+{
+  number_of_objects 12
+  set_gaia_object_only
+  actor_area_to_place_in 3373
+  temp_min_distance_group_placement 20
+  actor_area 3374
+  actor_area_radius 2
+}
+
+create_object ARCHERY_RANGE
+{
+  number_of_objects 12
+  set_gaia_object_only
+  actor_area_to_place_in 3373
+  temp_min_distance_group_placement 20
+  actor_area 3375
+  actor_area_radius 2
+  avoid_actor_area 3374
+}
+
+
+create_object STABLE
+{
+  number_of_objects 12
+  set_gaia_object_only
+  actor_area_to_place_in 3373
+  temp_min_distance_group_placement 16
+  avoid_actor_area 3374
+  avoid_actor_area 3375
+}
+
+endif
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+/* Large camps in the center */
+
+
+/* central flag */
+
+
+
+create_object FLAG_C
+{
+  number_of_objects 1
+  number_of_groups 1
+  set_gaia_object_only
+  terrain_to_place_on ROAD
+  actor_area 11
+  actor_area_radius 10
+}
+
+
+/* castle in the center */
+
+/* central camps */
+
+create_object BLANKOBJECT
+{
+  number_of_objects 1
+  number_of_groups 999
+  set_gaia_object_only
+  terrain_to_place_on ROAD2
+  temp_min_distance_group_placement 1
+  actor_area_to_place_in 2008
+  avoid_actor_area 10
+  actor_area 2010
+  if MAPSIZE_TINY
+  actor_area_radius 5
+  elseif MAPSIZE_SMALL
+  actor_area_radius 5
+  else
+  actor_area_radius 6
+  endif
+}
+
+create_object GUARD_TOWER
+{
+  number_of_objects 1
+  number_of_groups 999
+  set_gaia_object_only
+  terrain_to_place_on ROAD2
+  temp_min_distance_group_placement 4
+  min_distance_group_placement 1
+  actor_area_to_place_in 2008
+  avoid_actor_area 10
+  /* set_gaia_unconvertible */
+}
+
+create_object HEAVY_SCORPION
+{
+  number_of_objects 1
+  number_of_groups 999
+  set_gaia_object_only
+  set_gaia_unconvertible
+  terrain_to_place_on ROAD2
+  temp_min_distance_group_placement 2
+  actor_area_to_place_in 2008
+  avoid_actor_area 10
+  actor_area 2009
+  actor_area_radius 2
+}
+
+create_object DLC_ELITESHOTELWARRIOR
+{
+  number_of_objects 1
+  number_of_groups 999
+  set_gaia_object_only
+  set_gaia_unconvertible
+  terrain_to_place_on ROAD2
+  temp_min_distance_group_placement 2
+  actor_area_to_place_in 2009
+  avoid_actor_area 10
+  avoid_actor_area 2008
+}
+
+create_object SIEGE_WORKSHOP
+{
+  number_of_objects 1
+  number_of_groups 4
+  set_gaia_object_only
+  terrain_to_place_on ROAD2
+  avoid_actor_area 2010
+if MAPSIZE_TINY
+  temp_min_distance_group_placement 22
+else
+  temp_min_distance_group_placement 27
+endif
+  min_distance_group_placement 5
+}
+
+create_object STRANGETRADE
+{
+  number_of_objects 1
+  number_of_groups 999
+  set_gaia_object_only
+  terrain_to_place_on ROAD2
+  avoid_actor_area 10
+  avoid_actor_area 2010
+  actor_area 2011
+  actor_area_radius 4
+  temp_min_distance_group_placement 8
+  min_distance_group_placement 3
+}
+
+
+if MAPSIZE_MINI
+#define 8_MILITARYBUILD
+elseif MAPSIZE_TINY
+#define 8_MILITARYBUILD
+elseif MAPSIZE_SMALL
+#define 8_MILITARYBUILD
+elseif MAPSIZE_MEDIUM
+#define 13_MILITARYBUILD
+elseif MAPSIZE_NORMAL
+#define 13_MILITARYBUILD
+elseif MAPSIZE_LARGE
+#define 13_MILITARYBUILD
+elseif MAPSIZE_HUGE
+#define 13_MILITARYBUILD
+elseif MAPSIZE_GIANT
+#define 13_MILITARYBUILD
+elseif MAPSIZE_MASSIVE
+#define 13_MILITARYBUILD
+else
+#define 18_MILITARYBUILD
+endif
+
+if 13_MILITARYBUILD
+
+create_object ARCHERY_RANGE
+{
+  number_of_objects 1
+  number_of_groups 13
+  set_gaia_object_only
+  actor_area_to_place_in 2011
+  temp_min_distance_group_placement 8
+  min_distance_group_placement 3
+}
+
+create_object STABLE
+{
+  number_of_objects 1
+  number_of_groups 13
+  set_gaia_object_only
+  actor_area_to_place_in 2011
+  temp_min_distance_group_placement 8
+  min_distance_group_placement 3
+}
+
+create_object BARRACKS
+{
+  number_of_objects 1
+  number_of_groups 13
+  set_gaia_object_only
+  actor_area_to_place_in 2011
+  temp_min_distance_group_placement 8
+  min_distance_group_placement 3
+}
+
+create_object MONASTERY
+{
+  number_of_objects 1
+  number_of_groups 6
+  set_gaia_object_only
+  actor_area_to_place_in 2011
+  temp_min_distance_group_placement 9
+}
+
+elseif 8_MILITARYBUILD
+
+
+create_object ARCHERY_RANGE
+{
+  number_of_objects 1
+  number_of_groups 8
+  set_gaia_object_only
+  actor_area_to_place_in 2011
+  temp_min_distance_group_placement 8
+  min_distance_group_placement 3
+}
+
+create_object STABLE
+{
+  number_of_objects 1
+  number_of_groups 8
+  set_gaia_object_only
+  actor_area_to_place_in 2011
+  temp_min_distance_group_placement 8
+  min_distance_group_placement 3
+}
+
+create_object BARRACKS
+{
+  number_of_objects 1
+  number_of_groups 8
+  set_gaia_object_only
+  actor_area_to_place_in 2011
+  temp_min_distance_group_placement 8
+  min_distance_group_placement 3
+}
+
+create_object MONASTERY
+{
+  number_of_objects 1
+  number_of_groups 6
+  set_gaia_object_only
+  actor_area_to_place_in 2011
+  temp_min_distance_group_placement 9
+}
+
+
+
+elseif 18_MILITARYBUILD
+
+create_object ARCHERY_RANGE
+{
+  number_of_objects 1
+  number_of_groups 18
+  set_gaia_object_only
+  actor_area_to_place_in 2011
+  temp_min_distance_group_placement 8
+  min_distance_group_placement 3
+}
+
+create_object STABLE
+{
+  number_of_objects 1
+  number_of_groups 18
+  set_gaia_object_only
+  actor_area_to_place_in 2011
+  temp_min_distance_group_placement 8
+  min_distance_group_placement 3
+}
+
+create_object BARRACKS
+{
+  number_of_objects 1
+  number_of_groups 18
+  set_gaia_object_only
+  actor_area_to_place_in 2011
+  temp_min_distance_group_placement 8
+  min_distance_group_placement 3
+}
+
+create_object MONASTERY
+{
+  number_of_objects 1
+  number_of_groups 8
+  set_gaia_object_only
+  actor_area_to_place_in 2011
+  temp_min_distance_group_placement 9
+}
+
+endif
+
+
+
+
+create_object CASTLE
+{
+  number_of_objects 1
+  number_of_groups 999
+  set_gaia_object_only
+  terrain_to_place_on ROAD
+  avoid_actor_area 1799
+  avoid_actor_area 2012
+  temp_min_distance_group_placement 6
+  actor_area 1781
+  actor_area_radius 4
+}
+
+
+create_object DLC_CAMELARCHER
+{
+  number_of_objects 1
+  number_of_groups 999
+  set_gaia_object_only
+  set_gaia_unconvertible
+  terrain_to_place_on ROAD
+  avoid_actor_area 1799
+  temp_min_distance_group_placement 1
+  actor_area 1782
+  actor_area_radius 4
+}
+
+create_object STRANGETRADE
+{
+  number_of_objects 1
+  number_of_groups 999
+  set_gaia_object_only
+  terrain_to_place_on ROAD
+  avoid_actor_area 1781
+  avoid_actor_area 1781
+  temp_min_distance_group_placement 15
+}
+

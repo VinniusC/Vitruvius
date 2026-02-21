@@ -1,0 +1,1107 @@
+; Jadwiga - Part II: Star of the Poles
+; Player 7: Lithuanian Villages / Lithuanian Rebels
+; AI by Lord Basse
+
+
+; Immobile start * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * 
+
+(defrule
+	(true)
+=>
+	(set-goal 1 0)
+	(disable-self)
+)
+
+(defrule ;villagers
+	(goal 1 0)
+=>
+	(set-strategic-number sn-maximum-food-drop-distance 15)
+	(set-strategic-number sn-maximum-wood-drop-distance 0)
+	(set-strategic-number sn-maximum-gold-drop-distance 0)
+	(set-strategic-number sn-maximum-hunt-drop-distance 0)
+	(set-strategic-number sn-maximum-stone-drop-distance 0)
+	(set-strategic-number sn-food-gatherer-percentage 100)
+	(set-strategic-number sn-wood-gatherer-percentage 0)
+	(set-strategic-number sn-gold-gatherer-percentage 0)
+	(set-strategic-number sn-stone-gatherer-percentage 0)
+	(set-strategic-number sn-cap-civilian-explorers 0)
+	(set-strategic-number sn-percent-civilian-explorers 0) 
+	(set-strategic-number sn-percent-civilian-builders 10)
+	(set-strategic-number sn-percent-civilian-gatherers 90)
+	(disable-self)
+)
+
+(defrule ;military
+	(goal 1 0)
+=>
+	(set-strategic-number sn-percent-enemy-sighted-response 100)
+	(set-strategic-number sn-hits-before-alliance-change 25)
+	(set-strategic-number sn-number-explore-groups 0)
+	(set-strategic-number sn-percent-attack-soldiers 0)
+	(set-strategic-number sn-task-ungrouped-soldiers 0)
+	(set-strategic-number sn-number-attack-groups 0)
+	(set-strategic-number sn-enemy-sighted-response-distance 10)
+	(set-strategic-number sn-total-number-explorers 0)
+	(set-strategic-number sn-relic-return-distance 0)
+	(set-strategic-number sn-minimum-town-size 0)
+	(set-strategic-number sn-maximum-town-size 0)
+	(disable-self)
+)
+
+(defrule
+	(building-type-count-total farm less-than 12)
+	(can-build farm)
+=>
+	(build farm)
+)
+
+
+; Difficulty levels & dodging missiles * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * 
+
+(defrule
+	(true)
+	(difficulty == easy)
+	=>
+	(set-signal 1); for trigger mechanics
+	(set-difficulty-parameter ability-to-maintain-distance 100)
+	(set-difficulty-parameter ability-to-dodge-missiles 100)
+	(disable-self)
+)
+
+(defrule
+	(true)
+	(difficulty == moderate)
+	=>
+	(set-signal 2); for trigger mechanics
+	(set-difficulty-parameter ability-to-maintain-distance 50)
+	(set-difficulty-parameter ability-to-dodge-missiles 50)
+	(disable-self)
+)
+
+(defrule
+	(true)
+	(difficulty == hard)
+	=>
+	(set-signal 3); for trigger mechanics
+	(set-difficulty-parameter ability-to-maintain-distance 30)
+	(set-difficulty-parameter ability-to-dodge-missiles 30)
+	(disable-self)
+)
+
+
+; Activated * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * 
+
+(defrule
+	(event-detected trigger 1)
+	=>
+	(set-goal 1 1)
+	(enable-timer 42 20)
+	(disable-self)
+)
+
+(defrule
+	(timer-triggered 42)
+=>
+	(attack-now)
+	(disable-self)
+)
+
+(defrule
+	(event-detected trigger 2)
+	=>
+;	(set-goal 1 0) ; they help you against Halych now instead
+	(enable-timer 4 10)
+	(disable-self)
+)
+
+(defrule ;villagers
+	(goal 1 1)
+=>
+	(set-strategic-number sn-percent-civilian-explorers 0)
+	(set-strategic-number sn-percent-civilian-builders 10)
+	(set-strategic-number sn-percent-civilian-gatherers 90)
+	(set-strategic-number sn-cap-civilian-explorers 0)
+	(set-strategic-number sn-cap-civilian-gatherers 100)
+	(set-strategic-number sn-food-gatherer-percentage  40)
+	(set-strategic-number sn-wood-gatherer-percentage  30)
+	(set-strategic-number sn-gold-gatherer-percentage  20)
+	(set-strategic-number sn-stone-gatherer-percentage 10)
+	(set-strategic-number sn-maximum-gold-drop-distance 20)
+	(set-strategic-number sn-maximum-stone-drop-distance 20)
+	(set-strategic-number sn-maximum-food-drop-distance 20) 
+	(set-strategic-number sn-maximum-wood-drop-distance 20)
+	(set-strategic-number sn-number-forward-builders 0)  
+	(set-strategic-number sn-maximum-town-size 20)
+        (set-strategic-number sn-camp-max-distance 35)
+        (set-strategic-number sn-mill-max-distance 25)
+	(set-strategic-number sn-blot-exploration-map 1)
+	(set-strategic-number sn-do-not-scale-for-difficulty-level 1)
+	(disable-self)
+)
+
+(defrule ;military
+	(goal 1 1)
+	(difficulty == easy)
+=>
+	(set-strategic-number sn-group-form-distance 50)
+	(set-strategic-number sn-maximum-attack-group-size 8)
+	(set-strategic-number sn-minimum-attack-group-size 3)
+	(set-strategic-number sn-percent-attack-soldiers 50)
+	(set-strategic-number sn-attack-group-size-randomness 0)
+	(set-strategic-number sn-percent-enemy-sighted-response 40)
+	(set-strategic-number sn-enemy-sighted-response-distance 20)
+	(set-strategic-number sn-number-explore-groups 1)
+	(set-strategic-number sn-task-ungrouped-soldiers 0)
+	(set-strategic-number sn-total-number-explorers 1)
+	(set-strategic-number sn-defense-distance 10)
+	(set-strategic-number sn-sentry-distance 10)
+	(set-strategic-number sn-wall-targeting-mode 1)
+	(set-strategic-number sn-attack-intelligence 0)
+	(disable-self)
+)
+
+(defrule
+	(goal 1 1)
+	(difficulty == moderate)
+=>
+	(set-strategic-number sn-group-form-distance 50)
+	(set-strategic-number sn-maximum-attack-group-size 15)
+	(set-strategic-number sn-minimum-attack-group-size 3)
+	(set-strategic-number sn-percent-attack-soldiers 50)
+	(set-strategic-number sn-attack-group-size-randomness 0)
+	(set-strategic-number sn-percent-enemy-sighted-response 50)
+	(set-strategic-number sn-enemy-sighted-response-distance 20)
+	(set-strategic-number sn-number-explore-groups 1)
+	(set-strategic-number sn-task-ungrouped-soldiers 0)
+	(set-strategic-number sn-total-number-explorers 1)
+	(set-strategic-number sn-defense-distance 15)
+	(set-strategic-number sn-sentry-distance 15)
+	(set-strategic-number sn-wall-targeting-mode 1)
+	(set-strategic-number sn-attack-intelligence 1)
+	(disable-self)
+)
+
+(defrule
+	(goal 1 1)
+	(difficulty == hard)
+=>
+	(set-strategic-number sn-group-form-distance 50)
+	(set-strategic-number sn-maximum-attack-group-size 20)
+	(set-strategic-number sn-minimum-attack-group-size 3)
+	(set-strategic-number sn-percent-attack-soldiers 50)
+	(set-strategic-number sn-attack-group-size-randomness 0)
+	(set-strategic-number sn-percent-enemy-sighted-response 50)
+	(set-strategic-number sn-enemy-sighted-response-distance 20)
+	(set-strategic-number sn-number-explore-groups 1)
+	(set-strategic-number sn-task-ungrouped-soldiers 0)
+	(set-strategic-number sn-total-number-explorers 1)
+	(set-strategic-number sn-defense-distance 20)
+	(set-strategic-number sn-sentry-distance 20)
+	(set-strategic-number sn-wall-targeting-mode 1)
+	(set-strategic-number sn-attack-intelligence 1)
+	(disable-self)
+)
+
+
+; Attacking * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * 
+
+; Hold off before next attack
+
+(defrule
+	(goal 1 1)
+	(difficulty == easy)
+=>
+	(enable-timer 1 600)
+	(disable-self)
+)
+
+(defrule
+	(goal 1 1)
+	(difficulty == moderate)
+=>
+	(enable-timer 1 420)
+	(disable-self)
+)
+
+(defrule
+	(goal 1 1)
+	(difficulty == hard)
+=>
+	(enable-timer 1 300)
+	(disable-self)
+)
+
+; Regular attacks
+
+(defrule
+	(timer-triggered 1)
+	(military-population >= 10)
+	(defend-soldier-count >= 10)
+	(not (town-under-attack))
+=>
+	(enable-timer 1 300) ; New interval
+	(attack-now)
+
+)
+
+; Army creation * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * 
+
+; Men-at-arms
+
+(defrule
+	(goal 1 1)
+	(unit-type-count-total militiaman-line < 3)
+	(can-train militiaman-line)
+	(difficulty == easy)
+=>
+	(train militiaman-line)
+)
+
+(defrule
+	(goal 1 1)
+	(unit-type-count-total militiaman-line < 5)
+	(can-train militiaman-line)
+	(difficulty == moderate)
+=>
+	(train militiaman-line)
+)
+
+(defrule
+	(goal 1 1)
+	(unit-type-count-total militiaman-line < 8)
+	(can-train militiaman-line)
+	(difficulty == hard)
+=>
+	(train militiaman-line)
+)
+
+; Spearmen
+
+(defrule
+	(goal 1 1)
+	(unit-type-count-total spearman-line < 5)
+	(can-train spearman-line)
+	(difficulty == easy)
+=>
+	(train spearman-line)
+)
+
+(defrule
+	(goal 1 1)
+	(unit-type-count-total spearman-line < 8)
+	(can-train spearman-line)
+	(difficulty == moderate)
+=>
+	(train spearman-line)
+)
+
+(defrule
+	(goal 1 1)
+	(unit-type-count-total spearman-line < 12)
+	(can-train spearman-line)
+	(difficulty == hard)
+=>
+	(train spearman-line)
+)
+
+; Archers
+
+(defrule
+	(goal 1 1)
+	(unit-type-count-total archer-line < 4)
+	(can-train archer-line)
+	(difficulty == easy)
+=>
+	(train archer-line)
+)
+
+(defrule
+	(goal 1 1)
+	(unit-type-count-total archer-line < 7)
+	(can-train archer-line)
+	(difficulty == moderate)
+=>
+	(train archer-line)
+)
+
+(defrule
+	(goal 1 1)
+	(unit-type-count-total archer-line < 10)
+	(can-train archer-line)
+	(difficulty == hard)
+=>
+	(train archer-line)
+)
+
+; Skirmishers
+
+(defrule
+	(goal 1 1)
+	(unit-type-count-total skirmisher-line < 3)
+	(can-train skirmisher-line)
+	(difficulty == easy)
+=>
+	(train skirmisher-line)
+)
+
+(defrule
+	(goal 1 1)
+	(unit-type-count-total skirmisher-line < 5)
+	(can-train skirmisher-line)
+	(difficulty == moderate)
+=>
+	(train skirmisher-line)
+)
+
+(defrule
+	(goal 1 1)
+	(unit-type-count-total skirmisher-line < 8)
+	(can-train skirmisher-line)
+	(difficulty == hard)
+=>
+	(train skirmisher-line)
+)
+
+; Scout cavalry
+
+(defrule
+	(goal 1 1)
+	(unit-type-count-total scout-cavalry-line < 5)
+	(can-train scout-cavalry-line)
+	(difficulty == easy)
+=>
+	(train scout-cavalry-line)
+)
+
+(defrule
+	(goal 1 1)
+	(unit-type-count-total scout-cavalry-line < 8)
+	(can-train scout-cavalry-line)
+	(difficulty == moderate)
+=>
+	(train scout-cavalry-line)
+)
+
+(defrule
+	(goal 1 1)
+	(unit-type-count-total scout-cavalry-line < 12)
+	(can-train scout-cavalry-line)
+	(difficulty == hard)
+=>
+	(train scout-cavalry-line)
+)
+
+
+
+; Villagers - always produced * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * 
+
+(defrule
+	(goal 1 0)
+	(unit-type-count-total villager less-than 12)
+	(can-train villager)
+=>
+	(train villager)
+	(chat-local-to-self "villager")
+)
+
+(defrule
+	(goal 1 1)
+	(unit-type-count-total villager less-than 25)
+	(can-train villager)
+=>
+	(train villager)
+	(chat-local-to-self "villager")
+)
+
+; Construction work * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * 
+
+(defrule
+	(goal 1 1)
+	(housing-headroom less-than 4)
+	(population-headroom greater-than 0)
+	(can-build house)
+=>
+	(build house)
+	(chat-local-to-self "house")
+)
+
+(defrule
+	(goal 1 1)
+	(building-type-count barracks less-than 1)
+	(can-build barracks)
+=>
+	(build barracks)
+)
+
+(defrule
+	(building-type-count market less-than 1)
+	(can-build market)
+=>
+	(build market)
+)
+
+(defrule
+	(goal 1 1)
+	(building-type-count archery-range less-than 1)
+	(can-build archery-range)
+=>
+	(build archery-range)
+)
+
+(defrule
+	(goal 1 1)
+	(building-type-count stable less-than 1)
+	(can-build stable)
+=>
+	(build stable)
+)
+
+
+(defrule
+	(goal 1 1)
+	(building-type-count blacksmith less-than 1)
+	(can-build blacksmith)
+=>
+	(build blacksmith)
+)
+
+(defrule
+	(building-type-count-total farm less-than 12)
+	(sheep-and-forage-too-far)
+	(can-build farm)
+=>
+	(build farm)
+)
+
+(defrule
+	(goal 1 1)
+	(resource-found wood)
+	(building-type-count-total lumber-camp < 3)
+	(dropsite-min-distance wood > 5)
+	(can-build lumber-camp)
+=>
+	(build lumber-camp)
+	(chat-local-to-self "wood place")
+)
+
+(defrule
+	(goal 1 1)
+	(resource-found gold)
+	(building-type-count-total mining-camp < 3)
+	(dropsite-min-distance gold > 7)
+	(can-build mining-camp)
+=>
+	(build mining-camp)
+	(chat-local-to-self "gold place")
+)
+
+(defrule
+	(goal 1 1)
+	(resource-found stone)
+	(building-type-count-total mining-camp < 3)
+	(dropsite-min-distance stone > 7)
+	(can-build mining-camp)
+=>
+	(build mining-camp)
+	(chat-local-to-self "stone place")
+)
+
+(defrule
+	(goal 1 1)
+	(dropsite-min-distance food greater-than 4)
+	(building-type-count-total mill less-than 3)
+	(can-build mill)
+=>
+	(build mill)
+	(chat-local-to-self "mill")
+)
+
+
+
+; Keep reserves for upgrades * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * 
+
+(defrule
+	(or
+		(or
+			(escrow-amount wood > 1000)
+			(escrow-amount food > 1000)
+		)
+		(or
+			(escrow-amount gold > 1000)
+			(escrow-amount stone > 1000)
+		)
+	)
+=>
+	(release-escrow wood)
+	(release-escrow food)
+	(release-escrow gold)
+	(release-escrow stone)
+)
+
+(defrule
+	(true)
+=>
+	(set-escrow-percentage wood 30)
+	(set-escrow-percentage food 30)
+	(set-escrow-percentage gold 30)
+	(set-escrow-percentage stone 30)
+)
+
+; Upgrades  * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * 
+
+(defrule
+	(goal 1 1)
+	(can-research-with-escrow ri-man-at-arms)
+=>
+	(release-escrow wood)
+	(release-escrow food)
+	(release-escrow gold)
+	(release-escrow stone)
+        (research ri-man-at-arms)
+)
+
+(defrule
+	(goal 1 1)
+	(not(difficulty == easy))
+	(can-research-with-escrow ri-bloodlines)
+=>
+	(release-escrow wood)
+	(release-escrow food)
+	(release-escrow gold)
+	(release-escrow stone)
+        (research ri-bloodlines)
+)
+
+(defrule
+	(goal 1 1)
+	(not(difficulty == easy))
+	(can-research-with-escrow ri-padded-archer-armor)
+=>
+	(release-escrow wood)
+	(release-escrow food)
+	(release-escrow gold)
+	(release-escrow stone)
+        (research ri-padded-archer-armor)
+)
+
+(defrule
+	(goal 1 1)
+	(not(difficulty == easy))
+	(can-research-with-escrow ri-fletching)
+=>
+	(release-escrow wood)
+	(release-escrow food)
+	(release-escrow gold)
+	(release-escrow stone)
+        (research ri-fletching)
+)
+
+
+(defrule
+	(goal 1 1)
+	(not (difficulty == easy)) 
+	(can-research-with-escrow ri-forging)
+=>
+	(release-escrow wood)
+	(release-escrow food)
+	(release-escrow gold)
+	(release-escrow stone)
+        (research ri-forging)
+)
+
+(defrule
+	(goal 1 1)
+	(not (difficulty == easy)) 
+	(can-research-with-escrow ri-scale-barding)
+=>
+	(release-escrow wood)
+	(release-escrow food)
+	(release-escrow gold)
+	(release-escrow stone)
+        (research ri-scale-barding)
+)
+
+(defrule
+	(goal 1 1)
+	(not (difficulty == easy)) 
+	(can-research-with-escrow ri-scale-mail)
+=>
+	(release-escrow wood)
+	(release-escrow food)
+	(release-escrow gold)
+	(release-escrow stone)
+        (research ri-scale-mail)
+)
+
+(defrule
+	(goal 1 1)
+	(can-research-with-escrow ri-wheel-barrow)
+=>
+	(release-escrow wood)
+	(release-escrow food)
+	(release-escrow gold)
+	(release-escrow stone)
+        (research ri-wheel-barrow)
+)
+
+(defrule
+	(goal 1 1)
+	(can-research-with-escrow ri-town-watch)
+=>
+	(release-escrow wood)
+	(release-escrow food)
+	(release-escrow gold)
+	(release-escrow stone)
+        (research ri-town-watch)
+)
+
+(defrule
+	(goal 1 1)
+	(not (difficulty == easy)) 
+	(can-research-with-escrow ri-gold-mining)
+=>
+	(release-escrow wood)
+	(release-escrow food)
+	(release-escrow gold)
+	(release-escrow stone)
+        (research ri-gold-mining)
+)
+
+(defrule
+	(goal 1 1)
+	(not (difficulty == easy)) 
+	(can-research-with-escrow ri-stone-mining)
+=>
+	(release-escrow wood)
+	(release-escrow food)
+	(release-escrow gold)
+	(release-escrow stone)
+        (research ri-stone-mining)
+)
+
+(defrule
+	(goal 1 1)
+	(not (difficulty == easy)) 
+	(can-research-with-escrow ri-double-bit-axe)
+=>
+	(release-escrow wood)
+	(release-escrow food)
+	(release-escrow gold)
+	(release-escrow stone)
+        (research ri-double-bit-axe)
+)
+
+(defrule
+	(goal 1 1)
+	(can-research-with-escrow ri-horse-collar)
+=>
+	(release-escrow wood)
+	(release-escrow food)
+	(release-escrow gold)
+	(release-escrow stone)
+        (research ri-horse-collar)
+)
+
+
+; Market * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * 
+
+(defrule
+	(gold-amount >= 1500)
+	(wood-amount <= 200)
+	(commodity-buying-price wood <= 150)
+	(can-buy-commodity wood)
+=>
+	(buy-commodity wood)
+)
+
+(defrule
+	(gold-amount >= 1500)
+	(food-amount <= 200)
+	(commodity-buying-price food <= 150)
+	(can-buy-commodity food)
+=>
+	(buy-commodity food)
+)
+
+(defrule
+	(gold-amount >= 500)
+	(food-amount <= 100)
+	(can-buy-commodity food)
+=>
+	(buy-commodity food)
+)
+
+(defrule
+	(gold-amount >= 2000)
+	(stone-amount <= 500)
+	(commodity-buying-price stone <= 100)
+	(can-buy-commodity stone)
+=>
+	(buy-commodity stone)
+)
+
+(defrule
+	(gold-amount >= 1500)
+	(stone-amount <= 200)
+	(commodity-buying-price stone <= 200)
+	(can-buy-commodity stone)
+=>
+	(buy-commodity stone)
+)
+
+(defrule
+	(wood-amount >= 2000)
+	(or
+		(gold-amount < 200)
+		(food-amount < 200)
+	)
+	(can-sell-commodity wood)
+=>
+	(sell-commodity wood)
+)
+
+(defrule
+	(food-amount >= 2000)
+	(or
+		(gold-amount < 200)
+		(wood-amount < 200)
+	)
+	(can-sell-commodity food)
+=>
+	(sell-commodity food)
+)
+
+(defrule
+	(stone-amount >= 1500)
+	(or
+		(or
+			(gold-amount < 200)
+			(wood-amount < 200)
+		)
+		(food-amount < 200)
+	)
+	(commodity-selling-price stone >= 70)
+	(can-sell-commodity stone)
+=>
+	(sell-commodity stone)
+)
+
+; Resign conditions * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * 
+
+(defrule
+        (building-type-count town-center < 1)
+=>
+	(resign)
+	(disable-self)
+)
+
+; Resource cheating if the game runs late * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * 
+
+(defrule
+	(goal 1 1)
+=>
+	(enable-timer 2 1800) ; starts cheating after 30 minutes of B&D
+	(enable-timer 3 1800) ; never run out of gold
+	(disable-self)
+)
+
+(defrule
+	(timer-triggered 2)
+=>
+	(chat-local-to-self "I think I need some resources")
+	(cc-add-resource food 500)
+	(cc-add-resource wood 500)
+	(cc-add-resource gold 500)
+	(cc-add-resource stone 125)
+	(disable-timer 2)
+	(enable-timer 2 900) ; cheat again after 15 minutes
+)
+
+(defrule
+	(timer-triggered 3)
+	(difficulty == easy)
+	(gold-amount < 200)
+=>
+	(cc-add-resource gold 60)
+	(disable-timer 3)
+	(enable-timer 3 60)
+)
+
+(defrule
+	(timer-triggered 3)
+	(difficulty == moderate)
+	(gold-amount < 300)
+=>
+	(cc-add-resource gold 60)
+	(disable-timer 3)
+	(enable-timer 3 60)
+)
+
+(defrule
+	(timer-triggered 3)
+	(difficulty == hard)
+	(gold-amount < 400)
+=>
+	(cc-add-resource gold 60)
+	(disable-timer 3)
+	(enable-timer 3 60)
+)
+
+; Taunt commands if they become your ally * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * 
+
+(defrule
+	(players-stance 1 ally)
+	(not(building-type-count market greater-or-equal 1))
+	(or
+		(taunt-detected 1 4)
+		(taunt-detected 1 5)
+	)
+	(or
+		(taunt-detected 1 6)
+		(taunt-detected 1 3)
+	)
+=>
+	(acknowledge-taunt 1 4)
+	(acknowledge-taunt 1 5)
+	(acknowledge-taunt 1 6)
+	(acknowledge-taunt 1 3)
+;	(chat-to-player 1 "I would help you, my Queen, if you hadn't destroyed my market earlier!")
+	(set-signal 10)
+)	
+
+(defrule
+	(building-type-count market greater-or-equal 1)
+	(players-stance 1 ally)
+	(taunt-detected 1 3) ; food, please!
+	(food-amount greater-or-equal 1000)
+	(timer-triggered 4)
+=>
+	(acknowledge-taunt 1 4)
+	(acknowledge-taunt 1 5)
+	(acknowledge-taunt 1 6)
+	(acknowledge-taunt 1 3)
+	(tribute-to-player 1 food 200)
+;	(chat-to-player 1 "We will give what we can spare.")
+	(set-signal 11)
+	(enable-timer 4 60)
+)
+
+(defrule
+	(building-type-count market greater-or-equal 1)
+	(players-stance 1 ally)
+	(taunt-detected 1 4) ; wood , please!
+	(wood-amount greater-or-equal 1000)
+	(timer-triggered 4)
+=>
+	(acknowledge-taunt 1 4)
+	(acknowledge-taunt 1 5)
+	(acknowledge-taunt 1 6)
+	(acknowledge-taunt 1 3)
+	(tribute-to-player 1 wood 200)
+;	(chat-to-player 1 "I don't need any firewood for the winter anyway...")
+	(set-signal 12)
+	(enable-timer 4 60)
+)
+
+(defrule
+	(building-type-count market greater-or-equal 1)
+	(players-stance 1 ally)
+	(taunt-detected 1 5) ; gold, please!
+	(gold-amount greater-or-equal 1000)
+	(timer-triggered 4)
+=>
+	(acknowledge-taunt 1 4)
+	(acknowledge-taunt 1 5)
+	(acknowledge-taunt 1 6)
+	(acknowledge-taunt 1 3)
+	(tribute-to-player 1 gold 100)
+;	(chat-to-player 1 "We never had much, but now it is yours... my Queen.")
+	(set-signal 13)
+	(enable-timer 4 60)
+)
+
+(defrule
+	(building-type-count market greater-or-equal 1)
+	(players-stance 1 ally)
+	(taunt-detected 1 6) ; stone , please!
+	(stone-amount greater-or-equal 500)
+	(timer-triggered 4)
+=>
+	(acknowledge-taunt 1 4)
+	(acknowledge-taunt 1 5)
+	(acknowledge-taunt 1 6)
+	(acknowledge-taunt 1 3)
+	(tribute-to-player 1 stone 100)
+;	(chat-to-player 1 "We were going to use this stone to build a wall, to protect")
+;	(chat-to-player 1 "ourselves from you. But I guess we don't need it anymore...")
+	(set-signal 14)
+	(enable-timer 4 60)
+)
+
+(defrule
+	(building-type-count market greater-or-equal 1)
+	(players-stance 1 ally)
+	(taunt-detected 1 3) ; food , please!
+	(food-amount less-than 1000)
+	(timer-triggered 4)
+=>
+	(acknowledge-taunt 1 3)
+	(acknowledge-taunt 1 4)
+	(acknowledge-taunt 1 5)
+	(acknowledge-taunt 1 6)
+;	(chat-to-player 1 "We have no food to spare at the moment, my Queen.")
+	(set-signal 15)
+	(enable-timer 4 10)
+)
+
+(defrule
+	(building-type-count market greater-or-equal 1)
+	(players-stance 1 ally)
+	(taunt-detected 1 4) ; wood, please!
+	(wood-amount less-than 1000)
+	(timer-triggered 4)
+=>
+	(acknowledge-taunt 1 3)
+	(acknowledge-taunt 1 4)
+	(acknowledge-taunt 1 5)
+	(acknowledge-taunt 1 6)
+;	(chat-to-player 1 "We have no wood to spare at the moment, my Queen.")
+	(set-signal 16)
+	(enable-timer 4 10)
+)
+
+(defrule
+	(building-type-count market greater-or-equal 1)
+	(players-stance 1 ally)
+	(taunt-detected 1 5) ; gold, please!
+	(gold-amount less-than 1000)
+	(timer-triggered 4)
+=>
+	(acknowledge-taunt 1 3)
+	(acknowledge-taunt 1 4)
+	(acknowledge-taunt 1 5)
+	(acknowledge-taunt 1 6)
+;	(chat-to-player 1 "We are but poor farmers, we have no gold to give you.")
+	(set-signal 17)
+	(enable-timer 4 10)
+)
+
+(defrule
+	(building-type-count market greater-or-equal 1)
+	(players-stance 1 ally)
+	(taunt-detected 1 6) ; stone, please!
+	(stone-amount less-than 1000)
+	(timer-triggered 4)
+=>
+	(acknowledge-taunt 1 3)
+	(acknowledge-taunt 1 4)
+	(acknowledge-taunt 1 5)
+	(acknowledge-taunt 1 6)
+;	(chat-to-player 1 "Get it yourself! ... I mean, get it yourself, Your Highness!")
+	(set-signal 18)
+	(enable-timer 4 10)
+)
+
+
+;ONLY PLACE MILLS AT FARMS (code by Henning von Bassi)
+
+(defconst min-farms			161)
+(defconst farming-level			191)
+(defconst g-temp 			143)
+(defconst gl-temp			144)
+(defconst gl-temp2			145)
+(defconst gl-temp3			146)
+(defconst gl-temp4			147)
+(defconst gl-temp5			148)
+(defconst gl-temp6			149)
+(defconst gl-cost-food 			160)
+(defconst gl-cost-wood 			161)
+(defconst gl-cost-stone 		162)
+(defconst gl-cost-gold 			163)
+(defconst object-data-under-attack 	35)
+(defconst gl-local-total		130)
+(defconst gl-point-x			100)
+(defconst gl-point-x2			103)
+(defconst gl-point-y2			104)
+(defconst minimum-dark-age-wood-for-farm 90)
+(defconst gl-escrow-state 		164)
+
+(defrule
+	(building-type-count mill > 0)
+	=>
+	(up-full-reset-search)
+	(set-strategic-number sn-focus-player-number my-player-number)
+	(up-get-fact building-type-count mill gl-temp3)
+	(up-modify-goal gl-temp3 c:min 8)
+	(set-goal gl-temp4 0)
+	(set-goal gl-temp5 -1)
+	)
+
+(defrule
+	(true)
+	=>
+	(up-modify-goal gl-temp4 c:+ 1)
+	(up-modify-goal gl-temp5 c:+ 1)
+	)
+
+(defrule
+	(building-type-count mill > 0)
+	=>
+	(up-reset-search 1 0 1 1)
+	(up-find-local c: mill g: gl-temp3)
+	(up-set-target-object search-local g: gl-temp5)
+	(up-get-point position-object gl-point-x)
+	(up-bound-point gl-point-x2 gl-point-x)
+	(up-modify-goal gl-point-x2 c:+ 2)
+	(up-build-line gl-point-x2 gl-point-x2 c: farm)
+	(up-bound-point gl-point-x2 gl-point-x)
+	(up-modify-goal gl-point-x2 c:- 1)
+	(up-modify-goal gl-point-y2 c:+ 2)
+	(up-build-line gl-point-x2 gl-point-x2 c: farm)
+	(up-bound-point gl-point-x2 gl-point-x)
+	(up-modify-goal gl-point-x2 c:- 3)
+	(up-modify-goal gl-point-y2 c:- 1)
+	(up-build-line gl-point-x2 gl-point-x2 c: farm)
+	)
+
+(defrule
+	(building-type-count town-center > 0)
+	=>
+	(up-bound-point gl-point-x2 gl-point-x)
+	(up-modify-goal gl-point-y2 c:- 3)
+	(up-build-line gl-point-x2 gl-point-x2 c: farm)
+	(up-bound-point gl-point-x2 gl-point-x)
+	(up-modify-goal gl-point-x2 c:+ 2)
+	(up-modify-goal gl-point-y2 c:+ 3)
+	(up-build-line gl-point-x2 gl-point-x2 c: farm)
+	(up-bound-point gl-point-x2 gl-point-x)
+	(up-modify-goal gl-point-x2 c:- 4)
+	(up-modify-goal gl-point-y2 c:+ 2)
+	(up-build-line gl-point-x2 gl-point-x2 c: farm)
+	(up-bound-point gl-point-x2 gl-point-x)
+	(up-modify-goal gl-point-x2 c:- 3)
+	(up-modify-goal gl-point-y2 c:- 4)
+	(up-build-line gl-point-x2 gl-point-x2 c: farm)
+	)
+
+(defrule
+	(building-type-count town-center > 0)
+	=>
+	(up-bound-point gl-point-x2 gl-point-x)
+	(up-modify-goal gl-point-x2 c:+ 3)
+	(up-modify-goal gl-point-y2 c:- 3)
+	(up-build-line gl-point-x2 gl-point-x2 c: farm)
+	)
+
+(defrule
+	(unit-type-count mill g:>= gl-temp3)
+	(up-compare-goal gl-temp4 < 8)
+	=>
+	(up-jump-rule -5)
+	)
+
+(defrule
+	(true)
+	=>
+	(up-modify-escrow wood g:= gl-temp)
+	)

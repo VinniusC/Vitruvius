@@ -1,0 +1,829 @@
+/* Mountain Ridge 2020 */
+
+#include_drs random_map.def 
+
+/* PH SEASONS */
+
+#define PH_AUTUMN
+
+/*
+start_random
+percent_chance 25 #define PH_ALPINE
+percent_chance 25 #define PH_ASIAN
+percent_chance 50 #define PH_AUTUMN
+end_random
+*/
+
+#include_drs F_seasons.inc
+
+<PLAYER_SETUP>
+random_placement
+  ai_info_map_type ARABIA 0 0 0
+
+#include_drs thebr_setup.inc
+
+<LAND_GENERATION>
+
+enable_waves 0
+
+base_terrain LAYER_A
+
+create_player_lands
+{
+  terrain_type LAYER_B
+  land_percent 2
+  base_size 12
+  circle_radius 33 0
+  border_fuzziness   15
+  clumping_factor 15
+  other_zone_avoidance_distance 3
+  base_elevation 0
+}
+
+
+start_random
+percent_chance 50 #define ROTATE_LEFT
+percent_chance 50 #define ROTATE_RIGHT
+end_random
+
+create_land
+{
+ terrain_type LAYER_C
+land_percent 7
+	if ROTATE_LEFT
+left_border 26
+right_border 60
+top_border 12
+bottom_border 28
+	elseif ROTATE_RIGHT
+left_border 12
+right_border 28
+top_border 26
+bottom_border 60
+	endif
+border_fuzziness 1
+base_elevation 4
+}
+
+create_land
+{
+ terrain_type LAYER_C
+land_percent 7
+	if ROTATE_LEFT
+left_border 60
+right_border 26
+top_border 28
+bottom_border 12
+	elseif ROTATE_RIGHT
+left_border 28
+right_border 12
+top_border 60
+bottom_border 26
+	endif
+border_fuzziness 1
+base_elevation 4
+}
+
+create_land
+{
+ terrain_type LAYER_C
+land_percent 4
+left_border 40
+right_border 40
+top_border 35
+bottom_border 35
+border_fuzziness 12
+base_elevation 4
+}
+
+
+/* *********************************** */
+<TERRAIN_GENERATION>
+
+/* SNOW ON TOP */
+
+create_terrain SNOW
+{
+base_terrain LAYER_C
+land_percent 100
+number_of_clumps 100
+height_limits 5 7
+spacing_to_other_terrain_types 0
+}
+
+create_terrain SNOW
+{
+base_terrain LAYER_C
+land_percent 100
+number_of_clumps 100
+height_limits 5 7
+spacing_to_other_terrain_types 0
+}
+
+create_terrain LAYER_C
+{
+base_terrain SNOW
+land_percent 4
+number_of_clumps 100
+height_limits 5 6
+spacing_to_other_terrain_types 0
+terrain_mask 2
+}
+
+create_terrain SNOW
+{
+base_terrain LAYER_A
+land_percent 16
+number_of_clumps 100
+height_limits 3 4
+terrain_mask 1
+}
+
+create_terrain SNOW
+{
+base_terrain LAYER_B
+land_percent 8
+number_of_clumps 100
+height_limits 3 4
+terrain_mask 1
+}
+
+create_terrain SNOW
+{
+base_terrain LAYER_B
+land_percent 1
+number_of_clumps 100
+height_limits 1 2
+terrain_mask 1
+}
+
+create_terrain SNOW
+{
+base_terrain LAYER_A
+land_percent 1
+number_of_clumps 100
+height_limits 1 2
+terrain_mask 1
+}
+
+/* SNOW ON TOP END */
+
+/* setting up the bogs */
+
+create_terrain DESERT
+{
+base_terrain LAYER_A
+land_percent 100
+number_of_clumps 1000
+spacing_to_other_terrain_types 4
+}
+
+create_terrain DLC_BOGLAND
+{
+base_terrain DESERT
+land_percent 6
+number_of_clumps 15 /* 20 */
+spacing_to_other_terrain_types 1
+set_avoid_player_start_areas
+set_scale_by_groups
+height_limits 0 0
+}
+
+/* individual starting forests */
+
+create_terrain DLC_ROCK
+{
+base_terrain LAYER_B
+land_percent 100
+number_of_clumps 1
+}
+
+create_terrain DLC_JUNGLEGRASS
+{
+base_terrain LAYER_B
+land_percent 100
+number_of_clumps 1
+}
+
+create_terrain GRASS2
+{
+base_terrain LAYER_B
+land_percent 100
+number_of_clumps 1
+}
+
+create_terrain DLC_CRACKED
+{
+base_terrain LAYER_B
+land_percent 100
+number_of_clumps 1
+}
+
+create_terrain DLC_DIRT4
+{
+base_terrain LAYER_B
+land_percent 100
+number_of_clumps 1
+}
+
+create_terrain DLC_SAVANNAH
+{
+base_terrain LAYER_B
+land_percent 100
+number_of_clumps 1
+}
+
+create_terrain ROAD
+{
+base_terrain LAYER_B
+land_percent 100
+number_of_clumps 1
+}
+
+create_terrain WOODIES
+{
+base_terrain LAYER_B
+number_of_tiles 40
+number_of_clumps 1
+spacing_to_other_terrain_types 0
+set_avoid_player_start_areas
+}
+
+create_terrain WOODIES
+{
+base_terrain GRASS2
+number_of_tiles 40
+number_of_clumps 1
+spacing_to_other_terrain_types 0
+set_avoid_player_start_areas
+}
+
+create_terrain WOODIES
+{
+base_terrain DLC_JUNGLEGRASS
+number_of_tiles 40
+number_of_clumps 1
+spacing_to_other_terrain_types 0
+set_avoid_player_start_areas
+}
+
+create_terrain WOODIES
+{
+base_terrain DLC_ROCK
+number_of_tiles 40
+number_of_clumps 1
+spacing_to_other_terrain_types 0
+set_avoid_player_start_areas
+}
+
+create_terrain WOODIES
+{
+base_terrain DLC_SAVANNAH
+number_of_tiles 40
+number_of_clumps 1
+spacing_to_other_terrain_types 0
+set_avoid_player_start_areas
+}
+
+create_terrain WOODIES
+{
+base_terrain DLC_DIRT4
+number_of_tiles 40
+number_of_clumps 1
+spacing_to_other_terrain_types 0
+set_avoid_player_start_areas
+}
+
+create_terrain WOODIES
+{
+base_terrain DLC_CRACKED
+number_of_tiles 40
+number_of_clumps 1
+spacing_to_other_terrain_types 0
+set_avoid_player_start_areas
+}
+
+create_terrain WOODIES
+{
+base_terrain ROAD
+number_of_tiles 40
+number_of_clumps 1
+spacing_to_other_terrain_types 0
+set_avoid_player_start_areas
+}
+
+
+
+
+create_terrain LAYER_B
+{
+base_terrain DLC_ROCK
+land_percent 100
+number_of_clumps 1000
+}
+
+create_terrain LAYER_B
+{
+base_terrain DLC_ROCK
+land_percent 100
+number_of_clumps 1000
+}
+
+create_terrain LAYER_B
+{
+base_terrain DLC_ROCK
+land_percent 100
+number_of_clumps 1000
+}
+
+create_terrain LAYER_B
+{
+base_terrain DLC_ROCK
+land_percent 100
+number_of_clumps 1000
+}
+
+create_terrain LAYER_B
+{
+base_terrain ROAD
+land_percent 100
+number_of_clumps 1000
+}
+
+create_terrain LAYER_B
+{
+base_terrain ROAD
+land_percent 100
+number_of_clumps 1000
+}
+
+create_terrain LAYER_B
+{
+base_terrain ROAD
+land_percent 100
+number_of_clumps 1000
+}
+
+create_terrain LAYER_B
+{
+base_terrain ROAD
+land_percent 100
+number_of_clumps 1000
+}
+
+create_terrain LAYER_B
+{
+base_terrain DLC_JUNGLEGRASS
+land_percent 100
+number_of_clumps 1000
+}
+
+create_terrain LAYER_B
+{
+base_terrain DLC_JUNGLEGRASS
+land_percent 100
+number_of_clumps 1000
+}
+
+create_terrain LAYER_B
+{
+base_terrain DLC_JUNGLEGRASS
+land_percent 100
+number_of_clumps 1000
+}
+
+create_terrain LAYER_B
+{
+base_terrain DLC_JUNGLEGRASS
+land_percent 100
+number_of_clumps 1000
+}
+
+create_terrain LAYER_B
+{
+base_terrain DLC_DIRT4
+land_percent 100
+number_of_clumps 1000
+}
+
+create_terrain LAYER_B
+{
+base_terrain DLC_DIRT4
+land_percent 100
+number_of_clumps 1000
+}
+
+create_terrain LAYER_B
+{
+base_terrain DLC_DIRT4
+land_percent 100
+number_of_clumps 1000
+}
+
+create_terrain LAYER_B
+{
+base_terrain DLC_DIRT4
+land_percent 100
+number_of_clumps 1000
+}
+
+create_terrain LAYER_B
+{
+base_terrain GRASS2
+land_percent 100
+number_of_clumps 1000
+}
+
+create_terrain LAYER_B
+{
+base_terrain GRASS2
+land_percent 100
+number_of_clumps 1000
+}
+
+create_terrain LAYER_B
+{
+base_terrain GRASS2
+land_percent 100
+number_of_clumps 1000
+}
+
+create_terrain LAYER_B
+{
+base_terrain GRASS2
+land_percent 100
+number_of_clumps 1000
+}
+
+create_terrain LAYER_B
+{
+base_terrain DLC_CRACKED
+land_percent 100
+number_of_clumps 1000
+}
+
+create_terrain LAYER_B
+{
+base_terrain DLC_CRACKED
+land_percent 100
+number_of_clumps 1000
+}
+
+create_terrain LAYER_B
+{
+base_terrain DLC_CRACKED
+land_percent 100
+number_of_clumps 1000
+}
+
+create_terrain LAYER_B
+{
+base_terrain DLC_CRACKED
+land_percent 100
+number_of_clumps 1000
+}
+create_terrain LAYER_B
+{
+base_terrain DLC_SAVANNAH
+land_percent 100
+number_of_clumps 1000
+}
+create_terrain LAYER_B
+{
+base_terrain DLC_SAVANNAH
+land_percent 100
+number_of_clumps 1000
+}
+create_terrain LAYER_B
+{
+base_terrain DLC_SAVANNAH
+land_percent 100
+number_of_clumps 1000
+}
+create_terrain LAYER_B
+{
+base_terrain DLC_SAVANNAH
+land_percent 100
+number_of_clumps 1000
+}
+
+/* individual forests - end */
+
+create_terrain LAYER_A
+{
+base_terrain LAYER_B
+land_percent 100
+number_of_clumps 1000
+}
+
+create_terrain WOODIES
+{
+base_terrain DESERT
+land_percent 8
+number_of_clumps 16
+spacing_to_other_terrain_types 1
+set_avoid_player_start_areas
+set_scale_by_groups
+}
+
+create_terrain LAYER_A
+{
+base_terrain DESERT
+land_percent 100
+number_of_clumps 1000
+}
+
+create_terrain LAYER_A
+{
+base_terrain DESERT
+land_percent 100
+number_of_clumps 1000
+}
+
+create_terrain LAYER_A
+{
+base_terrain DESERT
+land_percent 100
+number_of_clumps 1000
+}
+
+create_terrain LAYER_A
+{
+base_terrain DESERT
+land_percent 100
+number_of_clumps 1000
+}
+
+create_terrain DEEP_WATER
+{
+base_terrain DLC_BOGLAND
+land_percent 100
+number_of_clumps 1000
+spacing_to_other_terrain_types 1
+}
+
+create_terrain DEEP_WATER
+{
+base_terrain DLC_BOGLAND
+land_percent 100
+number_of_clumps 1000
+spacing_to_other_terrain_types 1
+}
+
+create_terrain DEEP_WATER
+{
+base_terrain DLC_BOGLAND
+land_percent 100
+number_of_clumps 1000
+spacing_to_other_terrain_types 1
+}
+
+/* Bogs end */
+
+/* PH Masking Patch B+C on A */
+
+   create_terrain LAYER_B
+{
+  base_terrain                   LAYER_A
+  number_of_clumps               32
+  spacing_to_other_terrain_types 0
+  land_percent                   22
+  set_scale_by_size
+}
+   create_terrain LAYER_C
+{
+  base_terrain                   LAYER_B
+  number_of_clumps               1000
+  spacing_to_other_terrain_types 2
+  land_percent                   100
+}
+   create_terrain LAYER_A
+{
+  base_terrain                   LAYER_B
+  number_of_clumps               1000
+  land_percent                   100
+terrain_mask 2
+}
+   create_terrain LAYER_A
+{
+  base_terrain                   LAYER_B
+  number_of_clumps               1000
+  land_percent                   100
+terrain_mask 2
+}
+   create_terrain LAYER_B
+{
+  base_terrain                   LAYER_C
+  number_of_clumps               1000
+  land_percent                   100
+}
+   create_terrain LAYER_B
+{
+  base_terrain                   LAYER_C
+  number_of_clumps               1000
+  land_percent                   100
+}
+
+   create_terrain LAYER_C
+{
+  base_terrain                   LAYER_A
+  number_of_clumps               32
+  spacing_to_other_terrain_types 1
+  land_percent                   10
+  set_scale_by_size
+terrain_mask 1
+}
+
+/* PH Masking Patch B+C on A - END */
+
+#include_drs F_ColorCorrection.inc
+
+<OBJECTS_GENERATION>
+
+#define GNR_NORMALTC
+#define GNR_STARTVILLS
+#define GNR_CLASSICSCOUT
+
+#define GNR_GIVERELICS
+#define GNR_RELICMODERN_MEDIUM
+
+#define GNR_REGICIDE_SPECIALTOWER
+#define EMP_W_GIVEKERSUB
+
+#define GNR_GIVEHERD_A
+#define GNR_GIVEHERD_B
+
+#define GNR_HERD4CLASSIC_A
+#define GNR_HERD22CLASSIC_B
+#define GNR_HERDBDIST_CL
+
+#define GNR_GIVELURES
+#define GNR_CLASSICLURES_ONE
+
+#define GNR_GIVEHUNT
+
+#define GNR_HUNT3OR4CLASSIC
+
+#define GNR_STARTINGGOLD
+#define GNR_STARTINGSTONE
+#define GNR_SPLITSTARTGOLDS
+
+#define GNR_STARTGOLD443M
+#define GNR_STARTSTONE22M
+
+#define GNR_RESCLOSE
+
+#include_drs GeneratingObjects.inc
+
+create_object MELKARYBA
+{
+  number_of_objects          9999
+     set_scaling_to_map_size
+     temp_min_distance_group_placement 1
+     set_gaia_object_only
+}
+
+/* DISTANT GOLD AND STONE in different areas */
+
+if BATTLE_ROYALE
+elseif INFINITE_RESOURCES
+else
+
+create_object GOLD
+{
+  number_of_groups 500
+  number_of_objects 4
+  group_placement_radius 2
+  set_tight_grouping
+  set_gaia_object_only
+  temp_min_distance_group_placement 21
+  min_distance_to_players    21
+  terrain_to_place_on SNOW
+  actor_area 66
+  actor_area_radius 3
+  avoid_forest_zone 2
+}
+
+create_object STONE
+{
+  number_of_groups 500
+  number_of_objects 3
+  group_placement_radius 2
+  set_tight_grouping
+  set_gaia_object_only
+  temp_min_distance_group_placement 12
+  max_distance_to_other_zones 2
+  min_distance_to_players    21
+  terrain_to_place_on SNOW
+  avoid_actor_area 66
+  actor_area 67
+  actor_area_radius 3
+  avoid_forest_zone 2
+}
+
+create_object DLC_IBEX
+{
+  number_of_groups 500
+  number_of_objects 4
+  group_placement_radius 2
+  set_loose_grouping
+  set_gaia_object_only
+  temp_min_distance_group_placement 16
+  min_distance_to_players    21
+  terrain_to_place_on SNOW
+  actor_area 68
+  actor_area_radius 3
+}
+
+endif
+
+if EMPIRE_WARS
+else
+
+create_object STRAGGLER
+{
+  number_of_objects             2
+  set_gaia_object_only
+  set_place_for_every_player
+  min_distance_to_players       5
+  max_distance_to_players       6
+  min_distance_group_placement  2
+}
+
+create_object STRAGGLER
+{
+  number_of_objects             3
+  set_gaia_object_only
+  set_place_for_every_player
+  min_distance_to_players       7
+  max_distance_to_players       9
+  min_distance_group_placement  2
+}
+
+endif
+
+create_object DLC_DEADTREE 
+{
+  number_of_groups 9999
+  number_of_objects             2
+  set_gaia_object_only
+  temp_min_distance_group_placement  9
+terrain_to_place_on SNOW
+  avoid_actor_area 66
+  avoid_actor_area 67
+  avoid_forest_zone 2
+
+}
+
+create_object BIRDS_A
+{
+   number_of_objects         4
+   set_scaling_to_map_size
+}
+
+if BATTLE_ROYALE
+else
+
+create_object PREDATOR_A
+{
+     number_of_groups 30
+     set_loose_grouping
+        number_of_objects 1
+     set_gaia_object_only
+     temp_min_distance_group_placement 48
+     min_distance_to_players 32
+terrain_to_place_on SNOW
+}
+
+endif
+
+/* ****************************************************** */
+
+<ELEVATION_GENERATION>
+
+create_elevation     7
+{
+base_terrain LAYER_C
+number_of_clumps  600
+number_of_tiles 4400
+set_scale_by_groups
+set_scale_by_size
+}
+
+create_elevation     7
+{
+base_terrain LAYER_C
+number_of_clumps  600
+number_of_tiles 4400
+set_scale_by_groups
+set_scale_by_size
+}
+
+create_elevation     7
+{
+base_terrain LAYER_C
+number_of_clumps  600
+number_of_tiles 4400
+set_scale_by_groups
+set_scale_by_size
+}

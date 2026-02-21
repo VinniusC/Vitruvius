@@ -1,0 +1,17 @@
+# Backup files
+*.*~
+*~
+*.swp
+*.user
+
+# IDE Files
+*.kdev4
+
+# build subdirectory
+build/
+*debug/
+*release/
+.vs/
+
+# generated files by doxygen
+doc/

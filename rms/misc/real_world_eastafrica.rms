@@ -1,0 +1,440 @@
+/* ************ EAST AFRICA ************ */
+
+#include_drs random_map.def
+
+/* ****************************************************** */
+<TERRAIN_GENERATION>
+
+create_terrain GRASS2
+{
+base_terrain GRASS
+number_of_clumps               100
+land_percent 100
+}
+
+create_terrain GRASS2
+{
+base_terrain GRASS
+number_of_clumps               100
+land_percent 100
+}
+
+create_terrain GRASS
+{
+base_terrain GRASS3
+number_of_clumps               100
+land_percent 100
+}
+
+create_terrain GRASS
+{
+base_terrain GRASS3
+number_of_clumps               100
+land_percent 100
+}
+
+create_terrain GRASS3
+{
+base_terrain DIRT3
+number_of_clumps               100
+land_percent 100
+}
+
+create_terrain GRASS3
+{
+base_terrain DIRT3
+number_of_clumps               100
+land_percent 100
+}
+
+create_terrain DIRT3
+{
+base_terrain DIRT2
+number_of_clumps               100
+land_percent 100
+}
+
+create_terrain DIRT3
+{
+base_terrain DIRT2
+number_of_clumps               100
+land_percent 100
+}
+
+#define WMASK_NOSEASONS
+#include_drs F_WaterMasking.inc
+
+#const SAVANNAH 41
+
+create_terrain SAVANNAH
+{
+  base_terrain                   GRASS
+  spacing_to_other_terrain_types 0
+  land_percent                   100
+  number_of_clumps               100
+}
+
+create_terrain SAVANNAH
+{
+  base_terrain                   GRASS
+  spacing_to_other_terrain_types 0
+  land_percent                   100
+  number_of_clumps               100
+}
+
+create_terrain SAVANNAH
+{
+  base_terrain                   GRASS3
+  spacing_to_other_terrain_types 0
+  land_percent                   100
+  number_of_clumps               100
+}
+
+create_terrain SAVANNAH
+{
+  base_terrain                   DIRT3
+  spacing_to_other_terrain_types 0
+  land_percent                   100
+  number_of_clumps               100
+}
+
+create_terrain ROAD
+{
+  base_terrain                   DESERT
+  spacing_to_other_terrain_types 2
+  land_percent                   100
+  number_of_clumps               1000
+}
+
+create_terrain DIRT
+{
+  base_terrain                   DESERT
+  land_percent                   100
+  number_of_clumps               100
+  terrain_mask 1
+}
+
+create_terrain DIRT
+{
+  base_terrain                   DESERT
+  land_percent                   100
+  number_of_clumps               100
+  terrain_mask 1
+}
+
+create_terrain DESERT
+{
+  base_terrain                   ROAD
+  land_percent                   100
+  number_of_clumps               100
+}
+
+create_terrain DESERT
+{
+  base_terrain                   ROAD
+  land_percent                   100
+  number_of_clumps               100
+}
+
+create_terrain ROAD
+{
+  base_terrain                   GRASS2
+  spacing_to_other_terrain_types 3
+  land_percent                   100
+  number_of_clumps               100
+}
+
+create_terrain DLC_DIRT4
+{
+  base_terrain                   GRASS2
+  land_percent                   100
+  number_of_clumps               100
+  terrain_mask 1
+}
+
+create_terrain GRASS2
+{
+  base_terrain                   ROAD
+  land_percent                   100
+  number_of_clumps               100
+}
+
+create_terrain GRASS2
+{
+  base_terrain                   ROAD
+  land_percent                   100
+  number_of_clumps               100
+}
+
+create_terrain JUNGLE
+{
+  base_terrain                   GRASS2
+  spacing_to_other_terrain_types 1
+  land_percent                   3
+  number_of_clumps               7
+  set_avoid_player_start_areas     
+  set_scale_by_groups
+}
+
+create_terrain DLC_JUNGLEGRASS
+{
+  base_terrain                   GRASS2
+  land_percent                   6
+  number_of_clumps               19
+  terrain_mask 1
+}
+
+#const ACCACIA_FOREST 50
+
+create_terrain ACCACIA_FOREST 
+{
+  base_terrain                   SAVANNAH
+  spacing_to_other_terrain_types 4
+  land_percent                   7
+  number_of_clumps               9
+  set_avoid_player_start_areas     
+  set_scale_by_groups
+}
+
+#const DIRT4 42
+#const BAOBAB_FOREST 49
+
+create_terrain BAOBAB_FOREST 
+{
+  base_terrain                   DIRT4
+  spacing_to_other_terrain_types 4
+  land_percent                   8
+  number_of_clumps               9
+  set_avoid_player_start_areas     
+  set_scale_by_groups
+}
+
+create_terrain JUNGLE
+{
+  base_terrain                   GRASS
+  spacing_to_other_terrain_types 1
+  land_percent                   3
+  number_of_clumps               6
+  set_avoid_player_start_areas     
+  set_scale_by_groups
+}
+
+create_terrain FOREST
+{
+  base_terrain                   GRASS3
+  spacing_to_other_terrain_types 3
+  land_percent                   2
+  number_of_clumps               8
+  set_avoid_player_start_areas     
+  set_scale_by_groups
+}
+
+create_terrain PALM_DESERT
+{
+  base_terrain                   DIRT
+  spacing_to_other_terrain_types 3
+  land_percent                   1
+  number_of_clumps               3
+  set_avoid_player_start_areas     
+  set_scale_by_groups
+}
+
+create_terrain FOREST
+{
+  base_terrain                   DIRT3
+  spacing_to_other_terrain_types 3
+  land_percent                   1
+  number_of_clumps               6
+  set_avoid_player_start_areas     
+  set_scale_by_groups
+}
+
+create_terrain PALM_DESERT
+{
+  base_terrain                   DESERT
+  spacing_to_other_terrain_types 3
+  number_of_tiles 10
+  number_of_clumps               6
+  set_avoid_player_start_areas     
+  set_scale_by_groups
+}
+
+create_terrain DIRT3
+{
+  base_terrain                   GRASS
+  spacing_to_other_terrain_types 1
+  land_percent                   2
+  number_of_clumps               6
+  set_scale_by_groups
+  terrain_mask 1
+}
+
+create_terrain DLC_DIRT4
+{
+  base_terrain                   SAVANNAH
+  spacing_to_other_terrain_types 1
+  land_percent                   6
+  number_of_clumps               12
+  set_scale_by_groups
+  terrain_mask 2
+}
+
+create_terrain DESERT
+{
+  base_terrain                   DIRT
+  spacing_to_other_terrain_types 3
+  land_percent                   4
+  number_of_clumps               12
+  set_scale_by_groups
+  terrain_mask 1
+}
+
+color_correction	CC_DESERT
+
+/* ****************************************************** */
+
+<OBJECTS_GENERATION>
+
+start_random
+percent_chance 50
+#const HUNTABLE 1019
+percent_chance 50
+#const HUNTABLE 1026
+end_random
+
+#const HERDABLE_A 1060
+#const HERDABLE_B 1060
+#const LURABLE_A 1301
+#const LURABLE_B 1301
+
+#const PREDATOR_A 1031
+#const PREDATOR_B 1029
+
+#define GNR_NORMALTC
+#define GNR_STARTVILLS
+#define GNR_CLASSICSCOUT
+
+#define GNR_REGICIDECLASSIC
+
+#define GNR_GIVEHERD_A
+#define GNR_GIVEHERD_B
+
+#define GNR_HERD4CLASSIC_A
+#define GNR_HERD22CLASSIC_B
+#define GNR_HERDBDIST_CL
+
+#define GNR_GIVEHUNT
+#define GNR_HUNT6MODERN
+
+#define GNR_GIVELURES
+#define GNR_CLASSICLURES
+
+#define GNR_STARTINGGOLD
+#define GNR_STARTINGSTONE
+#define GNR_EMP_CLUMPLUMBER
+
+#define GNR_STARTGOLD74M
+#define GNR_STARTSTONE44M
+
+#define GNR_STARTGS_5WBLOCK
+
+#define GNR_FARGMODERN_GIVE
+#define GNR_FARSMODERN_GIVE
+#define GNR_FARG_AVOID20PL
+#define GNR_FARS_AVOID20PL
+#define GNR_FARS_GENEROUS
+#define GNR_FARG_GENEROUS
+
+#const KERICEK 1059
+
+#define GNR_6KER
+
+#const STRAGGLER 1063
+#define GNR_HOMESTRAGGLE
+#define GNR_GIVERELICS
+#define GNR_RELICMODERN_MEDIUM
+
+#include_drs GeneratingObjects.inc
+
+/* Captain Fin */
+
+create_object DORADO
+{
+  number_of_objects 999
+  set_scaling_to_map_size
+  set_gaia_object_only
+  max_distance_to_other_zones 5
+     temp_min_distance_group_placement 7
+}
+
+create_object SHORE_FISH
+{
+  number_of_objects 25
+     set_scaling_to_map_size
+     min_distance_group_placement 5
+     set_gaia_object_only
+}
+
+/* Captain Fin end */
+
+create_object PREDATOR_B
+{
+     number_of_groups 30
+     set_loose_grouping
+        number_of_objects 1
+     set_gaia_object_only
+     temp_min_distance_group_placement 60
+  min_distance_to_players 26
+terrain_to_place_on SAVANNAH
+}
+
+create_object PREDATOR_A
+{
+     number_of_groups 30
+     set_loose_grouping
+        number_of_objects 1
+     set_gaia_object_only
+     temp_min_distance_group_placement 60
+  min_distance_to_players 26
+terrain_to_place_on GRASS2
+}
+
+#const STORK 1028
+
+create_object STORK
+{
+     number_of_objects 4
+     set_scaling_to_map_size
+}
+
+/* ****************************************************** */
+
+<ELEVATION_GENERATION>
+
+create_elevation        3
+{
+  base_terrain                DESERT
+  number_of_clumps 		7
+  number_of_tiles 		800
+  set_scale_by_groups
+  set_scale_by_size           
+}
+
+create_elevation        3
+{
+  base_terrain                DIRT
+  number_of_clumps 		7
+  number_of_tiles 		800
+  set_scale_by_groups
+  set_scale_by_size           
+}
+
+create_elevation        1
+{
+  base_terrain                GRASS
+  number_of_clumps 		7
+  number_of_tiles 		800
+  set_scale_by_groups
+  set_scale_by_size           
+}
+

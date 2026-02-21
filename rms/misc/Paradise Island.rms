@@ -1,0 +1,1186 @@
+/*
+
+	Paradise Island by Ensemble Studios
+	Reimagined by Forgotten Empires
+
+	Created: Likely in late 2000.
+	Updated: 27/10/2024
+	
+	Version: 2.0
+
+*/
+
+#const MAPSCALE_MODIFIER 1.05
+#include_drs includes/scaling.inc
+
+/* ----------------------------------- Debug Settings */
+
+/* #define DEBUG_MODE */
+/* #define TERRAIN_DEBUGGING */
+/* #define EMPIRE_WARS_TESTING */
+#define COLLAPSE
+
+/* ----------------------------------- Generation Settings */
+
+#define INDOMALAYAN_TROPICAL
+/* #define CENTRALISE_SPAWN */
+/* #define RESTRICTED_SPAWN */
+
+/* ----------------------------------- Nomad Settings */
+
+/* #define NOMAD_MAP */
+/* #define NOMAD_SCATTERED */
+/* #define NOMAD_UNIT */
+#define NOMAD_TREATY
+/* #define NOMAD_HERDABLE */
+
+/* ----------------------------------- Themes & Overwrites */
+
+#define OVERWRITES
+if OVERWRITES
+endif
+
+#define MAP_CONSTANTS
+if MAP_CONSTANTS
+	#const STRAGGLER_SPAWN 1146 /* Rainforest Tree */
+	#const STRAGGLER_NEUTRAL 1146 /* Rainforest Tree */
+	
+	#const BEACH_TERRAIN 2
+
+	#const BASE_FOREST 56
+	#const BASE_FOREST_VARIATION 112
+	#const BASE_FOREST_EDGE 20
+	#const BASE_FOREST_BLEND 77
+
+	#const BASE_TERRAIN 60
+	#const BASE_BLEND_A 5
+	#const BASE_BLEND_B 100
+	#const BASE_BLEND_C 77
+	#const BASE_BLEND_D 0
+
+	#const COASTAL_TERRAIN 14
+
+	#const MIDDLE_TERRAIN 101
+	#const MIDDLE_TERRAIN_BLEND 111
+	#const MIDDLE_FOREST 92
+
+	#const BLOCKER_TERRAIN 40
+	#const BLOCKER_BLEND 83
+
+	#const AESTHETIC_A 1091 /* Animal Skeleton */
+	#const AESTHETIC_B 709 /* Cactus */
+
+	#const RELIC_TERRAIN 101
+endif
+
+#include_drs includes/themes.inc
+#include_drs includes/constants.inc
+#include_drs includes/decay.inc
+
+<PLAYER_SETUP>
+	#include_drs includes/preliminaries.inc
+	#include_drs includes/gaia_civilisation.inc
+
+	#define WATER_DEFAULT
+	#include_drs includes/water_preset.inc
+	water_definition WATER_PRESET
+
+	random_placement
+	ai_info_map_type COASTAL 0 0
+
+	effect_amount GAIA_UPGRADE_UNIT TREE_PINE TREE_MANGROVE 0
+	effect_amount GAIA_UPGRADE_UNIT TREE_OAK TREE_RAINFOREST 0
+
+	if CONFINED_SETUP
+		#const CONFINED_INCREASE 1.2
+	else
+		#const CONFINED_INCREASE 1
+	endif
+	
+<LAND_GENERATION>
+	base_terrain WATER_SHALLOW
+
+	create_land
+	{
+		terrain_type SHALLOWS
+		land_percent 100
+		base_size 2
+		clumping_factor 15
+		top_border 44
+		left_border 44
+		right_border 44
+		bottom_border 44
+		land_position 50 50
+		land_id 420
+	}
+
+	create_player_lands
+	{
+		terrain_type COASTAL_TERRAIN
+		land_percent 100
+		base_size 4
+		clumping_factor 15
+		top_border 12
+		left_border 12
+		right_border 12
+		bottom_border 12
+		border_fuzziness 6
+
+		if MAPSIZE_MINI
+			circle_radius 27 0
+		elseif MAPSIZE_TINY
+			circle_radius 28 0
+		elseif MAPSIZE_SMALL
+			circle_radius 28 0
+		elseif MAPSIZE_MEDIUM
+			circle_radius 29 0
+		elseif MAPSIZE_NORMAL
+			circle_radius 30 0
+		elseif MAPSIZE_LARGE
+			circle_radius 31 0
+		elseif MAPSIZE_HUGE
+			circle_radius 32 0
+		elseif MAPSIZE_GIANT
+			circle_radius 33 0
+		elseif MAPSIZE_MASSIVE
+			circle_radius 33 0
+		elseif MAPSIZE_ENORMOUS
+			circle_radius 33 0
+		elseif MAPSIZE_COLOSSAL
+			circle_radius 33 0
+		elseif MAPSIZE_INCREDIBLE
+			circle_radius 33 0
+		elseif MAPSIZE_MONSTROUS
+			circle_radius 33 0
+		elseif MAPSIZE_LUDICROUS
+			circle_radius 33 0
+		endif
+	}
+
+<ELEVATION_GENERATION>
+	create_elevation 3
+	{
+		enable_balanced_elevation
+		base_terrain COASTAL_TERRAIN
+
+		number_of_tiles (256 * MAPSCALE_AREA)
+		number_of_clumps (16 * MAPSCALE_AREA)
+	}
+
+<CLIFF_GENERATION>
+	#include_drs includes/cliffs.inc
+	cliff_type CLIFF_TYPE
+
+<TERRAIN_GENERATION>
+	#include_drs includes/colour.inc
+
+
+	create_terrain PLACEHOLDER_TERRAIN_A
+	{
+		base_terrain WATER_SHALLOW
+		land_percent 100
+		number_of_clumps 512
+		set_scale_by_groups
+		spacing_to_other_terrain_types 1
+	}
+
+	create_terrain SHALLOWS
+	{
+		base_terrain WATER_SHALLOW
+		number_of_tiles (256 * MAPSCALE_MODIFIER)
+		number_of_clumps (160 * MAPSCALE_MODIFIER)
+		set_scale_by_size
+		set_scale_by_groups
+	}
+
+	create_terrain WATER_SHALLOW
+	{
+		base_terrain PLACEHOLDER_TERRAIN_A
+		land_percent 100
+		number_of_clumps 512
+		set_scale_by_groups
+	}
+
+	create_terrain WATER_SHALLOW
+	{
+		base_terrain PLACEHOLDER_TERRAIN_A
+		land_percent 1
+		number_of_clumps 256
+		set_scale_by_groups
+	}
+
+	create_terrain WATER_SHALLOW
+	{
+		base_terrain PLACEHOLDER_TERRAIN_A
+		land_percent 100
+		number_of_clumps 512
+		set_scale_by_groups
+	}
+
+	create_terrain WATER_SHALLOW
+	{
+		base_terrain PLACEHOLDER_TERRAIN_A
+		land_percent 100
+		number_of_clumps 512
+		set_scale_by_groups
+	}
+
+	create_terrain MIDDLE_FOREST
+	{
+		base_terrain SHALLOWS
+		land_percent 100
+		number_of_clumps 512
+		set_scale_by_groups
+		spacing_to_other_terrain_types 2
+	}
+	
+	create_terrain MIDDLE_TERRAIN
+	{
+		base_terrain MIDDLE_FOREST
+		land_percent 100
+		number_of_clumps 512
+		set_scale_by_groups
+		spacing_to_other_terrain_types 2
+	}
+
+	create_terrain BASE_TERRAIN
+	{
+		base_terrain COASTAL_TERRAIN
+		land_percent 100
+		number_of_clumps 512
+		set_scale_by_groups
+		spacing_to_other_terrain_types 4
+	}
+
+	create_terrain PLACEHOLDER_TERRAIN_A
+	{
+		base_terrain BASE_TERRAIN
+		land_percent 100
+		number_of_clumps 512
+		set_scale_by_groups
+		spacing_to_other_terrain_types 1
+	}
+
+	create_terrain COASTAL_TERRAIN
+	{
+		base_terrain BASE_TERRAIN
+		number_of_tiles 192
+		number_of_clumps 128
+		set_scale_by_size
+		set_scale_by_groups
+		terrain_mask 1
+	}
+
+	create_terrain BASE_TERRAIN
+	{
+		base_terrain PLACEHOLDER_TERRAIN_A
+		land_percent 100
+		number_of_clumps 512
+		set_scale_by_groups
+	}
+
+	create_terrain PLACEHOLDER_TERRAIN_A
+	{
+		base_terrain BASE_TERRAIN
+		land_percent 100
+		number_of_clumps 512
+		set_scale_by_groups
+		spacing_to_other_terrain_types 2
+	}
+
+	create_terrain COASTAL_TERRAIN
+	{
+		base_terrain BASE_TERRAIN
+		number_of_tiles 128
+		number_of_clumps 64
+		set_scale_by_size
+		set_scale_by_groups
+		terrain_mask 1
+	}
+
+	create_terrain BASE_TERRAIN
+	{
+		base_terrain PLACEHOLDER_TERRAIN_A
+		land_percent 100
+		number_of_clumps 512
+		set_scale_by_groups
+	}
+
+	create_terrain PLACEHOLDER_TERRAIN_A
+	{
+		base_terrain BASE_TERRAIN
+		land_percent 100
+		number_of_clumps 512
+		set_scale_by_groups
+		spacing_to_other_terrain_types 4
+	}
+
+	create_terrain COASTAL_TERRAIN
+	{
+		base_terrain BASE_TERRAIN
+		number_of_tiles 128
+		number_of_clumps 64
+		set_scale_by_size
+		set_scale_by_groups
+		terrain_mask 1
+	}
+
+	create_terrain BASE_TERRAIN
+	{
+		base_terrain PLACEHOLDER_TERRAIN_A
+		land_percent 100
+		number_of_clumps 512
+		set_scale_by_groups
+	}
+
+	create_terrain BASE_TERRAIN
+	{
+		base_terrain COASTAL_TERRAIN
+		number_of_tiles 256
+		number_of_clumps 128
+		set_scale_by_size
+		set_scale_by_groups
+		terrain_mask 1
+	}
+
+	create_terrain PLACEHOLDER_TERRAIN_A
+	{
+		base_terrain WATER_SHALLOW
+		land_percent 100
+		number_of_clumps 512
+		set_scale_by_groups
+		spacing_to_other_terrain_types 1
+	}
+
+	create_terrain BEACH_TERRAIN
+	{
+		base_terrain WATER_SHALLOW
+		land_percent 1
+		number_of_clumps 32
+		set_scale_by_groups
+	}
+
+	create_terrain WATER_SHALLOW
+	{
+		base_terrain PLACEHOLDER_TERRAIN_A
+		land_percent 100
+		number_of_clumps 512
+		set_scale_by_groups
+	}
+
+	create_terrain PLACEHOLDER_TERRAIN_A
+	{
+		base_terrain WATER_SHALLOW
+		land_percent 100
+		number_of_clumps 512
+		set_scale_by_groups
+		spacing_to_other_terrain_types 1
+	}
+
+	create_terrain BEACH_TERRAIN
+	{
+		base_terrain WATER_SHALLOW
+		land_percent 1
+		number_of_clumps 32
+		set_scale_by_groups
+		terrain_mask 1
+	}
+
+	create_terrain WATER_SHALLOW
+	{
+		base_terrain PLACEHOLDER_TERRAIN_A
+		land_percent 100
+		number_of_clumps 512
+		set_scale_by_groups
+	}
+
+	create_terrain PLACEHOLDER_TERRAIN_A
+	{
+		base_terrain WATER_SHALLOW
+		land_percent 100
+		number_of_clumps 512
+		set_scale_by_groups
+		spacing_to_other_terrain_types 2
+	}
+
+	create_terrain BEACH_TERRAIN
+	{
+		base_terrain WATER_SHALLOW
+		land_percent 1
+		number_of_clumps 32
+		set_scale_by_groups
+		terrain_mask 1
+	}
+
+	create_terrain WATER_SHALLOW
+	{
+		base_terrain PLACEHOLDER_TERRAIN_A
+		land_percent 100
+		number_of_clumps 512
+		set_scale_by_groups
+	}
+
+	create_terrain PLACEHOLDER_TERRAIN
+	{
+		base_terrain WATER_SHALLOW
+		land_percent 100
+		number_of_clumps 512
+		set_scale_by_groups
+		spacing_to_other_terrain_types 4
+	}
+
+	create_terrain BEACH_TERRAIN
+	{
+		base_terrain WATER_SHALLOW
+
+		if ANTARCTIC_TUNDRA
+			land_percent 1
+		else
+			land_percent 2
+		endif
+
+		number_of_clumps 32
+		set_scale_by_groups
+		terrain_mask 1
+	}
+
+	create_terrain WATER_SHALLOW
+	{
+		base_terrain PLACEHOLDER_TERRAIN_A
+		land_percent 100
+		number_of_clumps 512
+		set_scale_by_groups
+	}
+
+	create_terrain WATER_MEDIUM
+	{
+		base_terrain WATER_SHALLOW
+		land_percent 100
+		number_of_clumps 512
+		spacing_to_other_terrain_types 4
+	}
+
+	create_terrain WATER_DEEP
+	{
+		base_terrain WATER_MEDIUM
+		land_percent 100
+		number_of_clumps 512
+		spacing_to_other_terrain_types 4
+	}
+
+	create_terrain WATER_SHALLOW
+	{
+		base_terrain WATER_MEDIUM
+		land_percent 2
+		number_of_clumps 16
+		set_scale_by_groups
+		terrain_mask 1
+	}
+
+	create_terrain WATER_SHALLOW
+	{
+		base_terrain WATER_MEDIUM
+		land_percent 2
+		number_of_clumps 16
+		set_scale_by_groups
+		terrain_mask 2
+	}
+
+	create_terrain PLACEHOLDER_TERRAIN_A
+	{
+		base_terrain WATER_DEEP
+		land_percent 100
+		number_of_clumps 512
+		spacing_to_other_terrain_types 4
+	}
+
+	create_terrain WATER_SHALLOW
+	{
+		base_terrain WATER_DEEP
+		land_percent 2
+		number_of_clumps 16
+		set_scale_by_groups
+		terrain_mask 1
+	}
+
+	create_terrain WATER_SHALLOW
+	{
+		base_terrain WATER_DEEP
+		land_percent 2
+		number_of_clumps 16
+		set_scale_by_groups
+		terrain_mask 2
+	}
+
+	create_terrain WATER_DEEP
+	{
+		base_terrain PLACEHOLDER_TERRAIN_A
+		land_percent 100
+		number_of_clumps 512
+	}
+
+	create_terrain WATER_SHALLOW
+	{
+		base_terrain WATER_DEEP
+		land_percent 2
+		number_of_clumps 16
+		set_scale_by_groups
+		terrain_mask 1
+	}
+
+	create_terrain WATER_MEDIUM
+	{
+		base_terrain WATER_DEEP
+		land_percent 2
+		number_of_clumps 16
+		set_scale_by_groups
+		terrain_mask 1
+	}
+
+	create_terrain SHALLOWS
+	{
+		base_terrain WATER_SHALLOW
+		land_percent 2
+		number_of_clumps 64
+		set_scale_by_groups
+		clumping_factor -10
+		terrain_mask 1
+	}
+
+	create_terrain SHALLOWS
+	{
+		base_terrain WATER_MEDIUM
+		land_percent 2
+		number_of_clumps 64
+		set_scale_by_groups
+		clumping_factor -10
+		terrain_mask 1
+	}
+
+	create_terrain SHALLOWS
+	{
+		base_terrain WATER_DEEP
+		land_percent 4
+		number_of_clumps 64
+		set_scale_by_groups
+		clumping_factor -10
+		terrain_mask 1
+	}
+
+	create_terrain WATER_SHALLOW
+	{
+		base_terrain SHALLOWS
+		land_percent (160 * MAPSCALE_MODIFIER)
+		number_of_clumps (160 * MAPSCALE_MODIFIER)
+		set_scale_by_groups
+		terrain_mask 1
+	}
+
+	create_terrain BASE_FOREST
+	{
+		base_terrain BASE_TERRAIN
+		land_percent 4
+		number_of_clumps 12
+		set_scale_by_groups
+		set_avoid_player_start_areas
+		spacing_to_other_terrain_types 2
+	}
+
+	create_terrain BASE_FOREST_VARIATION
+	{
+		base_terrain BASE_TERRAIN
+		land_percent 1
+		number_of_clumps 10
+		set_scale_by_groups
+		set_avoid_player_start_areas
+		spacing_to_other_terrain_types 2
+	}
+
+	create_terrain BASE_FOREST_VARIATION
+	{
+		base_terrain BASE_TERRAIN
+		land_percent 2
+		number_of_clumps 10
+		set_scale_by_groups
+		set_avoid_player_start_areas
+		spacing_to_other_terrain_types 2
+	}
+
+	create_terrain MIDDLE_TERRAIN_BLEND
+	{
+		base_terrain MIDDLE_TERRAIN
+		number_of_tiles 6
+		number_of_clumps 4
+		set_scale_by_size
+		set_scale_by_groups
+		terrain_mask 1
+	}
+
+	create_terrain BASE_BLEND_A
+	{
+		base_terrain BASE_TERRAIN
+		land_percent 14
+		number_of_clumps 20
+		set_scale_by_groups
+		terrain_mask 1
+	}
+
+	create_terrain BASE_BLEND_B
+	{
+		base_terrain BASE_TERRAIN
+		land_percent 2
+		number_of_clumps 12
+		clumping_factor -10
+		set_scale_by_groups
+		terrain_mask 1
+	}
+
+	create_terrain BASE_BLEND_C
+	{
+		base_terrain BASE_TERRAIN
+		land_percent 8
+		number_of_clumps 12
+		set_scale_by_groups
+		terrain_mask 1
+	}
+
+	create_terrain BASE_BLEND_D
+	{
+		base_terrain BASE_TERRAIN
+		land_percent 2
+		number_of_clumps 24
+		set_scale_by_groups
+		terrain_mask 1
+	}
+
+	create_terrain BASE_FOREST
+	{
+		base_terrain BASE_FOREST_VARIATION
+		land_percent 2
+		number_of_clumps 64
+		set_scale_by_groups
+		spacing_to_other_terrain_types 1
+	}
+
+	create_terrain PLACEHOLDER_TERRAIN_A
+	{
+		base_terrain BASE_FOREST
+		land_percent 100
+		number_of_clumps 512
+		set_scale_by_groups
+		spacing_to_other_terrain_types 1
+	}
+
+	create_terrain BASE_FOREST_EDGE
+	{
+		base_terrain BASE_FOREST
+		land_percent 100
+		number_of_clumps 512
+		set_scale_by_groups
+	}
+
+	create_terrain BASE_FOREST
+	{
+		base_terrain PLACEHOLDER_TERRAIN_A
+		land_percent 100
+		number_of_clumps 512
+		set_scale_by_groups
+	}
+
+	create_terrain BASE_FOREST
+	{
+		base_terrain PLACEHOLDER_TERRAIN_A
+		land_percent 100
+		number_of_clumps 512
+		set_scale_by_groups
+	}
+
+	create_terrain BASE_FOREST
+	{
+		base_terrain PLACEHOLDER_TERRAIN_A
+		land_percent 100
+		number_of_clumps 512
+		set_scale_by_groups
+	}
+
+	create_terrain BASE_FOREST
+	{
+		base_terrain PLACEHOLDER_TERRAIN_A
+		land_percent 100
+		number_of_clumps 512
+		set_scale_by_groups
+	}
+
+	create_terrain BASE_FOREST_BLEND
+	{
+		base_terrain BASE_FOREST
+		land_percent 100
+		number_of_clumps 512
+		set_scale_by_groups
+		terrain_mask 1
+	}
+
+	create_terrain BASE_FOREST_BLEND
+	{
+		base_terrain BASE_FOREST
+		land_percent 100
+		number_of_clumps 512
+		set_scale_by_groups
+		terrain_mask 1
+	}
+
+	create_terrain BASE_FOREST_BLEND
+	{
+		base_terrain BASE_FOREST_VARIATION
+		land_percent 100
+		number_of_clumps 512
+		set_scale_by_groups
+		terrain_mask 1
+	}
+
+	create_terrain BASE_FOREST_BLEND
+	{
+		base_terrain BASE_FOREST_VARIATION
+		land_percent 100
+		number_of_clumps 512
+		set_scale_by_groups
+		terrain_mask 1
+	}
+
+	create_terrain BASE_FOREST_BLEND
+	{
+		base_terrain BASE_FOREST_EDGE
+		land_percent 100
+		number_of_clumps 512
+		set_scale_by_groups
+		terrain_mask 1
+	}
+
+	create_terrain BASE_FOREST_BLEND
+	{
+		base_terrain BASE_FOREST_EDGE
+		land_percent 100
+		number_of_clumps 512
+		set_scale_by_groups
+		terrain_mask 1
+	}
+
+	create_terrain BLOCKER_TERRAIN
+	{
+		base_terrain BASE_FOREST
+		number_of_tiles 8
+		number_of_clumps 8
+		set_scale_by_size
+		set_scale_by_groups
+	}
+
+	create_terrain BLOCKER_BLEND { base_terrain BLOCKER_TERRAIN land_percent 100 number_of_clumps 512 terrain_mask 1 }
+	create_terrain BLOCKER_BLEND { base_terrain BLOCKER_TERRAIN land_percent 100 number_of_clumps 512 terrain_mask 1 }
+	create_terrain BLOCKER_BLEND { base_terrain BLOCKER_TERRAIN land_percent 100 number_of_clumps 512 terrain_mask 1 }
+	create_terrain BLOCKER_BLEND { base_terrain BLOCKER_TERRAIN land_percent 100 number_of_clumps 512 terrain_mask 1 }
+	create_terrain BLOCKER_BLEND { base_terrain BLOCKER_TERRAIN land_percent 100 number_of_clumps 512 terrain_mask 1 }
+	create_terrain BLOCKER_BLEND { base_terrain BLOCKER_TERRAIN land_percent 100 number_of_clumps 512 terrain_mask 1 }
+	create_terrain BLOCKER_BLEND { base_terrain BLOCKER_TERRAIN land_percent 100 number_of_clumps 512 terrain_mask 1 }
+	create_terrain BLOCKER_BLEND { base_terrain BLOCKER_TERRAIN land_percent 100 number_of_clumps 512 terrain_mask 1 }
+
+<OBJECTS_GENERATION>
+	if TERRAIN_DEBUGGING
+	else
+		#define PRELIMINARIES
+		if PRELIMINARIES
+			#const RESOURCE_SPACING_DEFAULT 8
+			#const RESOURCE_SPACING_FAR 16
+			#const RESOURCE_RESTRICTION 2
+
+			#include_drs includes/object_setup.inc
+			#include_drs includes/market_objects.inc
+		endif
+
+		#include_drs includes/town_centres.inc
+		#include_drs includes/villagers.inc
+		#include_drs includes/scouts.inc
+		#include_drs includes/walls.inc
+
+		#include_drs includes/defend_wonder.inc
+
+		#const REGICIDE_BUILDING 1102
+
+		#include_drs includes/regicide.inc
+		#include_drs includes/capture_relic.inc
+
+		if NOMAD_START
+		else
+			#include_drs includes/stragglers.inc
+
+			#const FORAGE_BUSH_PRIMARY_DISTANCE 10
+			#define FORAGE_BUSH_PRIMARY
+
+			#const FORAGE_BUSH_SECONDARY_DISTANCE 16
+			#define FORAGE_BUSH_SECONDARY
+
+			#const FORAGE_BUSH_TERTIARY_DISTANCE 22
+			#define FORAGE_BUSH_TERTIARY
+
+			#const GOLD_PRIMARY_DISTANCE 10
+			#define GOLD_PRIMARY
+
+			#const GOLD_SECONDARY_DISTANCE 20
+			#const GOLD_SECONDARY_CAA_A 2000 /* Neutral Zone, Small */
+			#define GOLD_SECONDARY
+
+			#const GOLD_TERTIARY_DISTANCE 28
+			#const GOLD_TERTIARY_CAA_A 2000 /* Neutral Zone, Small */
+			#define GOLD_TERTIARY
+
+			#const STONE_PRIMARY_DISTANCE 10
+			#define STONE_PRIMARY
+
+			#const STONE_SECONDARY_DISTANCE 24
+			#const STONE_SECONDARY_CAA_A 2000 /* Neutral Zone, Small */
+			#define STONE_SECONDARY
+
+			#include_drs includes/starting_resources.inc
+
+			if DEATH_MATCH
+			elseif INFINITE_RESOURCES
+			else
+				#define HERDABLE_STARTING_COUNT_FOUR
+
+				#include_drs includes/herdable_starting.inc
+
+				#const HERDABLE_GROUPS 0
+
+				#include_drs includes/herdable.inc
+				#include_drs includes/huntable.inc
+
+				#const LUREABLE_GROUPS 3
+
+				#include_drs includes/lureable.inc
+				#include_drs includes/furbearers.inc
+			endif
+		endif
+
+		if DEATH_MATCH
+		else
+			create_object CROCODILE
+			{
+				place_on_specific_land_id 420
+				number_of_objects 5
+				set_scaling_to_map_size
+				find_closest
+				enable_tile_shuffling
+				temp_min_distance_group_placement 3
+				terrain_to_place_on SHALLOWS
+				ignore_terrain_restrictions
+				avoid_forest_zone 2
+				max_distance_to_players (24 * MAPSCALE_SIDE)
+
+				actor_area 1100
+				actor_area_radius 1
+			}
+
+			#include_drs includes/riparian.inc
+		endif
+
+		#include_drs includes/neritic.inc
+		#include_drs includes/oysters.inc
+
+		#const FRESHWATER_COUNT 0
+
+		#include_drs includes/aquatic_freshwater.inc
+
+		#const SALTWATER_SPACING 16
+
+		#include_drs includes/aquatic_saltwater.inc
+
+		if DEATH_MATCH
+		else
+			#include_drs includes/reeds.inc
+		endif
+
+		#define RELIC_TYPE_UNRESTRICTED
+
+		if MAPSIZE_ABOVE_TINY
+			#const RELIC_SPACING 1
+			#const RELIC_FOREST_DISTANCE 1
+		else
+			#const RELIC_SPACING 0
+			#const RELIC_FOREST_DISTANCE 0
+		endif
+
+		#include_drs includes/relics.inc
+		#include_drs includes/remote_resources.inc
+
+		#define EXTRA_STUFF
+		if EXTRA_STUFF
+			if EMPIRE_WARS_MODE
+				#define EMPIRE_WARS_FORAGERS
+
+				#include_drs includes/empire_wars.inc
+				#include_drs includes/empire_food.inc
+				#include_drs includes/empire_gold.inc
+				#include_drs includes/empire_wood.inc
+				#include_drs includes/empire_buildings.inc
+			elseif ESCALATION_MODE
+				#include_drs includes/escalation_mode.inc
+			endif
+
+			#define AESTHETICS
+			if AESTHETICS
+				#include_drs includes/birds.inc
+
+				create_object OLD_STONE_HEAD
+				{
+					second_object FLOWER_BED
+					number_of_objects 1024
+					temp_min_distance_group_placement 8
+					terrain_to_place_on MIDDLE_TERRAIN
+
+					avoid_forest_zone 2
+
+					actor_area 8000
+					actor_area_radius 1
+				}
+
+				create_object JAGUAR
+				{
+					number_of_objects 1024
+					temp_min_distance_group_placement 8
+					terrain_to_place_on MIDDLE_TERRAIN
+
+					avoid_forest_zone 2
+
+					actor_area 8001
+					actor_area_radius 1
+
+					avoid_actor_area 8000 /* Stone Heads */
+					avoid_actor_area 8001 /* Jaguars */
+				}
+
+				create_object JAGUAR
+				{
+					number_of_objects 1024
+					temp_min_distance_group_placement 8
+					terrain_to_place_on MIDDLE_TERRAIN
+
+					avoid_forest_zone 2
+
+					actor_area 8001
+					actor_area_radius 1
+
+					avoid_actor_area 8000 /* Stone Heads */
+					avoid_actor_area 8001 /* Jaguars */
+				}
+
+				create_object JAGUAR
+				{
+					number_of_objects 1024
+					temp_min_distance_group_placement 8
+					terrain_to_place_on MIDDLE_TERRAIN
+
+					avoid_forest_zone 2
+
+					actor_area 8001
+					actor_area_radius 1
+
+					avoid_actor_area 8000 /* Stone Heads */
+					avoid_actor_area 8001 /* Jaguars */
+				}
+
+				create_object JAGUAR
+				{
+					number_of_objects 1024
+					temp_min_distance_group_placement 8
+					terrain_to_place_on MIDDLE_TERRAIN
+
+					avoid_forest_zone 2
+
+					actor_area 8001
+					actor_area_radius 1
+
+					avoid_actor_area 8000 /* Stone Heads */
+					avoid_actor_area 8001 /* Jaguars */
+				}
+
+				create_object SKELETON
+				{
+					number_of_objects 1024
+					temp_min_distance_group_placement 6
+					terrain_to_place_on MIDDLE_TERRAIN
+
+					avoid_forest_zone 2
+
+					actor_area 8002
+					actor_area_radius 0
+
+					avoid_actor_area 8000 /* Stone Heads */
+					avoid_actor_area 8001 /* Jaguars */
+					avoid_actor_area 8002 /* Skeleton */
+				}
+
+				create_object SKELETON
+				{
+					number_of_objects 1024
+					temp_min_distance_group_placement 6
+					terrain_to_place_on MIDDLE_TERRAIN
+
+					avoid_forest_zone 2
+
+					actor_area 8002
+					actor_area_radius 0
+
+					avoid_actor_area 8000 /* Stone Heads */
+					avoid_actor_area 8001 /* Jaguars */
+					avoid_actor_area 8002 /* Skeleton */
+				}
+
+				create_object SKELETON
+				{
+					number_of_objects 1024
+					temp_min_distance_group_placement 6
+					terrain_to_place_on MIDDLE_TERRAIN
+
+					avoid_forest_zone 2
+
+					actor_area 8002
+					actor_area_radius 0
+
+					avoid_actor_area 8000 /* Stone Heads */
+					avoid_actor_area 8001 /* Jaguars */
+					avoid_actor_area 8002 /* Skeleton */
+				}
+
+				create_object TREASURE_CHEST
+				{
+					terrain_to_place_on MIDDLE_TERRAIN
+
+					avoid_forest_zone 4
+
+					actor_area 8003
+					actor_area_radius 1
+
+					avoid_actor_area 8000 /* Stone Heads */
+					avoid_actor_area 8001 /* Jaguars */
+					avoid_actor_area 8002 /* Skeleton */
+				}
+
+				create_object PLANT_BUSH
+				{
+					number_of_objects 2
+					set_scaling_to_map_size
+					temp_min_distance_group_placement 1
+					terrain_to_place_on MIDDLE_TERRAIN
+
+					actor_area 8004
+					actor_area_radius 0
+
+					avoid_actor_area 8000 /* Stone Heads */
+					avoid_actor_area 8001 /* Jaguars */
+					avoid_actor_area 8002 /* Skeleton */
+					avoid_actor_area 8003 /* Treasure Chest */
+					avoid_actor_area 8004 /* Plants */
+				}
+
+				create_object PLANT_FLOWERS
+				{
+					number_of_objects 2
+					set_scaling_to_map_size
+					temp_min_distance_group_placement 1
+					terrain_to_place_on MIDDLE_TERRAIN
+
+					actor_area 8004
+					actor_area_radius 0
+
+					avoid_actor_area 8000 /* Stone Heads */
+					avoid_actor_area 8001 /* Jaguars */
+					avoid_actor_area 8002 /* Skeleton */
+					avoid_actor_area 8003 /* Treasure Chest */
+					avoid_actor_area 8004 /* Plants */
+				}
+
+				create_object PLANT_SHRUB
+				{
+					number_of_objects 2
+					set_scaling_to_map_size
+					temp_min_distance_group_placement 1
+					terrain_to_place_on MIDDLE_TERRAIN
+
+					actor_area 8004
+					actor_area_radius 0
+
+					avoid_actor_area 8000 /* Stone Heads */
+					avoid_actor_area 8001 /* Jaguars */
+					avoid_actor_area 8002 /* Skeleton */
+					avoid_actor_area 8003 /* Treasure Chest */
+					avoid_actor_area 8004 /* Plants */
+				}
+
+				create_object ROCK_B
+				{
+					second_object FLOWER_BED
+					place_on_specific_land_id 420
+					number_of_objects 2
+					set_scaling_to_map_size
+					find_closest
+					set_circular_placement
+					enable_tile_shuffling
+					temp_min_distance_group_placement 3
+					place_on_forest_zone
+					terrain_to_place_on BEACH_TERRAIN
+
+					actor_area 8004
+					actor_area_radius 0
+
+					avoid_actor_area 1320 /* Reeds */
+				}
+
+				create_object WILD_ANIMAL
+				{
+					number_of_objects 5
+					number_of_groups 2
+					set_loose_grouping
+					set_scaling_to_map_size
+					min_distance_to_players 38
+					set_circular_placement
+					temp_min_distance_group_placement 48
+					terrain_to_place_on BASE_TERRAIN
+
+					max_distance_to_other_zones 10
+					avoid_forest_zone 2
+					avoid_cliff_zone 2
+					min_distance_to_map_edge 2
+
+					actor_area 8005
+					actor_area_radius 16
+				}
+
+				create_object WILD_ANIMAL
+				{
+					number_of_objects 2
+					number_of_groups 2
+					set_loose_grouping
+					set_scaling_to_map_size
+					min_distance_to_players 38
+					set_circular_placement
+					temp_min_distance_group_placement 64
+					terrain_to_place_on BASE_TERRAIN
+
+					max_distance_to_other_zones 10
+					avoid_forest_zone 2
+					avoid_cliff_zone 2
+					min_distance_to_map_edge 2
+
+					actor_area 8005
+					actor_area_radius 16
+
+					avoid_actor_area 8005 /* Wildlife */
+				}
+
+				create_object ROCK_JUNGLE
+				{
+					number_of_objects 1024
+					terrain_to_place_on BLOCKER_TERRAIN
+				}
+			endif
+		endif
+	endif

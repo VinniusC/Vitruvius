@@ -1,0 +1,330 @@
+{
+	"correction_types" : [
+    {
+      "name": "Default",
+      "localisedname": "9742",
+      "gamma": 1.0,
+      "saturation": 1.05,
+      "contrast": 1.01,
+      "brightness": 1.10,
+      "sharpness": 0.75,
+
+      "tint_factor": 0.0,
+      "tint_color": [ 1.0, 1.0, 1.0 ],
+
+      "bloom_threshold": 0.25,
+      "bloom_intensity": 0.4,
+      "bloom_tint_color": [ 1.0, 1.0, 1.0 ],
+      "bloom_scene_intensity": [ 1.0, 1.0, 1.0 ],
+      "bloom_sigma": 3.75,
+      "bloom_saturation": 0.55,
+      "bloom_terrain_correction": 0.95,
+
+      "terrain_tint_color": [ 1.00, 1.00, 1.00 ],
+
+      "fog_tint_color": [ 0.25, 0.25, 0.25 ],
+      "fog_seen_land_mult": 0.5,
+      "fog_default_resolution": [ 1920, 1080 ],
+      "fog_cell_size": 2,
+      "fog_anim_speed": 7500.0,
+
+      "distance_fog_visible_intensity": 0.25,
+      "distance_fog_color": [ 0.25, 0.25, 0.25 ],
+
+      "shadow_strength": 1.0,
+      "shadow_color": [ 0.0, 0.0, 0.0 ],
+
+      "cloud_size": 1.0,
+      "cloud_strength": 0.0,
+      "cloud_vector": [ 0.05, 0.15 ],
+
+      "vignette_border": [ 1.0, 1.5 ],
+      "vignette_radius": 0.85,
+      "vignette_smoothness": 0.25,
+
+      "vignette_intensity": 1.0,
+      "vignette_color": [ 0.5, 0.5, 1.0 ],
+
+      "aa_sample_size": 1.5,
+      "aa_edge_distance": 1,
+      "aa_edge": 1,
+      "aa_intensity": 1.0,
+
+      "blur_border": [ 1.0, 1.1 ],
+      "blur_radius": 0.75,
+      "blur_smoothness": 0.375,
+      "blur_intensity": 2.0
+    },
+    {
+      "name": "Autumn",
+      "localisedname": "IDS_COLOR_WARMER_AUTUMN",
+      "gamma": 1.0,
+      "saturation": 1.00,
+      "contrast": 1.01,
+      "brightness": 1.15,
+      "sharpness": 0.75,
+
+      "tint_factor": 0.1,
+      "tint_color": [ 0.25, 0.0, 0.125 ],
+
+      "bloom_threshold": 0.25,
+      "bloom_intensity": 0.5,
+      "bloom_tint_color": [ 1.25, 1.0, 1.125 ],
+      "bloom_scene_intensity": [ 1.0, 1.0, 1.0 ],
+      "bloom_sigma": 5.0,
+      "bloom_saturation": 0.75,
+      "bloom_terrain_correction": 1.0,
+
+      "terrain_tint_color": [ 1.0, 0.95, 0.95 ],
+
+      "fog_tint_color": [ 0.25, 0.225, 0.225 ],
+      "fog_seen_land_mult": 0.5,
+      "fog_default_resolution": [ 1920, 1080 ],
+      "fog_cell_size": 2,
+      "fog_anim_speed": 7500.0,
+
+      "distance_fog_visible_intensity": 0.25,
+      "distance_fog_color": [ 0.3, 0.225, 0.2 ],
+
+      "shadow_strength": 0.55,
+      "shadow_color": [ -0.75, -0.65, 0.25 ],
+
+      "cloud_strength": 0.3,
+      "cloud_vector": [ 0.05, 0.15 ],
+
+      "vignette_border": [ 1.0, 1.5 ],
+      "vignette_radius": 0.85,
+      "vignette_smoothness": 0.25,
+
+      "vignette_intensity": 0.875,
+      "vignette_color": [ 0.5, 0.5, 1.25 ],
+
+      "aa_sample_size": 1.5,
+      "aa_edge_distance": 1,
+      "aa_edge": 1,
+      "aa_intensity": 1.0,
+
+      "blur_border": [ 1.0, 1.1 ],
+      "blur_radius": 0.75,
+      "blur_smoothness": 0.375,
+      "blur_intensity": 2.0
+    },
+    {
+      "name": "Winter",
+      "localisedname": "IDS_COLOR_WARMER_WINTER",
+      "gamma": 1.0,
+      "saturation": 0.97,
+      "contrast": 1.01,
+      "brightness": 1.12,
+      "sharpness": 0.75,
+
+      "tint_factor": 0.05,
+      "tint_color": [ 0.0, 0.25, 1.5 ],
+
+      "bloom_threshold": 0.1,
+      "bloom_intensity": 0.35,
+      "bloom_tint_color": [ 1.0, 1.25, 1.5 ],
+      "bloom_scene_intensity": [ 1.0, 1.0, 1.0 ],
+      "bloom_sigma": 5.0,
+      "bloom_saturation": 0.65,
+      "bloom_terrain_correction": 0.9,
+
+      "terrain_tint_color": [ 1.0, 1.0, 1.0 ],
+
+      "fog_tint_color": [ 0.175, 0.225, 0.275 ],
+      "fog_seen_land_mult": 0.5,
+      "fog_default_resolution": [ 1920, 1080 ],
+      "fog_cell_size": 2,
+      "fog_anim_speed": 7500.0,
+
+      "distance_fog_visible_intensity": 0.25,
+      "distance_fog_color": [ 0.2, 0.25, 0.3 ],
+
+      "shadow_strength": 1.0,
+      "shadow_color": [ 0.0, 0.25, 0.5 ],
+
+      "cloud_strength": 0.35,
+      "cloud_vector": [ 0.05, 0.15 ],
+
+      "vignette_border": [ 1.0, 1.5 ],
+      "vignette_radius": 0.8,
+      "vignette_smoothness": 0.25,
+
+      "vignette_intensity": 0.5,
+      "vignette_color": [ 0.5, 0.75, 1.5 ],
+
+      "aa_sample_size": 1.5,
+      "aa_edge_distance": 1,
+      "aa_edge": 1,
+      "aa_intensity": 1.0,
+
+      "blur_border": [ 1.0, 1.1 ],
+      "blur_radius": 0.75,
+      "blur_smoothness": 0.375,
+      "blur_intensity": 2.0
+    },
+    {
+      "name": "Jungle",
+      "localisedname": "IDS_COLOR_WARMER_JUNGLE",
+      "gamma": 1.0,
+      "saturation": 1.00,
+      "contrast": 1.01,
+      "brightness": 1.15,
+      "sharpness": 0.75,
+
+      "tint_factor": 0.1,
+      "tint_color": [ 0.0, 0.125, 0.0 ],
+
+      "bloom_threshold": 0.25,
+      "bloom_intensity": 0.5,
+      "bloom_tint_color": [ 1.0, 1.125, 1.0 ],
+      "bloom_scene_intensity": [ 1.0, 1.0, 1.0 ],
+      "bloom_sigma": 5.0,
+      "bloom_saturation": 0.65,
+      "bloom_terrain_correction": 0.9,
+
+      "terrain_tint_color": [ 1.0, 1.025, 1.0 ],
+
+      "fog_tint_color": [ 0.175, 0.225, 0.175 ],
+      "fog_seen_land_mult": 0.5,
+      "fog_default_resolution": [ 1920, 1080 ],
+      "fog_cell_size": 2,
+      "fog_anim_speed": 7500.0,
+
+      "distance_fog_visible_intensity": 0.25,
+      "distance_fog_color": [ 0.1, 0.25, 0.1 ],
+
+      "shadow_strength": 1.0,
+      "shadow_color": [ 0.0, 0.25, 0.0 ],
+
+      "cloud_strength": 0.3,
+      "cloud_vector": [ 0.05, 0.15 ],
+
+      "vignette_border": [ 1.0, 1.5 ],
+      "vignette_radius": 0.8,
+      "vignette_smoothness": 0.25,
+
+      "vignette_intensity": 0.75,
+      "vignette_color": [ 1.0, 1.0, 1.0 ],
+
+      "aa_sample_size": 1.5,
+      "aa_edge_distance": 1,
+      "aa_edge": 1,
+      "aa_intensity": 1.0,
+
+      "blur_border": [ 1.0, 1.1 ],
+      "blur_radius": 0.75,
+      "blur_smoothness": 0.375,
+      "blur_intensity": 2.0
+    },
+    {
+      "name": "Desert",
+      "localisedname": "IDS_COLOR_WARMER_DESERT",
+      "gamma": 1.0,
+      "saturation": 1.0,
+      "contrast": 1.01,
+      "brightness": 1.10,
+      "sharpness": 0.75,
+
+      "tint_factor": 0.1,
+      "tint_color": [ 0.5, 0.25, 0.25 ],
+
+      "bloom_threshold": 0.275,
+      "bloom_intensity": 0.45,
+      "bloom_tint_color": [ 1.25, 1.125, 1.0 ],
+      "bloom_scene_intensity": [ 1.0, 1.0, 1.0 ],
+      "bloom_sigma": 5.0,
+      "bloom_saturation": 0.65,
+      "bloom_terrain_correction": 0.95,
+
+      "terrain_tint_color": [ 1.0, 1.0, 1.0 ],
+
+      "fog_tint_color": [ 0.3, 0.15, 0.075 ],
+      "fog_seen_land_mult": 0.5,
+      "fog_default_resolution": [ 1920, 1080 ],
+      "fog_cell_size": 2,
+      "fog_anim_speed": 7500.0,
+
+      "distance_fog_visible_intensity": 0.25,
+      "distance_fog_color": [ 0.25, 0.2, 0.10 ],
+
+      "shadow_strength": 1.0,
+      "shadow_color": [ 0.0, -0.1, -0.1 ],
+
+      "cloud_strength": 0.25,
+      "cloud_vector": [ 0.05, 0.15 ],
+
+      "vignette_border": [ 1.0, 1.5 ],
+      "vignette_radius": 0.8,
+      "vignette_smoothness": 0.25,
+
+      "vignette_intensity": 1.0,
+      "vignette_color": [ 0.76, 0.70, 0.50 ],
+
+      "aa_sample_size": 1.5,
+      "aa_edge_distance": 1,
+      "aa_edge": 1,
+      "aa_intensity": 1.0,
+
+      "blur_border": [ 1.0, 1.1 ],
+      "blur_radius": 0.75,
+      "blur_smoothness": 0.375,
+      "blur_intensity": 2.0
+    },
+    {
+      "name": "Night",
+      "localisedname": "IDS_COLOR_WARMER_NIGHT",
+      "gamma": 1.0,
+      "saturation": 0.99,
+      "contrast": 1.11,
+      "brightness": 0.80,
+      "sharpness": 0.75,
+
+      "tint_factor": 0.25,
+      "tint_color": [ 0.25, 0.5, 1.0 ],
+
+      "bloom_threshold": 0.25,
+      "bloom_intensity": 0.6,
+      "bloom_tint_color": [ 1.0, 1.0, 1.0 ],
+      "bloom_scene_intensity": [ 1.0, 1.0, 1.0 ],
+      "bloom_sigma": 3.75,
+      "bloom_saturation": 0.55,
+      "bloom_terrain_correction": 0.95,
+
+      "terrain_tint_color": [ 0.75, 0.75, 1.00 ],
+
+      "fog_tint_color": [ 0.125, 0.25, 0.25 ],
+      "fog_seen_land_mult": 0.5,
+      "fog_default_resolution": [ 1920, 1080 ],
+      "fog_cell_size": 2,
+      "fog_anim_speed": 7500.0,
+
+      "distance_fog_visible_intensity": 0.25,
+      "distance_fog_color": [ 0.125, 0.25, 0.25 ],
+
+      "shadow_strength": 0.5,
+      "shadow_color": [ -0.1, -0.1, 0.0 ],
+
+      "cloud_size": 1.0,
+      "cloud_strength": 0.0,
+      "cloud_vector": [ 0.05, 0.15 ],
+
+      "vignette_border": [ 1.0, 1.5 ],
+      "vignette_radius": 0.85,
+      "vignette_smoothness": 0.25,
+
+      "vignette_intensity": 1.0,
+      "vignette_color": [ 0.25, 0.25, 0.75 ],
+
+      "aa_sample_size": 1.5,
+      "aa_edge_distance": 1,
+      "aa_edge": 1,
+      "aa_intensity": 1.0,
+
+      "blur_border": [ 1.0, 1.1 ],
+      "blur_radius": 0.75,
+      "blur_smoothness": 0.375,
+      "blur_intensity": 2.0
+    }
+	]
+}

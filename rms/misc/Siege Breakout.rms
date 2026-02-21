@@ -1,0 +1,956 @@
+/* *****************************************************************************
+ * Siege Breakout - Made by Gatsuca
+ * *****************************************************************************
+ * A Siege style map where 1 or 2 players face off against 2-6 surrounding foes!
+ * Defend your lakeside lands from sieging invaders!
+ * RECOMMENDED PLAYERS: 3-8 (3-5 Players player 1 defender - 6-8 Players player 1 and 2 defenders)
+ * ***************************************************************************** 
+ * git: https://github.com/Gatsuca/AOE2_RMS
+ * ***************************************************************************** */
+
+/* Biome Selection from F_seasons.inc */
+if ANTIQUITY_MODE
+	start_random
+		percent_chance 10 	#define PH_ALPINE
+		percent_chance 12 	#define PH_SPRING
+		percent_chance 12 	#define PH_SPRING_C
+		percent_chance 24 	#define PH_MEDISOUTH
+		percent_chance 12 	#define PH_DESERT
+		percent_chance 12 	#define PH_AFRICAN		
+		percent_chance 12 	#define PH_AUTUMN
+		percent_chance 6 	#define PH_FROZEN
+	end_random
+else 
+	start_random
+		percent_chance 8 	#define PH_ALPINE
+		percent_chance 5 	#define PH_SPRING
+		percent_chance 5 	#define PH_SPRING_B
+		percent_chance 5 	#define PH_SPRING_C
+		percent_chance 12 	#define PH_MEDISOUTH
+		percent_chance 12 	#define PH_TROPHICALSOUTH
+		percent_chance 8 	#define PH_TROPHICALEAST
+		percent_chance 8 	#define PH_DESERT
+		percent_chance 8 	#define PH_AFRICAN		
+		percent_chance 6 	#define PH_ASIAN
+		percent_chance 6 	#define PH_ASIAN_B
+		percent_chance 6 	#define PH_AUTUMN
+		percent_chance 6 	#define PH_AUTUMN_B
+		percent_chance 5 	#define PH_FROZEN
+	end_random
+endif
+#define PH_EXTENDEDSEASONS
+
+#include_drs F_seasons.inc
+
+/* Medium and deep water tile selection */
+if PH_ASIAN					
+#const MED_VODA 116
+#const DEEP_VODA 116
+elseif PH_TROPHICALSOUTH	
+#const MED_VODA 1
+#const DEEP_VODA 23
+elseif PH_TROPHICALEAST		
+#const MED_VODA 1
+#const DEEP_VODA 23
+else						
+#const MED_VODA 23
+#const DEEP_VODA 22
+endif
+/* Declaration for storing map size scaling value by LENGTH */
+if MAPSIZE_LUDICROUS 		#const LENGTH 480	/* LUDICROUS 480x480 mapsize */
+elseif MAPSIZE_MONSTROUS	#const LENGTH 400	/* MONSTROUS 400x400 mapsize */
+elseif MAPSIZE_INCREDIBLE 	#const LENGTH 360	/* INCREDIBLE 360x360 mapsize */
+elseif MAPSIZE_COLOSSAL 	#const LENGTH 320	/* COLOSSAL 320x320 mapsize */
+elseif MAPSIZE_ENORMOUS 	#const LENGTH 300	/* ENORMOUS 300x300 mapsize */
+elseif MAPSIZE_MASSIVE 		#const LENGTH 276	/* MASSIVE 276x276 mapsize */
+elseif MAPSIZE_GIANT 		#const LENGTH 252	/* GIANT 252x252 mapsize */
+elseif MAPSIZE_HUGE 		#const LENGTH 240	/* HUGE 240x240 mapsize */
+elseif MAPSIZE_LARGE 		#const LENGTH 220	/* LARGE 220x220 mapsize */
+elseif MAPSIZE_NORMAL 		#const LENGTH 200	/* NORMAL 200x200 mapsize */
+elseif MAPSIZE_MEDIUM 		#const LENGTH 168	/* MEDIUM 168x168 mapsize */
+elseif MAPSIZE_SMALL 		#const LENGTH 144	/* SMALL 144x144 mapsize */
+elseif MAPSIZE_TINY 		#const LENGTH 120	/* TINY 120x120 mapsize */
+elseif MAPSIZE_MINI 		#const LENGTH 80	/* MINI 80x80 mapsize */
+endif
+
+/* PLAYER_SETUP: Configures how players are positioned and global parameters */
+<PLAYER_SETUP>
+direct_placement
+ai_info_map_type CUSTOM 0 0 0			/* Tells AI: MapType=CUSTOM, IsNomad=0, IsMichi=0, ShowType=0 */
+behavior_version 1						/* Used for versioning changes that might affect how existing maps generate */
+<LAND_GENERATION>
+base_terrain VODA						/* Sets default terrain covering entire map */
+create_land 
+{
+	terrain_type LAYER_A
+	land_percent 				50
+	land_position 				52 50
+	if LENGTH > 200
+		left_border 			34
+		right_border 			34	
+		top_border 				38
+		bottom_border 			38
+	elseif LENGTH 200
+		left_border 			32
+		right_border 			32	
+		top_border 				36
+		bottom_border 			36	
+	elseif LENGTH < 200
+		left_border 			30
+		right_border 			30
+		top_border 				32
+		bottom_border 			32
+	endif
+	border_fuzziness 			60
+	land_id 					11		/* Land ID for this create_land */
+	zone 						11		/* Zone for this create_land */
+}
+create_land 
+{
+	terrain_type LAYER_A
+	land_percent 				50
+	land_position 				50 99
+	left_border 				0
+	right_border 				0
+	if LENGTH > 200
+		top_border 				64
+		bottom_border 			0
+	elseif LENGTH 200
+		top_border 				66
+		bottom_border 			0	
+	elseif LENGTH < 200
+		top_border 				68
+		bottom_border 			0
+	endif
+	border_fuzziness 			60
+	land_id 					12		/* Land ID for this create_land */
+	zone 						12		/* Zone for this create_land */
+}
+create_land 
+{
+	terrain_type LAYER_A
+	land_percent 				50
+	land_position 				50 0
+	left_border 				0
+	right_border 				0
+	if LENGTH > 200
+		top_border 				0
+		bottom_border 			64
+	elseif LENGTH 200
+		top_border 				0
+		bottom_border 			66	
+	elseif LENGTH < 200
+		top_border 				0
+		bottom_border 			68
+	endif
+	border_fuzziness 			60
+	land_id 					13		/* Land ID for this create_land */
+	zone 						13		/* Zone for this create_land */	
+}
+create_land 
+{
+	terrain_type VODA
+	land_percent 				8
+	land_position 				10 50
+	left_border 				-16
+	right_border 				70
+	top_border 					32
+	bottom_border 				32
+	border_fuzziness 			10
+	land_id						14		/* Land ID for this create_land */	
+	zone 						14		/* Zone for this create_land */
+}
+create_land 
+{
+	terrain_type VODA
+	land_percent 				8
+	land_position 				90 50
+	left_border 				70
+	right_border 				-16
+	top_border 					32
+	bottom_border 				32
+	border_fuzziness 			10
+	land_id						15		/* Land ID for this create_land */	
+	zone 						15		/* Zone for this create_land */
+}
+
+/* Loop for player starting areas */
+if 8_PLAYER_GAME
+	/* Player 1 starting area */
+	create_land 
+	{
+		terrain_type 				LAYER_A
+		number_of_tiles 				128
+		land_position 					42 50
+		base_size 						12
+		set_circular_base
+		assign_to AT_PLAYER 1 0 0
+	}
+	/* Player 2 starting area */
+	create_land 
+	{
+		terrain_type 				LAYER_A
+		number_of_tiles 				128	
+		land_position 					60 50
+		base_size 						12
+		set_circular_base
+		assign_to AT_PLAYER 2 0 0
+	}
+	/* Player 3 starting area */
+	create_land 
+	{
+		terrain_type 				LAYER_A
+		number_of_tiles 				128
+		land_position 					90 10
+		base_size 						12
+		set_circular_base
+		assign_to AT_PLAYER 3 0 0
+	}
+	/* Player 4 starting area */
+	create_land 
+	{
+		terrain_type 				LAYER_A
+		number_of_tiles 				128
+		land_position 					44 10
+		base_size 						12
+		set_circular_base
+		assign_to AT_PLAYER 4 0 0
+	}
+	/* Player 5 starting area */
+	create_land 
+	{
+		terrain_type 				LAYER_A
+		number_of_tiles 				128
+		land_position 					10 10
+		base_size 						12
+		set_circular_base
+		assign_to AT_PLAYER 5 0 0
+	}
+	/* Player 6 starting area */
+	create_land 
+	{
+		terrain_type 				LAYER_A
+		number_of_tiles 				128
+		land_position 					90 90
+		base_size 						12
+		set_circular_base
+		assign_to AT_PLAYER 6 0 0
+	}
+	/* Player 7 starting area */
+	create_land 
+	{
+		terrain_type 				LAYER_A
+		number_of_tiles 				128
+		land_position 					44 90
+		base_size 						12
+		set_circular_base
+		assign_to AT_PLAYER 7 0 0
+	}
+	/* Player 8 starting area */
+	create_land 
+	{
+		terrain_type 				LAYER_A
+		number_of_tiles 				128
+		land_position 					10 90
+		base_size 						12
+		set_circular_base
+		assign_to AT_PLAYER 8 0 0
+	}
+elseif 7_PLAYER_GAME
+	/* Player 1 starting area */
+	create_land 
+	{
+		terrain_type 				LAYER_A
+		number_of_tiles 				128
+		land_position 					42 50
+		base_size 						12
+		set_circular_base
+		assign_to AT_PLAYER 1 0 0
+	}
+	/* Player 2 starting area */
+	create_land 
+	{
+		terrain_type 				LAYER_A
+		number_of_tiles 				128	
+		land_position 					60 50
+		base_size 						12
+		set_circular_base
+		assign_to AT_PLAYER 2 0 0
+	}
+	/* Player 3 starting area */
+	create_land 
+	{
+		terrain_type 				LAYER_A
+		number_of_tiles 				128
+		land_position 					90 10
+		base_size 						12
+		set_circular_base
+		assign_to AT_PLAYER 3 0 0
+	}
+	/* Player 4 starting area */
+	create_land 
+	{
+		terrain_type 				LAYER_A
+		number_of_tiles 				128
+		land_position 					44 10
+		base_size 						12
+		set_circular_base
+		assign_to AT_PLAYER 4 0 0
+	}
+	/* Player 5 starting area */
+	create_land 
+	{
+		terrain_type 				LAYER_A
+		number_of_tiles 				128
+		land_position 					10 10
+		base_size 						12
+		set_circular_base
+		assign_to AT_PLAYER 5 0 0
+	}
+	/* Player 6 starting area */
+	create_land 
+	{
+		terrain_type 				LAYER_A
+		number_of_tiles 				128
+		land_position 					90 90
+		base_size 						12
+		set_circular_base
+		assign_to AT_PLAYER 6 0 0
+	}
+	/* Player 7 starting area */
+	create_land 
+	{
+		terrain_type 				LAYER_A
+		number_of_tiles 				128
+		land_position 					10 90
+		base_size 						12
+		set_circular_base
+		assign_to AT_PLAYER 7 0 0
+	}
+elseif 6_PLAYER_GAME
+	/* Player 1 starting area */
+	create_land 
+	{
+		terrain_type 				LAYER_A
+		number_of_tiles 				128
+		land_position 					42 50
+		base_size 						12
+		set_circular_base
+		assign_to AT_PLAYER 1 0 0
+	}
+	/* Player 2 starting area */
+	create_land 
+	{
+		terrain_type 				LAYER_A
+		number_of_tiles 				128	
+		land_position 					60 50
+		base_size 						12
+		set_circular_base
+		assign_to AT_PLAYER 2 0 0
+	}
+	/* Player 3 starting area */
+	create_land 
+	{
+		terrain_type 				LAYER_A
+		number_of_tiles 				128
+		land_position 					90 10
+		base_size 						12
+		set_circular_base
+		assign_to AT_PLAYER 3 0 0
+	}
+	/* Player 4 starting area */
+	create_land 
+	{
+		terrain_type 				LAYER_A
+		number_of_tiles 				128
+		land_position 					10 10
+		base_size 						12
+		set_circular_base
+		assign_to AT_PLAYER 4 0 0
+	}
+	/* Player 5 starting area */
+	create_land 
+	{
+		terrain_type 				LAYER_A
+		number_of_tiles 				128
+		land_position 					90 90
+		base_size 						12
+		set_circular_base
+		assign_to AT_PLAYER 5 0 0
+	}
+	/* Player 6 starting area */
+	create_land 
+	{
+		terrain_type 				LAYER_A
+		number_of_tiles 				128
+		land_position 					10 90
+		base_size 						12
+		set_circular_base
+		assign_to AT_PLAYER 6 0 0
+	}
+elseif 5_PLAYER_GAME
+	/* Player 1 starting area */
+	create_land 
+	{
+		terrain_type 				LAYER_A
+		number_of_tiles 				128
+		land_position 					44 50
+		base_size 						12
+		set_circular_base
+		assign_to AT_PLAYER 1 0 0
+	}
+	/* Player 2 starting area */
+	create_land 
+	{
+		terrain_type 				LAYER_A
+		number_of_tiles 				128	
+		land_position 					90 10
+		base_size 						12
+		set_circular_base
+		assign_to AT_PLAYER 2 0 0
+	}
+	/* Player 3 starting area */
+	create_land 
+	{
+		terrain_type 				LAYER_A
+		number_of_tiles 				128
+		land_position 					10 10
+		base_size 						12
+		set_circular_base
+		assign_to AT_PLAYER 3 0 0
+	}
+	/* Player 4 starting area */
+	create_land 
+	{
+		terrain_type 				LAYER_A
+		number_of_tiles 				128
+		land_position 					90 90
+		base_size 						12
+		set_circular_base
+		assign_to AT_PLAYER 4 0 0
+	}
+	/* Player 5 starting area */
+	create_land 
+	{
+		terrain_type 				LAYER_A
+		number_of_tiles 				128
+		land_position 					10 90
+		base_size 						12
+		set_circular_base
+		assign_to AT_PLAYER 5 0 0
+	}
+elseif 4_PLAYER_GAME
+	/* Player 1 starting area */
+	create_land 
+	{
+		terrain_type 				LAYER_A
+		number_of_tiles 				128
+		land_position 					44 50
+		base_size 						12
+		set_circular_base
+		assign_to AT_PLAYER 1 0 0
+	}
+	/* Player 2 starting area */
+	create_land 
+	{
+		terrain_type 				LAYER_A
+		number_of_tiles 				128	
+		land_position 					90 10
+		base_size 						12
+		set_circular_base
+		assign_to AT_PLAYER 2 0 0
+	}
+	/* Player 3 starting area */
+	create_land 
+	{
+		terrain_type 				LAYER_A
+		number_of_tiles 				128
+		land_position 					10 10
+		base_size 						12
+		set_circular_base
+		assign_to AT_PLAYER 3 0 0
+	}
+	/* Player 4 starting area */
+	create_land 
+	{
+		terrain_type 				LAYER_A
+		number_of_tiles 				128
+		land_position 					90 90
+		base_size 						12
+		set_circular_base
+		assign_to AT_PLAYER 4 0 0
+	}
+elseif 3_PLAYER_GAME
+	/* Player 1 starting area */
+	create_land 
+	{
+		terrain_type 				LAYER_A
+		number_of_tiles 				128
+		land_position 					44 50
+		base_size 						12
+		set_circular_base
+		assign_to AT_PLAYER 1 0 0
+	}
+	/* Player 2 starting area */
+	create_land 
+	{
+		terrain_type 				LAYER_A
+		number_of_tiles 				128	
+		land_position 					10 10
+		base_size 						12
+		set_circular_base
+		assign_to AT_PLAYER 2 0 0
+	}
+	/* Player 3 starting area */
+	create_land 
+	{
+		terrain_type 				LAYER_A
+		number_of_tiles 				128
+		land_position 					90 90
+		base_size 						12
+		set_circular_base
+		assign_to AT_PLAYER 3 0 0
+	}
+elseif 2_PLAYER_GAME
+	/* Player 1 starting area */
+	create_land 
+	{
+		terrain_type 				LAYER_A
+		number_of_tiles 				128
+		land_position 					10 10
+		base_size 						12
+		set_circular_base
+		assign_to AT_PLAYER 1 0 0
+	}
+	/* Player 2 starting area */
+	create_land 
+	{
+		terrain_type 				LAYER_A
+		number_of_tiles 				128	
+		land_position 					90 90
+		base_size 						12
+		set_circular_base
+		assign_to AT_PLAYER 2 0 0
+	}
+else
+	/* Everything fails, make players together */
+	create_player_lands
+	{
+		terrain_type 				LAYER_A
+		number_of_tiles 				128	
+		base_size 						12
+		set_circular_base
+	}
+endif
+
+/* ELEVATION_GENERATION: Create hills */
+<ELEVATION_GENERATION>
+create_elevation 5 								/* Sets max height allowed in create_elevation (0-16) */
+{
+	base_terrain 				LAYER_A			/* Terrain type to apply elevation */
+	set_scale_by_size							/* Scales tile count by map size */
+	number_of_tiles 			2048			/* Amount of elevated tiles */
+	number_of_clumps 			(LENGTH / 2)	/* Amount of hills LENGTH divided by 2 */
+	enable_balanced_elevation					/* To keep elevation balanced across entirety of map */
+}
+/* TERRAIN_GENERATION: Replace terrains with other terrains */
+<TERRAIN_GENERATION>
+/* Color correction selection - Based upon Biome selected prior */
+if PH_ALPINE				color_correction	CC_WINTER
+elseif PH_ALPINE_B			color_correction	CC_WINTER
+elseif PH_SPRING			color_correction	CC_SPRING
+elseif PH_SPRING_B			color_correction	CC_SPRING
+elseif PH_SPRING_C			color_correction	CC_SPRING
+elseif PH_MEDISOUTH			color_correction	CC_SUMMER
+elseif PH_TROPHICALSOUTH	color_correction	CC_RAINFOREST
+elseif PH_TROPHICALEAST		color_correction	CC_JUNGLE
+elseif PH_ASIAN 			color_correction	CC_SUMMER
+elseif PH_ASIAN_B			color_correction	CC_STEPPES
+elseif PH_AUTUMN			color_correction	CC_AUTUMN
+elseif PH_AUTUMN_B			color_correction	CC_AUTUMN
+elseif PH_FROZEN			color_correction	CC_ARCTIC
+else
+endif
+/* Placing WOODIES */
+create_terrain WOODIES
+{
+	base_terrain 					LAYER_A			/* Terrain type to create new terrain from */
+	spacing_to_other_terrain_types 	0				/* Distance to other terrain types */
+	land_percent 					24				/* How much WOODIES is present on terrain in percent */
+	number_of_clumps 				64				/* Number of clumps to be created */
+	set_scale_by_groups
+	set_avoid_player_start_areas	20				/* Sets terrain generation to avoid player base area */
+	clumping_factor 				30				/* How much WOODIES prefer to be together next to other tiles of the same clump. */
+}
+/* Placing WOODIES_B */
+create_terrain WOODIES_B
+{
+	base_terrain 					WOODIES			/* Terrain type to create new terrain from */
+	spacing_to_other_terrain_types 	0				/* Distance to other terrain types */
+	land_percent 					8				/* How much WOODIES_B is present on terrain in percent */
+	number_of_clumps 				32				/* Number of clumps to be created */
+	set_scale_by_groups
+	set_avoid_player_start_areas					/* Sets terrain generation to avoid player base area */
+	clumping_factor 				12				/* How much WOODIES_B prefer to be together next to other tiles of the same clump. */
+}
+/* Placing WOODIES_C */
+create_terrain WOODIES_C
+{
+	base_terrain 					WOODIES			/* Terrain type to create new terrain from */
+	spacing_to_other_terrain_types 	0				/* Distance to other terrain types */
+	land_percent 					4				/* How much WOODIES_C is present on terrain in percent */
+	number_of_clumps 				32				/* Number of clumps to be created */
+	set_scale_by_groups
+	set_avoid_player_start_areas					/* Sets terrain generation to avoid player base area */
+	clumping_factor 				8				/* How much WOODIES_C prefer to be together next to other tiles of the same clump. */
+}
+/* Seasonal terrain mixing for land Decor */
+create_terrain LAYER_B
+{
+	base_terrain 				LAYER_A				/* Terrain type to create new terrain from */
+	land_percent 				16					/* How much LAYER_B is present on terrain in percent */
+	number_of_clumps 			2048				/* Number of clumps to be created */
+	set_scale_by_groups								/* Scales clumps by map size */
+	terrain_mask 				1					/* 1 - new terrain is masked over the base terrain and inherits its properties */
+}
+create_terrain LAYER_C
+{
+	base_terrain 				LAYER_A				/* Terrain type to create new terrain from */
+	land_percent 				12					/* How much LAYER_C is present on terrain in percent */
+	number_of_clumps 			2048				/* Number of clumps to be created */
+	set_scale_by_groups								/* Scales clumps by map size */
+	terrain_mask 				1					/* 1 - new terrain is masked over the base terrain and inherits its properties */
+}
+create_terrain LAYER_D
+{
+	base_terrain 				LAYER_A				/* Terrain type to create new terrain from */
+	land_percent 				8					/* How much LAYER_D is present on terrain in percent */
+	number_of_clumps 			2048				/* Number of clumps to be created */
+	set_scale_by_groups								/* Scales clumps by map size */
+	terrain_mask 				1					/* 1 - new terrain is masked over the base terrain and inherits its properties */
+}
+/* Water depth creation */
+create_terrain MED_VODA 
+{
+	base_terrain 				VODA			/* Terrain type to create new terrain from */	
+	land_percent 					24			/* How much MED_VODA is present on terrain in percent */
+	number_of_clumps 				128			/* Number of clumps to be created */
+	spacing_to_other_terrain_types 	2			/* Distance to other terrain types */
+}
+create_terrain DEEP_VODA 
+{
+	base_terrain 				MED_VODA		/* Terrain type to create new terrain from */	
+	land_percent 					12			/* How much DEEP_VODA is present on terrain in percent */
+	number_of_clumps 				128			/* Number of clumps to be created */
+	spacing_to_other_terrain_types 	2			/* Distance to other terrain types */
+}
+
+/* CONNECTION_GENERATION: Draws connections between lands and players */
+<CONNECTION_GENERATION>
+accumulate_connections 			/* Allows you to replace terrains created in previous connections with new terrains */
+/* Connect all lands creating river crossings and tree clearing */
+create_connect_land_zones 11 12
+{
+	default_terrain_replacement CESTA
+	replace_terrain		VODA MELCINA			/* Replace VODA with MELCINA */	
+	/* Terrain cost scale of 1-100 - lower values are more favorable - 0 = impassable */ 
+	terrain_cost 		LAYER_A 			1		
+	terrain_cost 		LAYER_B 			1		
+	terrain_cost 		LAYER_C 			1		
+	terrain_cost 		LAYER_E 			1		
+	terrain_cost 		WOODIES 			2		
+	terrain_cost 		WOODIES_B 			2
+	terrain_cost 		WOODIES_C 			2		
+	terrain_cost 		MELCINA 			10		
+	terrain_cost 		VODA 				20		
+	terrain_cost		MED_VODA			50	
+	terrain_cost		DEEP_VODA			100						
+	/* Terrain size radius and variance for replaced terrain */ 
+	terrain_size 		VODA 				2 0
+	terrain_size 		MED_VODA 			2 0	
+	terrain_size 		WOODIES 			2 1		
+	terrain_size  		WOODIES_B			2 1
+	terrain_size  		WOODIES_C			2 1		
+}
+create_connect_land_zones 11 13
+{
+	default_terrain_replacement CESTA	
+	replace_terrain		VODA MELCINA			/* Replace VODA with MELCINA */	
+	/* Terrain cost scale of 1-100 - lower values are more favorable - 0 = impassable */ 
+	terrain_cost 		LAYER_A 			1		
+	terrain_cost 		LAYER_B 			1		
+	terrain_cost 		LAYER_C 			1		
+	terrain_cost 		LAYER_E 			1		
+	terrain_cost 		WOODIES 			2		
+	terrain_cost 		WOODIES_B 			2
+	terrain_cost 		WOODIES_C 			2		
+	terrain_cost 		MELCINA 			10		
+	terrain_cost 		VODA 				20		
+	terrain_cost		MED_VODA			50
+	terrain_cost		DEEP_VODA			100						
+	/* Terrain size radius and variance for replaced terrain */ 
+	terrain_size 		VODA 				3 0
+	terrain_size 		MED_VODA 			2 0	
+	terrain_size 		WOODIES 			2 1		
+	terrain_size  		WOODIES_B			2 1
+	terrain_size  		WOODIES_C			2 1		
+}
+
+/* OBJECTS_GENERATION: Places units, buildings, and resources on the map */
+<OBJECTS_GENERATION>
+/* Town Center placement - placed at land origin for every player */
+create_object TOWN_CENTER
+{
+	set_place_for_every_player    				/* Places TC for each player land */
+	find_closest								/* Place at closest valid location to land origin */
+}
+/* Villager placement - automatic count based on civilization */
+create_object VILLAGER
+{
+	set_place_for_every_player    				/* Places VILLAGER for each player land */
+	min_distance_to_players 			3		/* Minimum distance of VILLAGERVILLAGER generation from player origin */
+	max_distance_to_players 			5		/* Maximum distance of VILLAGER generation from player origin */
+}	
+/* Scout placement */	
+create_object SCOUT	
+{	
+	set_place_for_every_player					/* Places SCOUT for each player land */
+	min_distance_to_players 			4		/* Minimum distance of SCOUT generation from player origin */		
+	max_distance_to_players 			6		/* Maximum distance of SCOUT generation from player origin */		
+}
+/* Near Stone */
+create_object STONE 
+{
+	number_of_objects 					4		/* How many STONE tiles per group */
+	number_of_groups 					2		/* How many groups of STONE per player */
+	set_tight_grouping							/* Grouping type set to tight for this STONE */
+	set_gaia_object_only						/* Required for gaia objects placed per-player */
+	set_place_for_every_player					/* Places STONE for each player land */
+	min_distance_to_players 			8		/* Minimum distance of STONE generation from player origin */
+	max_distance_to_players 			16		/* Maximum distance of STONE generation from player origin */
+	avoid_forest_zone 					2		/* Avoid FOREST tile to prevent trapped Resource */
+	enable_tile_shuffling						/* Increases randomness of object positions */
+}	
+/* Near Gold */	
+create_object GOLD 	
+{	
+	number_of_objects 					4		/* How many GOLD tiles per group */
+	number_of_groups 					2		/* How many groups of GOLD per player */
+	set_tight_grouping							/* Grouping type set to tight for this GOLD */
+	set_gaia_object_only						/* Required for gaia objects placed per-player */
+	set_place_for_every_player					/* Places GOLD for each player land */
+	min_distance_to_players 			10		/* Minimum distance of GOLD generation from player origin */
+	max_distance_to_players 			16		/* Maximum distance of GOLD generation from player origin */
+	min_distance_group_placement 		4		/* Minimum distance between group members */
+	avoid_forest_zone 2							/* Avoid FOREST tile to prevent trapped Resource */
+	enable_tile_shuffling						/* Increases randomness of object positions */
+}	
+/* Far Gold */	
+create_object GOLD 	
+{	
+	number_of_objects 				rnd(3,5)	/* How many GOLD tiles per group */
+	number_of_groups 					3		/* How many groups of GOLD per player */
+	set_scaling_to_player_number				/* Scales groups to player count */
+	set_tight_grouping							/* Grouping type set to tight for this GOLD */
+	set_gaia_object_only						/* Required for gaia objects placed per-player */
+	min_distance_to_players 			32		/* Minimum distance of GOLD generation from player origin */
+	max_distance_to_players 			64		/* Maximum distance of GOLD generation from player origin */
+	min_distance_group_placement 		8		/* Minimum distance between group members */
+	temp_min_distance_group_placement 	40		/* Avoid placement of this create_object type within 40 tiles */
+	avoid_forest_zone 					2		/* Avoid FOREST tile to prevent trapped Resource */
+	enable_tile_shuffling						/* Increases randomness of object positions */
+}	
+/* Far Stone */	
+create_object STONE 	
+{	
+	number_of_objects 				rnd(3,5)	/* How many STONE tiles per group */
+	number_of_groups 					3		/* How many groups of STONE per player */
+	set_scaling_to_player_number				/* Scales groups to player count */
+	set_tight_grouping							/* Grouping type set to tight for this STONE */
+	set_gaia_object_only						/* Required for gaia objects placed per-player */
+	min_distance_to_players 			32		/* Minimum distance of STONE generation from player origin */
+	max_distance_to_players 			64		/* Maximum distance of STONE generation from player origin */
+	min_distance_group_placement 		8		/* Minimum distance between group members */
+	temp_min_distance_group_placement 	40		/* Avoid placement of this create_object type within 40 tiles */
+	avoid_forest_zone 					2		/* Avoid FOREST tile to prevent trapped Resource */
+	enable_tile_shuffling						/* Increases randomness of object positions */
+}
+/* Defender Stone */	
+create_object STONE 	
+{	
+	number_of_objects 					6		/* How many STONE tiles per group */
+	number_of_groups 					4		/* How many groups of STONE */
+	set_scaling_to_map_size						/* Scales groups to mapsize */
+	set_tight_grouping							/* Grouping type set to tight for this STONE */
+	set_gaia_object_only						/* Required for gaia objects placed per-player */
+	min_distance_to_players 			8		/* Minimum distance of STONE generation from player origin */
+	min_distance_group_placement 		8		/* Minimum distance between group members */
+	temp_min_distance_group_placement 	16		/* Avoid placement of this create_object type within 40 tiles */
+	enable_tile_shuffling						/* Increases randomness of object positions */
+	place_on_specific_land_id			11
+}
+/* Relic Placement */	
+create_object RELIC	
+{	
+	number_of_objects 					2		/* Number of RELIC per-player */
+	set_gaia_object_only						/* Required for gaia objects placed per-player */
+	set_place_for_every_player					/* Places RELIC for each player land */
+	min_distance_to_players 			16		/* Minimum distance of RELIC generation from land origin */
+	max_distance_to_players 			32		/* Maximum distance of RELIC generation from land origin */
+	temp_min_distance_group_placement 	16		/* Avoid placement of this create_object type within 16 tiles */
+	avoid_forest_zone 					2		/* Avoid FOREST tile to prevent trapped RELIC */
+	enable_tile_shuffling						/* Increases randomness of object positions */
+}	
+/* STRAGGLER trees */	
+create_object STRAGGLER	
+{	
+	number_of_objects 					24		/* STRAGGLER_A per player */
+	set_gaia_object_only        				/* Required for gaia objects placed per-player */
+	set_place_for_every_player  				/* Places trees for each player land */
+	terrain_to_place_on 		LAYER_A			/* Limits objects to LAYER_A */
+	min_distance_to_players 			4   	/* 4 tiles from land origin */
+	max_distance_to_players 			16		/* 16 tiles from land origin */
+	set_circular_placement      				/* Uses circular distance instead of square */
+	min_distance_group_placement 		0 		/* No minimum distance between group members */
+	enable_tile_shuffling						/* Increases randomness of object positions */
+}
+/* Herdables */
+create_object HERDABLE_A
+{
+	number_of_objects 					2		/* How many HERDABLE_A per group */				
+	number_of_groups 					2		/* How many groups of HERDABLE_A per player */
+	set_gaia_object_only						/* Required for gaia objects placed per-player */
+	set_place_for_every_player					/* Places HERDABLE_A for each player land */
+	min_distance_to_players 			3		/* Minimum distance of HERDABLE_A generation from land origin */
+	max_distance_to_players 			9		/* Maximum distance of HERDABLE_A generation from land origin */
+	set_circular_placement						/* Uses circular distance instead of square */
+	require_path 1								/* Requires a path to the HERDABLE_A */
+}	
+create_object HERDABLE_B	
+{	
+	number_of_objects 					2		/* How many HERDABLE_B per group */				
+	number_of_groups 					2		/* How many groups of HERDABLE_B per player */
+	set_gaia_object_only						/* Required for gaia objects placed per-player */
+	set_place_for_every_player					/* Places HERDABLE_B for each player land */
+	min_distance_to_players 			3		/* Minimum distance of HERDABLE_B generation from land origin */
+	max_distance_to_players 			9		/* Maximum distance of HERDABLE_B generation from land origin */
+	set_circular_placement						/* Uses circular distance instead of square */
+	require_path 1								/* Requires a path to the HERDABLE_B */
+}	
+/* Forage bushes  */	
+create_object KERICEK 	
+{	
+    number_of_objects 					6		/* How many KERICEK tiles per group */
+	number_of_groups 					1		/* How many groups of KERICEK per player */
+    set_tight_grouping							/* Grouping type set to tight for this object */
+	set_gaia_object_only						/* Required for gaia objects placed per-player */
+	set_place_for_every_player					/* Places KERICEK for each player land */
+	min_distance_to_players 			6		/* Minimum distance of KERICEK generation from land origin */
+	max_distance_to_players 			10		/* Maximum distance of KERICEK generation from land origin */
+	avoid_forest_zone 					2		/* Avoid FOREST tile to prevent trapped Resource */
+	require_path 1								/* Requires a path to the KERICEK */
+}	
+/* Fish */	
+create_object MELKARYBA	
+{	
+	number_of_objects 					64		/* Number of FISH in regular water */
+	min_distance_group_placement 		3		/* Avoid placement of this create_object type within 4 tiles */
+}	
+create_object FISH_A	
+{	
+	number_of_objects					1
+	number_of_groups 					64		/* Number of FISH in regular water */
+	min_distance_group_placement 		3 		/* Minimum distance between group members */
+}	
+create_object FISH_B	
+{	
+	number_of_objects					1
+	number_of_groups 					64		/* Number of FISH in regular water */
+	min_distance_group_placement 		3 		/* Minimum distance between group members */
+}	
+/* Huntables */	
+create_object HUNTABLE 	
+{	
+	number_of_objects 					6		/* How many HUNTABLE per group */
+	number_of_groups 					2		/* How many groups of HUNTABLE per player */
+	group_placement_radius 				5		/* Number of tiles from the central tile that objects belonging to the same group may spawn */
+	set_loose_grouping							/* Grouping type set to loose for this object */
+	set_gaia_object_only						/* Required for gaia objects placed per-player */
+	set_place_for_every_player					/* Places HUNTABLE for each player land */
+	min_distance_to_players 			12		/* Minimum distance of HUNTABLE generation from player origin */
+	max_distance_to_players 			24		/* Maximum distance of HUNTABLE generation from player origin */
+	min_distance_group_placement 		8 		/* Minimum distance between group members */
+	require_path 1								/* Requires a path to the HUNTABLE */
+}	
+/* Lurables */	
+create_object LURABLE_A	
+{	
+	number_of_objects 					1		/* How many LURABLE_A per group */
+	number_of_groups 					3		/* How many groups of LURABLE_A per player */
+	set_gaia_object_only						/* Required for gaia objects placed per-player */
+	set_place_for_every_player					/* Places LURABLE_A for each player land */
+	min_distance_to_players 			12		/* Minimum distance of LURABLE_A generation from player origin */
+	max_distance_to_players 			24		/* Maximum distance of LURABLE_A generation from player origin */
+	min_distance_group_placement 		5 		/* Minimum distance between group members */
+	require_path 1								/* Requires a path to the LURABLE_A */
+}	
+create_object LURABLE_B	
+{	
+	number_of_objects 					1		/* How many LURABLE_B per group */
+	number_of_groups 					3		/* How many groups of LURABLE_B per player */
+	set_gaia_object_only						/* Required for gaia objects placed per-player */
+	set_place_for_every_player					/* Places LURABLE_B for each player land */
+	min_distance_to_players 			12		/* Minimum distance of LURABLE_B generation from player origin */
+	max_distance_to_players 			24		/* Maximum distance of LURABLE_B generation from player origin */
+	min_distance_group_placement 		5 		/* Minimum distance between group members */
+	require_path 1								/* Requires a path to the LURABLE_B */
+}
+/* Predators */
+create_object PREDATOR_A
+{
+	number_of_objects 					1		/* Number of PREDATOR_A per group */
+	number_of_groups 			(LENGTH / 16) 	/* Number of groups of PREDATOR_A */	
+	min_distance_to_players 			24		/* Minimum distance of PREDATOR_A generation from player origin */
+	min_distance_group_placement 		8 		/* Minimum distance between group members */
+	temp_min_distance_group_placement 	16		/* Avoid placement of this create_object type within 16 tiles */
+}
+create_object PREDATOR_B
+{
+	number_of_objects 					1		/* Number of PREDATOR_B per group */
+	number_of_groups 			(LENGTH / 16) 	/* Number of groups of PREDATOR_B */		
+	min_distance_to_players 			28		/* Minimum distance of PREDATOR_B generation from player origin */
+	min_distance_group_placement 		8 		/* Minimum distance between group members */	
+	temp_min_distance_group_placement 	12		/* Avoid placement of this create_object type within 12 tiles */
+}
+/* Birds */
+create_object BIRDS_A
+{
+	number_of_objects 					4			/* Number of BIRDS_A per group */
+	number_of_groups            		2		    /* Number of BIRDS_A groups */
+	group_variance						2           /* BIRDS_A randomly varied by up to the amount specified */	
+	set_scaling_to_map_size							/* Scales object amount to map size */
+}
+create_object BIRDS_B
+{
+	number_of_objects 					4			/* Number of BIRD_B per group */
+	number_of_groups            		2		    /* Number of BIRD_B groups */
+	group_variance						2           /* BIRDS_B randomly varied by up to the amount specified */	
+	set_scaling_to_map_size							/* Scales object amount to map size */
+}
+/* Regicide game mode - spawns KING and CASTLE when Regicide is active */
+if REGICIDE
+create_object KING
+{	
+	set_place_for_every_player  				/* Places KING for each player land */
+	min_distance_to_players 			4		/* Minimum distance of KING generation from player origin */
+	find_closest                 				/* Placed at closest valid location to land origin */
+}
+
+create_object CASTLE
+{
+	set_place_for_every_player					/* Places CASTLE for each player land */
+	min_distance_to_players 			8		/* Minimum distance of CASTLE generation from player origin */
+	max_distance_to_players				16		/* Maximum distance of CASTLE generation from player origin */
+	find_closest								/* Place at closest valid location to land origin */		
+}
+endif

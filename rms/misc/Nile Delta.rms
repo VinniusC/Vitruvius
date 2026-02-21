@@ -1,0 +1,2057 @@
+/* Nile Delta */
+
+#include_drs random_map.def 
+
+if 1_PLAYER_GAME
+			#define POS_DEFAULT
+elseif 2_PLAYER_GAME
+			#define POS_1V1
+elseif 3_PLAYER_GAME
+	if 1_TEAM_GAME
+			#define POS_2V1
+	else
+			#define POS_DEFAULT
+	endif
+elseif 4_PLAYER_GAME
+	if 2_TEAM_GAME
+			#define POS_2V2
+	else
+			#define POS_DEFAULT
+	endif
+elseif 5_PLAYER_GAME
+	if 2_TEAM_GAME
+		if TEAM0_SIZE0
+			if TEAM1_SIZE3
+			#define POS_3V2
+			elseif TEAM2_SIZE3
+			#define POS_2V3
+			else
+			#define POS_DEFAULT
+			endif
+		else
+			#define POS_DEFAULT
+		endif
+	else
+			#define POS_DEFAULT
+	endif
+elseif 6_PLAYER_GAME
+	if 2_TEAM_GAME
+		if TEAM0_SIZE0
+			if TEAM1_SIZE3
+			#define POS_3V3
+			elseif TEAM2_SIZE3
+			#define POS_3V3
+			elseif TEAM1_SIZE4
+			#define POS_4V2
+			elseif TEAM2_SIZE4
+			#define POS_2V4
+			else
+			#define POS_DEFAULT
+			endif
+		else
+			#define POS_DEFAULT /* or 2v2v1v1 3v2v1 etc.. */
+		endif
+	else
+			#define POS_DEFAULT /* or multiple teams */
+	endif
+elseif 7_PLAYER_GAME
+	if 2_TEAM_GAME
+		if TEAM0_SIZE0
+			if TEAM1_SIZE4
+			#define POS_4V3
+			elseif TEAM2_SIZE4
+			#define POS_3V4
+			else
+			#define POS_DEFAULT
+			endif
+		else
+			#define POS_DEFAULT
+		endif
+	else
+			#define POS_DEFAULT
+	endif
+elseif 8_PLAYER_GAME
+	if 2_TEAM_GAME
+		if TEAM0_SIZE0
+			if TEAM1_SIZE4
+			#define POS_4V4
+			elseif TEAM2_SIZE4
+			#define POS_4V4
+			else /* includes 5v3, 6v2, 3v3v2 and other combinations */
+			#define POS_DEFAULT
+			endif
+		else
+			#define POS_DEFAULT
+		endif
+	else
+			#define POS_DEFAULT
+	endif
+else 
+
+endif
+
+start_random
+percent_chance 50
+#define LNR_ATEAMLEFT
+end_random
+
+	#define NILEDELTA_PATCHTOP
+
+
+
+
+<PLAYER_SETUP>
+
+if POS_DEFAULT
+  grouped_by_team
+  
+  behavior_version 0
+else
+  direct_placement
+endif
+
+  nomad_resources
+  force_nomad_treaty
+  ai_info_map_type MIGRATION 1 0 0
+
+
+<LAND_GENERATION>
+
+#const SAVANNAH 41
+#const MOORLAND 44
+#const CRACKEDIT 45
+#const ACACIA_FOREST 50
+#const DIRT4 42
+#const GRASSDRY 100
+
+base_terrain WATER
+
+
+
+
+
+
+if POS_DEFAULT
+
+create_player_lands
+{
+  terrain_type CRACKEDIT
+  land_percent 40
+  base_size 3 /* 4 */
+  border_fuzziness 20
+  clumping_factor 20
+  other_zone_avoidance_distance 3
+  bottom_border 70
+  left_border 70
+
+ if TINY_MAP
+ elseif SMALL_MAP
+	#define NILEDELTA_PATCHTOP
+ top_border 3
+ right_border 3
+ elseif MEDIUM_MAP
+	#define NILEDELTA_PATCHTOP
+ top_border 3
+ right_border 3
+ else
+	#define NILEDELTA_PATCHTOP
+ top_border 2
+ right_border 2
+ endif
+
+}
+
+
+else
+
+
+
+if NILEDELTA_PATCHTOP
+
+
+	if LUDIKRIS_MAP
+	else
+
+
+create_land
+{
+  terrain_type SAVANNAH
+  land_percent 0
+  base_size 3
+  land_position 99 1
+}
+
+	endif
+
+endif
+
+
+
+
+	if POS_1V1
+	
+create_land 
+{ 
+  terrain_type                     CRACKEDIT
+  number_of_tiles				   200
+  land_position 				   74 9
+  base_size                        6
+  border_fuzziness                 15
+  clumping_factor                  100
+  assign_to AT_TEAM -10 0 0
+  bottom_border 70
+  left_border 70
+  top_border 3
+  right_border 3
+  other_zone_avoidance_distance 3
+  zone 741
+}
+
+create_land 
+{ 
+  terrain_type                     CRACKEDIT
+  number_of_tiles				   200
+  land_position 				   91 26
+  base_size                        6
+  border_fuzziness                 15
+  clumping_factor                  100
+  assign_to AT_TEAM -10 0 0
+  bottom_border 70
+  left_border 70
+  top_border 3
+  right_border 3
+  other_zone_avoidance_distance 3
+  zone 744
+}
+	
+	elseif POS_2V1
+	
+	
+create_land 
+{ 
+  terrain_type                     CRACKEDIT
+  number_of_tiles				   200
+  land_position 				   84 5
+  base_size                        6
+  border_fuzziness                 15
+  clumping_factor                  100
+	if LNR_ATEAMLEFT
+  assign_to AT_TEAM 1 0 0
+	else
+  assign_to AT_TEAM -1 0 0
+	endif
+  bottom_border 70
+  left_border 70
+  top_border 3
+  right_border 3
+  other_zone_avoidance_distance 3
+  zone 740
+}
+
+	
+create_land 
+{ 
+  terrain_type                     CRACKEDIT
+  number_of_tiles				   200
+  land_position 				   74 11
+  base_size                        6
+  border_fuzziness                 15
+  clumping_factor                  100
+	if LNR_ATEAMLEFT
+  assign_to AT_TEAM 1 0 0
+	else
+  assign_to AT_TEAM -1 0 0
+	endif
+  bottom_border 70
+  left_border 70
+  top_border 3
+  right_border 3
+  other_zone_avoidance_distance 3
+  zone 741
+}
+
+
+
+
+create_land 
+{ 
+  terrain_type                     CRACKEDIT
+  number_of_tiles				   200
+  land_position 				   95 16
+  base_size                        6
+  border_fuzziness                 15
+  clumping_factor                  100
+	if LNR_ATEAMLEFT
+  assign_to AT_TEAM -1 0 0
+	else
+  assign_to AT_TEAM 1 0 0
+	endif
+  bottom_border 70
+  left_border 70
+  top_border 3
+  right_border 3
+  other_zone_avoidance_distance 3
+  zone 743
+}
+
+create_land 
+{ 
+  terrain_type                     CRACKEDIT
+  number_of_tiles				   200
+  land_position 				   89 26
+  base_size                        6
+  border_fuzziness                 15
+  clumping_factor                  100
+	if LNR_ATEAMLEFT
+  assign_to AT_TEAM -1 0 0
+	else
+  assign_to AT_TEAM 1 0 0
+	endif
+  bottom_border 70
+  left_border 70
+  top_border 3
+  right_border 3
+  other_zone_avoidance_distance 3
+  zone 744
+}
+	
+	elseif POS_2V2 
+	
+
+	
+create_land 
+{ 
+  terrain_type                     CRACKEDIT
+  number_of_tiles				   200
+  land_position 				   84 5
+  base_size                        6
+  border_fuzziness                 15
+  clumping_factor                  100
+	if LNR_ATEAMLEFT
+  assign_to AT_TEAM 1 0 0
+	else
+  assign_to AT_TEAM 2 0 0
+	endif
+  bottom_border 70
+  left_border 70
+  top_border 3
+  right_border 3
+  other_zone_avoidance_distance 3
+  zone 740
+}
+
+	
+create_land 
+{ 
+  terrain_type                     CRACKEDIT
+  number_of_tiles				   200
+  land_position 				   74 11
+  base_size                        6
+  border_fuzziness                 15
+  clumping_factor                  100
+	if LNR_ATEAMLEFT
+  assign_to AT_TEAM 1 0 0
+	else
+  assign_to AT_TEAM 2 0 0
+	endif
+  bottom_border 70
+  left_border 70
+  top_border 3
+  right_border 3
+  other_zone_avoidance_distance 3
+  zone 741
+}
+
+
+
+
+create_land 
+{ 
+  terrain_type                     CRACKEDIT
+  number_of_tiles				   200
+  land_position 				   95 16
+  base_size                        6
+  border_fuzziness                 15
+  clumping_factor                  100
+	if LNR_ATEAMLEFT
+  assign_to AT_TEAM 2 0 0
+	else
+  assign_to AT_TEAM 1 0 0
+	endif
+  bottom_border 70
+  left_border 70
+  top_border 3
+  right_border 3
+  other_zone_avoidance_distance 3
+  zone 743
+}
+
+create_land 
+{ 
+  terrain_type                     CRACKEDIT
+  number_of_tiles				   200
+  land_position 				   89 26
+  base_size                        6
+  border_fuzziness                 15
+  clumping_factor                  100
+	if LNR_ATEAMLEFT
+  assign_to AT_TEAM 2 0 0
+	else
+  assign_to AT_TEAM 1 0 0
+	endif
+  bottom_border 70
+  left_border 70
+  top_border 3
+  right_border 3
+  other_zone_avoidance_distance 3
+  zone 744
+}
+
+	elseif POS_3V2
+	
+	
+	
+create_land 
+{ 
+  terrain_type                     CRACKEDIT
+  number_of_tiles				   200
+  land_position 				   84 5
+  base_size                        6
+  border_fuzziness                 15
+  clumping_factor                  100
+	if LNR_ATEAMLEFT
+  assign_to AT_TEAM 1 0 0
+	else
+  assign_to AT_TEAM 2 0 0
+	endif
+  bottom_border 70
+  left_border 70
+  top_border 3
+  right_border 3
+  other_zone_avoidance_distance 3
+  zone 740
+}
+
+	
+create_land 
+{ 
+  terrain_type                     CRACKEDIT
+  number_of_tiles				   200
+  land_position 				   74 11
+  base_size                        6
+  border_fuzziness                 15
+  clumping_factor                  100
+	if LNR_ATEAMLEFT
+  assign_to AT_TEAM 1 0 0
+	else
+  assign_to AT_TEAM 2 0 0
+	endif
+  bottom_border 70
+  left_border 70
+  top_border 3
+  right_border 3
+  other_zone_avoidance_distance 3
+  zone 741
+}
+
+
+create_land 
+{ 
+  terrain_type                     CRACKEDIT
+  number_of_tiles				   200
+  land_position 				   67 24
+  base_size                        6
+  border_fuzziness                 15
+  clumping_factor                  100
+	if LNR_ATEAMLEFT
+  assign_to AT_TEAM 1 0 0
+	else
+  assign_to AT_TEAM 2 0 0
+	endif
+  bottom_border 70
+  left_border 70
+  top_border 3
+  right_border 3
+  other_zone_avoidance_distance 3
+  zone 742
+}
+
+
+
+create_land 
+{ 
+  terrain_type                     CRACKEDIT
+  number_of_tiles				   200
+  land_position 				   95 16
+  base_size                        6
+  border_fuzziness                 15
+  clumping_factor                  100
+	if LNR_ATEAMLEFT
+  assign_to AT_TEAM 2 0 0
+	else
+  assign_to AT_TEAM 1 0 0
+	endif
+  bottom_border 70
+  left_border 70
+  top_border 3
+  right_border 3
+  other_zone_avoidance_distance 3
+  zone 743
+}
+
+create_land 
+{ 
+  terrain_type                     CRACKEDIT
+  number_of_tiles				   200
+  land_position 				   89 26
+  base_size                        6
+  border_fuzziness                 15
+  clumping_factor                  100
+	if LNR_ATEAMLEFT
+  assign_to AT_TEAM 2 0 0
+	else
+  assign_to AT_TEAM 1 0 0
+	endif
+  bottom_border 70
+  left_border 70
+  top_border 3
+  right_border 3
+  other_zone_avoidance_distance 3
+  zone 744
+}
+
+create_land 
+{ 
+  terrain_type                     CRACKEDIT
+  number_of_tiles				   200
+  land_position 				   76 33
+  base_size                        6
+  border_fuzziness                 15
+  clumping_factor                  100
+	if LNR_ATEAMLEFT
+  assign_to AT_TEAM 2 0 0
+	else
+  assign_to AT_TEAM 1 0 0
+	endif
+  bottom_border 70
+  left_border 70
+  top_border 3
+  right_border 3
+  other_zone_avoidance_distance 3
+  zone 745
+}
+
+
+	elseif POS 2V3
+	
+	
+	
+create_land 
+{ 
+  terrain_type                     CRACKEDIT
+  number_of_tiles				   200
+  land_position 				   84 5
+  base_size                        6
+  border_fuzziness                 15
+  clumping_factor                  100
+	if LNR_ATEAMLEFT
+  assign_to AT_TEAM 1 0 0
+	else
+  assign_to AT_TEAM 2 0 0
+	endif
+  bottom_border 70
+  left_border 70
+  top_border 3
+  right_border 3
+  other_zone_avoidance_distance 3
+  zone 740
+}
+
+	
+create_land 
+{ 
+  terrain_type                     CRACKEDIT
+  number_of_tiles				   200
+  land_position 				   74 11
+  base_size                        6
+  border_fuzziness                 15
+  clumping_factor                  100
+	if LNR_ATEAMLEFT
+  assign_to AT_TEAM 1 0 0
+	else
+  assign_to AT_TEAM 2 0 0
+	endif
+  bottom_border 70
+  left_border 70
+  top_border 3
+  right_border 3
+  other_zone_avoidance_distance 3
+  zone 741
+}
+
+
+create_land 
+{ 
+  terrain_type                     CRACKEDIT
+  number_of_tiles				   200
+  land_position 				   67 24
+  base_size                        6
+  border_fuzziness                 15
+  clumping_factor                  100
+	if LNR_ATEAMLEFT
+  assign_to AT_TEAM 1 0 0
+	else
+  assign_to AT_TEAM 2 0 0
+	endif
+  bottom_border 70
+  left_border 70
+  top_border 3
+  right_border 3
+  other_zone_avoidance_distance 3
+  zone 742
+}
+
+
+
+create_land 
+{ 
+  terrain_type                     CRACKEDIT
+  number_of_tiles				   200
+  land_position 				   95 16
+  base_size                        6
+  border_fuzziness                 15
+  clumping_factor                  100
+	if LNR_ATEAMLEFT
+  assign_to AT_TEAM 2 0 0
+	else
+  assign_to AT_TEAM 1 0 0
+	endif
+  bottom_border 70
+  left_border 70
+  top_border 3
+  right_border 3
+  other_zone_avoidance_distance 3
+  zone 743
+}
+
+create_land 
+{ 
+  terrain_type                     CRACKEDIT
+  number_of_tiles				   200
+  land_position 				   89 26
+  base_size                        6
+  border_fuzziness                 15
+  clumping_factor                  100
+	if LNR_ATEAMLEFT
+  assign_to AT_TEAM 2 0 0
+	else
+  assign_to AT_TEAM 1 0 0
+	endif
+  bottom_border 70
+  left_border 70
+  top_border 3
+  right_border 3
+  other_zone_avoidance_distance 3
+  zone 744
+}
+
+create_land 
+{ 
+  terrain_type                     CRACKEDIT
+  number_of_tiles				   200
+  land_position 				   76 33
+  base_size                        6
+  border_fuzziness                 15
+  clumping_factor                  100
+	if LNR_ATEAMLEFT
+  assign_to AT_TEAM 2 0 0
+	else
+  assign_to AT_TEAM 1 0 0
+	endif
+  bottom_border 70
+  left_border 70
+  top_border 3
+  right_border 3
+  other_zone_avoidance_distance 3
+  zone 745
+}
+	
+
+	elseif POS_3V3
+	
+	
+create_land 
+{ 
+  terrain_type                     CRACKEDIT
+  number_of_tiles				   200
+  land_position 				   84 5
+  base_size                        6
+  border_fuzziness                 15
+  clumping_factor                  100
+	if LNR_ATEAMLEFT
+  assign_to AT_TEAM 1 0 0
+	else
+  assign_to AT_TEAM 2 0 0
+	endif
+  bottom_border 70
+  left_border 70
+  top_border 3
+  right_border 3
+  other_zone_avoidance_distance 3
+  zone 740
+}
+
+	
+create_land 
+{ 
+  terrain_type                     CRACKEDIT
+  number_of_tiles				   200
+  land_position 				   74 11
+  base_size                        6
+  border_fuzziness                 15
+  clumping_factor                  100
+	if LNR_ATEAMLEFT
+  assign_to AT_TEAM 1 0 0
+	else
+  assign_to AT_TEAM 2 0 0
+	endif
+  bottom_border 70
+  left_border 70
+  top_border 3
+  right_border 3
+  other_zone_avoidance_distance 3
+  zone 741
+}
+
+
+create_land 
+{ 
+  terrain_type                     CRACKEDIT
+  number_of_tiles				   200
+  land_position 				   67 24
+  base_size                        6
+  border_fuzziness                 15
+  clumping_factor                  100
+	if LNR_ATEAMLEFT
+  assign_to AT_TEAM 1 0 0
+	else
+  assign_to AT_TEAM 2 0 0
+	endif
+  bottom_border 70
+  left_border 70
+  top_border 3
+  right_border 3
+  other_zone_avoidance_distance 3
+  zone 742
+}
+
+
+
+create_land 
+{ 
+  terrain_type                     CRACKEDIT
+  number_of_tiles				   200
+  land_position 				   95 16
+  base_size                        6
+  border_fuzziness                 15
+  clumping_factor                  100
+	if LNR_ATEAMLEFT
+  assign_to AT_TEAM 2 0 0
+	else
+  assign_to AT_TEAM 1 0 0
+	endif
+  bottom_border 70
+  left_border 70
+  top_border 3
+  right_border 3
+  other_zone_avoidance_distance 3
+  zone 743
+}
+
+create_land 
+{ 
+  terrain_type                     CRACKEDIT
+  number_of_tiles				   200
+  land_position 				   89 26
+  base_size                        6
+  border_fuzziness                 15
+  clumping_factor                  100
+	if LNR_ATEAMLEFT
+  assign_to AT_TEAM 2 0 0
+	else
+  assign_to AT_TEAM 1 0 0
+	endif
+  bottom_border 70
+  left_border 70
+  top_border 3
+  right_border 3
+  other_zone_avoidance_distance 3
+  zone 744
+}
+
+create_land 
+{ 
+  terrain_type                     CRACKEDIT
+  number_of_tiles				   200
+  land_position 				   76 33
+  base_size                        6
+  border_fuzziness                 15
+  clumping_factor                  100
+	if LNR_ATEAMLEFT
+  assign_to AT_TEAM 2 0 0
+	else
+  assign_to AT_TEAM 1 0 0
+	endif
+  bottom_border 70
+  left_border 70
+  top_border 3
+  right_border 3
+  other_zone_avoidance_distance 3
+  zone 745
+}
+	
+	elseif POS_4V3
+	
+	
+	
+	
+create_land 
+{ 
+  terrain_type                     CRACKEDIT
+  number_of_tiles				   200
+  land_position 				   84 5
+  base_size                        6
+  border_fuzziness                 15
+  clumping_factor                  100
+	if LNR_ATEAMLEFT
+  assign_to AT_TEAM 1 0 0
+	else
+  assign_to AT_TEAM 2 0 0
+	endif
+  top_border 3
+  right_border 3
+  other_zone_avoidance_distance 3
+  zone 740
+}
+
+	
+create_land 
+{ 
+  terrain_type                     CRACKEDIT
+  number_of_tiles				   200
+  land_position 				   74 11
+  base_size                        6
+  border_fuzziness                 15
+  clumping_factor                  100
+	if LNR_ATEAMLEFT
+  assign_to AT_TEAM 1 0 0
+	else
+  assign_to AT_TEAM 2 0 0
+	endif
+  top_border 3
+  right_border 3
+  other_zone_avoidance_distance 3
+  zone 741
+}
+
+
+create_land 
+{ 
+  terrain_type                     CRACKEDIT
+  number_of_tiles				   200
+  land_position 				   67 24
+  base_size                        6
+  border_fuzziness                 15
+  clumping_factor                  100
+	if LNR_ATEAMLEFT
+  assign_to AT_TEAM 1 0 0
+	else
+  assign_to AT_TEAM 2 0 0
+	endif
+  top_border 3
+  right_border 3
+  other_zone_avoidance_distance 3
+  zone 742
+}
+
+create_land 
+{ 
+  terrain_type                     CRACKEDIT
+  number_of_tiles				   200
+  land_position 				   63 11
+  base_size                        6
+  border_fuzziness                 15
+  clumping_factor                  100
+	if LNR_ATEAMLEFT
+  assign_to AT_TEAM 1 0 0
+	else
+  assign_to AT_TEAM 2 0 0
+	endif
+  top_border 3
+  right_border 3
+  other_zone_avoidance_distance 3
+  zone 747
+}
+
+
+
+create_land 
+{ 
+  terrain_type                     CRACKEDIT
+  number_of_tiles				   200
+  land_position 				   95 16
+  base_size                        6
+  border_fuzziness                 15
+  clumping_factor                  100
+	if LNR_ATEAMLEFT
+  assign_to AT_TEAM 2 0 0
+	else
+  assign_to AT_TEAM 1 0 0
+	endif
+  top_border 3
+  right_border 3
+  other_zone_avoidance_distance 3
+  zone 743
+}
+
+create_land 
+{ 
+  terrain_type                     CRACKEDIT
+  number_of_tiles				   200
+  land_position 				   89 26
+  base_size                        6
+  border_fuzziness                 15
+  clumping_factor                  100
+	if LNR_ATEAMLEFT
+  assign_to AT_TEAM 2 0 0
+	else
+  assign_to AT_TEAM 1 0 0
+	endif
+  top_border 3
+  right_border 3
+  other_zone_avoidance_distance 3
+  zone 744
+}
+
+create_land 
+{ 
+  terrain_type                     CRACKEDIT
+  number_of_tiles				   200
+  land_position 				   76 33
+  base_size                        6
+  border_fuzziness                 15
+  clumping_factor                  100
+	if LNR_ATEAMLEFT
+  assign_to AT_TEAM 2 0 0
+	else
+  assign_to AT_TEAM 1 0 0
+	endif
+  top_border 3
+  right_border 3
+  other_zone_avoidance_distance 3
+  zone 745
+}
+
+
+create_land 
+{ 
+  terrain_type                     CRACKEDIT
+  number_of_tiles				   200
+  land_position 				   89 37
+  base_size                        6
+  border_fuzziness                 15
+  clumping_factor                  100
+	if LNR_ATEAMLEFT
+  assign_to AT_TEAM 2 0 0
+	else
+  assign_to AT_TEAM 1 0 0
+	endif
+  top_border 3
+  right_border 3
+  other_zone_avoidance_distance 3
+  zone 746
+}
+
+
+	
+
+	elseif POS_3V4
+	
+	
+	
+create_land 
+{ 
+  terrain_type                     CRACKEDIT
+  number_of_tiles				   200
+  land_position 				   84 5
+  base_size                        6
+  border_fuzziness                 15
+  clumping_factor                  100
+	if LNR_ATEAMLEFT
+  assign_to AT_TEAM 1 0 0
+	else
+  assign_to AT_TEAM 2 0 0
+	endif
+  top_border 3
+  right_border 3
+  other_zone_avoidance_distance 3
+  zone 740
+}
+
+	
+create_land 
+{ 
+  terrain_type                     CRACKEDIT
+  number_of_tiles				   200
+  land_position 				   74 11
+  base_size                        6
+  border_fuzziness                 15
+  clumping_factor                  100
+	if LNR_ATEAMLEFT
+  assign_to AT_TEAM 1 0 0
+	else
+  assign_to AT_TEAM 2 0 0
+	endif
+  top_border 3
+  right_border 3
+  other_zone_avoidance_distance 3
+  zone 741
+}
+
+
+create_land 
+{ 
+  terrain_type                     CRACKEDIT
+  number_of_tiles				   200
+  land_position 				   67 24
+  base_size                        6
+  border_fuzziness                 15
+  clumping_factor                  100
+	if LNR_ATEAMLEFT
+  assign_to AT_TEAM 1 0 0
+	else
+  assign_to AT_TEAM 2 0 0
+	endif
+  top_border 3
+  right_border 3
+  other_zone_avoidance_distance 3
+  zone 742
+}
+
+create_land 
+{ 
+  terrain_type                     CRACKEDIT
+  number_of_tiles				   200
+  land_position 				   63 11
+  base_size                        6
+  border_fuzziness                 15
+  clumping_factor                  100
+	if LNR_ATEAMLEFT
+  assign_to AT_TEAM 1 0 0
+	else
+  assign_to AT_TEAM 2 0 0
+	endif
+  top_border 3
+  right_border 3
+  other_zone_avoidance_distance 3
+  zone 747
+}
+
+
+
+create_land 
+{ 
+  terrain_type                     CRACKEDIT
+  number_of_tiles				   200
+  land_position 				   95 16
+  base_size                        6
+  border_fuzziness                 15
+  clumping_factor                  100
+	if LNR_ATEAMLEFT
+  assign_to AT_TEAM 2 0 0
+	else
+  assign_to AT_TEAM 1 0 0
+	endif
+  top_border 3
+  right_border 3
+  other_zone_avoidance_distance 3
+  zone 743
+}
+
+create_land 
+{ 
+  terrain_type                     CRACKEDIT
+  number_of_tiles				   200
+  land_position 				   89 26
+  base_size                        6
+  border_fuzziness                 15
+  clumping_factor                  100
+	if LNR_ATEAMLEFT
+  assign_to AT_TEAM 2 0 0
+	else
+  assign_to AT_TEAM 1 0 0
+	endif
+  top_border 3
+  right_border 3
+  other_zone_avoidance_distance 3
+  zone 744
+}
+
+create_land 
+{ 
+  terrain_type                     CRACKEDIT
+  number_of_tiles				   200
+  land_position 				   76 33
+  base_size                        6
+  border_fuzziness                 15
+  clumping_factor                  100
+	if LNR_ATEAMLEFT
+  assign_to AT_TEAM 2 0 0
+	else
+  assign_to AT_TEAM 1 0 0
+	endif
+  top_border 3
+  right_border 3
+  other_zone_avoidance_distance 3
+  zone 745
+}
+
+
+create_land 
+{ 
+  terrain_type                     CRACKEDIT
+  number_of_tiles				   200
+  land_position 				   89 37
+  base_size                        6
+  border_fuzziness                 15
+  clumping_factor                  100
+	if LNR_ATEAMLEFT
+  assign_to AT_TEAM 2 0 0
+	else
+  assign_to AT_TEAM 1 0 0
+	endif
+  top_border 3
+  right_border 3
+  other_zone_avoidance_distance 3
+  zone 746
+}
+
+
+	elseif POS_4V4
+	
+	
+	
+create_land 
+{ 
+  terrain_type                     CRACKEDIT
+  number_of_tiles				   200
+  
+if LUDIKRIS_MAP
+  land_position 				   95 2
+else
+  land_position 				   84 5
+endif
+
+  base_size                        6
+  border_fuzziness                 15
+  clumping_factor                  100
+	if LNR_ATEAMLEFT
+  assign_to AT_TEAM 1 0 0
+	else
+  assign_to AT_TEAM 2 0 0
+	endif
+  top_border 3
+  right_border 3
+  other_zone_avoidance_distance 3
+  zone 740
+}
+
+	
+create_land 
+{ 
+  terrain_type                     CRACKEDIT
+  number_of_tiles				   200
+  land_position 				   74 11
+  base_size                        6
+  border_fuzziness                 15
+  clumping_factor                  100
+	if LNR_ATEAMLEFT
+  assign_to AT_TEAM 1 0 0
+	else
+  assign_to AT_TEAM 2 0 0
+	endif
+  top_border 3
+  right_border 3
+  other_zone_avoidance_distance 3
+  zone 741
+}
+
+
+create_land 
+{ 
+  terrain_type                     CRACKEDIT
+  number_of_tiles				   200
+  land_position 				   67 24
+  base_size                        6
+  border_fuzziness                 15
+  clumping_factor                  100
+	if LNR_ATEAMLEFT
+  assign_to AT_TEAM 1 0 0
+	else
+  assign_to AT_TEAM 2 0 0
+	endif
+  top_border 3
+  right_border 3
+  other_zone_avoidance_distance 3
+  zone 742
+}
+
+create_land 
+{ 
+  terrain_type                     CRACKEDIT
+  number_of_tiles				   200
+  land_position 				   63 11
+  base_size                        6
+  border_fuzziness                 15
+  clumping_factor                  100
+	if LNR_ATEAMLEFT
+  assign_to AT_TEAM 1 0 0
+	else
+  assign_to AT_TEAM 2 0 0
+	endif
+  top_border 3
+  right_border 3
+  other_zone_avoidance_distance 3
+  zone 747
+}
+
+
+
+create_land 
+{ 
+  terrain_type                     CRACKEDIT
+  number_of_tiles				   200
+  if LUDIKRIS_MAP
+  land_position 				   98 5
+else
+  land_position 				   95 16
+endif
+  
+  base_size                        6
+  border_fuzziness                 15
+  clumping_factor                  100
+	if LNR_ATEAMLEFT
+  assign_to AT_TEAM 2 0 0
+	else
+  assign_to AT_TEAM 1 0 0
+	endif
+  top_border 3
+  right_border 3
+  other_zone_avoidance_distance 3
+  zone 743
+}
+
+create_land 
+{ 
+  terrain_type                     CRACKEDIT
+  number_of_tiles				   200
+  land_position 				   89 26
+  base_size                        6
+  border_fuzziness                 15
+  clumping_factor                  100
+	if LNR_ATEAMLEFT
+  assign_to AT_TEAM 2 0 0
+	else
+  assign_to AT_TEAM 1 0 0
+	endif
+  top_border 3
+  right_border 3
+  other_zone_avoidance_distance 3
+  zone 744
+}
+
+create_land 
+{ 
+  terrain_type                     CRACKEDIT
+  number_of_tiles				   200
+  land_position 				   76 33
+  base_size                        6
+  border_fuzziness                 15
+  clumping_factor                  100
+	if LNR_ATEAMLEFT
+  assign_to AT_TEAM 2 0 0
+	else
+  assign_to AT_TEAM 1 0 0
+	endif
+  top_border 3
+  right_border 3
+  other_zone_avoidance_distance 3
+  zone 745
+}
+
+
+create_land 
+{ 
+  terrain_type                     CRACKEDIT
+  number_of_tiles				   200
+  land_position 				   89 37
+  base_size                        6
+  border_fuzziness                 15
+  clumping_factor                  100
+	if LNR_ATEAMLEFT
+  assign_to AT_TEAM 2 0 0
+	else
+  assign_to AT_TEAM 1 0 0
+	endif
+  top_border 3
+  right_border 3
+  other_zone_avoidance_distance 3
+  zone 746
+}
+
+
+	
+	endif
+	
+
+
+endif
+
+
+
+
+create_land
+{
+  terrain_type DEEP_WATER
+land_percent 100
+if LUDIKRIS_MAP
+  base_size 1
+else
+  base_size 12
+endif
+
+  border_fuzziness 20
+clumping_factor 20
+other_zone_avoidance_distance 6
+top_border 47
+right_border 47
+}
+
+
+create_land
+{
+  terrain_type MED_WATER
+land_percent 100
+  base_size 1
+  border_fuzziness 20
+clumping_factor 20
+other_zone_avoidance_distance 6
+top_border 23
+right_border 23
+bottom_border 59
+left_border 59
+  zone 433
+}
+
+
+create_land
+{
+  terrain_type MED_WATER
+land_percent 100
+  base_size 1
+  border_fuzziness 20
+clumping_factor 20
+other_zone_avoidance_distance 6
+top_border 28
+right_border 28
+bottom_border 45
+left_border 45
+  zone 432
+}
+
+create_land
+{
+  terrain_type MED_WATER
+land_percent 100
+  base_size 1
+  border_fuzziness 20
+clumping_factor 20
+other_zone_avoidance_distance 6
+top_border 36
+right_border 45
+bottom_border 55
+left_border 35
+  zone 431
+}
+
+create_land
+{
+  terrain_type MED_WATER
+land_percent 100
+  base_size 1
+  border_fuzziness 20
+clumping_factor 20
+other_zone_avoidance_distance 6
+top_border 45
+right_border 36
+bottom_border 35
+left_border 55
+zone 430
+}
+
+
+create_land
+{
+  terrain_type SAVANNAH
+  land_percent 100
+  base_size 12
+  border_fuzziness 20
+  clumping_factor 20
+  right_border 90
+  bottom_border 61
+  zone 449
+  other_zone_avoidance_distance 6
+  land_id 557
+}
+
+create_land
+{
+  terrain_type SAVANNAH
+  land_percent 100
+  base_size 12
+  border_fuzziness 20
+  clumping_factor 20
+  left_border 61
+  top_border 42
+  zone 450
+  other_zone_avoidance_distance 6
+  land_id 558
+}
+
+
+<TERRAIN_GENERATION>
+
+	color_correction	CC_DESERT
+
+create_terrain SAVANNAH
+{
+base_terrain WATER
+land_percent 45
+number_of_clumps 20
+spacing_to_other_terrain_types 4
+set_avoid_player_start_areas
+}
+
+create_terrain SAVANNAH
+{
+base_terrain WATER
+land_percent 45
+number_of_clumps 20
+spacing_to_other_terrain_types 4
+set_avoid_player_start_areas
+}
+
+
+create_terrain SAVANNAH
+{
+base_terrain MED_WATER
+land_percent 4
+number_of_clumps 10
+spacing_to_other_terrain_types 2
+set_avoid_player_start_areas
+}
+
+create_terrain WATER
+{
+base_terrain MED_WATER
+land_percent 100
+number_of_clumps 100
+spacing_to_other_terrain_types 0
+set_avoid_player_start_areas
+}
+
+create_terrain WATER
+{
+base_terrain DEEP_WATER
+land_percent 100
+number_of_clumps 100
+spacing_to_other_terrain_types 0
+set_avoid_player_start_areas
+}
+
+create_terrain ACACIA_FOREST
+{
+base_terrain SAVANNAH
+land_percent 9
+number_of_clumps 10 /* from 20 */
+spacing_to_other_terrain_types 3
+set_avoid_player_start_areas
+set_scale_by_groups /* for better forest generation on larger maps */
+}
+
+/* PH Masking Patch */
+
+   create_terrain SAVANNAH
+{
+  base_terrain                   DIRT4
+  number_of_clumps               1000
+  land_percent                   100
+}
+
+   create_terrain DIRT4
+{
+  base_terrain                   SAVANNAH
+  number_of_clumps               36
+  spacing_to_other_terrain_types 0
+  land_percent                   rnd(3,7)
+  set_scale_by_size
+}
+
+   create_terrain ROAD
+{
+  base_terrain                   DIRT4
+  number_of_clumps               1000
+  spacing_to_other_terrain_types 2
+  land_percent                   100
+}
+   create_terrain SAVANNAH
+{
+  base_terrain                   DIRT4
+  number_of_clumps               1000
+  land_percent                   100
+terrain_mask 2
+}
+   create_terrain SAVANNAH
+{
+  base_terrain                   DIRT4
+  number_of_clumps               1000
+  land_percent                   100
+terrain_mask 2
+}
+   create_terrain DIRT4
+{
+  base_terrain                   ROAD
+  number_of_clumps               1000
+  land_percent                   100
+}
+   create_terrain DIRT4
+{
+  base_terrain                   ROAD
+  number_of_clumps               1000
+  land_percent                   100
+}
+
+   create_terrain GRASSDRY
+{
+  base_terrain                   SAVANNAH
+  number_of_clumps               24
+  spacing_to_other_terrain_types 0
+  land_percent                   rnd(2,6)
+  set_scale_by_size
+terrain_mask 1
+}
+
+#define WMASK_NOSEASONS
+#include_drs F_WaterMasking.inc
+
+<OBJECTS_GENERATION>
+
+if EMPIRE_WARS
+create_object VILLAGER
+{
+  number_of_objects	14
+  set_place_for_every_player
+  min_distance_to_players       0
+  max_distance_to_players       4
+ }
+else
+create_object VILLAGER
+{
+  set_place_for_every_player
+  min_distance_to_players       1
+  max_distance_to_players       3
+  min_distance_group_placement 1
+ }
+endif
+
+
+if EMPIRE_WARS
+
+create_object TRANSPORT_SHIP
+{
+  set_place_for_every_player
+  number_of_objects    3
+  min_distance_to_players    5
+  max_distance_to_players    60
+  find_closest
+  temp_min_distance_group_placement 3
+}
+
+else
+
+create_object TRANSPORT_SHIP
+{
+  set_place_for_every_player
+  number_of_objects    1
+  min_distance_to_players    5
+  max_distance_to_players    60
+  find_closest
+}
+
+endif
+
+/*
+if EMPIRE_WARS
+create_object VILLAGER
+{
+  number_of_objects 24
+  set_place_for_every_player
+  min_distance_to_players       1
+  max_distance_to_players       3
+ }
+
+else
+endif
+*/
+
+
+
+
+/* resources distributed per island */
+
+create_object RELIC
+{
+if TINY_MAP
+   number_of_objects            2
+elseif SMALL_MAP
+   number_of_objects            2
+elseif MEDIUM_MAP
+   number_of_objects            3
+else
+   number_of_objects            4
+endif
+   temp_min_distance_group_placement 30
+   place_on_specific_land_id 557
+   avoid_forest_zone 2
+   min_distance_group_placement 3
+}
+
+create_object RELIC
+{
+if TINY_MAP
+   number_of_objects            2
+elseif SMALL_MAP
+   number_of_objects            2
+elseif MEDIUM_MAP
+   number_of_objects            3
+else
+   number_of_objects            4
+endif
+   temp_min_distance_group_placement 30
+   place_on_specific_land_id 558
+   avoid_forest_zone 2
+   min_distance_group_placement 3
+}
+
+create_object RELIC
+{
+   number_of_objects            1
+   terrain_to_place_on DLC_CRACKED
+   max_distance_to_other_zones 3
+}
+
+if REGICIDE
+
+create_object KING
+{
+  set_place_for_every_player
+  min_distance_to_players       1
+  max_distance_to_players       3
+}
+    create_object VILLAGER
+    {
+      set_place_for_every_player
+      number_of_objects 7
+      max_distance_to_players 6
+      force_placement
+    }
+
+endif
+
+#const GOATEE 1060
+
+create_object GOATEE
+{
+   number_of_objects 4
+   set_loose_grouping
+   set_gaia_object_only
+   set_place_for_every_player
+   min_distance_to_players    1
+   max_distance_to_players    3
+}
+
+/*
+start_random
+percent_chance 50
+create_object STONE
+percent_chance 50
+create_object GOLD
+end_random
+{
+  number_of_groups 1
+  number_of_objects 3
+  set_tight_grouping
+  set_gaia_object_only
+  place_on_specific_land_id 559
+}
+*/
+
+#const ZEBRA 1019
+#const OSTRICH 1026
+
+create_object OSTRICH
+{
+  number_of_groups 180
+  number_of_objects 4
+  group_placement_radius 3
+  set_loose_grouping
+  set_gaia_object_only
+  temp_min_distance_group_placement 18
+  min_distance_group_placement 3
+  terrain_to_place_on SAVANNAH
+  avoid_forest_zone 2
+}
+
+create_object GOATEE
+{
+  number_of_groups 9999
+  number_of_objects 2
+  group_placement_radius 3
+  set_loose_grouping
+  set_gaia_object_only
+  terrain_to_place_on SAVANNAH
+  temp_min_distance_group_placement 20 /* raised from 14 */
+  avoid_forest_zone 2
+  min_distance_group_placement 2
+  max_distance_to_other_zones 9
+}
+
+#const ELEPHANT 1301
+
+create_object ELEPHANT
+{
+  number_of_groups 9999
+  number_of_objects 1
+  group_placement_radius 3
+  set_loose_grouping
+  set_gaia_object_only
+  terrain_to_place_on SAVANNAH
+  temp_min_distance_group_placement 22
+  avoid_forest_zone 2
+  min_distance_group_placement 2
+}
+
+
+
+
+
+/* distant gold and stone done per island */
+
+create_object GOLD
+{
+if TINY_MAP
+  number_of_groups 4
+  number_of_objects 4
+elseif SMALL_MAP
+  number_of_groups 6
+  number_of_objects 4
+elseif MEDIUM_MAP
+  number_of_groups 8
+  number_of_objects 4
+elseif LARGE_MAP
+  number_of_groups 12
+  number_of_objects 4
+elseif HUGE_MAP
+  number_of_groups 16
+  number_of_objects 4
+elseif GIGANTIC_MAP
+  number_of_groups 18
+  number_of_objects 4
+else
+  number_of_groups 80
+  number_of_objects 4
+endif
+  group_placement_radius 2
+  set_tight_grouping
+  set_gaia_object_only
+  place_on_specific_land_id 557
+  temp_min_distance_group_placement 16
+  min_distance_group_placement 3
+  max_distance_to_other_zones 6
+  avoid_forest_zone 3
+}
+
+create_object GOLD
+{
+if TINY_MAP
+  number_of_groups 4
+  number_of_objects 4
+elseif SMALL_MAP
+  number_of_groups 6
+  number_of_objects 4
+elseif MEDIUM_MAP
+  number_of_groups 8
+  number_of_objects 4
+elseif LARGE_MAP
+  number_of_groups 12
+  number_of_objects 4
+elseif HUGE_MAP
+  number_of_groups 16
+  number_of_objects 4
+elseif GIGANTIC_MAP
+  number_of_groups 18
+  number_of_objects 4
+else
+  number_of_groups 80
+  number_of_objects 4
+endif
+  group_placement_radius 2
+  set_tight_grouping
+  set_gaia_object_only
+  place_on_specific_land_id 558
+  temp_min_distance_group_placement 16
+  min_distance_group_placement 3
+  max_distance_to_other_zones 6
+  avoid_forest_zone 3
+}
+
+create_object STONE
+{
+if TINY_MAP
+  number_of_groups 3
+  number_of_objects 3
+elseif SMALL_MAP
+  number_of_groups 4
+  number_of_objects 3
+elseif MEDIUM_MAP
+  number_of_groups 6
+  number_of_objects 3
+elseif LARGE_MAP
+  number_of_groups 9
+  number_of_objects 3
+elseif HUGE_MAP
+  number_of_groups 12
+  number_of_objects 3
+elseif GIGANTIC_MAP
+  number_of_groups 14
+  number_of_objects 4
+else
+  number_of_groups 50
+  number_of_objects 4
+endif
+  group_placement_radius 2
+  set_tight_grouping
+  set_gaia_object_only
+  place_on_specific_land_id 557
+  temp_min_distance_group_placement 16
+  min_distance_group_placement 3
+  max_distance_to_other_zones 6
+  avoid_forest_zone 3
+}
+
+create_object STONE
+{
+if TINY_MAP
+  number_of_groups 3
+  number_of_objects 3
+elseif SMALL_MAP
+  number_of_groups 4
+  number_of_objects 3
+elseif MEDIUM_MAP
+  number_of_groups 6
+  number_of_objects 3
+elseif LARGE_MAP
+  number_of_groups 9
+  number_of_objects 3
+elseif HUGE_MAP
+  number_of_groups 12
+  number_of_objects 3
+elseif GIGANTIC_MAP
+  number_of_groups 14
+  number_of_objects 4
+else
+  number_of_groups 50
+  number_of_objects 4
+endif
+  group_placement_radius 2
+  set_tight_grouping
+  set_gaia_object_only
+  place_on_specific_land_id 558
+  temp_min_distance_group_placement 16
+  min_distance_group_placement 3
+  max_distance_to_other_zones 6
+  avoid_forest_zone 3
+}
+
+#const STORK 1028
+
+create_object STORK
+{
+   number_of_objects         4
+   set_scaling_to_map_size
+}
+
+#const ORANGEBUSH 1059
+
+create_object ORANGEBUSH
+{
+  number_of_groups 180
+  number_of_objects 3
+  group_placement_radius 2
+  set_tight_grouping
+  set_gaia_object_only
+  terrain_to_place_on SAVANNAH
+  temp_min_distance_group_placement 60
+  max_distance_to_other_zones 4
+  avoid_forest_zone 2
+}
+
+
+#const ACCACIASTUMP 1063
+
+create_object ACCACIASTUMP 
+{
+  number_of_objects             2
+  set_gaia_object_only
+  set_place_for_every_player
+  min_distance_to_players       4
+  max_distance_to_players       5
+  min_distance_group_placement  2
+}
+create_object ACCACIASTUMP 
+{
+  number_of_objects             3
+  set_gaia_object_only
+  set_place_for_every_player
+  min_distance_to_players       6
+  max_distance_to_players       8
+  min_distance_group_placement  2
+}
+
+create_object ACCACIASTUMP 
+{
+  number_of_objects          60
+  set_gaia_object_only
+  set_scaling_to_map_size
+  min_distance_to_players    1
+  max_distance_to_players    20
+  terrain_to_place_on CRACKEDIT
+  avoid_forest_zone 2
+}
+
+#const AFROBOULDER_A 1048
+#const AFROBOULDER_B 1049
+#const AFROBOULDER_C 1050
+#const AFROBUSH 1053
+
+/*
+
+#const CROCODILE 1031
+
+create_object CROCODILE
+{
+     number_of_groups 30
+     set_loose_grouping
+        number_of_objects 1
+     set_gaia_object_only
+     temp_min_distance_group_placement 60
+     min_distance_to_players 60
+}
+
+*/
+
+
+
+
+create_object DORADO
+{
+  number_of_objects 999
+  set_scaling_to_map_size
+  set_gaia_object_only
+  max_distance_to_other_zones 5
+     temp_min_distance_group_placement 8
+}
+
+create_object SHORE_FISH
+{
+  number_of_objects 999
+     set_scaling_to_map_size
+     temp_min_distance_group_placement 15
+     set_gaia_object_only
+}
+if ANTIQUITY_MODE
+create_object OYSTERS
+{
+number_of_objects 2
+number_of_groups 25
+terrain_to_place_on MED_WATER
+temp_min_distance_group_placement 20
+set_scaling_to_map_size
+}
+endif
+
+create_object AFROBOULDER_A 
+{
+  number_of_objects 999
+     set_scaling_to_map_size
+     temp_min_distance_group_placement 160
+     set_gaia_object_only
+     min_distance_to_players 25
+    terrain_to_place_on SAVANNAH
+}
+
+create_object AFROBOULDER_B
+{
+  number_of_objects 999
+     set_scaling_to_map_size
+     temp_min_distance_group_placement 160
+     set_gaia_object_only
+     min_distance_to_players 25
+    terrain_to_place_on SAVANNAH
+}
+
+create_object AFROBOULDER_C
+{
+  number_of_objects 999
+     set_scaling_to_map_size
+     temp_min_distance_group_placement 160
+     set_gaia_object_only
+     min_distance_to_players 25
+    terrain_to_place_on SAVANNAH
+}
+
+/* ****************************************************** */
+
+<ELEVATION_GENERATION>
+
+#const LAYER_D 41
+
+#define GNRELEV_HEIGHT02
+#define GNRELEV_INTENSITY_H /* originally F */
+#define GNRELEV_LAY_D
+
+
+#include_drs GeneratingElevation.inc
+
+
+<CONNECTION_GENERATION>
+create_connect_all_players_land
+{
+  replace_terrain SAVANNAH	WATER
+  replace_terrain DLC_DIRT4 WATER
+  terrain_cost    SAVANNAH 		9 
+  terrain_cost    DLC_DIRT4 	9
+  terrain_cost    BEACH 	1
+  terrain_size    SAVANNAH  	3       0
+  terrain_size	  DLC_DIRT4     3		0
+}

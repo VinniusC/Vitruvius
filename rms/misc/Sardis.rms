@@ -1,0 +1,540 @@
+/*
+
+	Sardis by Capture Age
+	Created: 13-02-2025
+	Updated: 16-10-2025
+	
+	Version: 1.2
+	Compatibility: Definitive Edition
+
+*/
+
+#define PH_MEDISOUTH
+#include_drs F_seasons.inc
+
+<PLAYER_SETUP>
+
+grouped_by_team
+ai_info_map_type ARENA 0 0 0
+set_gaia_civilization 46
+behavior_version 1
+
+#const GRAVEL 70
+
+#const TEMPOBJECT 278
+#const T_WORKSHOP 1647
+
+#const GOODS 1321
+#const MARKET_STALL 2284
+#const HOUSE_RUBBLE3 1435
+#const FLAME1 1333
+#const RANDOM_BURNED_BUILDING 2504
+
+effect_amount GAIA_SET_ATTRIBUTE HOUSE_RUBBLE3 ATTR_STORAGE_VALUE 30000
+
+effect_amount GAIA_SET_ATTRIBUTE FLAME1 ATTR_STANDING_GRAPHIC 16057
+
+
+if HUGE_MAP
+		override_map_size 252
+endif
+if LARGE_MAP
+		override_map_size 220
+endif
+if MEDIUM_MAP
+		override_map_size 200
+endif
+
+<LAND_GENERATION>
+
+base_terrain DIRT2
+
+create_land
+{
+terrain_type DLC_ROADGRAVEL
+land_percent 100
+land_position 50 50
+land_id 1
+clumping_factor 35
+other_zone_avoidance_distance 1
+}
+
+create_player_lands
+{
+terrain_type DIRT2
+circle_radius 43 1
+if TINY_MAP
+	base_size 15
+	land_percent 32
+elseif SMALL_MAP
+	base_size 15
+	land_percent 35
+	circle_radius 43 0
+elseif MEDIUM_MAP
+	base_size 17
+	land_percent 35
+	circle_radius 44 1
+elseif LARGE_MAP
+	base_size 19
+	land_percent 40
+	circle_radius 45 0
+elseif HUGE_MAP
+	base_size 21
+	land_percent 50
+	circle_radius 47 0
+else
+	base_size 21
+	land_percent 45
+	circle_radius 48 0
+endif
+
+base_elevation 1
+clumping_factor 20
+other_zone_avoidance_distance 26
+if FIXED_POSITIONS
+	set_zone_by_team
+else
+endif
+border_fuzziness 100
+
+}
+<TERRAIN_GENERATION>
+
+create_terrain DESERT
+{
+base_terrain DLC_ROADGRAVEL
+land_percent 99
+set_avoid_player_start_areas
+}
+
+create_terrain DLC_ROADGRAVEL
+{
+base_terrain DESERT
+land_percent 100
+number_of_clumps 9999
+clumping_factor 5
+set_avoid_player_start_areas
+spacing_to_other_terrain_types 1
+}
+
+if DEATH_MATCH
+elseif INFINITE_RESOURCES
+else
+	create_terrain WOODIES
+	{
+	base_terrain DIRT2
+	number_of_tiles 170
+	number_of_clumps 20
+	set_scale_by_groups
+	set_avoid_player_start_areas
+	spacing_to_other_terrain_types 1
+	}
+	create_terrain WOODIES_B
+	{
+	base_terrain DIRT2
+	if TINY_MAP
+	  number_of_tiles 50
+	elseif MEDIUM_MAP
+	  number_of_tiles 70
+	else
+	  number_of_tiles 120
+	endif
+	number_of_clumps 10
+	clumping_factor 20
+	}
+endif
+
+create_terrain WOODIES
+{
+base_terrain DIRT2
+number_of_tiles 170
+number_of_clumps 20
+set_scale_by_groups
+set_avoid_player_start_areas
+spacing_to_other_terrain_types 1
+}
+
+create_terrain WOODIES
+{
+base_terrain DLC_ROADGRAVEL
+land_percent 10
+number_of_clumps 10
+clumping_factor 40
+set_scale_by_groups
+set_avoid_player_start_areas
+spacing_to_other_terrain_types 3
+}
+
+create_terrain LAYER_B
+{
+base_terrain DIRT2
+land_percent 20
+number_of_clumps 100
+terrain_mask 2
+}
+create_terrain DLC_DESERTGRAVEL 
+{
+base_terrain DLC_ROADGRAVEL
+land_percent 100
+number_of_clumps 9999
+height_limits 1 1
+}
+create_terrain LAYER_C
+{
+base_terrain DLC_ROADGRAVEL
+land_percent 5
+set_scale_by_groups
+number_of_clumps 50
+set_avoid_player_start_areas 30
+}
+create_terrain DIRT
+{
+base_terrain DLC_ROADGRAVEL
+land_percent 5
+set_scale_by_groups
+number_of_clumps 50
+}
+create_terrain DLC_MOORLAND
+{
+base_terrain DLC_ROADGRAVEL
+land_percent 5
+set_scale_by_groups
+number_of_clumps 50
+}
+create_terrain GRAVEL
+{
+base_terrain DLC_ROADGRAVEL
+land_percent 5
+set_scale_by_groups
+number_of_clumps 50
+}
+<OBJECTS_GENERATION>
+
+create_object FORTIFIED_WALL 
+{
+number_of_objects 9999
+terrain_to_place_on DESERT
+set_gaia_object_only
+set_gaia_unconvertible
+actor_area 5 
+actor_area_radius 5
+}
+
+#define GNR_NORMALTC
+#define GNR_STARTVILLS
+#define GNR_CLASSICSCOUT
+
+#define GNR_REGICIDECLASSIC
+
+#define GNR_GIVEHERD_A
+#define GNR_GIVEHERD_B
+
+#define GNR_HERD4CLASSIC_A
+#define GNR_HERD22CLASSIC_B
+
+#define GNR_GIVEHUNT
+#define GNR_HUNT3OR4CLASSIC
+
+#define GNR_GIVERELICS
+#define GNR_RELICMODERN_MEDIUM_SA
+#define GNR_RELPLACE_LAYERC
+
+#define GNR_GIVELURES
+#define GNR_CLASSICLURES
+
+#define GNR_STARTINGGOLD
+#define GNR_STARTINGSTONE
+
+#define GNR_STARTGOLD43M
+#define GNR_STARTSTONE32M
+
+#define GNR_RESSUPERCLOSE
+
+#define GNR_6KER
+#define GNR_HOMESTRAGGLE
+
+#define GNR_NORMALBIRDS
+
+#include_drs GeneratingObjects.inc
+
+if BATTLE_ROYALE
+elseif DEATH_MATCH
+elseif INFINITE_RESOURCES
+else
+	create_object PREDATOR_A
+	{
+	number_of_objects 1
+	set_scaling_to_map_size
+	set_gaia_object_only
+	set_place_for_every_player
+	min_distance_to_players 35
+	temp_min_distance_group_placement 20
+	}
+endif
+
+create_object OUTPOST 
+{
+number_of_objects 100
+set_scaling_to_map_size
+min_distance_group_placement 3
+set_gaia_object_only
+set_building_capturable
+terrain_to_place_on DLC_DESERTGRAVEL
+actor_area 9999
+actor_area_radius 5
+}
+
+create_object T_WORKSHOP 
+{
+number_of_objects 1
+set_gaia_object_only
+set_building_capturable
+place_on_specific_land_id 1
+find_closest
+actor_area 700
+actor_area_radius 10
+} 
+
+create_object RANDOM_BURNED_BUILDING
+{
+number_of_objects 1
+number_of_groups 5
+set_scaling_to_map_size
+temp_min_distance_group_placement 30
+min_distance_to_players 25
+terrain_to_place_on DLC_ROADGRAVEL
+avoid_actor_area 5
+avoid_actor_area 9999
+avoid_actor_area 700
+avoid_forest_zone 3
+actor_area 5000
+actor_area_radius 10
+min_distance_to_map_edge 10
+second_object FLAME1
+}
+
+create_object RANDOM_BURNED_BUILDING 
+{
+number_of_objects 1
+set_scaling_to_map_size
+number_of_groups 5
+temp_min_distance_group_placement 20
+min_distance_group_placement 3
+actor_area_to_place_in 5000
+avoid_actor_area 700
+avoid_actor_area 5
+avoid_forest_zone 3
+second_object FLAME1
+}
+
+create_object RANDOM_BURNED_BUILDING 
+{
+number_of_objects 1
+set_scaling_to_map_size
+number_of_groups 5
+temp_min_distance_group_placement 20
+min_distance_group_placement 3
+actor_area_to_place_in 5000
+avoid_actor_area 700
+avoid_actor_area 5
+avoid_forest_zone 3
+second_object FLAME1
+}
+
+create_object RANDOM_BURNED_BUILDING 
+{
+number_of_objects 1
+set_scaling_to_map_size
+number_of_groups 5
+temp_min_distance_group_placement 20
+min_distance_group_placement 3
+actor_area_to_place_in 5000
+avoid_actor_area 700
+avoid_actor_area 5
+avoid_forest_zone 3
+second_object FLAME1
+}
+
+create_object RANDOM_BURNED_BUILDING 
+{
+number_of_objects 1
+set_scaling_to_map_size
+number_of_groups 5
+temp_min_distance_group_placement 20
+min_distance_group_placement 3
+actor_area_to_place_in 5000
+avoid_actor_area 700
+avoid_actor_area 5
+avoid_forest_zone 3
+second_object FLAME1
+}
+
+create_object MARKET_STALL 
+{
+number_of_objects 50
+set_scaling_to_map_size
+temp_min_distance_group_placement 5
+set_gaia_object_only
+set_gaia_unconvertible
+actor_area_to_place_in 5000
+actor_area 5002
+actor_area_radius 1
+avoid_actor_area 5
+terrain_to_place_on DLC_ROADGRAVEL
+}
+
+create_object GOODS 
+{
+number_of_objects 50
+set_scaling_to_map_size
+temp_min_distance_group_placement 5
+set_gaia_object_only
+set_gaia_unconvertible
+actor_area_to_place_in 5002
+avoid_actor_area 5
+terrain_to_place_on DLC_ROADGRAVEL
+} 
+
+if DEATH_MATCH
+elseif INFINITE_RESOURCES
+else
+	create_object WILD_CHICKEN_A 
+	{
+	number_of_objects 2
+	number_of_groups 5
+	set_tight_grouping
+	set_scaling_to_map_size
+	temp_min_distance_group_placement 20
+	set_gaia_object_only
+	set_gaia_unconvertible
+	actor_area_to_place_in 5002
+	avoid_actor_area 5
+	terrain_to_place_on DLC_ROADGRAVEL
+	} 
+	create_object WILD_CHICKEN_B
+	{
+	number_of_objects 2
+	number_of_groups 5
+	set_tight_grouping
+	set_scaling_to_map_size
+	temp_min_distance_group_placement 20
+	set_gaia_object_only
+	set_gaia_unconvertible
+	actor_area_to_place_in 5002
+	avoid_actor_area 5
+	terrain_to_place_on DLC_ROADGRAVEL
+	} 
+	create_object WILD_CHICKEN_C
+	{
+	number_of_objects 2
+	number_of_groups 5
+	set_tight_grouping
+	set_scaling_to_map_size
+	temp_min_distance_group_placement 20
+	set_gaia_object_only
+	set_gaia_unconvertible
+	actor_area_to_place_in 5002
+	avoid_actor_area 5
+	terrain_to_place_on DLC_ROADGRAVEL
+	}
+endif
+
+create_object RANDOM_BURNED_BUILDING {
+set_scaling_to_map_size
+number_of_objects 1
+number_of_groups 25
+temp_min_distance_group_placement 5
+terrain_to_place_on DLC_ROADGRAVEL
+avoid_actor_area 5
+avoid_actor_area 9999
+avoid_actor_area 700
+avoid_actor_area 5000
+actor_area 660
+actor_area_radius 3
+second_object FLAME1
+} 
+
+create_object HOUSE_RUBBLE3 {
+set_scaling_to_map_size
+number_of_objects 1
+number_of_groups 25
+temp_min_distance_group_placement 5
+set_gaia_object_only
+set_gaia_unconvertible
+make_indestructible
+terrain_to_place_on DLC_ROADGRAVEL
+avoid_actor_area 5
+avoid_actor_area 9999
+avoid_actor_area 700
+avoid_actor_area 5000
+actor_area 660
+actor_area_radius 3
+min_distance_to_map_edge 2
+}
+
+if INFINITE_RESOURCES
+else
+	create_object TEMPOBJECT 
+	{
+	second_object STONE
+	number_of_objects 3
+	number_of_groups 2
+	group_placement_radius 2
+	min_distance_to_players 35
+	temp_min_distance_group_placement 24
+	set_gaia_object_only
+	set_place_for_every_player
+	terrain_to_place_on DLC_ROADGRAVEL
+	set_tight_grouping
+	find_closest
+	avoid_actor_area 82
+	avoid_forest_zone 2
+	actor_area 92
+	actor_area_radius 10
+	avoid_actor_area 5
+	avoid_actor_area 9999
+	avoid_actor_area 700
+	avoid_actor_area 5000
+	avoid_actor_area 660
+	}
+	create_object TEMPOBJECT 
+	{
+	second_object GOLD
+	number_of_objects 3
+	number_of_groups 2
+	group_placement_radius 2
+	min_distance_to_players 35
+	temp_min_distance_group_placement 24
+	set_gaia_object_only
+	set_place_for_every_player
+	terrain_to_place_on DLC_ROADGRAVEL
+	set_tight_grouping
+	find_closest
+	avoid_actor_area 92
+	avoid_forest_zone 2
+	actor_area 82
+	actor_area_radius 10
+	avoid_actor_area 5
+	avoid_actor_area 9999
+	avoid_actor_area 5000
+	avoid_actor_area 700
+	avoid_actor_area 660
+	}
+endif
+
+<ELEVATION_GENERATION>
+create_elevation 1
+{
+base_terrain DLC_ROADGRAVEL
+if TINY_MAP
+  number_of_clumps 10
+  number_of_tiles 60
+elseif MEDIUM_MAP
+  number_of_clumps 15
+  number_of_tiles 80
+else
+  number_of_clumps 25
+  number_of_tiles 140
+endif
+enable_balanced_elevation
+}

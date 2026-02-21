@@ -1,0 +1,551 @@
+/* Ghost Lake 2020 */
+
+/* Note: random_map.def is automatically included in every rms script */
+<PLAYER_SETUP>
+  random_placement 
+	ai_info_map_type GHOST_LAKE 0 0 0
+
+#include_drs thebr_setup.inc
+
+<LAND_GENERATION>
+
+base_terrain SNOW
+
+enable_waves 0 
+
+
+create_player_lands 
+{            
+  terrain_type                     SNOW
+  land_percent                     12
+  base_size                        10
+if TINY_MAP
+  circle_radius 		   38 0
+else
+  circle_radius 		   37 0
+endif
+  border_fuzziness                 10
+  zone 17
+}
+
+create_land 
+{
+  terrain_type                     ROAD2
+  land_percent                     100
+  left_border                      22
+  right_border                     22
+  top_border                       22
+  bottom_border                    22
+  border_fuzziness                 40
+  other_zone_avoidance_distance    2
+  zone 17
+}
+
+
+/* ****************************************************** */
+<TERRAIN_GENERATION>
+
+
+   create_terrain ICE
+{
+  base_terrain                   ROAD2
+  number_of_clumps               1000
+  land_percent                   100
+  spacing_to_other_terrain_types 4
+}
+
+   create_terrain ICE
+{
+  base_terrain                   ROAD2
+  number_of_clumps               1000
+  land_percent                   100
+  spacing_to_other_terrain_types 4
+}
+
+   create_terrain ICE
+{
+  base_terrain                   ROAD2
+  number_of_clumps               1000
+  land_percent                   100
+  spacing_to_other_terrain_types 4
+}
+
+   create_terrain DLC_DRYGRASS
+{
+  base_terrain                   ROAD2
+  number_of_clumps               1000
+  land_percent                   100
+}
+
+   create_terrain DLC_DRYGRASS
+{
+  base_terrain                   ROAD2
+  number_of_clumps               1000
+  land_percent                   100
+}
+   create_terrain DLC_DRYGRASS
+{
+  base_terrain                   ROAD2
+  number_of_clumps               1000
+  land_percent                   100
+}
+
+   create_terrain DLC_DRYGRASS
+{
+  base_terrain                   ROAD2
+  number_of_clumps               1000
+  land_percent                   100
+}
+
+   create_terrain DLC_DRYGRASS
+{
+  base_terrain                   ROAD2
+  number_of_clumps               1000
+  land_percent                   100
+}
+
+
+   create_terrain ICE
+{
+  base_terrain                   DLC_DRYGRASS
+  number_of_clumps               50
+  land_percent                   1
+  terrain_mask 1
+}
+
+   create_terrain SNOW
+{
+  base_terrain                   DLC_DRYGRASS
+  number_of_clumps               1000
+  land_percent                   100
+  terrain_mask 1
+}
+
+   create_terrain SNOW
+{
+  base_terrain                   DLC_DRYGRASS
+  number_of_clumps               50
+  land_percent                   1
+  terrain_mask 2
+}
+
+  create_terrain SNOW_FOREST
+{
+  base_terrain                   SNOW
+  spacing_to_other_terrain_types 4
+  land_percent                   11 /* 10 */
+  number_of_clumps               18 /* 12 */
+  set_avoid_player_start_areas     
+  set_scale_by_groups
+}
+
+   create_terrain GRASS
+{
+  base_terrain                   SNOW
+  number_of_clumps               14
+  land_percent                   16
+  set_scale_by_size
+}
+
+   create_terrain ROAD
+{
+  base_terrain                   GRASS
+  number_of_clumps               100
+  spacing_to_other_terrain_types 2
+  land_percent                   100
+}
+
+   create_terrain SNOW
+{
+  base_terrain                   GRASS
+  number_of_clumps               100
+  land_percent                   100
+  terrain_mask 2
+}
+
+   create_terrain SNOW
+{
+  base_terrain                   GRASS
+  number_of_clumps               100
+  land_percent                   100
+  terrain_mask 2
+}
+
+   create_terrain SNOW
+{
+  base_terrain                   GRASS
+  number_of_clumps               100
+  land_percent                   100
+  terrain_mask 2
+}
+
+   create_terrain SNOW
+{
+  base_terrain                   GRASS
+  number_of_clumps               100
+  land_percent                   100
+  terrain_mask 2
+}
+
+   create_terrain GRASS
+{
+  base_terrain                   ROAD
+  number_of_clumps               100
+  land_percent                   100
+}
+
+   create_terrain GRASS
+{
+  base_terrain                   ROAD
+  number_of_clumps               100
+  land_percent                   100
+}
+
+
+/* SECONDARY PATCH */
+
+create_terrain DIRT3
+{
+  base_terrain                   SNOW
+  number_of_clumps               24
+  spacing_to_other_terrain_types 1
+  land_percent                   4
+  set_scale_by_size
+  terrain_mask 1
+}
+
+/* SECONDARY FOREST */
+
+/*
+
+create_terrain PINE_FOREST
+{
+  base_terrain                   GRASS
+  spacing_to_other_terrain_types 3
+  land_percent                   1
+  number_of_clumps               3
+  set_avoid_player_start_areas     
+  set_scale_by_groups
+}
+
+*/
+
+/* TERTIARY PATCH */
+
+  create_terrain GRASS2
+{
+  base_terrain                   SNOW
+  number_of_clumps               30
+  spacing_to_other_terrain_types 1
+  land_percent                   2
+  set_scale_by_size
+  terrain_mask 1
+}
+
+/* ICE FISHING */
+
+  create_terrain MED_WATER
+{
+  base_terrain                   ICE
+  number_of_clumps               5
+  number_of_tiles 	40
+  set_scale_by_size
+if TINY_MAP
+  spacing_to_other_terrain_types 9
+else
+  spacing_to_other_terrain_types 12
+endif
+}
+
+color_correction CC_WINTER
+
+<OBJECTS_GENERATION>
+
+if INFINITE_RESOURCES
+else
+
+create_object GOLD
+{
+   number_of_objects 7
+   number_of_groups 1
+   set_tight_grouping
+   find_closest
+   set_place_for_every_player
+   min_distance_group_placement 4
+   set_gaia_object_only
+   terrain_to_place_on DLC_DRYGRASS
+   actor_area 8400
+   actor_area_radius 20
+}
+
+endif
+
+#define GNR_NORMALTC
+#define GNR_STARTVILLS
+#define GNR_CLASSICSCOUT
+
+if TINY_MAP
+else
+
+#define GNR_GIVERELICS
+#define GNR_RELICMODERN_MEDIUM
+
+endif
+
+#define GNR_REGICIDECLASSIC
+
+/* required constants */
+#const HERDABLE_A 594
+#const HERDABLE_B 594
+#const HUNTABLE 65
+#const LURABLE_A 48
+#const LURABLE_B 48
+#const STRAGGLER 413
+#const PREDATOR_A 126
+#const PREDATOR_B 486
+
+#const KERICEK 59
+#define GNR_6KER
+
+#define GNR_STARTINGGOLD
+#define GNR_STARTINGSTONE
+
+#define GNR_STARTGOLD44M /* from 744 */
+#define GNR_STARTSTONE54CL
+
+#define GNR_STARTGOLDAVOID8400
+
+#define GNR_GIVEHERD_A
+#define GNR_GIVEHERD_B
+
+#define GNR_HERD4CLASSIC_A
+#define GNR_HERD22CLASSIC_B
+
+#define GNR_GIVEHUNT
+
+#define GNR_HUNT3OR4CLASSIC
+
+#define GNR_GIVELURES
+#define GNR_CLASSICLURES
+
+if TINY_MAP
+elseif SMALL_MAP
+elseif MEDIUM_MAP
+elseif LARGE_MAP
+elseif HUGE_MAP
+else
+
+#define GNR_FARGORIG_GIVE
+#define GNR_FARSORIG_GIVE
+
+#define GNR_FARGORIG_TYPE1
+#define GNR_FARSORIG_TYPE1
+
+endif
+
+#define GNR_CLASSICPRED
+
+#define GNR_HOMESTRAGGLE
+
+#define GNR_ADDITIONALPRED
+#define GNR_MAPSTRAGGLE
+
+#include_drs GeneratingObjects.inc
+
+create_object HAWK
+{
+   number_of_objects         4
+   set_scaling_to_map_size
+}
+
+/* changed to 3 groups of 2 instead of 2 groups of 3 - also forced on the ICE only */
+
+if INFINITE_RESOURCES
+else
+
+create_object GOLD
+{
+if TINY_MAP
+  number_of_groups 1
+  number_of_objects 3
+elseif SMALL_MAP
+  number_of_groups 1
+  number_of_objects 3
+elseif MEDIUM_MAP
+  number_of_groups 1
+  number_of_objects 2
+elseif LARGE_MAP
+  number_of_groups 1
+  number_of_objects 2
+elseif HUGE_MAP
+  number_of_groups 1
+  number_of_objects 2
+elseif GIGANTIC_MAP
+  number_of_groups 1
+  number_of_objects 3
+else
+  number_of_groups 1
+  number_of_objects 3
+endif
+  set_place_for_every_player
+  min_distance_to_players 46
+  find_closest
+  group_placement_radius 2
+  set_tight_grouping
+  set_gaia_object_only
+  temp_min_distance_group_placement 16
+  min_distance_group_placement 3
+  max_distance_to_other_zones 7
+  avoid_forest_zone 2
+  avoid_cliff_zone 4
+  actor_area 970
+  actor_area_radius 8
+}
+
+create_object STONE
+{
+if TINY_MAP
+  number_of_groups 1
+  number_of_objects 2
+elseif SMALL_MAP
+  number_of_groups 1
+  number_of_objects 2
+elseif MEDIUM_MAP
+  number_of_groups 1
+  number_of_objects 2
+elseif LARGE_MAP
+  number_of_groups 1
+  number_of_objects 2
+elseif HUGE_MAP
+  number_of_groups 1
+  number_of_objects 2
+elseif GIGANTIC_MAP
+  number_of_groups 1
+  number_of_objects 3
+else
+  number_of_groups 1
+  number_of_objects 3
+endif
+  set_place_for_every_player
+  min_distance_to_players 44
+  find_closest
+  group_placement_radius 2
+  set_tight_grouping
+  set_gaia_object_only
+  temp_min_distance_group_placement 16
+  min_distance_group_placement 3
+  max_distance_to_other_zones 7
+  avoid_forest_zone 2
+  avoid_cliff_zone 4
+  avoid_actor_area 970
+}
+
+endif
+
+
+
+if TINY_MAP
+
+create_object RELIC
+{
+  number_of_objects 1
+  set_place_for_every_player
+  min_distance_to_players 29
+  find_closest
+  set_gaia_object_only
+  min_distance_group_placement 2
+  avoid_forest_zone 2
+  avoid_cliff_zone 4
+  avoid_actor_area 970
+  actor_area 4040
+  actor_area_radius 24
+  max_distance_to_other_zones 2
+}
+
+create_object RELIC
+{
+  number_of_objects 1
+  set_place_for_every_player
+  min_distance_to_players 38
+  find_closest
+  set_gaia_object_only
+  min_distance_group_placement 2
+  avoid_forest_zone 2
+  avoid_cliff_zone 4
+  avoid_actor_area 970
+  avoid_actor_area 4040
+  max_distance_to_other_zones 2
+}
+
+#const BLANK_OBJECT 647
+
+create_object BLANK_OBJECT
+{
+  number_of_objects 1
+  set_gaia_object_only
+  actor_area 6240
+  actor_area_radius 6
+  terrain_to_place_on MED_WATER
+}
+
+create_object RELIC
+{
+  number_of_objects 1
+  set_gaia_object_only
+  min_distance_group_placement 2
+  actor_area_to_place_in 6240
+  terrain_to_place_on ICE
+}
+
+
+else
+endif
+
+if DEATH_MATCH
+else
+
+create_object SHEEP
+{
+   number_of_objects 2
+   number_of_groups 3
+   set_loose_grouping
+   set_scaling_to_player_number
+   min_distance_to_players    30
+   temp_min_distance_group_placement  12
+   terrain_to_place_on ICE
+}
+
+create_object SHORE_FISH
+{
+  number_of_objects                   5
+  set_scaling_to_map_size
+  min_distance_group_placement         3
+  set_gaia_object_only
+}
+
+endif
+
+/* ****************************************************** */
+
+<ELEVATION_GENERATION>
+
+#const LAYER_D 32
+
+#define GNRELEV_HEIGHT05
+#define GNRELEV_INTENSITY_G
+#define GNRELEV_LAY_D
+
+#include_drs GeneratingElevation.inc
+
+/*
+<CLIFF_GENERATION>
+
+min_number_of_cliffs 2
+max_number_of_cliffs 4
+min_length_of_cliff  2
+max_length_of_cliff  5
+cliff_curliness      10
+min_distance_cliffs  12
+*/
+
+<CONNECTION_GENERATION>

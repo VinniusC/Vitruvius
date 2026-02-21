@@ -1,0 +1,867 @@
+
+/* Team Islands */
+/* PH SEASONS */
+if ANTIQUITY_MODE
+	start_random
+		percent_chance 10 #define PH_SPRING
+		percent_chance 10 #define PH_ALPINE
+		percent_chance 15 #define PH_DESERT
+		percent_chance 5 #define PH_AFRICAN_E
+		percent_chance 5 #define PH_AUTUMN
+		percent_chance 5 #define PH_FROZEN
+		percent_chance 50 #define PH_MEDISOUTH
+	end_random
+else 
+	start_random
+		percent_chance 10 #define PH_SPRING
+		percent_chance 10 #define PH_ALPINE
+		percent_chance 15 #define PH_DESERT
+		percent_chance 8 #define PH_TROPHICALSOUTH
+		percent_chance 8 #define PH_TROPHICALEAST
+		percent_chance 8 #define PH_AFRICAN_E
+		percent_chance 8 #define PH_ASIAN
+		percent_chance 8 #define PH_AUTUMN
+		percent_chance 15 #define PH_FROZEN
+		percent_chance 10 #define PH_MEDISOUTH
+	end_random
+endif
+#include_drs EnlargeMap.inc
+
+#include_drs F_seasons.inc
+
+if PH_ALPINE
+#const CESTA_ALT 61
+elseif PH_SPRING
+#const CESTA_ALT 61
+elseif PH_ASIAN
+#const CESTA_ALT 61
+elseif PH_MEDISOUTH
+#const CESTA_ALT 25
+else
+#const CESTA_ALT 61
+endif
+
+<PLAYER_SETUP>
+  random_placement 
+  ai_info_map_type TEAM_ISLANDS 0 0 0
+
+#include_drs thebr_setup.inc
+#const ICY_SHORE 37
+<LAND_GENERATION>
+if PH_TROPHICALSOUTH
+base_terrain WATER
+elseif PH_TROPHICALEAST
+base_terrain WATER
+else
+base_terrain VODA
+endif
+
+create_player_lands 
+{            
+  terrain_type                   LAYER_C   /* LAYER_C */
+land_percent                     100 	/* originally 45 */
+
+if TINY_MAP
+base_size                        16
+elseif SMALL_MAP
+base_size                        16
+else
+base_size                        19
+endif
+	/* originally 12 and 13, increased by 6 tiles due to random water edges */
+
+border_fuzziness                 100 /* originally 15 */
+
+if TINY_MAP
+circle_radius		32 1
+elseif SMALL_MAP
+circle_radius		32 1
+elseif MEDIUM_MAP
+circle_radius		33 1
+else
+circle_radius		35 0 /* 34 1 */
+endif
+
+if TINY_MAP
+  left_border 7
+  right_border 7
+  top_border 7
+  bottom_border 7
+elseif SMALL_MAP
+  left_border 7
+  right_border 7
+  top_border 7
+  bottom_border 7
+else
+  left_border 9
+  right_border 9
+  top_border 9
+  bottom_border 9
+endif
+
+/* originally set randomly */
+
+  set_zone_by_team
+  other_zone_avoidance_distance    20	/* originally 22 */
+}
+
+/* ****************************************************** */
+<TERRAIN_GENERATION>
+
+#include_drs F_ColorCorrection.inc
+
+  create_terrain LAYER_A
+{
+  base_terrain                   LAYER_C
+if TINY_MAP
+  spacing_to_other_terrain_types 4
+elseif SMALL_MAP
+  spacing_to_other_terrain_types 4
+else
+  spacing_to_other_terrain_types 6
+endif
+  land_percent                   100
+  number_of_clumps               1000
+}
+
+  create_terrain LAYER_A
+{
+  base_terrain                   LAYER_C
+if TINY_MAP
+  spacing_to_other_terrain_types 3
+elseif SMALL_MAP
+  spacing_to_other_terrain_types 3
+else
+  spacing_to_other_terrain_types 6 /* originally 6 */
+endif
+  land_percent                   100
+  number_of_clumps               1000
+}
+
+if PH_TROPHICALSOUTH
+  create_terrain WATER
+elseif PH_TROPHICALEAST
+  create_terrain WATER
+else
+  create_terrain VODA
+endif
+{
+  base_terrain                   LAYER_C
+  land_percent                   2
+  number_of_clumps               8
+  height_limits 0 0
+  spacing_to_other_terrain_types 1
+}
+
+if PH_TROPHICALSOUTH
+  create_terrain WATER
+elseif PH_TROPHICALEAST
+  create_terrain WATER
+else
+  create_terrain VODA
+endif
+{
+  base_terrain                   LAYER_C
+  land_percent                   2	/* orinally 2 */
+  number_of_clumps               8
+  height_limits 0 0
+  spacing_to_other_terrain_types 1
+}
+
+  create_terrain LAYER_A
+{
+  base_terrain                   LAYER_C
+  land_percent                   100
+  number_of_clumps 		1000
+}
+
+if PH_TROPHICALSOUTH
+
+  create_terrain VODA
+{
+  base_terrain                   WATER
+  land_percent                   100
+  number_of_clumps 		1000
+}
+
+  create_terrain VODA
+{
+  base_terrain                   WATER
+  land_percent                   100
+  number_of_clumps 		1000
+}
+
+  create_terrain VODA
+{
+  base_terrain                   WATER
+  land_percent                   100
+  number_of_clumps 		1000
+}
+
+  create_terrain VODA
+{
+  base_terrain                   WATER
+  land_percent                   100
+  number_of_clumps 		1000
+}
+
+elseif PH_TROPHICALEAST
+
+  create_terrain VODA
+{
+  base_terrain                   WATER
+  land_percent                   100
+  number_of_clumps 		1000
+}
+
+  create_terrain VODA
+{
+  base_terrain                   WATER
+  land_percent                   100
+  number_of_clumps 		1000
+}
+
+  create_terrain VODA
+{
+  base_terrain                   WATER
+  land_percent                   100
+  number_of_clumps 		1000
+}
+
+  create_terrain VODA
+{
+  base_terrain                   WATER
+  land_percent                   100
+  number_of_clumps 		1000
+}
+
+else
+endif
+
+#define WMASK_VODA
+#include_drs F_WaterMasking.inc
+
+/* PRIMARY FOREST */
+
+if 2_PLAYER_GAME
+	#define TI_2SPLIT_FG
+else
+
+	if 0_TEAM_GAME
+	#define TI_CLASSIC_FG
+	elseif 1_TEAM_GAME
+	#define TI_CLASSIC_FG
+	elseif 3_TEAM_GAME
+	#define TI_CLASSIC_FG
+	elseif 4_TEAM_GAME
+	#define TI_CLASSIC_FG
+	else
+		if TEAM0_SIZE0
+	#define TI_2SPLIT_FG
+		else
+	#define TI_CLASSIC_FG
+		endif
+	endif
+endif
+
+if TI_2SPLIT_FG
+
+  create_terrain LAYER_E
+{
+  base_terrain                   LAYER_A
+  land_percent                   100
+  number_of_clumps 		1
+}
+
+
+  create_terrain WOODIES
+{
+  base_terrain                   LAYER_E
+  spacing_to_other_terrain_types 3
+
+if TINY_MAP
+  number_of_tiles		 560
+  number_of_clumps               6
+elseif SMALL_MAP
+  number_of_tiles		 840
+  number_of_clumps               9
+elseif MEDIUM_MAP
+  number_of_tiles		 1120
+  number_of_clumps               12
+elseif LARGE_MAP
+  number_of_tiles		 1680
+  number_of_clumps               18
+elseif HUGE_MAP
+  number_of_tiles		 2240
+  number_of_clumps               24
+elseif GIGANTIC_MAP
+  number_of_tiles		 2800
+  number_of_clumps               30
+elseif LUDIKRIS_MAP
+  number_of_tiles		 8960
+  number_of_clumps               96
+endif
+
+  set_avoid_player_start_areas  14
+}
+
+  create_terrain WOODIES
+{
+  base_terrain                   LAYER_A
+  spacing_to_other_terrain_types 3
+
+if TINY_MAP
+  number_of_tiles		 560
+  number_of_clumps               6
+elseif SMALL_MAP
+  number_of_tiles		 840
+  number_of_clumps               9
+elseif MEDIUM_MAP
+  number_of_tiles		 1120
+  number_of_clumps               12
+elseif LARGE_MAP
+  number_of_tiles		 1680
+  number_of_clumps               18
+elseif HUGE_MAP
+  number_of_tiles		 2240
+  number_of_clumps               24
+elseif GIGANTIC_MAP
+  number_of_tiles		 2800
+  number_of_clumps               30
+elseif LUDIKRIS_MAP
+  number_of_tiles		 8960
+  number_of_clumps               96
+endif
+
+  set_avoid_player_start_areas  14
+}
+
+  create_terrain LAYER_A
+{
+  base_terrain                   LAYER_E
+  land_percent                   100
+  number_of_clumps 		1000
+}
+
+  create_terrain LAYER_A
+{
+  base_terrain                   LAYER_E
+  land_percent                   100
+  number_of_clumps 		1000
+}
+
+  create_terrain LAYER_A
+{
+  base_terrain                   LAYER_E
+  land_percent                   100
+  number_of_clumps 		1000
+}
+
+  create_terrain LAYER_A
+{
+  base_terrain                   LAYER_E
+  land_percent                   100
+  number_of_clumps 		1000
+}
+
+  create_terrain LAYER_A
+{
+  base_terrain                   LAYER_E
+  land_percent                   100
+  number_of_clumps 		1000
+}
+
+  create_terrain LAYER_A
+{
+  base_terrain                   LAYER_E
+  land_percent                   100
+  number_of_clumps 		1000
+}
+
+elseif TI_CLASSIC_FG
+
+  create_terrain WOODIES
+{
+  base_terrain                   LAYER_A
+  spacing_to_other_terrain_types 4
+  land_percent                   8
+  number_of_clumps               10
+  set_avoid_player_start_areas  14
+  set_scale_by_groups
+}
+
+endif
+
+
+
+
+
+/* PRIMARY PATCH */
+
+   create_terrain LAYER_B
+{
+  base_terrain                   LAYER_A
+  number_of_clumps               16
+  spacing_to_other_terrain_types 0
+  land_percent                   20
+  set_scale_by_size
+}
+
+   create_terrain DLC_ROCK
+{
+  base_terrain                   LAYER_B
+  number_of_clumps               1000
+  spacing_to_other_terrain_types 2
+  land_percent                   100
+  set_scale_by_size
+}
+
+   create_terrain LAYER_A
+{
+  base_terrain                   LAYER_B
+  number_of_clumps               1000
+  spacing_to_other_terrain_types 0
+  land_percent                   100
+  set_scale_by_size
+terrain_mask 1
+}
+
+   create_terrain LAYER_B
+{
+  base_terrain                   DLC_ROCK
+  number_of_clumps               1000
+  spacing_to_other_terrain_types 0
+  land_percent                   100
+  set_scale_by_size
+}
+
+   create_terrain LAYER_B
+{
+  base_terrain                   DLC_ROCK
+  number_of_clumps               1000
+  spacing_to_other_terrain_types 0
+  land_percent                   100
+  set_scale_by_size
+}
+
+/* SECONDARY FOREST */
+/* clumped into the first forest to prevent awkward shapes */
+/*
+
+create_terrain WOODIES_B
+{
+  base_terrain                   LAYER_A
+  spacing_to_other_terrain_types 3
+  land_percent                   1
+  number_of_clumps               3
+  set_avoid_player_start_areas     
+  set_scale_by_groups
+}
+
+*/
+
+/* SECONDARY PATCH */
+
+   create_terrain LAYER_C
+{
+  base_terrain                   LAYER_A
+  number_of_clumps               24
+  spacing_to_other_terrain_types 1
+  land_percent                   2
+  set_scale_by_size
+  terrain_mask 1
+}
+
+/* LAYER E+F Patch */
+
+   create_terrain LAYER_E
+{
+  base_terrain                   LAYER_A
+  number_of_clumps               20
+  spacing_to_other_terrain_types 0
+  land_percent                   2
+  set_scale_by_size
+terrain_mask 1
+}
+
+   create_terrain LAYER_F
+{
+  base_terrain                   LAYER_A
+  number_of_clumps               14
+  spacing_to_other_terrain_types 0
+  land_percent                   1
+  set_scale_by_size
+terrain_mask 1
+}
+
+<OBJECTS_GENERATION>
+
+#define GNR_NORMALTC
+#define GNR_STARTVILLS
+#define GNR_CLASSICSCOUT
+
+#define GNR_GIVERELICS
+
+if TINY_MAP
+#define GNR_RELICMODERN_PER2PL
+elseif LUDIKRIS_MAP
+#define GNR_RELICMODERN_MEDIUM
+else
+	if 2_PLAYER_GAME
+#define GNR_RELICMODERN_PER2PL
+	else
+#define GNR_RELICMODERN_PERPL
+	endif
+endif
+
+#define GNR_REGICIDECLASSIC
+#define GNR_6KER
+
+#define GNR_STARTINGGOLD
+#define GNR_STARTINGSTONE
+
+#define GNR_STARTGOLD744CL
+#define GNR_STARTSTONE43M
+
+/* **** */
+#define GNR_SPLITSTARTGOLDS
+#define GNR_HUNTABLE_AVOID_BERRIES
+#define GNR_KERAVOIDWATER
+
+#define GNR_ISLANDBGS_DISTANCE
+/* #define GNR_STARTGS_7WBLOCK - increased from 5 to default, which is 7 */
+
+#define GNR_GIVEHERD_A
+#define GNR_GIVEHERD_B
+
+#define GNR_HERD4CLASSIC_A
+#define GNR_HERD22CLASSIC_B
+
+#define GNR_GIVEHUNT
+
+#define GNR_HUNT3OR4CLASSIC
+
+#define GNR_GIVELURES
+#define GNR_CLASSICLURES
+#define GNR_CLASSICPRED
+
+
+if LUDIKRIS_MAP
+
+#define GNR_FARGORIG_GIVE
+#define GNR_FARSORIG_GIVE
+
+#define GNR_FARGORIG_TYPE1
+#define GNR_FARSORIG_TYPE1
+
+else
+
+#define TEAMISLANDS_FGPERPLAYER /* far gold and stone handled per player */
+
+endif
+
+#define GNR_HOMESTRAGGLE
+#define GNR_NORMALBIRDS
+
+/* #define GNR_ADDITIONALPRED */
+
+#define GNR_MAPSTRAGGLE
+#define GNR_MAP15STRAGGLE
+
+#define GNR_STANDARDFISH
+
+#include_drs GeneratingObjects.inc
+
+if INFINITE_RESOURCES
+else
+if ANTIQUITY_MODE
+create_object OYSTERS
+{
+  number_of_objects          1
+  set_place_for_every_player
+  set_tight_grouping
+  number_of_groups 8
+  temp_min_distance_group_placement 30
+  min_distance_group_placement 5
+  set_gaia_object_only
+  terrain_to_place_on VODA
+  ignore_terrain_restrictions
+  min_distance_to_players 30
+} 
+create_object OYSTERS
+{
+  number_of_objects          2
+  set_place_for_every_player
+  set_gaia_object_only
+  set_tight_grouping
+  find_closest
+  terrain_to_place_on BEACH
+  ignore_terrain_restrictions
+}
+if TEAMISLANDS_FGPERPLAYER 
+
+create_object STONE
+{
+   number_of_objects 3	/* starting stone reduced to 43 from 54 to compensate */
+   number_of_groups 1
+   set_tight_grouping
+   set_gaia_object_only
+   set_place_for_every_player
+   min_distance_to_players    14
+   max_distance_to_other_zones 5
+   min_distance_group_placement 12
+   avoid_forest_zone 2
+   avoid_actor_area 66
+}
+
+	endif
+else
+
+	if TEAMISLANDS_FGPERPLAYER 
+
+create_object GOLD
+{
+   number_of_objects 3
+   number_of_groups 1
+   set_tight_grouping
+   set_gaia_object_only
+   set_place_for_every_player
+   min_distance_to_players    14
+   max_distance_to_other_zones 5
+   min_distance_group_placement 12
+   avoid_forest_zone 2
+   actor_area 66
+   actor_area_radius 5
+}
+
+create_object STONE
+{
+   number_of_objects 3	/* starting stone reduced to 43 from 54 to compensate */
+   number_of_groups 1
+   set_tight_grouping
+   set_gaia_object_only
+   set_place_for_every_player
+   min_distance_to_players    14
+   max_distance_to_other_zones 5
+   min_distance_group_placement 12
+   avoid_forest_zone 2
+   avoid_actor_area 66
+}
+
+	endif
+	endif
+
+endif
+
+/* disabled both for better consistency */
+/*
+
+create_object LURABLE_B
+{
+   number_of_objects 2
+   set_loose_grouping
+   set_gaia_object_only
+   set_place_for_every_player
+   min_distance_to_players    33
+   max_distance_to_players    38
+}
+*/
+
+
+/* ****************************************************** */
+
+<ELEVATION_GENERATION>
+
+
+#define GNRELEV_HEIGHT05
+#define GNRELEV_INTENSITY_H
+#define GNRELEV_LAY_C
+
+#include_drs GeneratingElevation.inc
+
+/*
+<CLIFF_GENERATION>
+
+min_number_of_cliffs 3
+max_number_of_cliffs 5
+min_length_of_cliff  4
+max_length_of_cliff  8
+cliff_curliness      10
+min_distance_cliffs  3     
+*/
+
+/* ****************************************************** */
+
+#const ICY_SHORE 37
+
+
+if PH_ALPINE
+
+<CONNECTION_GENERATION>
+create_connect_teams_lands
+{
+  replace_terrain LAYER_A	CESTA_ALT
+  replace_terrain LAYER_B	CESTA_ALT
+  replace_terrain LAYER_C	CESTA_ALT
+  replace_terrain VODA		CESTA_ALT
+  replace_terrain MED_WATER     CESTA_ALT
+  replace_terrain DEEP_WATER    CESTA_ALT
+  replace_terrain DLC_WATER4    CESTA_ALT
+  replace_terrain BEACH         CESTA_ALT
+  replace_terrain ICY_SHORE	CESTA_ALT
+  replace_terrain WOODIES	CESTA_ALT	
+  replace_terrain WOODIES_B	CESTA_ALT	
+  replace_terrain WOODIES_C	CESTA_ALT	
+  terrain_cost    DLC_WATER4	15
+  terrain_cost    VODA		5
+  terrain_cost    MED_WATER     7
+  terrain_cost    DEEP_WATER    15
+  terrain_cost    FOREST        7
+  terrain_cost    WOODIES	7
+  terrain_cost    WOODIES_B	7  
+  terrain_cost    WOODIES_C	7  
+  terrain_cost    LAYER_A	2
+  terrain_cost    LAYER_B	2
+  terrain_cost    LAYER_C	2
+  terrain_cost    BEACH         4
+  terrain_cost    ICY_SHORE	2
+  terrain_size    CESTA_ALT	0	0
+}
+
+elseif PH_SPRING
+
+
+<CONNECTION_GENERATION>
+create_connect_teams_lands
+{
+  replace_terrain LAYER_A	CESTA_ALT
+  replace_terrain LAYER_B	CESTA_ALT
+  replace_terrain LAYER_C	CESTA_ALT
+  replace_terrain VODA		CESTA_ALT
+  replace_terrain MED_WATER     CESTA_ALT
+  replace_terrain DEEP_WATER    CESTA_ALT
+  replace_terrain DLC_WATER4    CESTA_ALT
+  replace_terrain BEACH         CESTA_ALT
+  replace_terrain ICY_SHORE	CESTA_ALT
+  replace_terrain WOODIES	CESTA_ALT	
+  replace_terrain WOODIES_B	CESTA_ALT	
+  replace_terrain WOODIES_C	CESTA_ALT	
+  terrain_cost    DLC_WATER4	15
+  terrain_cost    VODA		5
+  terrain_cost    MED_WATER     7
+  terrain_cost    DEEP_WATER    15
+  terrain_cost    FOREST        7
+  terrain_cost    WOODIES	7
+  terrain_cost    WOODIES_B	7  
+  terrain_cost    WOODIES_C	7  
+  terrain_cost    LAYER_A	2
+  terrain_cost    LAYER_B	2
+  terrain_cost    LAYER_C	2
+  terrain_cost    BEACH         4
+  terrain_cost    ICY_SHORE	2
+  terrain_size    CESTA_ALT	0	0
+}
+
+elseif PH_ASIAN
+
+
+<CONNECTION_GENERATION>
+create_connect_teams_lands
+{
+  replace_terrain LAYER_A	CESTA_ALT
+  replace_terrain LAYER_B	CESTA_ALT
+  replace_terrain LAYER_C	CESTA_ALT
+  replace_terrain VODA		CESTA_ALT
+  replace_terrain MED_WATER     CESTA_ALT
+  replace_terrain DEEP_WATER    CESTA_ALT
+  replace_terrain DLC_WATER4    CESTA_ALT
+  replace_terrain BEACH         CESTA_ALT
+  replace_terrain ICY_SHORE	CESTA_ALT
+  replace_terrain WOODIES	CESTA_ALT	
+  replace_terrain WOODIES_B	CESTA_ALT	
+  replace_terrain WOODIES_C	CESTA_ALT	
+  terrain_cost    DLC_WATER4	15
+  terrain_cost    VODA		5
+  terrain_cost    MED_WATER     7
+  terrain_cost    DEEP_WATER    15
+  terrain_cost    FOREST        7
+  terrain_cost    WOODIES	7
+  terrain_cost    WOODIES_B	7  
+  terrain_cost    WOODIES_C	7  
+  terrain_cost    LAYER_A	2
+  terrain_cost    LAYER_B	2
+  terrain_cost    LAYER_C	2
+  terrain_cost    BEACH         4
+  terrain_cost    ICY_SHORE	2
+  terrain_size    CESTA_ALT	0	0
+}
+
+elseif PH_MEDISOUTH
+
+
+
+<CONNECTION_GENERATION>
+create_connect_teams_lands
+{
+  replace_terrain LAYER_A	CESTA_ALT
+  replace_terrain LAYER_B	CESTA_ALT
+  replace_terrain LAYER_C	CESTA_ALT
+  replace_terrain VODA		CESTA_ALT
+  replace_terrain MED_WATER     CESTA_ALT
+  replace_terrain DEEP_WATER    CESTA_ALT
+  replace_terrain DLC_WATER4    CESTA_ALT
+  replace_terrain BEACH         CESTA_ALT
+  replace_terrain ICY_SHORE	CESTA_ALT
+  replace_terrain WOODIES	CESTA_ALT	
+  replace_terrain WOODIES_B	CESTA_ALT	
+  replace_terrain WOODIES_C	CESTA_ALT	
+  terrain_cost    DLC_WATER4	15
+  terrain_cost    VODA		5
+  terrain_cost    MED_WATER     7
+  terrain_cost    DEEP_WATER    15
+  terrain_cost    FOREST        7
+  terrain_cost    WOODIES	7
+  terrain_cost    WOODIES_B	7  
+  terrain_cost    WOODIES_C	7  
+  terrain_cost    LAYER_A	2
+  terrain_cost    LAYER_B	2
+  terrain_cost    LAYER_C	2
+  terrain_cost    BEACH         4
+  terrain_cost    ICY_SHORE	2
+  terrain_size    CESTA_ALT	0	0
+}
+
+else
+
+<CONNECTION_GENERATION>
+create_connect_teams_lands
+{
+  replace_terrain LAYER_A	CESTA
+  replace_terrain LAYER_B	CESTA
+  replace_terrain LAYER_C	CESTA
+  replace_terrain VODA		CESTA
+  replace_terrain MED_WATER     CESTA
+  replace_terrain DEEP_WATER    CESTA
+  replace_terrain DLC_WATER4    CESTA
+  replace_terrain BEACH         CESTA
+  replace_terrain ICY_SHORE	CESTA
+  replace_terrain WOODIES	CESTA
+  replace_terrain WOODIES_B	CESTA
+  replace_terrain WOODIES_C	CESTA
+  terrain_cost    DLC_WATER4	15
+  terrain_cost    VODA		5
+  terrain_cost    MED_WATER     7
+  terrain_cost    DEEP_WATER    15
+  terrain_cost    FOREST        7
+  terrain_cost    WOODIES	7
+  terrain_cost    WOODIES_B	7  
+  terrain_cost    WOODIES_C	7  
+  terrain_cost    LAYER_A	2
+  terrain_cost    LAYER_B	2
+  terrain_cost    LAYER_C	2
+  terrain_cost    BEACH         4
+  terrain_cost    ICY_SHORE	2
+  terrain_size    CESTA		0	0
+}
+
+endif

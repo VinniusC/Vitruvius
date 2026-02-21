@@ -1,0 +1,1867 @@
+/*
+
+	Loch Ness by Chrazini
+
+	Created: 23/08/2025
+	Updated: N/A
+	
+	Version: 1.0
+
+*/
+
+#const MAPSCALE_MODIFIER 1
+#include_drs includes/scaling.inc
+
+/* ----------------------------------- Debug Settings */
+
+/* #define DEBUG_MODE */
+/* #define TERRAIN_DEBUGGING */
+/* #define EMPIRE_WARS_TESTING */
+#define COLLAPSE
+
+/* ----------------------------------- Generation Settings */
+
+#define PALAEARCTIC_EUROPE_TEMPERATE
+/* #define CENTRALISE_SPAWN */
+/* #define RESTRICTED_SPAWN */
+
+/* ----------------------------------- Nomad Settings */
+
+/* #define NOMAD_MAP */
+/* #define NOMAD_SCATTERED */
+/* #define NOMAD_UNIT */
+#define NOMAD_TREATY
+/* #define NOMAD_HERDABLE */
+
+/* ----------------------------------- Themes & Overwrites */
+
+#define OVERWRITES
+if OVERWRITES
+endif
+
+#define MAP_CONSTANTS
+if MAP_CONSTANTS
+	#const STRAGGLER_SPAWN 350 /* Pine Tree */
+	#const STRAGGLER_NEUTRAL 350 /* Pine Tree */
+
+	#const BEACH_TERRAIN 108
+	#const SEABED_TERRAIN 108
+	
+	#const SPAWN_FOREST 48
+	#const SPAWN_TERRAIN 6
+
+	#const BASE_FOREST 19
+	#const BASE_FOREST_VARIATION 20
+
+	#const BASE_TERRAIN 0
+	#const BASE_BLEND_A 100
+	#const BASE_BLEND_B 122
+	#const BASE_BLEND_C 5
+	#const BASE_BLEND_D 121
+	#const BASE_BLEND_E 120
+
+	#const MIDDLE_TERRAIN 32
+
+	#const LOCH_FOREST 20
+	#const LOCH_TERRAIN 5
+	#const LOCH_BLEND_A 100
+	#const LOCH_BLEND_B 122
+	#const LOCH_BLEND_C 76
+	#const LOCH_BLEND_D 0
+
+	#const RELIC_TERRAIN 115
+endif
+
+#include_drs includes/themes.inc
+#include_drs includes/constants.inc
+#include_drs includes/decay.inc
+
+<PLAYER_SETUP>
+	#include_drs includes/preliminaries.inc
+	#include_drs includes/gaia_civilisation.inc
+
+	#define WATER_POND
+	#include_drs includes/water_preset.inc
+	water_definition WATER_PRESET
+
+	direct_placement
+	ai_info_map_type ARABIA 0 0
+
+	if CONFINED_SETUP
+		#const CONFINED_INCREASE 1.2
+	else
+		#const CONFINED_INCREASE 1
+	endif
+	
+<LAND_GENERATION>
+	base_terrain BASE_TERRAIN
+
+	if MAPSIZE_BELOW_SMALL
+		#const LOCH_TILES 128
+		#const LOCH_BASE 4
+		#const LOCH_CLUMPING 15
+	elseif MAPSIZE_BELOW_MEDIUM
+		#const LOCH_TILES 162
+		#const LOCH_BASE 5
+		#const LOCH_CLUMPING 15
+	elseif MAPSIZE_BELOW_NORMAL
+		#const LOCH_TILES 322
+		#const LOCH_BASE 8
+		#const LOCH_CLUMPING 15
+	elseif MAPSIZE_BELOW_LARGE
+		#const LOCH_TILES 494
+		#const LOCH_BASE 10
+		#const LOCH_CLUMPING 15
+	elseif MAPSIZE_BELOW_ENORMOUS
+		#const LOCH_TILES 682
+		#const LOCH_BASE 12
+		#const LOCH_CLUMPING 15
+	elseif MAPSIZE_BELOW_INCREDIBLE
+		#const LOCH_TILES 1024
+		#const LOCH_BASE 14
+		#const LOCH_CLUMPING 15
+	elseif MAPSIZE_BELOW_MONSTROUS
+		#const LOCH_TILES 1280
+		#const LOCH_BASE 16
+		#const LOCH_CLUMPING 15
+	elseif MAPSIZE_BELOW_LUDICROUS
+		#const LOCH_TILES 1836
+		#const LOCH_BASE 20
+		#const LOCH_CLUMPING 15
+	else
+		#const LOCH_TILES 2688
+		#const LOCH_BASE 24
+		#const LOCH_CLUMPING 15
+	endif
+
+	start_random
+		percent_chance 50 #define LOCH_ORIENTATION_A
+		percent_chance 50 #define LOCH_ORIENTATION_B
+	end_random
+
+	if LOCH_ORIENTATION_A
+		create_land
+		{
+			terrain_type SNOW
+			land_percent 100
+			base_size 2
+			top_border -400
+			left_border 45
+			right_border -400
+			bottom_border 45
+			land_position 90 10
+		}
+		
+		create_land
+		{
+			terrain_type SNOW
+			land_percent 100
+			base_size 2
+			top_border 45
+			left_border -400
+			right_border 45
+			bottom_border -400
+			land_position 10 90
+		}
+
+		create_land
+		{
+			terrain_type BASE_TERRAIN
+			number_of_tiles 0
+			base_size 0
+			land_position 10 10
+			land_id 600
+		}
+
+		create_land
+		{
+			terrain_type BASE_TERRAIN
+			number_of_tiles 0
+			base_size 0
+			land_position 90 90
+			land_id 600
+		}
+
+		create_land { terrain_type WATER_SHALLOW number_of_tiles LOCH_TILES base_size LOCH_BASE clumping_factor LOCH_CLUMPING land_position rnd(19,21) rnd(19,21) land_id 500 }
+		create_land { terrain_type WATER_SHALLOW number_of_tiles LOCH_TILES base_size LOCH_BASE clumping_factor LOCH_CLUMPING land_position rnd(22,24) rnd(22,24) land_id 500 }
+		create_land { terrain_type WATER_SHALLOW number_of_tiles LOCH_TILES base_size LOCH_BASE clumping_factor LOCH_CLUMPING land_position rnd(26,28) rnd(26,28) land_id 500 }
+		create_land { terrain_type WATER_SHALLOW number_of_tiles LOCH_TILES base_size LOCH_BASE clumping_factor LOCH_CLUMPING land_position rnd(29,31) rnd(29,31) land_id 500 }
+		create_land { terrain_type WATER_SHALLOW number_of_tiles LOCH_TILES base_size LOCH_BASE clumping_factor LOCH_CLUMPING land_position rnd(33,35) rnd(33,35) land_id 500 }
+		create_land { terrain_type WATER_SHALLOW number_of_tiles LOCH_TILES base_size LOCH_BASE clumping_factor LOCH_CLUMPING land_position rnd(36,38) rnd(36,38) land_id 500 }
+		create_land { terrain_type WATER_SHALLOW number_of_tiles LOCH_TILES base_size LOCH_BASE clumping_factor LOCH_CLUMPING land_position rnd(39,41) rnd(39,41) land_id 500 }
+		create_land { terrain_type WATER_SHALLOW number_of_tiles LOCH_TILES base_size LOCH_BASE clumping_factor LOCH_CLUMPING land_position rnd(41,43) rnd(41,43) land_id 500 }
+		create_land { terrain_type WATER_SHALLOW number_of_tiles LOCH_TILES base_size LOCH_BASE clumping_factor LOCH_CLUMPING land_position rnd(45,47) rnd(45,47) land_id 500 }
+		create_land { terrain_type SHALLOWS number_of_tiles LOCH_TILES base_size LOCH_BASE clumping_factor LOCH_CLUMPING land_position rnd(48,50) rnd(48,50) land_id 500 }
+		create_land { terrain_type SHALLOWS number_of_tiles LOCH_TILES base_size LOCH_BASE clumping_factor LOCH_CLUMPING land_position rnd(52,54) rnd(52,54) land_id 500 }
+		create_land { terrain_type WATER_SHALLOW number_of_tiles LOCH_TILES base_size LOCH_BASE clumping_factor LOCH_CLUMPING land_position rnd(55,57) rnd(55,57) land_id 500 }
+		create_land { terrain_type WATER_SHALLOW number_of_tiles LOCH_TILES base_size LOCH_BASE clumping_factor LOCH_CLUMPING land_position rnd(58,60) rnd(58,60) land_id 500 }
+		create_land { terrain_type WATER_SHALLOW number_of_tiles LOCH_TILES base_size LOCH_BASE clumping_factor LOCH_CLUMPING land_position rnd(61,63) rnd(61,63) land_id 500 }
+		create_land { terrain_type WATER_SHALLOW number_of_tiles LOCH_TILES base_size LOCH_BASE clumping_factor LOCH_CLUMPING land_position rnd(64,66) rnd(64,66) land_id 500 }
+		create_land { terrain_type WATER_SHALLOW number_of_tiles LOCH_TILES base_size LOCH_BASE clumping_factor LOCH_CLUMPING land_position rnd(67,69) rnd(67,69) land_id 500 }
+		create_land { terrain_type WATER_SHALLOW number_of_tiles LOCH_TILES base_size LOCH_BASE clumping_factor LOCH_CLUMPING land_position rnd(70,72) rnd(70,72) land_id 500 }
+		create_land { terrain_type WATER_SHALLOW number_of_tiles LOCH_TILES base_size LOCH_BASE clumping_factor LOCH_CLUMPING land_position rnd(74,76) rnd(74,76) land_id 500 }
+		create_land { terrain_type WATER_SHALLOW number_of_tiles LOCH_TILES base_size LOCH_BASE clumping_factor LOCH_CLUMPING land_position rnd(77,79) rnd(77,79) land_id 500 }
+		create_land { terrain_type WATER_SHALLOW number_of_tiles LOCH_TILES base_size LOCH_BASE clumping_factor LOCH_CLUMPING land_position rnd(79,81) rnd(79,81) land_id 500 }
+	elseif LOCH_ORIENTATION_B
+		create_land
+		{
+			terrain_type SNOW
+			land_percent 100
+			base_size 2
+			top_border -400
+			left_border -400
+			right_border 45
+			bottom_border 45
+			land_position 10 10
+		}
+
+		{
+			terrain_type SNOW
+			land_percent 100
+			base_size 2
+			top_border 45
+			left_border 45
+			right_border -400
+			bottom_border -400
+			land_position 90 90
+		}
+
+		create_land
+		{
+			terrain_type BASE_TERRAIN
+			number_of_tiles 0
+			base_size 0
+			land_position 90 10
+			land_id 600
+		}
+
+		create_land
+		{
+			terrain_type BASE_TERRAIN
+			number_of_tiles 0
+			base_size 0
+			land_position 10 90
+			land_id 600
+		}
+
+		create_land { terrain_type WATER_SHALLOW number_of_tiles LOCH_TILES base_size LOCH_BASE clumping_factor LOCH_CLUMPING land_position rnd(79,81) rnd(19,21) land_id 500 }
+		create_land { terrain_type WATER_SHALLOW number_of_tiles LOCH_TILES base_size LOCH_BASE clumping_factor LOCH_CLUMPING land_position rnd(76,78) rnd(22,24) land_id 500 }
+		create_land { terrain_type WATER_SHALLOW number_of_tiles LOCH_TILES base_size LOCH_BASE clumping_factor LOCH_CLUMPING land_position rnd(73,75) rnd(26,28) land_id 500 }
+		create_land { terrain_type WATER_SHALLOW number_of_tiles LOCH_TILES base_size LOCH_BASE clumping_factor LOCH_CLUMPING land_position rnd(70,72) rnd(29,31) land_id 500 }
+		create_land { terrain_type WATER_SHALLOW number_of_tiles LOCH_TILES base_size LOCH_BASE clumping_factor LOCH_CLUMPING land_position rnd(66,68) rnd(33,35) land_id 500 }
+		create_land { terrain_type WATER_SHALLOW number_of_tiles LOCH_TILES base_size LOCH_BASE clumping_factor LOCH_CLUMPING land_position rnd(63,65) rnd(36,38) land_id 500 }
+		create_land { terrain_type WATER_SHALLOW number_of_tiles LOCH_TILES base_size LOCH_BASE clumping_factor LOCH_CLUMPING land_position rnd(60,62) rnd(39,41) land_id 500 }
+		create_land { terrain_type WATER_SHALLOW number_of_tiles LOCH_TILES base_size LOCH_BASE clumping_factor LOCH_CLUMPING land_position rnd(57,59) rnd(41,43) land_id 500 }
+		create_land { terrain_type WATER_SHALLOW number_of_tiles LOCH_TILES base_size LOCH_BASE clumping_factor LOCH_CLUMPING land_position rnd(53,55) rnd(45,47) land_id 500 }
+		create_land { terrain_type SHALLOWS number_of_tiles LOCH_TILES base_size LOCH_BASE clumping_factor LOCH_CLUMPING land_position rnd(50,52) rnd(48,50) land_id 500 }
+		create_land { terrain_type SHALLOWS number_of_tiles LOCH_TILES base_size LOCH_BASE clumping_factor LOCH_CLUMPING land_position rnd(47,49) rnd(52,54) land_id 500 }
+		create_land { terrain_type WATER_SHALLOW number_of_tiles LOCH_TILES base_size LOCH_BASE clumping_factor LOCH_CLUMPING land_position rnd(44,46) rnd(55,57) land_id 500 }
+		create_land { terrain_type WATER_SHALLOW number_of_tiles LOCH_TILES base_size LOCH_BASE clumping_factor LOCH_CLUMPING land_position rnd(41,43) rnd(58,60) land_id 500 }
+		create_land { terrain_type WATER_SHALLOW number_of_tiles LOCH_TILES base_size LOCH_BASE clumping_factor LOCH_CLUMPING land_position rnd(39,41) rnd(61,63) land_id 500 }
+		create_land { terrain_type WATER_SHALLOW number_of_tiles LOCH_TILES base_size LOCH_BASE clumping_factor LOCH_CLUMPING land_position rnd(35,37) rnd(64,66) land_id 500 }
+		create_land { terrain_type WATER_SHALLOW number_of_tiles LOCH_TILES base_size LOCH_BASE clumping_factor LOCH_CLUMPING land_position rnd(32,34) rnd(67,69) land_id 500 }
+		create_land { terrain_type WATER_SHALLOW number_of_tiles LOCH_TILES base_size LOCH_BASE clumping_factor LOCH_CLUMPING land_position rnd(29,31) rnd(70,72) land_id 500 }
+		create_land { terrain_type WATER_SHALLOW number_of_tiles LOCH_TILES base_size LOCH_BASE clumping_factor LOCH_CLUMPING land_position rnd(25,27) rnd(74,76) land_id 500 }
+		create_land { terrain_type WATER_SHALLOW number_of_tiles LOCH_TILES base_size LOCH_BASE clumping_factor LOCH_CLUMPING land_position rnd(22,24) rnd(77,79) land_id 500 }
+		create_land { terrain_type WATER_SHALLOW number_of_tiles LOCH_TILES base_size LOCH_BASE clumping_factor LOCH_CLUMPING land_position rnd(19,21) rnd(79,81) land_id 500 }
+	endif
+
+	create_land
+	{
+		terrain_type SHALLOWS
+		number_of_tiles 0
+		base_size 0
+		land_position 50 50
+		land_id 420
+	}
+
+	if 2_PLAYER_GAME
+		#define UNEVEN_TEAMS
+	elseif 2_TEAM_GAME
+		if 4_PLAYER_GAME
+			#define EVEN_TEAMS
+		elseif 6_PLAYER_GAME
+			if TEAM1_SIZE3
+				if TEAM2_SIZE3
+					#define EVEN_TEAMS
+				endif
+			endif
+		elseif 8_PLAYER_GAME
+			if TEAM1_SIZE4
+				if TEAM2_SIZE4
+					#define EVEN_TEAMS
+				endif
+			endif
+		endif
+	endif
+
+	if EVEN_TEAMS
+	else
+		#define UNEVEN_TEAMS
+	endif
+
+	start_random
+		percent_chance 50 #define SWITCH_A
+		percent_chance 50 #define SWITCH_B
+	end_random
+
+	if 1_PLAYER_GAME
+		#define GENERATE_LAND_A
+	elseif 2_PLAYER_GAME
+		#define GENERATE_LAND_A
+		#define GENERATE_LAND_B
+	elseif 3_PLAYER_GAME
+		#define GENERATE_LAND_A
+		#define GENERATE_LAND_B
+		#define GENERATE_LAND_C
+	elseif 4_PLAYER_GAME
+		#define GENERATE_LAND_A
+		#define GENERATE_LAND_B
+		#define GENERATE_LAND_C
+		#define GENERATE_LAND_D
+	elseif 5_PLAYER_GAME
+		#define GENERATE_LAND_A
+		#define GENERATE_LAND_B
+		#define GENERATE_LAND_C
+		#define GENERATE_LAND_D
+		#define GENERATE_LAND_E
+	elseif 6_PLAYER_GAME
+		#define GENERATE_LAND_A
+		#define GENERATE_LAND_B
+		#define GENERATE_LAND_C
+		#define GENERATE_LAND_D
+		#define GENERATE_LAND_E
+		#define GENERATE_LAND_F
+	elseif 7_PLAYER_GAME
+		#define GENERATE_LAND_A
+		#define GENERATE_LAND_B
+		#define GENERATE_LAND_C
+		#define GENERATE_LAND_D
+		#define GENERATE_LAND_E
+		#define GENERATE_LAND_F
+		#define GENERATE_LAND_G
+	elseif 8_PLAYER_GAME
+		#define GENERATE_LAND_A
+		#define GENERATE_LAND_B
+		#define GENERATE_LAND_C
+		#define GENERATE_LAND_D
+		#define GENERATE_LAND_E
+		#define GENERATE_LAND_F
+		#define GENERATE_LAND_G
+		#define GENERATE_LAND_H
+	endif
+
+	start_random
+		percent_chance 50 #define TWO_A
+		percent_chance 50 #define TWO_B
+	end_random
+
+	#const SPAWN_TILES 0
+
+	if GENERATE_LAND_A
+		create_land
+		{
+			terrain_type SPAWN_TERRAIN
+			land_percent SPAWN_TILES
+			base_size 0
+
+			if 2_PLAYER_GAME
+				if LOCH_ORIENTATION_B
+					land_position 35 35
+				elseif LOCH_ORIENTATION_A
+					land_position 65 35
+				endif
+			elseif 3_PLAYER_GAME
+				if TWO_A
+					if LOCH_ORIENTATION_B
+						land_position 35 35
+					elseif LOCH_ORIENTATION_A
+						land_position 65 35
+					endif
+				elseif TWO_B
+					if LOCH_ORIENTATION_B
+						land_position 65 65
+					elseif LOCH_ORIENTATION_A
+						land_position 35 65
+					endif
+				endif
+			elseif 4_PLAYER_GAME
+				if LOCH_ORIENTATION_B
+					land_position 32 43
+				elseif LOCH_ORIENTATION_A
+					land_position 57 32
+				endif
+			elseif 5_PLAYER_GAME
+				if TWO_A
+					if LOCH_ORIENTATION_B
+						land_position 32 43
+					elseif LOCH_ORIENTATION_A
+						land_position 57 32
+					endif
+				elseif TWO_B
+					if LOCH_ORIENTATION_B
+						land_position 67 57
+					elseif LOCH_ORIENTATION_A
+						land_position 43 67
+					endif
+				endif
+			elseif 6_PLAYER_GAME
+				if LOCH_ORIENTATION_B
+					land_position 30 50
+				elseif LOCH_ORIENTATION_A
+					land_position 50 30
+				endif
+			elseif 7_PLAYER_GAME
+				if TWO_A
+					if LOCH_ORIENTATION_B
+						land_position 30 50
+					elseif LOCH_ORIENTATION_A
+						land_position 50 30
+					endif
+				elseif TWO_B
+					if LOCH_ORIENTATION_B
+						land_position 70 50
+					elseif LOCH_ORIENTATION_A
+						land_position 50 70
+					endif
+				endif
+			elseif 8_PLAYER_GAME
+				if LOCH_ORIENTATION_B
+					land_position 25 55
+				elseif LOCH_ORIENTATION_A
+					land_position 45 25
+				endif
+			endif
+
+			if UNEVEN_TEAMS
+				assign_to AT_TEAM -10 0 0
+			else
+				if SWITCH_A
+					assign_to AT_TEAM 1 0 0
+				elseif SWITCH_B
+					assign_to AT_TEAM 2 0 0
+				endif
+			endif
+		}
+	endif
+
+	if GENERATE_LAND_B
+		create_land
+		{
+			terrain_type SPAWN_TERRAIN
+			land_percent SPAWN_TILES
+			base_size 0
+
+			if 2_PLAYER_GAME
+				if LOCH_ORIENTATION_B
+					land_position 65 65
+				elseif LOCH_ORIENTATION_A
+					land_position 35 65
+				endif
+			elseif 3_PLAYER_GAME
+				if TWO_A
+					if LOCH_ORIENTATION_B
+						land_position 67 57
+					elseif LOCH_ORIENTATION_A
+						land_position 43 67
+					endif
+				elseif TWO_B
+					if LOCH_ORIENTATION_B
+						land_position 32 43
+					elseif LOCH_ORIENTATION_A
+						land_position 57 32
+					endif
+				endif
+			elseif 4_PLAYER_GAME
+				if LOCH_ORIENTATION_B
+					land_position 67 57
+				elseif LOCH_ORIENTATION_A
+					land_position 43 67
+				endif
+			elseif 5_PLAYER_GAME
+				if TWO_A
+					if LOCH_ORIENTATION_B
+						land_position 42 33
+					elseif LOCH_ORIENTATION_A
+						land_position 67 42
+					endif
+				elseif TWO_B
+					if LOCH_ORIENTATION_B
+						land_position 57 67
+					elseif LOCH_ORIENTATION_A
+						land_position 33 57
+					endif
+				endif
+			elseif 6_PLAYER_GAME
+				if LOCH_ORIENTATION_B
+					land_position 70 50
+				elseif LOCH_ORIENTATION_A
+					land_position 50 70
+				endif
+			elseif 7_PLAYER_GAME
+				if TWO_A
+					if LOCH_ORIENTATION_B
+						land_position 40 40
+					elseif LOCH_ORIENTATION_A
+						land_position 60 40
+					endif
+				elseif TWO_B
+					if LOCH_ORIENTATION_B
+						land_position 60 60
+					elseif LOCH_ORIENTATION_A
+						land_position 40 60
+					endif
+				endif
+			elseif 8_PLAYER_GAME
+				if LOCH_ORIENTATION_B
+					land_position 75 45
+				elseif LOCH_ORIENTATION_A
+					land_position 55 75
+				endif
+			endif
+
+			if UNEVEN_TEAMS
+				assign_to AT_TEAM -10 0 0
+			else
+				if SWITCH_A
+					assign_to AT_TEAM 2 0 0
+				elseif SWITCH_B
+					assign_to AT_TEAM 1 0 0
+				endif
+			endif
+		}
+	endif
+
+	if GENERATE_LAND_C
+		create_land
+		{
+			terrain_type SPAWN_TERRAIN
+			land_percent SPAWN_TILES
+			base_size 0
+
+			if 3_PLAYER_GAME
+				if TWO_A
+					if LOCH_ORIENTATION_B
+						land_position 57 67
+					elseif LOCH_ORIENTATION_A
+						land_position 33 57
+					endif
+				elseif TWO_B
+					if LOCH_ORIENTATION_B
+						land_position 42 33
+					elseif LOCH_ORIENTATION_A
+						land_position 67 42
+					endif
+				endif
+			elseif 4_PLAYER_GAME
+				if LOCH_ORIENTATION_B
+					land_position 42 33
+				elseif LOCH_ORIENTATION_A
+					land_position 67 42
+				endif
+			elseif 5_PLAYER_GAME
+				if TWO_A
+					if LOCH_ORIENTATION_B
+						land_position 70 50
+					elseif LOCH_ORIENTATION_A
+						land_position 50 70
+					endif
+				elseif TWO_B
+					if LOCH_ORIENTATION_B
+						land_position 30 50
+					elseif LOCH_ORIENTATION_A
+						land_position 50 30
+					endif
+				endif
+			elseif 6_PLAYER_GAME
+				if LOCH_ORIENTATION_B
+					land_position 40 40
+				elseif LOCH_ORIENTATION_A
+					land_position 60 40
+				endif
+			elseif 7_PLAYER_GAME
+				if TWO_A
+					if LOCH_ORIENTATION_B
+						land_position 50 30
+					elseif LOCH_ORIENTATION_A
+						land_position 70 50
+					endif
+				elseif TWO_B
+					if LOCH_ORIENTATION_B
+						land_position 50 70
+					elseif LOCH_ORIENTATION_A
+						land_position 30 50
+					endif
+				endif
+			elseif 8_PLAYER_GAME
+				if LOCH_ORIENTATION_B
+					land_position 35 45
+				elseif LOCH_ORIENTATION_A
+					land_position 55 35
+				endif
+			endif
+
+			if UNEVEN_TEAMS
+				assign_to AT_TEAM -10 0 0
+			else
+				if SWITCH_A
+					assign_to AT_TEAM 1 0 0
+				elseif SWITCH_B
+					assign_to AT_TEAM 2 0 0
+				endif
+			endif
+		}
+	endif
+
+	if GENERATE_LAND_D
+		create_land
+		{
+			terrain_type SPAWN_TERRAIN
+			land_percent SPAWN_TILES
+			base_size 0
+
+			if 4_PLAYER_GAME
+				if LOCH_ORIENTATION_B
+					land_position 57 67
+				elseif LOCH_ORIENTATION_A
+					land_position 33 57
+				endif
+			elseif 5_PLAYER_GAME
+				if TWO_A
+					if LOCH_ORIENTATION_B
+						land_position 60 60
+					elseif LOCH_ORIENTATION_A
+						land_position 40 60
+					endif
+				elseif TWO_B
+					if LOCH_ORIENTATION_B
+						land_position 40 40
+					elseif LOCH_ORIENTATION_A
+						land_position 60 40
+					endif
+				endif
+			elseif 6_PLAYER_GAME
+				if LOCH_ORIENTATION_B
+					land_position 60 60
+				elseif LOCH_ORIENTATION_A
+					land_position 40 60
+				endif
+			elseif 7_PLAYER_GAME
+				if TWO_A
+					if LOCH_ORIENTATION_B
+						land_position 75 45
+					elseif LOCH_ORIENTATION_A
+						land_position 55 75
+					endif
+				elseif TWO_B
+					if LOCH_ORIENTATION_B
+						land_position 25 55
+					elseif LOCH_ORIENTATION_A
+						land_position 45 25
+					endif
+				endif
+			elseif 8_PLAYER_GAME
+				if LOCH_ORIENTATION_B
+					land_position 65 55
+				elseif LOCH_ORIENTATION_A
+					land_position 45 65
+				endif
+			endif
+
+			if UNEVEN_TEAMS
+				assign_to AT_TEAM -10 0 0
+			else
+				if SWITCH_A
+					assign_to AT_TEAM 2 0 0
+				elseif SWITCH_B
+					assign_to AT_TEAM 1 0 0
+				endif
+			endif
+		}
+	endif
+	
+	if GENERATE_LAND_E
+		create_land
+		{
+			terrain_type SPAWN_TERRAIN
+			land_percent SPAWN_TILES
+			base_size 0
+
+			if 5_PLAYER_GAME
+				if TWO_A
+					if LOCH_ORIENTATION_B
+						land_position 50 70
+					elseif LOCH_ORIENTATION_A
+						land_position 30 50
+					endif
+				elseif TWO_B
+					if LOCH_ORIENTATION_B
+						land_position 50 30
+					elseif LOCH_ORIENTATION_A
+						land_position 70 50
+					endif
+				endif
+			elseif 6_PLAYER_GAME
+				if LOCH_ORIENTATION_B
+					land_position 50 30
+				elseif LOCH_ORIENTATION_A
+					land_position 70 50
+				endif
+			elseif 7_PLAYER_GAME
+				if TWO_A
+					if LOCH_ORIENTATION_B
+						land_position 65 55
+					elseif LOCH_ORIENTATION_A
+						land_position 45 65
+					endif
+				elseif TWO_B
+					if LOCH_ORIENTATION_B
+						land_position 35 45
+					elseif LOCH_ORIENTATION_A
+						land_position 55 35
+					endif
+				endif
+			elseif 8_PLAYER_GAME
+				if LOCH_ORIENTATION_B
+					land_position 45 35
+				elseif LOCH_ORIENTATION_A
+					land_position 65 45
+				endif
+			endif
+
+			if UNEVEN_TEAMS
+				assign_to AT_TEAM -10 0 0
+			else
+				if SWITCH_A
+					assign_to AT_TEAM 1 0 0
+				elseif SWITCH_B
+					assign_to AT_TEAM 2 0 0
+				endif
+			endif
+		}
+	endif
+
+	if GENERATE_LAND_F
+		create_land
+		{
+			terrain_type SPAWN_TERRAIN
+			land_percent SPAWN_TILES
+			base_size 0
+
+			if 6_PLAYER_GAME
+				if LOCH_ORIENTATION_B
+					land_position 50 70
+				elseif LOCH_ORIENTATION_A
+					land_position 30 50
+				endif
+			elseif 7_PLAYER_GAME
+				if TWO_A
+					if LOCH_ORIENTATION_B
+						land_position 55 65
+					elseif LOCH_ORIENTATION_A
+						land_position 35 55
+					endif
+				elseif TWO_B
+					if LOCH_ORIENTATION_B
+						land_position 45 35
+					elseif LOCH_ORIENTATION_A
+						land_position 65 45
+					endif
+				endif
+			elseif 8_PLAYER_GAME
+				if LOCH_ORIENTATION_B
+					land_position 55 65
+				elseif LOCH_ORIENTATION_A
+					land_position 35 55
+				endif
+			endif
+
+			if UNEVEN_TEAMS
+				assign_to AT_TEAM -10 0 0
+			else
+				if SWITCH_A
+					assign_to AT_TEAM 2 0 0
+				elseif SWITCH_B
+					assign_to AT_TEAM 1 0 0
+				endif
+			endif
+		}
+	endif
+
+	if GENERATE_LAND_G
+		create_land
+		{
+			terrain_type SPAWN_TERRAIN
+			land_percent SPAWN_TILES
+			base_size 0
+
+			if 7_PLAYER_GAME
+				if TWO_A
+					if LOCH_ORIENTATION_B
+						land_position 45 75
+					elseif LOCH_ORIENTATION_A
+						land_position 25 45
+					endif
+				elseif TWO_B
+					if LOCH_ORIENTATION_B
+						land_position 55 25
+					elseif LOCH_ORIENTATION_A
+						land_position 75 55
+					endif
+				endif
+			elseif 8_PLAYER_GAME
+				if LOCH_ORIENTATION_B
+					land_position 55 25
+				elseif LOCH_ORIENTATION_A
+					land_position 75 55
+				endif
+			endif
+
+			if UNEVEN_TEAMS
+				assign_to AT_TEAM -10 0 0
+			else
+				if SWITCH_A
+					assign_to AT_TEAM 1 0 0
+				elseif SWITCH_B
+					assign_to AT_TEAM 2 0 0
+				endif
+			endif
+		}
+	endif
+
+	if GENERATE_LAND_H
+		create_land
+		{
+			terrain_type SPAWN_TERRAIN
+			land_percent SPAWN_TILES
+			base_size 0
+
+			if 7_PLAYER_GAME
+				if TWO_A
+					if LOCH_ORIENTATION_B
+						land_position 85 75
+					elseif LOCH_ORIENTATION_A
+						land_position 25 85
+					endif
+				elseif TWO_B
+					if LOCH_ORIENTATION_B
+						land_position 85 70
+					elseif LOCH_ORIENTATION_A
+						land_position 30 85
+					endif
+				endif
+			elseif 8_PLAYER_GAME
+				if LOCH_ORIENTATION_B
+					land_position 45 75
+				elseif LOCH_ORIENTATION_A
+					land_position 25 45
+				endif
+			endif
+
+			if UNEVEN_TEAMS
+				assign_to AT_TEAM -10 0 0
+			else
+				if SWITCH_A
+					assign_to AT_TEAM 2 0 0
+				elseif SWITCH_B
+					assign_to AT_TEAM 1 0 0
+				endif
+			endif
+		}
+	endif
+
+
+<ELEVATION_GENERATION>
+	create_elevation 5
+	{
+		enable_balanced_elevation
+		base_terrain BASE_TERRAIN
+
+		number_of_tiles (1536 * MAPSCALE_AREA)
+		number_of_clumps (64 * MAPSCALE_AREA)
+	}
+
+	create_elevation 2
+	{
+		enable_balanced_elevation
+		base_terrain SNOW
+
+		number_of_tiles (512 * MAPSCALE_AREA)
+		number_of_clumps (16 * MAPSCALE_AREA)
+	}
+
+<CLIFF_GENERATION>
+	#include_drs includes/cliffs.inc
+	cliff_type CLIFF_TYPE
+
+<TERRAIN_GENERATION>
+	#include_drs includes/colour.inc
+	color_correction COLOUR_MOOD
+
+	create_terrain BASE_TERRAIN { base_terrain SNOW land_percent 100 number_of_clumps 512 set_scale_by_groups beach_terrain BEACH_TERRAIN }
+	create_terrain BASE_TERRAIN { base_terrain SNOW land_percent 100 number_of_clumps 512 set_scale_by_groups beach_terrain BEACH_TERRAIN }
+	create_terrain BASE_TERRAIN { base_terrain SNOW land_percent 100 number_of_clumps 512 set_scale_by_groups beach_terrain BEACH_TERRAIN }
+	create_terrain BASE_TERRAIN { base_terrain SNOW land_percent 100 number_of_clumps 512 set_scale_by_groups beach_terrain BEACH_TERRAIN }
+	create_terrain BASE_TERRAIN { base_terrain SNOW land_percent 100 number_of_clumps 512 set_scale_by_groups beach_terrain BEACH_TERRAIN }
+	create_terrain BASE_TERRAIN { base_terrain SNOW land_percent 100 number_of_clumps 512 set_scale_by_groups beach_terrain BEACH_TERRAIN }
+	create_terrain BASE_TERRAIN { base_terrain SNOW land_percent 100 number_of_clumps 512 set_scale_by_groups beach_terrain BEACH_TERRAIN }
+	create_terrain BASE_TERRAIN { base_terrain SNOW land_percent 100 number_of_clumps 512 set_scale_by_groups beach_terrain BEACH_TERRAIN }
+	create_terrain BASE_TERRAIN { base_terrain SNOW land_percent 100 number_of_clumps 512 set_scale_by_groups beach_terrain BEACH_TERRAIN }
+	create_terrain BASE_TERRAIN { base_terrain SNOW land_percent 100 number_of_clumps 512 set_scale_by_groups beach_terrain BEACH_TERRAIN }
+	create_terrain BASE_TERRAIN { base_terrain SNOW land_percent 100 number_of_clumps 512 set_scale_by_groups beach_terrain BEACH_TERRAIN }
+	create_terrain BASE_TERRAIN { base_terrain SNOW land_percent 100 number_of_clumps 512 set_scale_by_groups beach_terrain BEACH_TERRAIN }
+	create_terrain BASE_TERRAIN { base_terrain SNOW land_percent 100 number_of_clumps 512 set_scale_by_groups beach_terrain BEACH_TERRAIN }
+	create_terrain BASE_TERRAIN { base_terrain SNOW land_percent 100 number_of_clumps 512 set_scale_by_groups beach_terrain BEACH_TERRAIN }
+	create_terrain BASE_TERRAIN { base_terrain SNOW land_percent 100 number_of_clumps 512 set_scale_by_groups beach_terrain BEACH_TERRAIN }
+	create_terrain BASE_TERRAIN { base_terrain SNOW land_percent 100 number_of_clumps 512 set_scale_by_groups beach_terrain BEACH_TERRAIN }
+
+	create_terrain LOCH_TERRAIN { base_terrain BASE_TERRAIN land_percent 100 number_of_clumps 512 set_scale_by_groups beach_terrain BEACH_TERRAIN }
+	create_terrain LOCH_TERRAIN { base_terrain BASE_TERRAIN land_percent 100 number_of_clumps 512 set_scale_by_groups beach_terrain BEACH_TERRAIN }
+	create_terrain LOCH_TERRAIN { base_terrain BASE_TERRAIN land_percent 100 number_of_clumps 512 set_scale_by_groups beach_terrain BEACH_TERRAIN }
+	create_terrain LOCH_TERRAIN { base_terrain BASE_TERRAIN land_percent 100 number_of_clumps 512 set_scale_by_groups beach_terrain BEACH_TERRAIN }
+	create_terrain LOCH_TERRAIN { base_terrain BASE_TERRAIN land_percent 100 number_of_clumps 512 set_scale_by_groups beach_terrain BEACH_TERRAIN }
+	create_terrain LOCH_TERRAIN { base_terrain BASE_TERRAIN land_percent 100 number_of_clumps 512 set_scale_by_groups beach_terrain BEACH_TERRAIN }
+	create_terrain LOCH_TERRAIN { base_terrain BASE_TERRAIN land_percent 100 number_of_clumps 512 set_scale_by_groups beach_terrain BEACH_TERRAIN }
+	create_terrain LOCH_TERRAIN { base_terrain BASE_TERRAIN land_percent 100 number_of_clumps 512 set_scale_by_groups beach_terrain BEACH_TERRAIN }
+
+	create_terrain PLACEHOLDER_TERRAIN_E
+	{
+		base_terrain WATER_SHALLOW
+		land_percent 100
+		number_of_clumps 512
+		set_scale_by_groups
+		spacing_to_specific_terrain SHALLOWS 3
+	}
+
+	create_terrain SHALLOWS
+	{
+		base_terrain WATER_SHALLOW
+		number_of_tiles (80 * MAPSCALE_SIDE)
+		number_of_clumps (6 * MAPSCALE_SIDE)
+	}
+
+	create_terrain PLACEHOLDER_TERRAIN_E
+	{
+		base_terrain WATER_SHALLOW
+		land_percent 100
+		number_of_clumps 512
+		set_scale_by_groups
+	}
+
+	create_terrain PLACEHOLDER_TERRAIN_E
+	{
+		base_terrain WATER_SHALLOW
+		land_percent 100
+		number_of_clumps 512
+		set_scale_by_groups
+	}
+
+	create_terrain PLACEHOLDER_TERRAIN_E
+	{
+		base_terrain WATER_SHALLOW
+		land_percent 100
+		number_of_clumps 512
+		set_scale_by_groups
+	}
+
+	create_terrain PLACEHOLDER_TERRAIN_E
+	{
+		base_terrain WATER_SHALLOW
+		land_percent 100
+		number_of_clumps 512
+		set_scale_by_groups
+	}
+
+	create_terrain WATER_SHALLOW
+	{
+		base_terrain SHALLOWS
+		land_percent 100
+		number_of_clumps 512
+		set_scale_by_groups
+		spacing_to_other_terrain_types 2
+	}
+
+	create_terrain SHALLOWS
+	{
+		base_terrain WATER_SHALLOW
+		land_percent 100
+		number_of_clumps 512
+		set_scale_by_groups
+	}
+
+	create_terrain WATER_SHALLOW
+	{
+		base_terrain PLACEHOLDER_TERRAIN_E
+		land_percent 100
+		number_of_clumps 512
+		set_scale_by_groups
+	}
+
+	create_terrain PLACEHOLDER_TERRAIN_E
+	{
+		base_terrain SHALLOWS
+		land_percent 100
+		number_of_clumps 512
+		set_scale_by_groups
+		spacing_to_specific_terrain WATER_SHALLOW 1
+	}
+
+	create_terrain WATER_SHALLOW
+	{
+		base_terrain SHALLOWS
+		land_percent 100
+		number_of_clumps 512
+		set_scale_by_groups
+		terrain_mask 2
+	}
+
+	create_terrain SHALLOWS
+	{
+		base_terrain PLACEHOLDER_TERRAIN_E
+		land_percent 100
+		number_of_clumps 512
+		set_scale_by_groups
+	}
+
+	create_terrain WATER_SHALLOW
+	{
+		base_terrain SHALLOWS
+		number_of_tiles (40 * MAPSCALE_SIDE)
+		number_of_clumps (10 * MAPSCALE_SIDE)
+		terrain_mask 1
+	}
+
+	create_terrain LOCH_TERRAIN
+	{
+		base_terrain PLACEHOLDER_TERRAIN_D
+		land_percent 100
+		number_of_clumps 512
+		set_scale_by_groups
+		beach_terrain BEACH_TERRAIN
+	}
+
+	create_terrain BASE_TERRAIN
+	{
+		base_terrain LOCH_TERRAIN
+		land_percent 100
+		number_of_clumps 512
+		set_scale_by_groups
+		spacing_to_other_terrain_types 12
+	} 
+
+	create_terrain PLACEHOLDER_TERRAIN_A
+	{
+		base_terrain WATER_SHALLOW
+		land_percent 100
+		number_of_clumps 512
+		set_scale_by_groups
+		spacing_to_other_terrain_types 1
+	}
+
+	create_terrain SEABED_TERRAIN
+	{
+		base_terrain WATER_SHALLOW
+		number_of_tiles (168 * MAPSCALE_AREA)
+		number_of_clumps (24 * MAPSCALE_AREA)
+		terrain_mask 1
+	}
+
+	create_terrain SEABED_TERRAIN
+	{
+		base_terrain WATER_SHALLOW
+		number_of_tiles (32 * MAPSCALE_AREA)
+		number_of_clumps (16 * MAPSCALE_AREA)
+		terrain_mask 1
+	}
+
+	create_terrain WATER_SHALLOW
+	{
+		base_terrain PLACEHOLDER_TERRAIN_A
+		land_percent 100
+		number_of_clumps 512
+		set_scale_by_groups
+	}
+
+	create_terrain PLACEHOLDER_TERRAIN_A
+	{
+		base_terrain WATER_SHALLOW
+		land_percent 100
+		number_of_clumps 512
+		set_scale_by_groups
+		spacing_to_other_terrain_types 2
+	}
+
+	create_terrain SHALLOWS
+	{
+		base_terrain WATER_SHALLOW
+		number_of_tiles (168 * MAPSCALE_AREA)
+		number_of_clumps (24 * MAPSCALE_AREA)
+		terrain_mask 1
+	}
+
+	create_terrain SHALLOWS
+	{
+		base_terrain WATER_SHALLOW
+		number_of_tiles (32 * MAPSCALE_AREA)
+		number_of_clumps (16 * MAPSCALE_AREA)
+		terrain_mask 1
+	}
+
+	create_terrain WATER_SHALLOW
+	{
+		base_terrain PLACEHOLDER_TERRAIN_A
+		land_percent 100
+		number_of_clumps 512
+		set_scale_by_groups
+	}
+
+	create_terrain WATER_MEDIUM
+	{
+		base_terrain WATER_SHALLOW
+		land_percent 4
+		number_of_clumps 64
+		set_scale_by_groups
+		spacing_to_other_terrain_types 6
+		terrain_mask 2
+	}
+
+	create_terrain PLACEHOLDER_TERRAIN_A
+	{
+		base_terrain SPAWN_TERRAIN
+		land_percent 100
+		number_of_clumps 512
+		set_scale_by_groups
+		spacing_to_other_terrain_types 6
+	}
+
+	create_terrain LOCH_TERRAIN
+	{
+		base_terrain SPAWN_TERRAIN
+		number_of_tiles (256 * PLAYER_COUNT)
+		number_of_clumps (128 * PLAYER_COUNT)
+		spacing_to_specific_terrain PLACEHOLDER_TERRAIN_A 4
+		terrain_mask 1
+	}
+
+	create_terrain LOCH_TERRAIN
+	{
+		base_terrain SPAWN_TERRAIN
+		number_of_tiles (128 * PLAYER_COUNT)
+		number_of_clumps (64 * PLAYER_COUNT)
+		spacing_to_specific_terrain PLACEHOLDER_TERRAIN_A 2
+		terrain_mask 1
+	}
+
+	create_terrain LOCH_TERRAIN
+	{
+		base_terrain SPAWN_TERRAIN
+		number_of_tiles (128 * PLAYER_COUNT)
+		number_of_clumps (64 * PLAYER_COUNT)
+		terrain_mask 1
+	}
+
+	create_terrain LOCH_TERRAIN
+	{
+		base_terrain SPAWN_TERRAIN
+		number_of_tiles (64 * PLAYER_COUNT)
+		number_of_clumps (32 * PLAYER_COUNT)
+		terrain_mask 1
+	}
+
+	create_terrain SPAWN_TERRAIN { base_terrain PLACEHOLDER_TERRAIN_A land_percent 100 number_of_clumps 512 set_scale_by_groups }
+	create_terrain SPAWN_TERRAIN { base_terrain PLACEHOLDER_TERRAIN_A land_percent 100 number_of_clumps 512 set_scale_by_groups }
+	create_terrain SPAWN_TERRAIN { base_terrain PLACEHOLDER_TERRAIN_A land_percent 100 number_of_clumps 512 set_scale_by_groups }
+	create_terrain SPAWN_TERRAIN { base_terrain PLACEHOLDER_TERRAIN_A land_percent 100 number_of_clumps 512 set_scale_by_groups }
+	create_terrain SPAWN_TERRAIN { base_terrain PLACEHOLDER_TERRAIN_A land_percent 100 number_of_clumps 512 set_scale_by_groups }
+	create_terrain SPAWN_TERRAIN { base_terrain PLACEHOLDER_TERRAIN_A land_percent 100 number_of_clumps 512 set_scale_by_groups }
+	create_terrain SPAWN_TERRAIN { base_terrain PLACEHOLDER_TERRAIN_A land_percent 100 number_of_clumps 512 set_scale_by_groups }
+	create_terrain SPAWN_TERRAIN { base_terrain PLACEHOLDER_TERRAIN_A land_percent 100 number_of_clumps 512 set_scale_by_groups }
+
+	create_terrain BASE_FOREST
+	{
+		base_terrain BASE_TERRAIN
+		land_percent 8
+		number_of_clumps 24
+		set_scale_by_groups
+		set_avoid_player_start_areas
+		spacing_to_specific_terrain LOCH_TERRAIN 4
+		spacing_to_specific_terrain LOCH_FOREST 4
+		terrain_mask 2
+	}
+
+	create_terrain BASE_BLEND_A
+	{
+		base_terrain BASE_TERRAIN
+		land_percent 8
+		number_of_clumps 16
+		set_scale_by_groups
+		terrain_mask 1
+	}
+
+	create_terrain BASE_BLEND_B
+	{
+		base_terrain BASE_TERRAIN
+		land_percent 6
+		number_of_clumps 32
+		set_scale_by_groups
+		terrain_mask 1
+	}
+
+	create_terrain BASE_BLEND_C
+	{
+		base_terrain BASE_TERRAIN
+		land_percent 8
+		number_of_clumps 12
+		set_scale_by_groups
+		terrain_mask 1
+	}
+
+	create_terrain BASE_BLEND_D
+	{
+		base_terrain BASE_TERRAIN
+		land_percent 2
+		number_of_clumps 24
+		set_scale_by_groups
+		terrain_mask 1
+	}
+
+	create_terrain BASE_BLEND_E
+	{
+		base_terrain BASE_TERRAIN
+		land_percent 2
+		number_of_clumps 24
+		set_scale_by_groups
+		terrain_mask 1
+	}
+
+	create_terrain LOCH_BLEND_A
+	{
+		base_terrain LOCH_TERRAIN
+		land_percent 4
+		number_of_clumps 16
+		set_scale_by_groups
+		terrain_mask 1
+		beach_terrain BEACH_TERRAIN
+	}
+
+	create_terrain LOCH_BLEND_B
+	{
+		base_terrain LOCH_TERRAIN
+		land_percent 4
+		number_of_clumps 32
+		set_scale_by_groups
+		terrain_mask 1
+		beach_terrain BEACH_TERRAIN
+	}
+
+	create_terrain LOCH_BLEND_C
+	{
+		base_terrain LOCH_TERRAIN
+		land_percent 4
+		number_of_clumps 28
+		set_scale_by_groups
+		terrain_mask 1
+		beach_terrain BEACH_TERRAIN
+	}
+
+	create_terrain LOCH_BLEND_D
+	{
+		base_terrain LOCH_TERRAIN
+		land_percent 2
+		number_of_clumps 28
+		set_scale_by_groups
+		terrain_mask 1
+		beach_terrain BEACH_TERRAIN
+	}
+
+	create_terrain LOCH_BLEND_D
+	{
+		base_terrain LOCH_TERRAIN
+		land_percent 4
+		number_of_clumps 28
+		set_scale_by_groups
+		terrain_mask 1
+		beach_terrain BEACH_TERRAIN
+	}
+/*
+<CONNECTION_GENERATION>
+	create_connect_non_player_lands
+	{
+		replace_terrain WATER_SHALLOW SHALLOWS
+		replace_terrain WATER_MEDIUM SHALLOWS
+		replace_terrain WATER_DEEP SHALLOWS
+
+		terrain_cost BASE_TERRAIN 1
+		terrain_cost WATER_SHALLOW 2
+		terrain_cost WATER_MEDIUM 3
+		terrain_cost WATER_DEEP 4
+
+		terrain_size WATER_SHALLOW 1 0
+		terrain_size WATER_MEDIUM 1 0
+		terrain_size WATER_DEEP 1 0
+	}
+*/
+<OBJECTS_GENERATION>
+	if TERRAIN_DEBUGGING
+	else
+		#define PRELIMINARIES
+		if PRELIMINARIES
+			#const RESOURCE_SPACING_DEFAULT 10
+			#const RESOURCE_SPACING_FAR 18
+			#const RESOURCE_RESTRICTION 2
+
+			#include_drs includes/object_setup.inc
+			#include_drs includes/market_objects.inc
+
+			#const NESSIE 1973
+			create_object NESSIE
+			{
+				number_of_objects 1
+				temp_min_distance_group_placement 8
+				terrain_to_place_on WATER_MEDIUM
+			}
+
+			create_object PLACEHOLDER_GENERIC
+			{
+				number_of_objects 2048
+				set_scaling_to_map_size
+				temp_min_distance_group_placement 1
+				terrain_to_place_on BEACH_TERRAIN
+
+				actor_area 7000
+				actor_area_radius 5
+			}
+
+			create_object PLACEHOLDER_GENERIC
+			{
+				number_of_objects 2048
+				set_scaling_to_map_size
+				temp_min_distance_group_placement 1
+				terrain_to_place_on SHALLOWS
+
+				actor_area 7001
+				actor_area_radius 4
+			}
+
+			create_object PLACEHOLDER_GENERIC
+			{
+				number_of_objects 2048
+				set_scaling_to_map_size
+				temp_min_distance_group_placement 1
+				terrain_to_place_on BEACH_TERRAIN
+
+				actor_area 7002
+				actor_area_radius 4
+			}
+
+			create_object PLACEHOLDER_GENERIC
+			{
+				number_of_objects 2048
+				set_scaling_to_map_size
+				temp_min_distance_group_placement 1
+				terrain_to_place_on BEACH_TERRAIN
+
+				actor_area 7003
+				actor_area_radius 10
+			}
+		endif
+
+		#include_drs includes/town_centres.inc
+		#include_drs includes/villagers.inc
+		#include_drs includes/scouts.inc
+		#include_drs includes/walls.inc
+
+		#include_drs includes/defend_wonder.inc
+		#include_drs includes/regicide.inc
+		#include_drs includes/capture_relic.inc
+
+		if NOMAD_START
+		else
+			#include_drs includes/stragglers.inc
+
+			#const FORAGE_BUSH_PRIMARY_ZONE_DISTANCE 14
+			#define FORAGE_BUSH_PRIMARY
+
+			#const GOLD_PRIMARY_ZONE_DISTANCE 14
+			#define GOLD_PRIMARY
+
+			#const GOLD_SECONDARY_ZONE_DISTANCE 14
+			#define GOLD_SECONDARY
+
+			#const STONE_PRIMARY_ZONE_DISTANCE 14
+			#define STONE_PRIMARY
+
+			#include_drs includes/starting_resources.inc
+
+			if DEATH_MATCH
+			elseif INFINITE_RESOURCES
+			else
+				#define HERDABLE_STARTING_COUNT_FOUR
+
+				#include_drs includes/herdable_starting.inc
+
+				#const HERDABLE_CAA_A 7003 /* Shoreline */
+
+				#include_drs includes/herdable.inc
+
+				#const HUNTABLE_SMALL_COUNT 6
+				#const HUNTABLE_SMALL_GROUPS 1
+
+				if EMPIRE_WARS_MODE
+					#define HUNTABLE_SMALL_TIGHT_GROUPING
+					#const HUNTABLE_SMALL_PLACEMENT_ID 10205
+				endif
+
+				#include_drs includes/huntable.inc
+				#include_drs includes/lureable.inc
+				#include_drs includes/furbearers.inc
+			endif
+		endif
+
+		if INFINITE_RESOURCES
+		else
+			create_object GOLD
+			{
+				number_of_objects 3	
+				number_of_groups 1024
+				set_tight_grouping
+				group_placement_radius 1
+				temp_min_distance_group_placement 16
+				actor_area_to_place_in 7000
+
+				min_distance_group_placement 1
+				max_distance_to_other_zones 2
+				avoid_forest_zone 2
+				avoid_cliff_zone 2
+				min_distance_to_map_edge 6
+
+				actor_area 1010
+				actor_area_radius 2
+
+				avoid_actor_area 20 /* Villagers */
+				avoid_actor_area 21 /* Villagers, Additional A */
+				avoid_actor_area 22 /* Villagers, Additional B */
+				avoid_actor_area 30 /* Scout */
+				avoid_actor_area 31 /* Scout, Secondary */
+				avoid_actor_area 32 /* Scout, Tertiary */
+				avoid_actor_area 50 /* Walls */
+				avoid_actor_area 51 /* Walls, Second Layer */
+				avoid_actor_area 52 /* Walls, Third Layer */
+				avoid_actor_area 60 /* Straggler, Spawn */
+				avoid_actor_area 61 /* Straggler, Escalation Mode */
+
+				avoid_actor_area 100 /* Primary Forage Bush */
+				avoid_actor_area 110 /* Secondary Forage Bush */
+				avoid_actor_area 120 /* Tertiary Forage Bush */
+				avoid_actor_area 130 /* Additional Forage Bush */
+				avoid_actor_area 140 /* Custom Forage Bush */
+				avoid_actor_area 150 /* Custom Forage Bush */
+				avoid_actor_area 200 /* Primary Gold */
+				avoid_actor_area 210 /* Secondary Gold */
+				avoid_actor_area 220 /* Tertiary Gold */
+				avoid_actor_area 230 /* Additional Gold */
+				avoid_actor_area 240 /* Custom Gold */
+				avoid_actor_area 250 /* Custom Gold */
+				avoid_actor_area 300 /* Primary Stone */
+				avoid_actor_area 310 /* Secondary Stone */
+				avoid_actor_area 320 /* Tertiary Stone */
+				avoid_actor_area 330 /* Additional Stone */
+				avoid_actor_area 340 /* Custom Stone */
+				avoid_actor_area 350 /* Custom Stone */
+
+				avoid_actor_area 5100 /* King */
+				avoid_actor_area 5110 /* Tower & Castle */
+				avoid_actor_area 5350 /* Monastery */
+				avoid_actor_area 5400 /* Wonder */
+
+				avoid_actor_area 10100 /* Default Primary Forage Bush - Spacer */
+				avoid_actor_area 10200 /* Default Primary Gold - Spacer */
+				avoid_actor_area 10300 /* Default Primary Stone - Spacer */
+
+				avoid_actor_area 11000 /* Neutral Forage Bush - Spacer */
+				avoid_actor_area 11001 /* Neutral Forage Bush, Additional A - Spacer */
+				avoid_actor_area 11002 /* Neutral Forage Bush, Additional B - Spacer */
+				avoid_actor_area 11010 /* Neutral Gold - Spacer */
+				avoid_actor_area 11011 /* Neutral Gold, Additional A - Spacer */
+				avoid_actor_area 11012 /* Neutral Gold, Additional B - Spacer */
+				avoid_actor_area 11020 /* Neutral Stone - Spacer */
+				avoid_actor_area 11021 /* Neutral Stone, Additional - Spacer A */
+				avoid_actor_area 11022 /* Neutral Stone, Additional - Spacer B */
+			}
+
+			create_object PLACEHOLDER_GENERIC /* Neutral Gold - Spacer */
+			{
+				number_of_objects 1024
+				temp_min_distance_group_placement 1
+				actor_area_to_place_in 1010
+
+				actor_area 11010
+				actor_area_radius 6
+			}
+
+			create_object STONE
+			{
+				number_of_objects 2
+				number_of_groups 1024
+				set_tight_grouping
+				group_placement_radius 1
+				temp_min_distance_group_placement 16
+				actor_area_to_place_in 7000
+
+				min_distance_group_placement 1
+				max_distance_to_other_zones 1
+				avoid_forest_zone 2
+				avoid_cliff_zone 2
+				min_distance_to_map_edge 6
+
+				actor_area 1020
+				actor_area_radius 2
+
+				avoid_actor_area 20 /* Villagers */
+				avoid_actor_area 21 /* Villagers, Additional A */
+				avoid_actor_area 22 /* Villagers, Additional B */
+				avoid_actor_area 30 /* Scout */
+				avoid_actor_area 31 /* Scout, Secondary */
+				avoid_actor_area 32 /* Scout, Tertiary */
+				avoid_actor_area 50 /* Walls */
+				avoid_actor_area 51 /* Walls, Second Layer */
+				avoid_actor_area 52 /* Walls, Third Layer */
+				avoid_actor_area 60 /* Straggler, Spawn */
+				avoid_actor_area 61 /* Straggler, Escalation Mode */
+
+				avoid_actor_area 100 /* Primary Forage Bush */
+				avoid_actor_area 110 /* Secondary Forage Bush */
+				avoid_actor_area 120 /* Tertiary Forage Bush */
+				avoid_actor_area 130 /* Additional Forage Bush */
+				avoid_actor_area 140 /* Custom Forage Bush */
+				avoid_actor_area 150 /* Custom Forage Bush */
+				avoid_actor_area 200 /* Primary Gold */
+				avoid_actor_area 210 /* Secondary Gold */
+				avoid_actor_area 220 /* Tertiary Gold */
+				avoid_actor_area 230 /* Additional Gold */
+				avoid_actor_area 240 /* Custom Gold */
+				avoid_actor_area 250 /* Custom Gold */
+				avoid_actor_area 300 /* Primary Stone */
+				avoid_actor_area 310 /* Secondary Stone */
+				avoid_actor_area 320 /* Tertiary Stone */
+				avoid_actor_area 330 /* Additional Stone */
+				avoid_actor_area 340 /* Custom Stone */
+				avoid_actor_area 350 /* Custom Stone */
+
+				avoid_actor_area 5100 /* King */
+				avoid_actor_area 5110 /* Tower & Castle */
+				avoid_actor_area 5350 /* Monastery */
+				avoid_actor_area 5400 /* Wonder */
+
+				avoid_actor_area 10100 /* Default Primary Forage Bush - Spacer */
+				avoid_actor_area 10200 /* Default Primary Gold - Spacer */
+				avoid_actor_area 10300 /* Default Primary Stone - Spacer */
+
+				avoid_actor_area 11000 /* Neutral Forage Bush - Spacer */
+				avoid_actor_area 11001 /* Neutral Forage Bush, Additional A - Spacer */
+				avoid_actor_area 11002 /* Neutral Forage Bush, Additional B - Spacer */
+				avoid_actor_area 11010 /* Neutral Gold - Spacer */
+				avoid_actor_area 11011 /* Neutral Gold, Additional A - Spacer */
+				avoid_actor_area 11012 /* Neutral Gold, Additional B - Spacer */
+				avoid_actor_area 11020 /* Neutral Stone - Spacer */
+				avoid_actor_area 11021 /* Neutral Stone, Additional - Spacer A */
+				avoid_actor_area 11022 /* Neutral Stone, Additional - Spacer B */
+			}
+
+			create_object PLACEHOLDER_GENERIC /* Neutral Stone - Spacer */
+			{
+				number_of_objects 1024
+				temp_min_distance_group_placement 1
+				actor_area_to_place_in 1020
+
+				actor_area 11020
+				actor_area_radius 6
+			}
+		endif
+
+		if DEATH_MATCH
+		else
+			#include_drs includes/predators.inc
+			#include_drs includes/riparian.inc
+		endif
+
+		#include_drs includes/neritic.inc
+		#include_drs includes/oysters.inc
+
+		#const FRESHWATER_COUNT 1024
+
+		#include_drs includes/aquatic_freshwater.inc
+
+		#const SALTWATER_COUNT 0
+
+		#include_drs includes/aquatic_saltwater.inc
+
+		if DEATH_MATCH
+		else
+			#include_drs includes/stragglers_neutral.inc
+			#include_drs includes/stragglers_coastal.inc
+			#include_drs includes/reeds.inc
+		endif
+
+		create_object RELIC
+		{
+			place_on_specific_land_id 600
+			set_gaia_object_only
+
+			if MAPSIZE_MINI
+				number_of_objects 2
+			elseif MAPSIZE_TINY
+				number_of_objects 3
+			elseif MAPSIZE_SMALL
+				number_of_objects 3
+			elseif MAPSIZE_MEDIUM
+				number_of_objects 4
+			elseif MAPSIZE_NORMAL
+				number_of_objects 4
+			elseif MAPSIZE_LARGE
+				number_of_objects 5
+			elseif MAPSIZE_HUGE
+				number_of_objects 5
+			elseif MAPSIZE_GIANT
+				number_of_objects 5
+			elseif MAPSIZE_MASSIVE
+				number_of_objects 6
+			elseif MAPSIZE_ENORMOUS
+				number_of_objects 6
+			elseif MAPSIZE_COLOSSAL
+				number_of_objects 7
+			elseif MAPSIZE_INCREDIBLE
+				number_of_objects 7
+			elseif MAPSIZE_MONSTROUS
+				number_of_objects 8
+			elseif MAPSIZE_LUDICROUS
+				number_of_objects 10
+			endif
+
+			max_distance_to_players (6 * MAPSCALE_SIDE)
+			set_circular_placement
+			temp_min_distance_group_placement 2
+
+			actor_area 1500
+			actor_area_radius 20
+
+			avoid_actor_area 10102 /* Minimum Primary Forage Bush Distance */
+			avoid_actor_area 10202 /* Minimum Primary Gold Distance */
+			avoid_actor_area 10302 /* Minimum Primary Stone Distance */
+		}
+
+		#include_drs includes/remote_resources.inc
+
+		#define EXTRA_STUFF
+		if EXTRA_STUFF
+			if EMPIRE_WARS_MODE
+				#define EMPIRE_WARS_FORAGERS
+
+				#include_drs includes/empire_wars.inc
+				#include_drs includes/empire_food.inc
+				#include_drs includes/empire_gold.inc
+				#include_drs includes/empire_wood.inc
+				#include_drs includes/empire_buildings.inc
+			elseif ESCALATION_MODE
+				#include_drs includes/escalation_mode.inc
+			endif
+
+			#define AESTHETICS
+			if AESTHETICS
+				#include_drs includes/birds.inc
+
+				create_object ROCK_A
+				{
+					number_of_objects 1024
+					temp_min_distance_group_placement 24
+					terrain_to_place_on BEACH_TERRAIN
+					
+					actor_area 8000
+					actor_area_radius 1
+				}
+
+				create_object ROCK_A
+				{
+					number_of_objects 1024
+					temp_min_distance_group_placement 16
+					terrain_to_place_on WATER_SHALLOW
+					actor_area_to_place_in 8000
+					
+					actor_area 8001
+					actor_area_radius 1
+				}
+
+				create_object ROCK_A
+				{
+					number_of_objects 1024
+					temp_min_distance_group_placement 16
+					terrain_to_place_on WATER_SHALLOW
+					actor_area_to_place_in 8001
+					
+					actor_area 8001
+					actor_area_radius 1
+				}
+
+				create_object ROCK_A
+				{
+					number_of_objects 1024
+					temp_min_distance_group_placement 16
+					terrain_to_place_on WATER_SHALLOW
+					actor_area_to_place_in 8001
+					
+					actor_area 8001
+					actor_area_radius 1
+				}
+
+				create_object ROCK_A
+				{
+					number_of_objects 1024
+					temp_min_distance_group_placement 16
+					terrain_to_place_on WATER_SHALLOW
+					actor_area_to_place_in 8001
+					
+					actor_area 8001
+					actor_area_radius 1
+				}
+
+				create_object ROCK_A
+				{
+					number_of_objects 1024
+					temp_min_distance_group_placement 16
+					terrain_to_place_on WATER_SHALLOW
+					actor_area_to_place_in 8001
+					
+					actor_area 8001
+					actor_area_radius 1
+				}
+
+				create_object ROCK_A
+				{
+					number_of_objects 1024
+					temp_min_distance_group_placement 16
+					terrain_to_place_on WATER_SHALLOW
+					actor_area_to_place_in 8001
+					
+					actor_area 8001
+					actor_area_radius 1
+				}
+
+				create_object ROCK_A
+				{
+					number_of_objects 1024
+					temp_min_distance_group_placement 16
+					terrain_to_place_on WATER_SHALLOW
+					actor_area_to_place_in 8000
+					
+					actor_area 8001
+					actor_area_radius 1
+				}
+
+				create_object ROCK_A
+				{
+					number_of_objects 1024
+					temp_min_distance_group_placement 16
+					terrain_to_place_on WATER_SHALLOW
+					actor_area_to_place_in 8000
+					
+					actor_area 8001
+					actor_area_radius 1
+				}
+
+				create_object ROCK_A
+				{
+					number_of_objects 1024
+					temp_min_distance_group_placement 16
+					terrain_to_place_on WATER_SHALLOW
+					actor_area_to_place_in 8000
+					
+					actor_area 8001
+					actor_area_radius 1
+				}
+
+				create_object ROCK_A
+				{
+					number_of_objects 1024
+					temp_min_distance_group_placement 16
+					terrain_to_place_on BEACH_TERRAIN
+					
+					actor_area 8002
+					actor_area_radius 1
+				}
+
+				create_object ROCK_A
+				{
+					number_of_objects 1024
+					temp_min_distance_group_placement 12
+					terrain_to_place_on BEACH_TERRAIN
+					
+					actor_area 8002
+					actor_area_radius 1
+				}
+
+				create_object PLACEHOLDER_GENERIC
+				{
+					second_object CASTLE_RUINS
+					place_on_specific_land_id 420
+					min_distance_to_players 32
+					find_closest_to_map_center
+					set_circular_placement
+					enable_tile_shuffling
+					terrain_to_place_on LOCH_TERRAIN
+
+					other_zone_avoidance_distance 8
+					
+					actor_area 8003
+					actor_area_radius 1
+
+					avoid_actor_area 20 /* Villagers */
+					avoid_actor_area 21 /* Villagers, Additional A */
+					avoid_actor_area 22 /* Villagers, Additional B */
+					avoid_actor_area 30 /* Scout */
+					avoid_actor_area 31 /* Scout, Secondary */
+					avoid_actor_area 32 /* Scout, Tertiary */
+					avoid_actor_area 50 /* Walls */
+					avoid_actor_area 51 /* Walls, Second Layer */
+					avoid_actor_area 52 /* Walls, Third Layer */
+					avoid_actor_area 60 /* Straggler, Spawn */
+					avoid_actor_area 61 /* Straggler, Escalation Mode */
+
+					avoid_actor_area 100 /* Primary Forage Bush */
+					avoid_actor_area 110 /* Secondary Forage Bush */
+					avoid_actor_area 120 /* Tertiary Forage Bush */
+					avoid_actor_area 130 /* Additional Forage Bush */
+					avoid_actor_area 140 /* Custom Forage Bush */
+					avoid_actor_area 150 /* Custom Forage Bush */
+					avoid_actor_area 200 /* Primary Gold */
+					avoid_actor_area 210 /* Secondary Gold */
+					avoid_actor_area 220 /* Tertiary Gold */
+					avoid_actor_area 230 /* Additional Gold */
+					avoid_actor_area 240 /* Custom Gold */
+					avoid_actor_area 250 /* Custom Gold */
+					avoid_actor_area 300 /* Primary Stone */
+					avoid_actor_area 310 /* Secondary Stone */
+					avoid_actor_area 320 /* Tertiary Stone */
+					avoid_actor_area 330 /* Additional Stone */
+					avoid_actor_area 340 /* Custom Stone */
+					avoid_actor_area 350 /* Custom Stone */
+
+					avoid_actor_area 5100 /* King */
+					avoid_actor_area 5110 /* Tower & Castle */
+					avoid_actor_area 5350 /* Monastery */
+					avoid_actor_area 5400 /* Wonder */
+
+					avoid_actor_area 7002 /* Beach */
+
+					avoid_actor_area 11000 /* Neutral Forage Bush - Spacer */
+					avoid_actor_area 11001 /* Neutral Forage Bush, Additional A - Spacer */
+					avoid_actor_area 11002 /* Neutral Forage Bush, Additional B - Spacer */
+					avoid_actor_area 11010 /* Neutral Gold - Spacer */
+					avoid_actor_area 11011 /* Neutral Gold, Additional A - Spacer */
+					avoid_actor_area 11012 /* Neutral Gold, Additional B - Spacer */
+					avoid_actor_area 11020 /* Neutral Stone - Spacer */
+					avoid_actor_area 11021 /* Neutral Stone, Additional - Spacer A */
+					avoid_actor_area 11022 /* Neutral Stone, Additional - Spacer B */
+				}
+			endif
+		endif
+	endif

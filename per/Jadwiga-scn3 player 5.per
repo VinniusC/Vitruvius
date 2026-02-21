@@ -1,0 +1,38 @@
+; Jadwiga - Part III: Duel of the Dukes
+; Player 5: Muscovy
+; AI by Lord Basse
+
+(defrule
+	(true)
+=>
+	(set-strategic-number sn-wall-targeting-mode 1)
+	(set-goal 1 0)
+	(disable-self)
+)
+
+(defrule
+	(up-timer-status 10 != timer-running); Promi was here
+=>
+	(set-strategic-number sn-total-number-explorers 0)
+	(set-strategic-number sn-percent-enemy-sighted-response 90)
+	(set-strategic-number sn-enemy-sighted-response-distance 42)
+	(set-strategic-number sn-minimum-attack-group-size 2)
+	(set-strategic-number sn-maximum-attack-group-size 60)
+	(set-strategic-number sn-percent-attack-soldiers 100)
+	(attack-now)
+	(enable-timer 10 5); Promi was here
+)
+
+(defrule
+	(event-detected trigger 3)
+=>
+	(set-goal 1 1)
+	(disable-self)
+)
+
+(defrule
+	(goal 1 1)
+	(military-population <= 2)
+=>
+	(resign)
+)

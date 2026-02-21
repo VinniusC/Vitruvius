@@ -1,0 +1,57 @@
+; Jadwiga - Part IV: The Siege of Vilnius
+; Player 7: The Teutonic Order (Aggressive)
+; AI by Bassi, edited by Lord Basse
+
+;Dodging projectiles
+(defrule
+	(true)
+=>
+	(set-difficulty-parameter ability-to-maintain-distance 20)
+	(set-difficulty-parameter ability-to-dodge-missiles 20)
+)
+;military 
+(defrule
+	(true)
+=>
+	(set-strategic-number sn-percent-enemy-sighted-response 60) ; previously 100, but this makes kiting a bit harder
+	(set-strategic-number sn-hits-before-alliance-change 25)
+	(set-strategic-number sn-number-explore-groups 0)
+	(set-strategic-number sn-percent-attack-soldiers 0)
+	(set-strategic-number sn-task-ungrouped-soldiers 0)
+	(set-strategic-number sn-number-attack-groups 0)
+	(set-strategic-number sn-enemy-sighted-response-distance 80)
+	(set-strategic-number sn-total-number-explorers 0)
+	(set-strategic-number sn-relic-return-distance 0)
+	(set-strategic-number sn-wall-targeting-mode 1)
+	(set-strategic-number sn-do-not-scale-for-difficulty-level 1)
+	(disable-self)
+)
+(defrule
+	(event-detected trigger 3)
+=>
+	(enable-timer 1 5)
+	(disable-self)
+)
+(defrule
+	(timer-triggered 1)
+=>
+	(set-strategic-number sn-percent-attack-soldiers 100)
+	(set-strategic-number sn-focus-player-number 1)
+	(set-strategic-number sn-target-player-number 1)
+	(attack-now)
+	(disable-timer 1)
+	(enable-timer 1 10)
+)
+;SCOUTING
+(defrule
+    (true)
+=>
+    (set-strategic-number sn-total-number-explorers 3)
+    (disable-self)
+)
+(defrule
+    (event-detected trigger 3)
+=>
+    (set-strategic-number sn-total-number-explorers 0)
+    (disable-self)
+)
